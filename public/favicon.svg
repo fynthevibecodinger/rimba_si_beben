@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#E8F7F0" />
+      <stop offset="100%" stop-color="#C7EBD9" />
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#153B2D" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Badge / Shield Circle -->
+  <circle cx="128" cy="128" r="120" fill="url(#bgGrad)" stroke="#2D6A4F" stroke-width="8" />
+  <circle cx="128" cy="128" r="112" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="6 4" opacity="0.6" />
+
+  <!-- Rimba Head Scaled and Centered -->
+  <g transform="translate(128, 134) scale(0.84) translate(-208, -125)" filter="url(#shadow)">
+    <!-- head base -->
+    <ellipse cx="170" cy="139" rx="77" ry="73" fill="#263E38" />
+    <path d="M128 111c-17 31-11 66 17 86 30 2 51-13 62-39-7-31-36-53-79-47Z" fill="#FAF6E9" />
+
+    <!-- hornbill beak, long and down-curved -->
+    <path
+      d="M170 130c43-27 105-19 149 8-32 8-59 27-95 51-28 19-55 4-50-23Z"
+      fill="#E9A43B"
+      stroke="#7A4938"
+      stroke-linejoin="round"
+      stroke-width="6"
+    />
+    <path d="M177 153c45-5 91-2 129-13-28 12-52 31-83 49-24 14-43 4-48-10Z" fill="#F5C354" />
+    
+    <!-- casque -->
+    <path
+      d="M176 126c30-36 82-43 111-9-39-3-67 8-93 25Z"
+      fill="#D88732"
+      stroke="#7A4938"
+      stroke-linejoin="round"
+      stroke-width="6"
+    />
+    <path d="M195 122c20-17 46-22 65-14-21 2-38 8-55 19Z" fill="#F5C354" />
+
+    <!-- eye -->
+    <circle cx="158" cy="133" r="14" fill="#173B30" />
+    <circle cx="153" cy="128" r="4" fill="white" />
+    <circle cx="134" cy="161" r="11" fill="#EFA88B" opacity=".5" />
+
+    <!-- explorer hat -->
+    <path d="M104 101c26-16 86-25 126-4l-10 16c-39-12-77-8-111 4Z" fill="#8D5B4C" />
+    <path
+      d="M126 93c1-48 70-58 87-3l-6 13c-31-10-56-8-81 2Z"
+      fill="#B9825F"
+      stroke="#684437"
+      stroke-width="5"
+    />
+    <path d="M125 86c29 8 59 7 88-1l-1 14c-31 8-58 8-87 1Z" fill="#2D6A4F" />
+    <path d="M184 74c10-8 21-11 34-7-8 12-18 19-32 20Z" fill="#52B788" />
+  </g>
+</svg>
