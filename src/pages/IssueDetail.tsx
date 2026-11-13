@@ -3,7 +3,11 @@ import { useParams, Link } from "../router";
 import { issuesData, IssueContent } from "../data/issuesData";
 import QuizSection from "../components/quiz/QuizSection";
 import RimbaMascot from "../components/mascot/RimbaMascot";
+import LandslideIcon from "../components/icons/LandslideIcon";
 import {
+  CloudRainWind,
+  DropletOff,
+  FlameKindling,
   Waves,
   Mountain,
   SunMedium,
@@ -52,6 +56,10 @@ export default function IssueDetail() {
   }
 
   const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    CloudRainWind,
+    Landslide: LandslideIcon,
+    DropletOff,
+    FlameKindling,
     Waves,
     Mountain,
     SunMedium,

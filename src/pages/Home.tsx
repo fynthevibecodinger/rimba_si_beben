@@ -4,6 +4,7 @@ import RimbaMascot, { RimbaMood } from "../components/mascot/RimbaMascot";
 import LiveDisasterStats from "../components/home/LiveDisasterStats";
 import IssueCard from "../components/home/IssueCard";
 import EcoLandscape from "../components/hero/EcoLandscape";
+import RootSnakeScroll from "../components/common/RootSnakeScroll";
 import { Link } from "../router";
 import { useGaspAnimation } from "../hooks/useGaspAnimation";
 import { issuesData } from "../data/issuesData";
@@ -64,24 +65,27 @@ export default function Home() {
   };
 
   return (
-    <div ref={rootRef} className="w-full">
-      {/* 1. HERO SECTION DENGAN BACKGROUND INTERAKTIF & TATA LETAK LAPANG */}
-      <section className="eco-hero relative overflow-hidden bg-gradient-to-b from-[#dff4ec] via-[#e9f5e9] to-[#f7f5ee] min-h-[620px] lg:min-h-[680px] pt-10 pb-14 sm:pt-14 sm:pb-16 lg:pt-16 lg:pb-20 border-b border-emerald-900/10 flex flex-col justify-center">
+    <div ref={rootRef} className="w-full relative">
+      {/* Indikator Interaktif Akar Rimba & Ular Melata (Khusus Halaman Beranda) */}
+      <RootSnakeScroll />
+
+      {/* 1. HERO SECTION DENGAN BACKGROUND INTERAKTIF & TATA LETAK LAPANG (PAS DI LAYAR) */}
+      <section className="eco-hero relative overflow-hidden bg-gradient-to-b from-[#dff4ec] via-[#e9f5e9] to-[#f7f5ee] min-h-[calc(100vh-4rem)] flex flex-col justify-between pt-8 pb-10 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-16 border-b border-emerald-900/10">
         {/* Animated Eco Landscape (Pegunungan Parallax, Satelit Orbit, Awan, Kincir Angin, Rumah, Sungai) */}
         <EcoLandscape />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             {/* Kolom Kiri: Judul, Deskripsi & Tombol Aksi */}
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+            <div className="lg:col-span-7 space-y-3 sm:space-y-3.5 lg:space-y-4 text-center lg:text-left">
               {/* Badge Identitas */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-emerald-700/20 shadow-md shadow-emerald-950/5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 backdrop-blur-xs">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                Laboratorium Literasi Bencana Pelajar
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 border border-emerald-700/20 shadow-xs text-xs font-extrabold uppercase tracking-wider text-emerald-800 backdrop-blur-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Laboratorium Literasi Bencana Pelajar</span>
               </div>
 
               {/* Headline Bersih & Rapi Tanpa Font Terpotong */}
-              <h1 className="font-['Fredoka'] text-4xl sm:text-5xl lg:text-6xl font-black text-[#173a2d] tracking-tight leading-[1.14]">
+              <h1 className="font-['Fredoka'] text-3xl sm:text-4xl lg:text-[40px] xl:text-[44px] font-black text-[#173a2d] tracking-tight leading-[1.14]">
                 Jaga Bumi dengan <br />
                 <span className="text-[#2d6a4f] underline decoration-emerald-400/60 decoration-wavy decoration-2">
                   Teknologi Hijau
@@ -90,47 +94,47 @@ export default function Home() {
               </h1>
 
               {/* Deskripsi Jelas & Terbaca */}
-              <p className="text-base sm:text-lg text-[#305345] font-medium max-w-2xl leading-relaxed mx-auto lg:mx-0">
+              <p className="text-xs sm:text-sm lg:text-[15px] text-[#305345] font-medium max-w-xl leading-relaxed mx-auto lg:mx-0">
                 Jelajahi bagaimana sensor IoT, pemantauan satelit, dan kecerdasan ekologis 
                 membantu kita memitigasi bencana hidrometeorologi di Indonesia. Belajar sains, uji skenario virtual, dan raih sertifikat kesiapsiagaan!
               </p>
 
               {/* Tombol Aksi Utama Bersih */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
                 <button
                   onClick={scrollToIssues}
-                  className="px-8 py-4 rounded-2xl bg-[#173a2d] hover:bg-[#1f4e3c] text-white font-extrabold text-base shadow-xl shadow-emerald-950/20 inline-flex items-center gap-3 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                  className="px-6 py-3 rounded-xl sm:px-7 sm:py-3.5 sm:rounded-2xl bg-[#173a2d] hover:bg-[#1f4e3c] text-white font-extrabold text-sm sm:text-base shadow-lg shadow-emerald-950/15 inline-flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  <BookOpen className="w-5 h-5 text-emerald-300" />
+                  <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300" />
                   <span>Eksplorasi 4 Materi Isu</span>
-                  <ArrowDown className="w-4 h-4 text-emerald-400 animate-bounce" />
+                  <ArrowDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 animate-bounce" />
                 </button>
               </div>
 
               {/* Lencana Terpercaya (P5, Virtual Lab, & PetaBencana) */}
-              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 text-xs text-slate-700 font-bold">
-                <div className="flex items-center gap-2 bg-white/85 backdrop-blur-xs px-3.5 py-2 rounded-xl border border-white shadow-xs">
-                  <Shield className="w-4 h-4 text-emerald-700" />
+              <div className="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 text-[11px] text-slate-700 font-bold">
+                <div className="flex items-center gap-1.5 bg-white/85 backdrop-blur-xs px-2.5 py-1.5 rounded-lg border border-white shadow-2xs">
+                  <Shield className="w-3.5 h-3.5 text-emerald-700" />
                   <span>Sesuai P5 Kurikulum Merdeka</span>
                 </div>
                 <Link
                   to="/simulasi"
-                  className="flex items-center gap-2 bg-white/85 hover:bg-emerald-50 backdrop-blur-xs px-3.5 py-2 rounded-xl border border-white shadow-xs text-emerald-900 transition-colors"
+                  className="flex items-center gap-1.5 bg-white/85 hover:bg-emerald-50 backdrop-blur-xs px-2.5 py-1.5 rounded-lg border border-white shadow-2xs text-emerald-900 transition-colors"
                   title="Masuk ke Lab Simulasi Ekosistem"
                 >
-                  <Compass className="w-4 h-4 text-emerald-700" />
-                  <span>Laboratorium Virtual Interaktif →</span>
+                  <Compass className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>Laboratorium Virtual →</span>
                 </Link>
-                <div className="flex items-center gap-2 bg-white/85 backdrop-blur-xs px-3.5 py-2 rounded-xl border border-white shadow-xs">
-                  <Activity className="w-4 h-4 text-emerald-700" />
+                <div className="flex items-center gap-1.5 bg-white/85 backdrop-blur-xs px-2.5 py-1.5 rounded-lg border border-white shadow-2xs">
+                  <Activity className="w-3.5 h-3.5 text-emerald-700" />
                   <span>Data Real-time PetaBencana.id</span>
                 </div>
               </div>
             </div>
 
             {/* Kolom Kanan: Maskot Rimba dengan Balon Ucapan Tips Tepat di Atasnya */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center relative pt-2 lg:pt-0">
-              <div className="relative flex flex-col items-center w-full max-w-sm">
+            <div className="lg:col-span-5 flex flex-col items-center justify-center relative pt-1 lg:pt-0">
+              <div className="relative flex flex-col items-center w-full max-w-xs sm:max-w-sm">
                 
                 {/* Balon Ucapan Tips Interaktif - Ditempatkan di Atas Maskot dengan Panah Menunjuk ke Topi Rimba */}
                 <motion.div
@@ -139,27 +143,27 @@ export default function Home() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   onClick={handleMascotClick}
-                  className="w-full max-w-xs bg-white/95 backdrop-blur-xs rounded-2xl p-4 shadow-xl border-2 border-emerald-800/15 cursor-pointer hover:border-emerald-500 transition-all mb-4 select-none relative group hover:scale-[1.02] z-20"
+                  className="w-full max-w-[270px] sm:max-w-[290px] bg-white/95 backdrop-blur-xs rounded-2xl p-3 sm:p-3.5 shadow-lg border border-emerald-800/15 cursor-pointer hover:border-emerald-500 transition-all mb-2 select-none relative group hover:scale-[1.02] z-20"
                   title="Klik untuk mendengar tips siaga baru!"
                 >
-                  <div className="flex items-center justify-between gap-2 mb-1.5">
-                    <div className="flex items-center gap-2 font-['Fredoka'] font-black text-emerald-800 text-sm">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <div className="flex items-center gap-1.5 font-['Fredoka'] font-black text-emerald-800 text-xs sm:text-sm">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
                       Hai, aku Rimba!
                     </div>
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-300/50">
+                    <span className="text-[9px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-300/50">
                       Tips {speechIndex + 1}/{speechList.length}
                     </span>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">
+                  <p className="text-[11px] sm:text-xs text-slate-700 font-medium leading-relaxed">
                     {currentSpeech.text}
                   </p>
 
-                  <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-emerald-700 font-bold">
+                  <div className="mt-1.5 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px] text-emerald-700 font-bold">
                     <span className="inline-flex items-center gap-1">
-                      <Volume2 className="w-3.5 h-3.5" />
-                      Tips Siaga Bencana
+                      <Volume2 className="w-3 h-3" />
+                      Tips Siaga
                     </span>
                     <span className="text-slate-400 font-normal group-hover:text-emerald-600 transition-colors">
                       Klik untuk ganti ↻
@@ -167,7 +171,7 @@ export default function Home() {
                   </div>
 
                   {/* Penunjuk Segitiga Balon Ucapan Mengarah ke Topi Rimba di Bawahnya */}
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b-2 border-r-2 border-emerald-800/15 transform rotate-45 pointer-events-none" />
+                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-white border-b-2 border-r-2 border-emerald-800/15 transform rotate-45 pointer-events-none" />
                 </motion.div>
 
                 {/* Maskot Rimba Interaktif (Terlihat Jelas 100% Tanpa Terhalang Apapun) */}
@@ -178,8 +182,8 @@ export default function Home() {
                 >
                   <RimbaMascot
                     mood={mascotMood}
-                    size="lg"
-                    className="transition-transform duration-200 group-hover:scale-105"
+                    size="md"
+                    className="w-44 h-48 sm:w-48 sm:h-52 lg:w-52 lg:h-56 transition-transform duration-200 group-hover:scale-105"
                   />
                 </div>
 
@@ -187,6 +191,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Jarak bernapas di bagian bawah untuk pemandangan eco landscape */}
+        <div className="w-full h-4 sm:h-6 lg:h-8 relative z-10 pointer-events-none" />
       </section>
 
       {/* 2. LIVE DISASTER STATS (PetaBencana.id API Integration) */}

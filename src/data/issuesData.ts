@@ -34,6 +34,13 @@ export interface IssueSections {
   };
 }
 
+export interface RealDisasterPhoto {
+  src: string;          // Target file path, contoh: "/images/disasters/banjir.jpg"
+  fallbackSrc: string;  // High-resolution real documentary photo fallback
+  alt: string;
+  caption: string;
+}
+
 export interface IssueContent {
   slug: "banjir" | "tanah-longsor" | "kekeringan" | "kebakaran-hutan";
   title: string;
@@ -44,6 +51,7 @@ export interface IssueContent {
   threatLevel: "Tinggi" | "Kritis" | "Sedang" | "Sangat Tinggi";
   heroBadge: string;
   icon: string;
+  realPhoto: RealDisasterPhoto;
   sections: IssueSections;
   quiz: QuizQuestion[];
 }
@@ -58,7 +66,13 @@ export const issuesData: Record<string, IssueContent> = {
     accentBg: "from-sky-500/20 to-blue-600/10",
     threatLevel: "Sangat Tinggi",
     heroBadge: "Hidrometeorologi Basah",
-    icon: "Waves",
+    icon: "CloudRainWind",
+    realPhoto: {
+      src: "/images/disasters/banjir.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=600&q=80",
+      alt: "Dokumentasi nyata banjir dan genangan air ekstrem merendam pemukiman",
+      caption: "Dokumentasi Riil Banjir",
+    },
     sections: {
       causeAndEffect: {
         title: "Mengapa Air Meluap dan Menggenang?",
@@ -180,7 +194,13 @@ export const issuesData: Record<string, IssueContent> = {
     accentBg: "from-amber-700/20 to-stone-800/10",
     threatLevel: "Tinggi",
     heroBadge: "Geohidrologi Lereng",
-    icon: "Mountain",
+    icon: "Landslide",
+    realPhoto: {
+      src: "/images/disasters/tanah-longsor.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1618588507085-c79565432917?auto=format&fit=crop&w=600&q=80",
+      alt: "Dokumentasi nyata bencana longsor tebing lereng curam",
+      caption: "Dokumentasi Riil Tanah Longsor",
+    },
     sections: {
       causeAndEffect: {
         title: "Bagaimana Massa Tanah Bisa Tiba-Tiba Ambles?",
@@ -302,7 +322,13 @@ export const issuesData: Record<string, IssueContent> = {
     accentBg: "from-amber-500/20 to-yellow-600/10",
     threatLevel: "Sedang",
     heroBadge: "Hidrometeorologi Kering",
-    icon: "SunMedium",
+    icon: "DropletOff",
+    realPhoto: {
+      src: "/images/disasters/kekeringan.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+      alt: "Dokumentasi nyata tanah sawah merekah akibat kemarau panjang dan kekeringan",
+      caption: "Dokumentasi Riil Kekeringan",
+    },
     sections: {
       causeAndEffect: {
         title: "Mengapa Sumur Mengering dan Sawah Pecah-Pecah?",
@@ -419,7 +445,13 @@ export const issuesData: Record<string, IssueContent> = {
     accentBg: "from-red-600/20 to-orange-700/10",
     threatLevel: "Kritis",
     heroBadge: "Emisi & Karhutla",
-    icon: "Flame",
+    icon: "FlameKindling",
+    realPhoto: {
+      src: "/images/disasters/kebakaran-hutan.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1602980085566-6c459f23fa46?auto=format&fit=crop&w=600&q=80",
+      alt: "Dokumentasi nyata kebakaran hutan dan lahan gambut berkabut asap tebal",
+      caption: "Dokumentasi Riil Karhutla",
+    },
     sections: {
       causeAndEffect: {
         title: "Mengapa Lahan Gambut Indonesia Begitu Mudah Membara?",

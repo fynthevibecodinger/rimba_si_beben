@@ -1,6 +1,7 @@
 import { RouterProvider, useRouter } from "./router";
+import { AmbientMusicProvider } from "./context/AmbientMusicContext";
 import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
+import Footer from "./components/layout/Footer.tsx";
 import Home from "./pages/Home";
 import IssueDetail from "./pages/IssueDetail";
 import EcosystemSimulation from "./pages/EcosystemSimulation";
@@ -45,7 +46,9 @@ function AppContent() {
 export default function App() {
   return (
     <RouterProvider>
-      <AppContent />
+      <AmbientMusicProvider>
+        <AppContent />
+      </AmbientMusicProvider>
     </RouterProvider>
   );
 }
