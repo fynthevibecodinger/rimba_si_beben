@@ -89,7 +89,7 @@ export const issuesData: Record<string, IssueContent> = {
       studentActions: [
         {
           type: "pencegahan",
-          title: "Bikin Lubang Biopori di Sekolah / Rumah",
+           title: "Bikin Lubang Resapan di Lingkungan",
           description:
             "Buat lubang silindris sedalam 100 cm dan isi dengan sampah organik untuk mempercepat peresapan air ke tanah hingga 40%.",
           iconName: "Drill",
@@ -342,7 +342,7 @@ export const issuesData: Record<string, IssueContent> = {
           type: "pencegahan",
           title: "Daur Ulang Air Bilasan Wudhu & Cucian Beras",
           description:
-            "Gunakan air bekas bilasan wudhu atau cucian beras untuk menyiram tanaman di taman sekolah daripada dibuang percuma.",
+             "Gunakan air bekas bilasan wudhu atau cucian beras untuk menyiram tanaman di lingkungan sekitar daripada dibuang percuma.",
           iconName: "RotateCcw",
         },
         {

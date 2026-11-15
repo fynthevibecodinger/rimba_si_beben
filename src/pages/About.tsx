@@ -136,7 +136,7 @@ export default function About() {
                 <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />Menyajikan literasi bencana dan iklim yang mudah dipahami.</li>
                   <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />Menghadirkan simulasi untuk melatih nalar dan pengambilan keputusan.</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />Mendorong aksi kecil yang berdampak bagi sekolah, keluarga, dan alam.</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />Mendorong aksi kecil yang berdampak bagi keluarga, lingkungan, dan alam.</li>
                 </ul>
               </div>
             </div>

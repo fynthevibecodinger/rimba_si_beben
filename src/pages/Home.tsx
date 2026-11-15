@@ -16,7 +16,7 @@ export default function Home() {
   const [completedActions, setCompletedActions] = useState<number[]>([]);
 
   const ecoActions = [
-    "Pilah sampah organik dan anorganik di rumah atau sekolah",
+    "Pilah sampah organik dan anorganik di rumah atau lingkungan sekitar",
     "Bawa botol minum dan tas belanja yang dapat digunakan kembali",
     "Rawat satu tanaman atau pohon di lingkungan sekitar",
   ];
@@ -44,7 +44,7 @@ export default function Home() {
     },
     {
       mood: "celebrate",
-      text: "Lubang resapan di halaman sekolah membantu air hujan masuk ke tanah, bukan menggenang!",
+      text: "Lubang resapan di lingkungan sekitar membantu air hujan masuk ke tanah, bukan menggenang!",
     },
     {
       mood: "scan",
@@ -238,13 +238,13 @@ export default function Home() {
              <div className="max-w-2xl mb-8">
                <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider">Kampanye Peduli Lingkungan</span>
                <h2 className="text-2xl sm:text-3xl font-black text-[#173a2d] font-['Fredoka'] mt-2">Satu kebiasaan baik, dampak untuk banyak kehidupan</h2>
-               <p className="text-sm text-slate-600 leading-relaxed mt-3">Lakukan aksi kecil yang bisa dimulai dari sekolah, rumah, atau destinasi wisata. Lingkungan yang terjaga juga membantu mengurangi risiko bencana.</p>
+                <p className="text-sm text-slate-600 leading-relaxed mt-3">Lakukan aksi kecil yang bisa dimulai dari rumah, lingkungan sekitar, atau destinasi wisata. Alam yang terjaga juga membantu mengurangi risiko bencana.</p>
              </div>
              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                {[
                  { icon: Leaf, title: "Konservasi Alam", text: "Jelajahi cara menjaga hutan, sungai, dan destinasi wisata tetap lestari." },
                  { icon: Recycle, title: "Kelola Sampah", text: "Pilah, gunakan kembali, dan kurangi sampah dari sumbernya." },
-                 { icon: TreePine, title: "Hijaukan Sekitar", text: "Tanam dan rawat pohon di sekolah, kampus, atau lingkungan rumah." },
+                  { icon: TreePine, title: "Hijaukan Lingkungan", text: "Tanam dan rawat pohon di sekitar rumah dan lingkungan tempat tinggal." },
                ].map(({ icon: Icon, title, text }) => (
                  <div key={title} className="bg-white/85 rounded-2xl border border-white p-5 shadow-sm">
                    <div className="flex items-center gap-3 mb-3"><div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center"><Icon className="w-5 h-5" /></div><h3 className="font-bold text-slate-900">{title}</h3></div>
@@ -269,7 +269,7 @@ export default function Home() {
             {[
               { title: "Hutan Lestari", label: "Rumah bagi banyak hewan", emoji: "🌳", tone: "from-emerald-800 to-lime-600" },
               { title: "Sungai Bersih", label: "Air untuk semua kehidupan", emoji: "🌊", tone: "from-sky-700 to-cyan-400" },
-              { title: "Sekolah Hijau", label: "Belajar sambil menanam", emoji: "🌱", tone: "from-teal-800 to-emerald-400" },
+              { title: "Lingkungan Hijau", label: "Tumbuh bersama alam", emoji: "🌱", tone: "from-teal-800 to-emerald-400" },
               { title: "Wisata Bijak", label: "Datang, nikmati, jaga", emoji: "🏞️", tone: "from-amber-700 to-orange-400" },
             ].map((item) => (
               <div key={item.title} className={`min-h-44 rounded-3xl bg-gradient-to-br ${item.tone} p-5 text-white relative overflow-hidden shadow-lg group`}>

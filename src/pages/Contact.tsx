@@ -53,7 +53,7 @@ export default function Contact() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Format email tidak valid.";
     }
-    if (!formData.school.trim()) newErrors.school = "Nama sekolah atau instansi wajib diisi.";
+    if (!formData.school.trim()) newErrors.school = "Nama lingkungan atau komunitas wajib diisi.";
     if (!formData.message.trim() || formData.message.trim().length < 10) {
       newErrors.message = "Pesan minimal berisi 10 karakter.";
     }
@@ -93,8 +93,7 @@ export default function Contact() {
             Kontak Darurat &amp; Suara Pelajar
           </h1>
           <p className="text-emerald-100/90 text-sm sm:text-base leading-relaxed">
-            Simpan nomor kontak darurat nasional di ponselmu dan bagikan masukan untuk pengembangan 
-            media pembelajaran literasi bencana ini.
+             Simpan nomor kontak darurat nasional di ponselmu dan bagikan cerita atau ide untuk menjaga lingkungan.
           </p>
         </div>
       </section>
@@ -166,7 +165,7 @@ export default function Contact() {
                 Formulir Komunikasi
               </span>
               <h3 className="text-2xl font-black text-slate-900 font-['Fredoka']">
-                Kirim Saran, Cerita, atau Ide Mitigasi Sekolahmu
+                 Kirim Saran, Cerita, atau Ide Peduli Lingkunganmu
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 mt-1">
                 Punya pengalaman aksi penanaman pohon, ide penambahan simulasi, atau saran materi? Tuliskan di sini!
@@ -200,7 +199,7 @@ export default function Contact() {
                   {/* Name */}
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700">
-                      Nama Lengkap Pelajar / Pengajar <span className="text-rose-500">*</span>
+                       Nama Lengkap <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -234,7 +233,7 @@ export default function Contact() {
                         type="email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="nama@sekolah.sch.id"
+                         placeholder="nama@email.com"
                         className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
                           errors.email
                             ? "border-rose-400 bg-rose-50/50 focus:border-rose-500"
@@ -254,7 +253,7 @@ export default function Contact() {
                   {/* School / City */}
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700">
-                      Asal Sekolah / Komunitas <span className="text-rose-500">*</span>
+                       Asal Lingkungan / Komunitas <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <Building className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -262,7 +261,7 @@ export default function Contact() {
                         type="text"
                         value={formData.school}
                         onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                        placeholder="Contoh: SMPN 1 Nusantara"
+                         placeholder="Contoh: Komunitas Rimba Nusantara"
                         className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
                           errors.school
                             ? "border-rose-400 bg-rose-50/50 focus:border-rose-500"
@@ -290,7 +289,7 @@ export default function Contact() {
                       <option value="saran_materi">Usulan Materi Isu Baru</option>
                       <option value="ide_simulasi">Ide Fitur Simulasi Ekosistem</option>
                       <option value="laporan_bug">Laporan Masalah Tampilan / Bug</option>
-                      <option value="kerjasama_p5">Kolaborasi Projek P5 Sekolah</option>
+                       <option value="kerjasama_p5">Kolaborasi Aksi Peduli Lingkungan</option>
                     </select>
                   </div>
                 </div>
