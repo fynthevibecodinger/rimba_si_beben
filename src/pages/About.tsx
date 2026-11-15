@@ -24,14 +24,14 @@ export default function About() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            Misi Literasi Lingkungan Nusantara
+             Portal Edukasi Lingkungan Nusantara
           </span>
           <h1 className="text-3xl sm:text-5xl font-black font-['Fredoka'] tracking-tight leading-tight">
-            Membangun Generasi Pelajar Tangguh Bencana
+             Membangun Generasi Peduli Alam dan Tangguh Bencana
           </h1>
           <p className="text-emerald-100/90 text-sm sm:text-base mt-4 leading-relaxed max-w-2xl mx-auto">
-            Media pembelajaran interaktif berbasis web yang menghubungkan sains iklim, 
-            kebijakan mitigasi berbasis alam, dan aksi penyelamatan diri untuk pelajar Indonesia.
+             Media pembelajaran interaktif berbasis web yang menghubungkan konservasi alam, pengelolaan lingkungan,
+             dan kesiapsiagaan bencana untuk pelajar Indonesia.
           </p>
         </div>
       </section>
@@ -81,7 +81,7 @@ export default function About() {
                 <div className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong>Tablet Telemetri Cerdas:</strong> Membawa data satelit dan sensor IoT untuk mendeteksi bahaya sebelum terlambat.
+                     <strong>Tablet Pintar:</strong> Membawa informasi dari satelit dan alat pengukur untuk mengetahui bahaya lebih awal.
                   </span>
                 </div>
               </div>
@@ -207,7 +207,7 @@ export default function About() {
                 3. Aksi Nyata Pelajar
               </h4>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Panduan praktis pembuatan biopori sekolah, tas siaga bencana 3 hari, dan prosedur evakuasi mandiri yang dapat diterapkan di keluarga.
+                 Panduan praktis membuat lubang resapan, menyiapkan tas darurat 3 hari, dan menyelamatkan diri bersama keluarga.
               </p>
             </div>
           </div>
@@ -265,7 +265,7 @@ export default function About() {
             Siap Menjadi Pahlawan Kesiapsiagaan Bencana?
           </h3>
           <p className="text-emerald-200 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
-            Mulailah dengan memilih salah satu materi bencana atau uji kemampuan ekologismu di ruang simulasi.
+             Mulailah dengan memilih salah satu materi lingkungan atau mencoba permainan simulasi.
           </p>
           <div className="pt-2 flex flex-wrap justify-center gap-4">
             <Link

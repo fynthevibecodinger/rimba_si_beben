@@ -52,7 +52,7 @@ export const issuesData: Record<string, IssueContent> = {
   banjir: {
     slug: "banjir",
     title: "Banjir & Genangan Ekstrem",
-    subtitle: "Dinamika Daerah Aliran Sungai, Drainase Kota, dan Solusi Berbasis Alam",
+     subtitle: "Cerita tentang sungai, saluran air kota, dan cara alam membantu mencegah banjir",
     tagline: "Air mencari jalannya. Ketika pori tanah tertutup beton dan sungai tersumbat, bencana terjadi.",
     themeColor: "#0284c7",
     accentBg: "from-sky-500/20 to-blue-600/10",
@@ -63,7 +63,7 @@ export const issuesData: Record<string, IssueContent> = {
       causeAndEffect: {
         title: "Mengapa Air Meluap dan Menggenang?",
         description:
-          "Banjir bukan sekadar karena curah hujan deras. Ketika permukaan tanah ditutup aspal dan beton tanpa daerah resapan, koefisien limpasan (run-off) meningkat hingga 80%. Air hujan tidak sempat terserap ke akuifer tanah dan langsung meluncur ke sungai yang mendangkal akibat sedimentasi dan sampah.",
+           "Banjir bukan hanya karena hujan deras. Saat tanah tertutup aspal dan beton, air hujan tidak bisa masuk ke tanah. Air pun mengalir deras ke sungai yang dangkal karena lumpur dan sampah.",
         humanActivities: [
           "Alih fungsi sempadan sungai dan rawa retensi menjadi pemukiman padat.",
           "Membuang sampah rumah tangga dan limbah padat ke saluran drainase.",
@@ -71,12 +71,12 @@ export const issuesData: Record<string, IssueContent> = {
           "Penggundulan hutan hulu yang menurunkan kemampuan akar pohon mengikat air.",
         ],
         ecologicalProcess:
-          "Siklus infiltrasi air terputus. Tanah kehilangan kemampuan menahan air, sehingga kapasitas tampung sungai terlampaui dalam hitungan jam.",
+           "Air tidak lagi punya cukup tempat untuk masuk ke tanah. Akibatnya, sungai cepat penuh dan meluap.",
       },
       impact: {
         environmental: [
           "Pencemaran sumber air minum warga oleh bakteri E. coli dan limbah lumpur.",
-          "Kerusakan ekosistem riparian dan hilangnya vegetasi pelindung tebing sungai.",
+           "Kerusakan lingkungan di tepi sungai dan hilangnya pohon yang melindungi tebing.",
           "Penyebaran penyakit leptospirosis, diare, dan infeksi kulit pascabencana.",
         ],
         socialEconomic: [
@@ -117,10 +117,10 @@ export const issuesData: Record<string, IssueContent> = {
         },
       ],
       greenTechTrivia: {
-        techName: "Sensor Ultrasonik IoT Telemetri Pintu Air",
-        category: "IoT Sensor",
+         techName: "Alat Pengukur Tinggi Air di Pintu Air",
+         category: "IoT Sensor",
         description:
-          "Perangkat pintar bertenaga surya yang dipasang di atas jembatan sungai untuk mengukur ketinggian muka air secara nirkabel real-time ke dasbor BPBD tiap 60 detik.",
+           "Alat pintar bertenaga matahari yang dipasang di dekat sungai untuk mengukur tinggi air dan mengirim kabar kepada petugas setiap menit.",
         factHighlight:
           "Memberi peringatan dini 3-6 jam sebelum gelombang air bah mencapai pemukiman hilir, menyelamatkan ribuan nyawa!",
       },
@@ -174,7 +174,7 @@ export const issuesData: Record<string, IssueContent> = {
   "tanah-longsor": {
     slug: "tanah-longsor",
     title: "Tanah Longsor & Pergerakan Lereng",
-    subtitle: "Kekuatan Akar Vegetasi, Kemiringan Lereng, dan Bahaya Erosi Lahan",
+     subtitle: "Kekuatan akar pohon, bukit yang miring, dan bahaya tanah terkikis",
     tagline: "Akar pohon adalah paku bumi alami. Ketika lereng ditebas, gravitasi mengambil alih.",
     themeColor: "#8d5b4c",
     accentBg: "from-amber-700/20 to-stone-800/10",
@@ -185,7 +185,7 @@ export const issuesData: Record<string, IssueContent> = {
       causeAndEffect: {
         title: "Bagaimana Massa Tanah Bisa Tiba-Tiba Ambles?",
         description:
-          "Tanah longsor terjadi ketika gaya pendorong (berat massa tanah jenuh air dan gravitasi) melebihi gaya penahan (kohesi tanah dan ikatan akar). Hujan berdurasi panjang meresap ke dalam tanah dan tertahan di atas lapisan batuan kedap (bidang gelincir), melumasi tanah sehingga meluncur menuruni lereng dengan kecepatan tinggi.",
+           "Tanah longsor terjadi saat tanah di bukit terlalu berat dan tidak lagi kuat menahannya. Hujan yang lama membuat tanah basah dan licin, lalu tanah dapat meluncur ke bawah.",
         humanActivities: [
           "Pemotongan tebing bukit secara tegak (90 derajat) untuk jalan atau bangunan tanpa terasering.",
           "Penebangan pohon berakar dalam (seperti beringin, aren, bambu) di lereng terjal.",
@@ -239,10 +239,10 @@ export const issuesData: Record<string, IssueContent> = {
         },
       ],
       greenTechTrivia: {
-        techName: "Extensometer Digital & Sensor Tiltmeter Nirkabel",
+         techName: "Alat Pengukur Gerakan Tanah",
         category: "IoT Sensor",
         description:
-          "Sensor pengukur pergeseran tanah tingkat milimeter yang dihubungkan ke sirine otomatis bertenaga surya. Saat retakan melebar lebih dari batas aman, sirine desa akan meraung.",
+           "Alat yang mengukur apakah tanah bergerak sedikit demi sedikit. Jika retakan semakin lebar, sirene dapat memberi tahu warga.",
         factHighlight:
           "Telah dipasang di ratusan titik rawan longsor di Jawa dan Sumatera oleh PVMBG dan universitas riset nasional.",
       },
@@ -296,7 +296,7 @@ export const issuesData: Record<string, IssueContent> = {
   kekeringan: {
     slug: "kekeringan",
     title: "Kekeringan & Krisis Air Bersih",
-    subtitle: "Dampak El Niño, Cadangan Air Tanah, dan Konservasi Air Cerdas",
+     subtitle: "Musim kemarau panjang, persediaan air, dan cara menghemat air",
     tagline: "Air adalah sumber kehidupan. Menjaga mata air hari ini adalah menyelamatkan napas esok hari.",
     themeColor: "#d97706",
     accentBg: "from-amber-500/20 to-yellow-600/10",
@@ -307,7 +307,7 @@ export const issuesData: Record<string, IssueContent> = {
       causeAndEffect: {
         title: "Mengapa Sumur Mengering dan Sawah Pecah-Pecah?",
         description:
-          "Kekeringan meteorologis terjadi ketika curah hujan berada jauh di bawah normal akibat anomali iklim seperti fenomena El Niño. Namun, kekeringan hidrologis diperparah oleh rusaknya daerah tangkapan air (catchment area), penyedotan air tanah secara berlebihan tanpa pengisian kembali, dan degradasi humus yang menurunkan kapasitas simpan air (water holding capacity).",
+           "Kekeringan terjadi saat hujan turun sangat sedikit dalam waktu lama, seperti saat El Niño. Keadaan menjadi lebih parah jika hutan rusak, air tanah diambil terlalu banyak, dan tanah tidak lagi mampu menyimpan air.",
         humanActivities: [
           "Eksploitasi air tanah dalam secara masif oleh industri tanpa izin konservasi.",
           "Pengurukan dan pengeringan rawa atau danau alami yang berfungsi sebagai reservoir penyimpan air.",
@@ -413,7 +413,7 @@ export const issuesData: Record<string, IssueContent> = {
   "kebakaran-hutan": {
     slug: "kebakaran-hutan",
     title: "Kebakaran Hutan & Lahan (Karhutla)",
-    subtitle: "Kerentanan Gambut, Titik Panas Hotspot, dan Penjagaan Kualitas Udara",
+     subtitle: "Lahan gambut, titik api, dan cara menjaga udara tetap bersih",
     tagline: "Gambut yang terbakar di bawah tanah melepaskan karbon ribuan tahun. Sekali menyala, sulit padam.",
     themeColor: "#dc2626",
     accentBg: "from-red-600/20 to-orange-700/10",
@@ -424,7 +424,7 @@ export const issuesData: Record<string, IssueContent> = {
       causeAndEffect: {
         title: "Mengapa Lahan Gambut Indonesia Begitu Mudah Membara?",
         description:
-          "Lahan gambut tropis adalah tumpukan bahan organik tumbuhan purba sedalam bermeter-meter yang terendam air. Ketika kanal buatan mengeringkan gambut untuk perkebunan, kubah gambut menjadi kering bagaikan spons berisi bahan bakar batu bara muda. Percikan api kecil dari puntung rokok atau pembukaan lahan dengan cara membakar (slash-and-burn) langsung memicu kebakaran bawah tanah (smoldering) yang menyebar tanpa terlihat di permukaan.",
+           "Lahan gambut adalah tanah basah yang terbentuk dari tumpukan tumbuhan selama waktu yang sangat lama. Jika gambut dikeringkan, percikan api kecil dapat membuat api menyebar diam-diam di bawah tanah.",
         humanActivities: [
           "Pembukaan lahan perkebunan dengan metode membakar karena biayanya paling murah.",
           "Pembuatan parit/kanal drainase ilegal yang mengeringkan air alami dari kubah gambut.",
@@ -432,7 +432,7 @@ export const issuesData: Record<string, IssueContent> = {
           "Perambahan kawasan konservasi hutan lindung untuk aktivitas tambang liar.",
         ],
         ecologicalProcess:
-          "Api gambut membakar di bawah tanah (sub-surface) tanpa oksigen terbuka, menghasilkan asap karbon monoksida pekat dan partikulat halus PM2.5 yang mematikan pernapasan.",
+           "Api gambut dapat menyala di bawah tanah dan menghasilkan asap tebal yang berbahaya bagi pernapasan.",
       },
       impact: {
         environmental: [
@@ -466,7 +466,7 @@ export const issuesData: Record<string, IssueContent> = {
           type: "penyelamatan",
           title: "Gunakan Masker N95 / KF94 Saat ISPU Memburuk",
           description:
-            "Partikel kabut asap karhutla berukuran PM2.5 yang sangat halus. Masker kain biasa tidak mampu menyaringnya, gunakan masker berstandar N95.",
+            "Debu sangat kecil dari kabut asap dapat masuk ke paru-paru. Masker kain biasa kurang melindungi, jadi gunakan masker N95 jika tersedia.",
           iconName: "Smile",
         },
         {
@@ -481,7 +481,7 @@ export const issuesData: Record<string, IssueContent> = {
         techName: "Satelit Penginderaan Jauh SNPP/VIIRS Hotspot & Drone Pemadam",
         category: "Satelit & Penginderaan Jauh",
         description:
-          "Sensor radiometer spektral satelit mengidentifikasi anomali panas permukaan tanah (titik api) beresolusi 375 meter setiap 12 jam untuk memandu tim darat Manggala Agni.",
+          "Sensor panas di satelit membantu menemukan titik api dari atas, sehingga petugas di darat dapat segera memeriksanya.",
         factHighlight:
           "Data titik panas satelit kini dapat diakses langsung oleh masyarakat via aplikasi Sipongi KLHK dan PetaBencana!",
       },
@@ -521,7 +521,7 @@ export const issuesData: Record<string, IssueContent> = {
           "Teknologi satelit seperti MODIS dan VIIRS membantu penanganan kebakaran hutan dengan cara...",
         options: [
           "Menyemprotkan air langsung dari orbit antariksa",
-          "Mendeteksi anomali suhu panas permukaan (hotspot titik api) secara real-time dari luar angkasa",
+          "Menemukan titik api dari luar angkasa dengan melihat panas di permukaan bumi",
           "Menurunkan hujan salju buatan",
           "Mematikan sinyal internet di sekitar hutan",
         ],

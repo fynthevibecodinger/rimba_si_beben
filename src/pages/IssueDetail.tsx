@@ -103,7 +103,7 @@ export default function IssueDetail() {
             <div className="lg:col-span-4 flex justify-center">
               <RimbaMascot
                 mood="scan"
-                speech={`Mari pelajari cara kerja ${issue.title} dan teknologi mitigasinya!`}
+                 speech={`Yuk pelajari ${issue.title} dan cara menjaga diri serta alam!`}
                 size="lg"
               />
             </div>
@@ -237,7 +237,7 @@ export default function IssueDetail() {
               </div>
 
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-600">
-                <strong>Catatan Kerentanan:</strong> {issue.sections.impact.vulnerabilityNote}
+                 <strong>Siapa yang Paling Berisiko?</strong> {issue.sections.impact.vulnerabilityNote}
               </div>
             </div>
           )}
@@ -301,7 +301,7 @@ export default function IssueDetail() {
                   Tahukah Kamu?
                 </span>
                 <span className="text-xs text-emerald-300 font-semibold">
-                  Teknologi Hijau Nusantara: {issue.sections.greenTechTrivia.category}
+                   Alat Pintar untuk Menjaga Alam: {issue.sections.greenTechTrivia.category}
                 </span>
               </div>
               <h4 className="text-lg sm:text-xl font-bold font-['Fredoka']">

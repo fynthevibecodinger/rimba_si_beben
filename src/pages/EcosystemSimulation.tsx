@@ -31,7 +31,7 @@ const SCENARIO_ACTIONS: Record<SimulationScenario, ActionConfig[]> = {
       label: "Halaman 100% Ditutup Semen/Beton",
       description: "Menghilangkan seluruh ruang tanah terbuka tempat peresapan air hujan alami.",
       isPositive: false,
-      impactNote: "Infiltrasi turun drastis, koefisien run-off naik hingga 80%.",
+       impactNote: "Air lebih sulit masuk ke tanah, sehingga banyak air mengalir di permukaan.",
     },
     {
       id: "sampahSungai",
@@ -49,8 +49,8 @@ const SCENARIO_ACTIONS: Record<SimulationScenario, ActionConfig[]> = {
     },
     {
       id: "tanamPohon",
-      label: "Penghijauan Sempadan Sungai (Riparian)",
-      description: "Menanam pohon pelindung di bantaran kali untuk memperkuat tanggul alami.",
+       label: "Menanam Pohon di Tepi Sungai",
+       description: "Menanam pohon di tepi sungai untuk memperkuat tanah dan menjaga air tetap mengalir.",
       isPositive: true,
       impactNote: "Menahan kecepatan air bah dan mencegah erosi tanggul tanah.",
     },
@@ -111,8 +111,8 @@ const SCENARIO_ACTIONS: Record<SimulationScenario, ActionConfig[]> = {
     },
     {
       id: "irigasiTetes",
-      label: "Penerapan Irigasi Tetes Presisi (IoT)",
-      description: "Menyalurkan air langsung ke akar tanaman via pipa tetes otomatis bertenaga surya.",
+       label: "Penyiraman Tetes Hemat Air",
+       description: "Menyalurkan air pelan-pelan langsung ke akar tanaman agar tidak boros.",
       isPositive: true,
       impactNote: "Efisiensi penggunaan air mencapai 90%, hemat cadangan air tawar.",
     },
@@ -131,19 +131,19 @@ const SCENARIO_ACTIONS: Record<SimulationScenario, ActionConfig[]> = {
       label: "Pembukaan Lahan dengan Membakar (Slash & Burn)",
       description: "Memicu titik api terbuka untuk membersihkan semak belukar secara cepat.",
       isPositive: false,
-      impactNote: "Bara api merambat ke bawah permukaan tanah (smoldering) tanpa terlihat.",
+       impactNote: "Bara api bisa merambat diam-diam di bawah tanah.",
     },
     {
       id: "sekatGambut",
-      label: "Pembangunan Sekat Kanal (Rewetting Gambut)",
-      description: "Membendung kanal buatan agar muka air gambut tetap basah minimal 40 cm.",
+       label: "Membasahi Kembali Lahan Gambut",
+       description: "Menahan air di parit agar lahan gambut tetap basah dan tidak mudah terbakar.",
       isPositive: true,
       impactNote: "Mencegah gambut kering sehingga api tidak dapat menyala di bawah tanah.",
     },
     {
       id: "patroliDrone",
-      label: "Sensor EWS Termal & Patroli Udara",
-      description: "Pendeteksian dini hotspot titik panas via radiometer termal dan drone.",
+       label: "Sensor Panas & Patroli Udara",
+       description: "Mencari titik panas lebih awal dengan sensor dan pesawat tanpa awak.",
       isPositive: true,
       impactNote: "Memadamkan percikan api sebelum membesar menjadi bencana asap lintas batas.",
     },
@@ -166,28 +166,28 @@ export default function EcosystemSimulation() {
   > = {
     banjir: {
       title: "Banjir: Daerah Aliran Sungai & Perkotaan",
-      subtitle: "Uji bagaimana penutupan beton dan sampah mempengaruhi tinggi genangan air.",
+      subtitle: "Lihat bagaimana beton dan sampah dapat membuat air lebih cepat menggenang.",
       icon: Waves,
       weatherLabel: "Curah Hujan Ekstrem",
       weatherUnit: "mm / hari",
     },
     longsor: {
       title: "Tanah Longsor: Stabilitas Lereng Bukit",
-      subtitle: "Pelajari gaya geser lereng saat perakaran pohon ditebang versus ditanami Vetiver.",
+      subtitle: "Lihat perbedaan lereng yang ditanami pohon dan lereng yang gundul saat hujan.",
       icon: Mountain,
       weatherLabel: "Intensitas Hujan Akumulatif",
       weatherUnit: "% kejenuhan",
     },
     kekeringan: {
       title: "Kekeringan: Desa & Lahan Pertanian",
-      subtitle: "Amati bagaimana pemanenan air dan irigasi tetes menjaga panen saat kemarau ekstrem.",
+      subtitle: "Lihat bagaimana menampung air dan menyiram dengan hemat membantu tanaman saat kemarau.",
       icon: SunMedium,
       weatherLabel: "Indeks Suhu & Kemarau Panas",
       weatherUnit: "°C / radiasi",
     },
     karhutla: {
       title: "Karhutla: Ekosistem Hutan Rawa Gambut",
-      subtitle: "Buktikan peran penting sekat kanal untuk menjaga muka air tanah gambut tetap basah.",
+      subtitle: "Lihat bagaimana menjaga lahan gambut tetap basah dapat mencegah kebakaran.",
       icon: Flame,
       weatherLabel: "Kekeringan Musim & Angin Kering",
       weatherUnit: "% kekeringan",
@@ -316,14 +316,13 @@ export default function EcosystemSimulation() {
             <div className="space-y-3 max-w-2xl">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                Laboratorium Virtual Interaktif
+                 Ruang Bermain dan Belajar
               </span>
               <h1 className="text-3xl sm:text-5xl font-black font-['Fredoka']">
-                Simulasi Keseimbangan Ekosistem
+                 Coba dan Lihat Dampaknya!
               </h1>
               <p className="text-emerald-100/80 text-sm sm:text-base leading-relaxed">
-                Uji sebab-akibat fenomena hidrometeorologi secara langsung. Kendalikan intensitas cuaca,
-                terapkan teknologi hijau, dan perhatikan respon real-time dari alam di kanvas visual.
+                 Atur cuaca, pilih tindakan baik atau buruk, lalu lihat apa yang terjadi pada alam di gambar ini.
               </p>
             </div>
 
@@ -333,7 +332,7 @@ export default function EcosystemSimulation() {
                 className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs sm:text-sm font-bold inline-flex items-center gap-2 transition-colors"
               >
                 <RotateCcw className="w-4 h-4" />
-                Reset Parameter
+                 Mulai Lagi
               </button>
             </div>
           </div>
@@ -361,7 +360,7 @@ export default function EcosystemSimulation() {
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs uppercase tracking-wider block opacity-75">Skenario</span>
+                    <span className="text-xs uppercase tracking-wider block opacity-75">Pilih cerita</span>
                     <strong className="text-sm capitalize">{scen}</strong>
                   </div>
                 </button>
@@ -386,7 +385,7 @@ export default function EcosystemSimulation() {
               ecosystemHealth={ecosystemHealth}
             />
 
-            {/* 3 Real-time Computed Metrics */}
+             {/* 3 Hasil yang Terlihat Sekarang */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Metric 1: Daya Serap Air */}
               <div className="rounded-2xl bg-white border border-slate-200 p-4 shadow-sm">
@@ -400,7 +399,7 @@ export default function EcosystemSimulation() {
                     style={{ width: `${waterAbsorption}%` }}
                   />
                 </div>
-                <span className="text-[11px] text-slate-400 mt-1 block">Infiltrasi pori tanah</span>
+                 <span className="text-[11px] text-slate-400 mt-1 block">Air yang bisa masuk ke tanah</span>
               </div>
 
               {/* Metric 2: Kekuatan Tanah/Akar */}

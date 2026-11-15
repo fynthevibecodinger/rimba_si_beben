@@ -125,7 +125,7 @@ export default function Navbar() {
                 Rimba
               </span>
               <span className="text-[9px] sm:text-[10px] font-extrabold text-emerald-800 tracking-widest uppercase mt-0.5">
-                Siaga Bencana
+                 Peduli Lingkungan
               </span>
             </div>
           </Link>
@@ -154,7 +154,7 @@ export default function Navbar() {
                     : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
                 }`}
               >
-                <span>Materi 4 Bencana</span>
+                 <span>Materi &amp; Aksi</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 transition-transform duration-200 ${
                     issuesDropdownOpen ? "rotate-180" : ""

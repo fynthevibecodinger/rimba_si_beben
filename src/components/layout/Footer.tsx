@@ -82,13 +82,13 @@ export default function Footer() {
               <div>
                 <span className="font-extrabold text-2xl font-['Fredoka'] text-white">Rimba</span>
                 <span className="block text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-                  Edukasi Siaga Bencana Hidrometeorologi
+                   Edukasi Lingkungan &amp; Kesiapsiagaan
                 </span>
               </div>
             </div>
             <p className="text-sm text-emerald-200/80 leading-relaxed max-w-md">
-              Platform literasi sains dan mitigasi bencana interaktif berbasis web untuk generasi muda Indonesia. 
-              Mengintegrasikan kurikulum merdeka dengan simulasi fisika lingkungan dan teknologi hijau nyata.
+               Portal edukasi lingkungan interaktif untuk generasi muda Indonesia. Rimba menghubungkan konservasi alam,
+               pengelolaan sampah, penghijauan, dan kesiapsiagaan melalui simulasi serta aksi sederhana.
             </p>
             <div className="flex items-center gap-2 text-xs text-emerald-300 font-medium">
               <Shield className="w-4 h-4 text-emerald-400" />
@@ -99,7 +99,7 @@ export default function Footer() {
           {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="font-bold text-sm text-white uppercase tracking-wider font-mono">
-              4 Isu Bencana
+               Isu Lingkungan
             </h4>
             <ul className="space-y-2 text-sm text-emerald-200/80">
               <li>
@@ -128,18 +128,18 @@ export default function Footer() {
           {/* Feature Links */}
           <div className="space-y-3">
             <h4 className="font-bold text-sm text-white uppercase tracking-wider font-mono">
-              Fitur Utama
+               Jelajahi Rimba
             </h4>
             <ul className="space-y-2 text-sm text-emerald-200/80">
               <li>
                 <Link to="/simulasi" className="hover:text-white transition-colors flex items-center gap-1.5 font-bold text-emerald-300">
                   <Sparkles className="w-4 h-4 text-amber-400" />
-                  Laboratorium Simulasi
+                   Laboratorium Ekosistem
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="hover:text-white transition-colors">
-                  Mengenal Karakter Rimba
+                   Tentang Rimba
                 </Link>
               </li>
               <li>
