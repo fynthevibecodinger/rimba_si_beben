@@ -154,7 +154,7 @@ export default function Navbar() {
                     : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
                 }`}
               >
-                 <span>Materi &amp; Aksi</span>
+                 <span>Jelajah Alam</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 transition-transform duration-200 ${
                     issuesDropdownOpen ? "rotate-180" : ""
@@ -277,7 +277,7 @@ export default function Navbar() {
 
             <div className="pt-1 pb-1">
               <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">
-                Materi 4 Bencana
+                 Jelajah Alam dan Bencana
               </span>
               <div className="grid grid-cols-2 gap-2 mt-1.5">
                 {issuesList.map((item) => {
@@ -304,7 +304,7 @@ export default function Navbar() {
             >
               <span className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                Lab Simulasi Ekosistem
+                 Coba Simulasi Alam
               </span>
               <span className="text-[10px] uppercase bg-emerald-600 px-2 py-0.5 rounded-full font-black">
                 Interaktif

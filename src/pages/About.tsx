@@ -33,6 +33,9 @@ export default function About() {
              Media pembelajaran interaktif berbasis web yang menghubungkan konservasi alam, pengelolaan lingkungan,
              dan kesiapsiagaan bencana untuk pelajar Indonesia.
           </p>
+          <div className="flex flex-wrap justify-center gap-2 mt-6">
+            {['Belajar', 'Bermain', 'Beraksi'].map((word) => <span key={word} className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-xs font-bold">{word}</span>)}
+          </div>
         </div>
       </section>
 
@@ -218,7 +221,7 @@ export default function About() {
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block mb-1">Di Balik Rimba</span>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">Tim Pengembang</h3>
-            <p className="text-sm text-slate-600 mt-3">Rimba dikembangkan melalui kolaborasi lintas keahlian untuk membuat pembelajaran bencana terasa dekat dan bermakna.</p>
+            <p className="text-sm text-slate-600 mt-3">Rimba dibuat bersama untuk membantu anak-anak belajar, bermain, lalu ikut menjaga alam.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[

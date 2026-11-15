@@ -99,7 +99,7 @@ export default function Footer() {
           {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="font-bold text-sm text-white uppercase tracking-wider font-mono">
-               Isu Lingkungan
+               Jelajah Alam
             </h4>
             <ul className="space-y-2 text-sm text-emerald-200/80">
               <li>

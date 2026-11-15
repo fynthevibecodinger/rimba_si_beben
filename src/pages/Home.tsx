@@ -7,7 +7,7 @@ import EcoLandscape from "../components/hero/EcoLandscape";
 import { Link } from "../router";
 import { useGaspAnimation } from "../hooks/useGaspAnimation";
 import { issuesData } from "../data/issuesData";
-import { Sparkles, ArrowDown, BookOpen, Shield, Compass, Activity, Volume2, Leaf, Recycle, TreePine, Check, RotateCcw } from "lucide-react";
+import { Sparkles, ArrowDown, BookOpen, Shield, Compass, Activity, Volume2, Leaf, Recycle, TreePine, Check, RotateCcw, Camera } from "lucide-react";
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -24,31 +24,31 @@ export default function Home() {
   const speechList: { mood: RimbaMood; text: string }[] = [
     {
       mood: "wave",
-      text: "Coba laboratorium virtual simulasi ekosistem kami, seru banget lho!",
+      text: "Ayo coba permainan alam kami. Kamu bisa memilih aksi baik dan melihat hasilnya!",
     },
     {
       mood: "celebrate",
-      text: "Alam memberi tanda sebelum bahaya datang. Bersama teknologi hijau, kita bisa selamat!",
+      text: "Alam selalu memberi tanda. Kalau kita menjaganya, alam juga membantu menjaga kita!",
     },
     {
       mood: "scan",
-      text: "Sedang memindai curah hujan & titik panas satelit... Yuk periksa data pantauan di bawah!",
+      text: "Yuk lihat kabar terbaru tentang banjir, longsor, kekeringan, dan kebakaran hutan!",
     },
     {
       mood: "alert",
-      text: "Waspada tanda alam! Kenali retakan tanah dan tinggi muka air sebelum bahaya tiba.",
+      text: "Perhatikan tanda alam, seperti tanah retak atau air sungai yang naik terlalu cepat.",
     },
     {
       mood: "think",
-      text: "Tahukah kamu? Akar rumput Vetiver bisa menembus tanah hingga 4 meter mengunci lereng!",
+      text: "Tahukah kamu? Akar rumput akar wangi bisa membantu menahan tanah di lereng bukit!",
     },
     {
       mood: "celebrate",
-      text: "Lubang biopori di halaman sekolah bisa meningkatkan daya serap air hujan hingga 40%!",
+      text: "Lubang resapan di halaman sekolah membantu air hujan masuk ke tanah, bukan menggenang!",
     },
     {
       mood: "scan",
-      text: "Sekat kanal di lahan gambut menjaga air tetap tinggi agar api bawah tanah tidak menyala.",
+      text: "Lahan gambut yang tetap basah tidak mudah terbakar. Yuk ikut menjaganya!",
     },
   ];
 
@@ -63,8 +63,8 @@ export default function Home() {
     setMascotMood(speechList[nextIndex].mood);
   };
 
-  const scrollToIssues = () => {
-    const el = document.getElementById("daftar-materi");
+  const scrollToMission = () => {
+    const el = document.getElementById("misi-lingkungan");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
@@ -111,11 +111,11 @@ export default function Home() {
               {/* Tombol Aksi Utama Bersih */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
                 <button
-                  onClick={scrollToIssues}
+                   onClick={scrollToMission}
                   className="px-8 py-4 rounded-2xl bg-[#173a2d] hover:bg-[#1f4e3c] text-white font-extrabold text-base shadow-xl shadow-emerald-950/20 inline-flex items-center gap-3 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <BookOpen className="w-5 h-5 text-emerald-300" />
-                   <span>Mulai Jelajah Lingkungan</span>
+                    <span>Mulai Misi Lingkungan</span>
                   <ArrowDown className="w-4 h-4 text-emerald-400 animate-bounce" />
                 </button>
               </div>
@@ -132,7 +132,7 @@ export default function Home() {
                   title="Masuk ke Lab Simulasi Ekosistem"
                 >
                   <Compass className="w-4 h-4 text-emerald-700" />
-                  <span>Laboratorium Virtual Interaktif →</span>
+                   <span>Coba Simulasi Ekosistem →</span>
                 </Link>
                 <div className="flex items-center gap-2 bg-white/85 backdrop-blur-xs px-3.5 py-2 rounded-xl border border-white shadow-xs">
                   <Activity className="w-4 h-4 text-emerald-700" />
@@ -172,7 +172,7 @@ export default function Home() {
                   <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-emerald-700 font-bold">
                     <span className="inline-flex items-center gap-1">
                       <Volume2 className="w-3.5 h-3.5" />
-                      Tips Siaga Bencana
+                       Tips Peduli Alam
                     </span>
                     <span className="text-slate-400 font-normal group-hover:text-emerald-600 transition-colors">
                       Klik untuk ganti ↻
@@ -256,8 +256,32 @@ export default function Home() {
          </div>
        </section>
 
-       {/* 5. MISI AKSI NYATA */}
-       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        {/* 5. GALERI AKSI DAN ALAM */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-7">
+            <div>
+              <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider">Lihat dan Bayangkan</span>
+              <h2 className="text-2xl sm:text-3xl font-black text-[#173a2d] font-['Fredoka'] mt-2">Alam yang ingin kita jaga</h2>
+            </div>
+            <span className="inline-flex items-center gap-2 text-xs font-bold text-slate-500"><Camera className="w-4 h-4 text-emerald-700" /> Galeri aksi lingkungan</span>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { title: "Hutan Lestari", label: "Rumah bagi banyak hewan", emoji: "🌳", tone: "from-emerald-800 to-lime-600" },
+              { title: "Sungai Bersih", label: "Air untuk semua kehidupan", emoji: "🌊", tone: "from-sky-700 to-cyan-400" },
+              { title: "Sekolah Hijau", label: "Belajar sambil menanam", emoji: "🌱", tone: "from-teal-800 to-emerald-400" },
+              { title: "Wisata Bijak", label: "Datang, nikmati, jaga", emoji: "🏞️", tone: "from-amber-700 to-orange-400" },
+            ].map((item) => (
+              <div key={item.title} className={`min-h-44 rounded-3xl bg-gradient-to-br ${item.tone} p-5 text-white relative overflow-hidden shadow-lg group`}>
+                <div className="absolute -right-3 -bottom-5 text-7xl opacity-30 group-hover:scale-110 transition-transform">{item.emoji}</div>
+                <div className="relative z-10"><span className="text-3xl" role="img" aria-label={item.title}>{item.emoji}</span><h3 className="font-bold text-lg mt-4">{item.title}</h3><p className="text-xs text-white/80 mt-1">{item.label}</p></div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 6. MISI AKSI NYATA */}
+        <section id="misi-lingkungan" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 scroll-mt-24">
          <div className="rounded-3xl bg-[#173a2d] text-white p-8 md:p-12 shadow-xl relative overflow-hidden">
            <div className="absolute -right-20 -bottom-24 w-72 h-72 rounded-full bg-emerald-400/10 blur-3xl pointer-events-none" />
            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
