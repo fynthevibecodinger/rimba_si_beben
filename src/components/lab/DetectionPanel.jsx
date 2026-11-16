@@ -20,7 +20,7 @@ export default function DetectionPanel({
         <div>
           <span>TAHAP 1 · GREEN TECH</span>
           <h3>Jaringan Deteksi Dini</h3>
-          <p>Klik titik sensor untuk melihat data lapangan secara real-time.</p>
+          <p>Klik titik alat untuk melihat kabar terbaru dari lapangan.</p>
         </div>
         <div className="online-indicator">
           <i /> SISTEM ONLINE
@@ -100,7 +100,7 @@ export default function DetectionPanel({
             <div>
               <Radio />
               <span>
-                <strong>Sensor IoT</strong>
+                <strong>Alat Pintar</strong>
                 <small>Mengirim data</small>
               </span>
               <Check />

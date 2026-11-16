@@ -93,7 +93,7 @@ const risks = [
     subtitle: "Api kecil, dampak besar",
     hook: "Asapnya terlihat, tapi apinya bisa bersembunyi di bawah tanah. Bagaimana cara memadamkannya?",
     funFact: "Api di lahan gambut bisa membara di bawah tanah, jadi permukaan yang tampak aman belum tentu aman.",
-    stat: "3 menit deteksi hotspot",
+    stat: "3 menit menemukan titik api",
     color: "#D95D39",
     pale: "#FBE9E4",
     Icon: Flame,

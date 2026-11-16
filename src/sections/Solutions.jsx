@@ -17,7 +17,7 @@ export default function Solutions({ onPick }) {
           </h2>
         </div>
         <p>
-          Pilih satu bencana hidrometeorologi. Rimba akan mengajakmu menguji teknologi deteksi dan
+          Pilih satu jenis bencana yang berkaitan dengan cuaca. Rimba akan mengajakmu mencoba cara menjaga alam dan
           solusi berbasis alam yang tepat.
         </p>
       </div>

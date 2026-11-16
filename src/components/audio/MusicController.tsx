@@ -13,7 +13,11 @@ import {
   Radio,
 } from "lucide-react";
 
-export default function MusicController() {
+interface MusicControllerProps {
+  compact?: boolean;
+}
+
+export default function MusicController({ compact = false }: MusicControllerProps) {
   const {
     isPlaying,
     currentTrackId,
@@ -50,12 +54,12 @@ export default function MusicController() {
          ========================================================================= */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`group px-3 py-1.5 rounded-full text-xs font-extrabold inline-flex items-center gap-2 transition-all duration-200 cursor-pointer select-none border shadow-xs ${
+        className={`${compact ? "w-9 h-9 justify-center rounded-xl" : "px-3 py-1.5 rounded-full"} group text-xs font-extrabold inline-flex items-center gap-2 transition-all duration-200 cursor-pointer select-none border shadow-xs ${
           isPlaying
             ? "bg-emerald-900 text-emerald-100 border-emerald-400/50 shadow-emerald-950/20 ring-2 ring-emerald-400/30"
             : "bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border-emerald-300/60 hover:scale-105 active:scale-95"
         }`}
-        title="Buka pemutar musik & ambience alam untuk membaca"
+        title="Buka musik alam"
         aria-label="Musik & Ambience Rimba"
       >
         {/* Animated Equalizer or Headphone Icon */}
@@ -70,7 +74,7 @@ export default function MusicController() {
         )}
 
         {/* Track Label */}
-        <span className="flex items-center gap-1.5">
+        <span className={`${compact ? "hidden" : "flex"} items-center gap-1.5`}>
           <span className="text-sm">{currentTrack.icon}</span>
           <span className="hidden lg:inline max-w-[110px] truncate">
             {isPlaying ? currentTrack.title.split(" ")[0] + " " + (currentTrack.title.split(" ")[1] || "") : "Ambience"}
