@@ -46,7 +46,7 @@ const SCENARIO_ACTIONS: Record<ScenarioId, ActionConfig[]> = {
       description: "Air hujan kehilangan ruang tanah terbuka untuk meresap alami.",
       isPositive: false,
       impactBadge: "-25% Resapan",
-      impactNote: "Limpasan air permukaan meningkat 250%, memicu genangan jalanan.",
+      impactNote: "Air yang mengalir di atas tanah naik 250% dan membuat jalan tergenang.",
     },
     {
       id: "sampahSungai",
@@ -83,40 +83,40 @@ const SCENARIO_ACTIONS: Record<ScenarioId, ActionConfig[]> = {
     // 5 Solusi Hijau
     {
       id: "biopori",
-      label: "Membuat Lubang Resapan Biopori",
-      description: "Pipa silinder berlubang mempercepat peresapan air hujan ke akuifer tanah.",
+      label: "Membuat Lubang Biopori",
+      description: "Lubang kecil membantu air hujan masuk dan tersimpan di dalam tanah.",
       isPositive: true,
       impactBadge: "+25% Resapan",
-      impactNote: "Meningkatkan daya serap air tanah 35% dan mengisi akuifer.",
+      impactNote: "Membantu tanah menyerap 35% lebih banyak air dan mengisi cadangan air tanah.",
     },
     {
       id: "mangrove",
-      label: "Menanam Pohon Mangrove di Muara",
-      description: "Akar tunjang mangrove menahan gelombang pasang dan banjir rob.",
+      label: "Menanam Mangrove di Muara",
+      description: "Akar mangrove membantu menahan gelombang dan air laut yang naik.",
       isPositive: true,
       impactBadge: "+25% Tegakan",
       impactNote: "Mengikat tebing sungai dan menahan kecepatan arus air bah.",
     },
     {
       id: "sumurResapan",
-      label: "Membangun Sumur Resapan Warga",
-      description: "Menampung air hujan dari talang atap rumah langsung ke dalam tanah.",
+      label: "Membuat Sumur Resapan",
+      description: "Menampung air hujan agar masuk dan tersimpan di dalam tanah.",
       isPositive: true,
       impactBadge: "+20% Resapan",
       impactNote: "Mencegah air hujan terbuang percuma dan mengisi cadangan sumur.",
     },
     {
       id: "rainGarden",
-      label: "Membuat Taman Hujan (Rain Garden)",
-      description: "Cekungan tanaman hijau yang menyaring sekaligus menyerap limpasan air.",
+      label: "Membuat Taman Hujan",
+      description: "Taman kecil yang membantu menyaring dan menyerap air hujan.",
       isPositive: true,
       impactBadge: "+15% Kesehatan",
       impactNote: "Menyerap polutan limpasan air dan mempercantik tata kota.",
     },
     {
       id: "bersihSungai",
-      label: "Normalisasi & Bersihkan Sungai",
-      description: "Mengangkat sedimen lumpur dan sampah agar kapasitas sungai optimal.",
+      label: "Membersihkan Sungai",
+      description: "Mengangkat lumpur dan sampah agar sungai bisa menampung lebih banyak air.",
       isPositive: true,
       impactBadge: "+20% Aliran",
       impactNote: "Memulihkan daya tampung sungai dan memperlancar arus menuju laut.",
@@ -127,32 +127,32 @@ const SCENARIO_ACTIONS: Record<ScenarioId, ActionConfig[]> = {
     // 5 Aksi Risiko
     {
       id: "tebangLiar",
-      label: "Menebang Pohon di Lereng (Deforestasi)",
-      description: "Hilangnya akar membuat lapisan tanah atas mudah terlepas saat hujan.",
+      label: "Menebang Pohon di Lereng",
+      description: "Tanpa akar pohon, tanah di lereng lebih mudah runtuh saat hujan.",
       isPositive: false,
       impactBadge: "-30% Kekuatan",
       impactNote: "Lereng kehilangan paku bumi biologis dan memicu retakan tanah.",
     },
     {
       id: "potongTebing",
-      label: "Memotong Lereng Tanpa Dinding Penahan",
-      description: "Membuat sudut kemiringan tebing terlalu curam dan labil.",
+      label: "Memotong Lereng Tanpa Penahan",
+      description: "Lereng menjadi terlalu curam dan mudah runtuh.",
       isPositive: false,
       impactBadge: "-25% Kekuatan",
       impactNote: "Sudut bidang gelincir lereng menjadi terjal dan rawan runtuh.",
     },
     {
       id: "rumahKakiBukit",
-      label: "Membangun Rumah Tepat di Bawah Tebing",
-      description: "Berisiko tinggi tertimpa material luncuran tanah saat cuaca ekstrem.",
+      label: "Membangun Rumah di Bawah Tebing",
+      description: "Rumah bisa tertimpa tanah dan batu saat hujan deras.",
       isPositive: false,
       impactBadge: "-20% Keamanan",
       impactNote: "Pemukiman berada tepat di zona luncuran berbahaya (run-out zone).",
     },
     {
       id: "limbahLereng",
-      label: "Mengalirkan Air Limbah ke Permukaan Tebing",
-      description: "Membuat tanah terus-menerus basah, berat, dan licin.",
+      label: "Membuang Air Limbah ke Tebing",
+      description: "Tanah menjadi terus basah, berat, dan mudah longsor.",
       isPositive: false,
       impactBadge: "-15% Kekuatan",
       impactNote: "Tanah menjadi cepat jenuh air dan meningkatkan beban lereng.",
@@ -168,8 +168,8 @@ const SCENARIO_ACTIONS: Record<ScenarioId, ActionConfig[]> = {
     // 5 Solusi Hijau
     {
       id: "tanamPohon",
-      label: "Menanam Pohon Vetiver & Bambu",
-      description: "Akar serabut dalam menjalar mengikat tanah hingga lapisan batuan dasar.",
+      label: "Menanam Akar Wangi dan Bambu",
+      description: "Akar yang kuat membantu mengikat tanah agar tidak mudah longsor.",
       isPositive: true,
       impactBadge: "+30% Kekuatan",
       impactNote: "Berfungsi sebagai paku bumi alami berdaya cengkeram kuat.",
@@ -555,8 +555,8 @@ export default function EcosystemSimulation() {
     { title: string; subtitle: string; icon: any; weatherLabel: string; weatherUnit: string; has3D: boolean }
   > = {
     banjir: {
-      title: "Diorama 3D Banjir: Sungai, Pemukiman & Akuifer",
-      subtitle: "Uji bagaimana resapan biopori, sampah sungai, dan pohon mangrove mempengaruhi debit air dan akuifer tanah.",
+      title: "Diorama 3D Banjir: Sungai, Rumah, dan Cadangan Air Tanah",
+      subtitle: "Lihat bagaimana biopori, sampah sungai, dan pohon mangrove memengaruhi aliran air dan simpanan air di tanah.",
       icon: Waves,
       weatherLabel: "Curah Hujan Ekstrem",
       weatherUnit: "mm / hari",
@@ -566,8 +566,8 @@ export default function EcosystemSimulation() {
       title: "Diorama 3D Tanah Longsor: Lereng Curam & Geologi",
       subtitle: "Uji bagaimana terasering berundak, penebangan pohon lereng, dan jaring akar paku bumi menahan massa tanah saat hujan deras.",
       icon: Mountain,
-      weatherLabel: "Curah Hujan & Kejenuhan Lereng",
-      weatherUnit: "% kejenuhan",
+      weatherLabel: "Hujan & Kebasahan Lereng",
+      weatherUnit: "% basah",
       has3D: true,
     },
     kekeringan: {
@@ -836,7 +836,7 @@ export default function EcosystemSimulation() {
       }
       return {
         mascotMood: "alert",
-        mascotSpeech: "Peringatan bahaya! Kondisi alam sedang kritis! Segera terapkan aksi konservasi hijau di panel sebelah kanan!",
+        mascotSpeech: "Peringatan bahaya! Alam sedang dalam kondisi buruk. Coba pilih cara menjaga alam di sebelah kanan!",
       };
     }
 
@@ -950,11 +950,11 @@ export default function EcosystemSimulation() {
                 Laboratorium Simulasi 3D Ekosistem
               </span>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Fredoka'] tracking-tight">
-                Diorama Interaktif Sains Bencana
+                 Diorama Belajar Bencana
               </h1>
               <p className="text-white/80 text-xs sm:text-sm md:text-base leading-relaxed">
-                Eksplorasi potongan balok lanskap 3D secara *real-time*. Uji bagaimana cuaca ekstrem,
-                kebiasaan manusia, dan solusi konservasi mempengaruhi aliran air, tanah, dan akuifer bumi.
+                Jelajahi potongan lanskap 3D secara langsung. Lihat bagaimana cuaca ekstrem,
+                 kebiasaan manusia, dan cara menjaga alam memengaruhi air dan tanah.
               </p>
             </div>
 
@@ -1041,7 +1041,7 @@ export default function EcosystemSimulation() {
                 <div className="flex items-center gap-2">
                   <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black shadow-xs ${currentTheme.viewportBadgeBg}`}>
                     <span className={`w-2 h-2 rounded-full animate-ping ${currentTheme.viewportPingColor}`} />
-                    <span>Diorama 3D Interaktif</span>
+                     <span>Diorama 3D</span>
                   </span>
                   <span className="text-xs text-slate-600 font-bold hidden sm:inline">
                     {currentMeta.title.split(":")[0]}
@@ -1182,7 +1182,7 @@ export default function EcosystemSimulation() {
             </div>
 
             {/* =========================================================================
-                TIGA (3) GAUGES METRIK TELEMETRI REAL-TIME
+                TIGA (3) UKURAN DATA LANGSUNG
                ========================================================================= */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               {/* Metric 1: Daya Serap Air */}
@@ -1205,7 +1205,7 @@ export default function EcosystemSimulation() {
                   />
                 </div>
                 <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium">
-                  <span>Infiltrasi ke tanah</span>
+                  <span>Air masuk ke tanah</span>
                   <span
                     className={`font-bold ${
                       waterAbsorption > 65
@@ -1297,7 +1297,7 @@ export default function EcosystemSimulation() {
                   />
                 </div>
                 <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium">
-                  <span>Ketahanan ekologis</span>
+                    <span>Ketahanan alam</span>
                   <span
                     className={`font-bold ${
                       ecosystemHealth > 65
@@ -1388,7 +1388,7 @@ export default function EcosystemSimulation() {
                     <h4 className="font-bold text-sm text-slate-900 leading-none">
                       {currentMeta.weatherLabel}
                     </h4>
-                    <span className="text-[10px] text-slate-400">Parameter iklim real-time</span>
+                    <span className="text-[10px] text-slate-400">Ukuran cuaca langsung</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 px-3 py-1 rounded-xl bg-slate-900 text-white font-mono font-black text-xs shadow-xs">
@@ -1465,7 +1465,7 @@ export default function EcosystemSimulation() {
                       Aksi Manusia &amp; Rekayasa
                     </h4>
                     <p className="text-[11px] text-slate-400 mt-0.5">
-                      10 parameter interaktif (5 Solusi + 5 Risiko)
+                       10 pilihan (5 Cara Baik + 5 Risiko)
                     </p>
                   </div>
 
