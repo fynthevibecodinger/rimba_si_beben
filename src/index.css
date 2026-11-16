@@ -35,7 +35,6 @@ body {
   }
 
   .falling-leaf {
-    filter: drop-shadow(0 3px 5px rgb(27 67 50 / 22%));
     height: var(--leaf-size);
     left: var(--leaf-left);
     object-fit: contain;
@@ -43,6 +42,7 @@ body {
     position: absolute;
     top: -12vh;
     transform: translate3d(0, -12vh, 0) rotate(0deg);
+    will-change: transform, opacity;
     width: var(--leaf-size);
   }
 
