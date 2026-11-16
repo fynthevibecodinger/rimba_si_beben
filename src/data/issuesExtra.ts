@@ -166,7 +166,7 @@ export const issuesExtra: Record<string, IssueExtra> = {
     glossary: [
       { term: "Gambut", meaning: "Tanah dari sisa tumbuhan yang menumpuk lama dalam kondisi terendam air." },
       { term: "Hotspot", meaning: "Titik panas yang terdeteksi satelit dan bisa menjadi tanda kebakaran." },
-      { term: "PM2.5", meaning: "Partikel halus di udara yang bisa masuk jauh ke paru-paru." },
+      { term: "Debu asap", meaning: "Debu sangat kecil di udara yang bisa masuk ke paru-paru." },
       { term: "Sekat kanal", meaning: "Bendungan kecil di kanal untuk menahan air di lahan gambut." },
       { term: "ISPU", meaning: "Indeks Standar Pencemar Udara untuk menilai kualitas udara." },
     ],

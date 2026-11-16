@@ -107,7 +107,7 @@ export const issuesData: Record<string, IssueContent> = {
           "Membuka hutan di wilayah hulu sehingga tidak ada lagi akar yang menahan dan menyimpan air.",
         ],
         ecologicalProcess:
-          "Siklus infiltrasi terputus: air hujan tidak lagi mengisi tanah, tetapi menumpuk di permukaan dan melampaui daya tampung sungai.",
+           "Air hujan tidak lagi masuk ke tanah. Air pun menumpuk di permukaan dan membuat sungai cepat penuh.",
       },
       impact: {
         environmental: [
@@ -153,7 +153,7 @@ export const issuesData: Record<string, IssueContent> = {
         },
       ],
       greenTechTrivia: {
-        techName: "Sensor Ultrasonik IoT untuk Tinggi Muka Air",
+         techName: "Alat Pengukur Tinggi Air",
         category: "IoT Sensor",
         description:
           "Sensor bertenaga surya di jembatan atau pintu air mengukur tinggi muka air dan mengirim datanya secara nirkabel ke pusat pemantauan secara berkala.",
@@ -645,7 +645,7 @@ export const issuesData: Record<string, IssueContent> = {
           "Merambah kawasan hutan lindung dan konservasi.",
         ],
         ecologicalProcess:
-          "Api gambut membara di bawah permukaan (smoldering) dan menghasilkan asap pekat berisi gas berbahaya serta partikel halus PM2.5.",
+          "Api gambut bisa menyala diam-diam di bawah tanah dan menghasilkan asap tebal yang berbahaya.",
       },
       impact: {
         environmental: [
@@ -672,14 +672,14 @@ export const issuesData: Record<string, IssueContent> = {
           type: "pencegahan",
           title: "Dukung Pembasahan Kembali Gambut",
           description:
-            "Pelajari dan dukung program sekat kanal serta rewetting agar gambut tetap basah dan tidak mudah terbakar.",
+            "Pelajari dan dukung cara menjaga lahan gambut tetap basah agar tidak mudah terbakar.",
           iconName: "Layers",
         },
         {
           type: "penyelamatan",
           title: "Pakai Masker N95 atau KF94 Saat Udara Buruk",
           description:
-            "Partikel PM2.5 sangat halus. Masker kain biasa tidak cukup, pilih N95 atau KF94 dan pastikan terpasang rapat di wajah.",
+            "Debu asap sangat kecil. Masker N95 atau KF94 lebih baik untuk melindungi napas jika kabut asap tebal.",
           iconName: "HeartPulse",
         },
         {

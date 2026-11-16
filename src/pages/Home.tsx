@@ -79,7 +79,7 @@ export default function Home() {
   return (
     <div ref={rootRef} className="w-full">
       {/* 1. HERO SECTION DENGAN BACKGROUND INTERAKTIF & TATA LETAK LAPANG */}
-      <section className="eco-hero relative overflow-hidden bg-gradient-to-b from-[#dff4ec] via-[#e9f5e9] to-[#f7f5ee] min-h-[620px] lg:min-h-[680px] pt-10 pb-14 sm:pt-14 sm:pb-16 lg:pt-16 lg:pb-20 border-b border-emerald-900/10 flex flex-col justify-center">
+       <section data-reveal className="eco-hero relative overflow-hidden bg-gradient-to-b from-[#dff4ec] via-[#e9f5e9] to-[#f7f5ee] min-h-[620px] lg:min-h-[680px] pt-10 pb-14 sm:pt-14 sm:pb-16 lg:pt-16 lg:pb-20 border-b border-emerald-900/10 flex flex-col justify-center">
         {/* Animated Eco Landscape (Pegunungan Parallax, Satelit Orbit, Awan, Kincir Angin, Rumah, Sungai) */}
         <EcoLandscape />
 
@@ -208,7 +208,7 @@ export default function Home() {
       </div>
 
        {/* 3. PORTAL 4 KARTU ISU BENCANA */}
-      <section id="daftar-materi" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-24">
+       <section data-reveal id="daftar-materi" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-24">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold uppercase tracking-wider mb-3">
              Jelajah Isu Lingkungan
@@ -231,7 +231,7 @@ export default function Home() {
        </section>
 
        {/* 4. KAMPANYE AKSI LINGKUNGAN */}
-       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+       <section data-reveal className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
          <div className="rounded-3xl bg-[#e8f5ed] border border-emerald-200/80 p-8 md:p-12 relative overflow-hidden">
            <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-emerald-300/20 blur-2xl pointer-events-none" />
            <div className="relative z-10">
@@ -281,7 +281,7 @@ export default function Home() {
         </section>
 
         {/* 6. MISI AKSI NYATA */}
-        <section id="misi-lingkungan" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 scroll-mt-24">
+        <section data-reveal id="misi-lingkungan" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 scroll-mt-24">
          <div className="rounded-3xl bg-[#173a2d] text-white p-8 md:p-12 shadow-xl relative overflow-hidden">
            <div className="absolute -right-20 -bottom-24 w-72 h-72 rounded-full bg-emerald-400/10 blur-3xl pointer-events-none" />
            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
@@ -310,7 +310,7 @@ export default function Home() {
        </section>
 
         {/* 6. BANNER FITUR SIMULASI EKOSISTEM */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+       <section data-reveal className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="rounded-3xl bg-gradient-to-r from-[#173a2d] via-[#1b4332] to-[#2d6a4f] text-white p-8 md:p-14 shadow-2xl relative overflow-hidden">
           {/* Background decorative glows */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-400/10 rounded-full blur-2xl pointer-events-none" />

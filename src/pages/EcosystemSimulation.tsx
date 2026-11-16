@@ -360,7 +360,7 @@ export default function EcosystemSimulation() {
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs uppercase tracking-wider block opacity-75">Pilih cerita</span>
+                 <span className="text-xs uppercase tracking-wider block opacity-75">Pilih cerita</span>
                     <strong className="text-sm capitalize">{scen}</strong>
                   </div>
                 </button>

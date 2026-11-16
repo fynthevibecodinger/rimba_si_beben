@@ -136,7 +136,7 @@ export default function IssueDetail() {
               }`}
             >
               <AlertTriangle className="w-4 h-4 text-amber-600" />
-              <span>Sebab-Akibat</span>
+              <span>Apa yang Terjadi?</span>
             </button>
 
             <button
@@ -148,7 +148,7 @@ export default function IssueDetail() {
               }`}
             >
               <ShieldAlert className="w-4 h-4 text-rose-600" />
-              <span>Dampak Bencana</span>
+              <span>Dampaknya</span>
             </button>
 
             <button
@@ -160,7 +160,7 @@ export default function IssueDetail() {
               }`}
             >
               <CheckCircle className="w-4 h-4 text-emerald-600" />
-              <span>Aksi Nyata Pelajar</span>
+              <span>Yang Bisa Kita Lakukan</span>
             </button>
           </div>
 
@@ -179,7 +179,7 @@ export default function IssueDetail() {
               {/* Human Activities List */}
               <div className="rounded-2xl bg-amber-50/70 border border-amber-200/70 p-6 space-y-3">
                 <span className="text-xs font-bold text-amber-800 uppercase tracking-wider block">
-                  Aktivitas Manusia yang Memperparah Risiko:
+                   Kebiasaan yang Bisa Membuat Masalah Makin Besar:
                 </span>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {issue.sections.causeAndEffect.humanActivities.map((act, i) => (
@@ -198,7 +198,7 @@ export default function IssueDetail() {
                 <Lightbulb className="w-6 h-6 text-emerald-700 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-xs font-bold text-emerald-800 uppercase tracking-widest block mb-1">
-                    Prinsip Keseimbangan Ekosistem:
+                     Bagaimana Alam Bekerja:
                   </strong>
                   <p className="text-xs sm:text-sm text-emerald-950 leading-relaxed">
                     {issue.sections.causeAndEffect.ecologicalProcess}
@@ -208,18 +208,18 @@ export default function IssueDetail() {
             </div>
           )}
 
-          {/* Tab 2: Dampak Bencana */}
+          {/* Tab 2: Dampak */}
           {activeTab === "dampak" && (
             <div className="space-y-6 animate-in fade-in duration-200">
               <h3 className="text-xl sm:text-2xl font-black text-slate-900 font-['Fredoka']">
-                Dampak Nyata terhadap Lingkungan &amp; Kehidupan
+                 Apa yang Terjadi pada Alam dan Kita?
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Environmental Impacts */}
                 <div className="p-6 rounded-2xl bg-emerald-50/80 border border-emerald-200 space-y-3">
                   <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block">
-                    Dampak Ekologis &amp; Lingkungan Hidup
+                     Dampak bagi Alam
                   </span>
                   <ul className="space-y-2">
                     {issue.sections.impact.environmental.map((item, idx) => (
@@ -234,7 +234,7 @@ export default function IssueDetail() {
                 {/* Socio-economic Impacts */}
                 <div className="p-6 rounded-2xl bg-rose-50/80 border border-rose-200 space-y-3">
                   <span className="text-xs font-bold text-rose-800 uppercase tracking-wider block">
-                    Dampak Sosial &amp; Aktivitas Pelajar
+                     Dampak bagi Kehidupan Kita
                   </span>
                   <ul className="space-y-2">
                     {issue.sections.impact.socialEconomic.map((item, idx) => (
@@ -253,15 +253,15 @@ export default function IssueDetail() {
             </div>
           )}
 
-          {/* Tab 3: Aksi Nyata Pelajar */}
+          {/* Tab 3: Aksi */}
           {activeTab === "aksi" && (
             <div className="space-y-6 animate-in fade-in duration-200">
               <div>
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900 font-['Fredoka']">
-                  Langkah Konkret Kesiapsiagaan Pelajar
+                   Langkah yang Bisa Kita Lakukan
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                  Bencana tidak dapat dihindari sepenuhnya, tetapi risikonya bisa kita minimalkan bersama.
+                   Kita mungkin tidak bisa menghentikan hujan atau kemarau, tetapi kita bisa membantu menjaga alam dan melindungi diri.
                 </p>
               </div>
 
@@ -285,7 +285,7 @@ export default function IssueDetail() {
                               : "bg-amber-200 text-amber-900"
                           }`}
                         >
-                          {isPencegahan ? "Langkah Pencegahan" : "Penyelamatan Diri"}
+                           {isPencegahan ? "Menjaga Alam" : "Menjaga Diri"}
                         </span>
                       </div>
                       <h4 className="font-bold text-sm sm:text-base text-slate-900 mb-1">
@@ -314,7 +314,7 @@ export default function IssueDetail() {
                   Tahukah Kamu?
                 </span>
                 <span className="text-xs text-emerald-300 font-semibold">
-                   Alat Pintar untuk Menjaga Alam: {issue.sections.greenTechTrivia.category}
+                    Alat Pintar untuk Menjaga Alam
                 </span>
               </div>
               <h4 className="text-lg sm:text-xl font-bold font-['Fredoka']">
