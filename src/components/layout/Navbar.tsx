@@ -4,9 +4,7 @@ import MusicController from "../audio/MusicController";
 import {
   Menu,
   X,
-  PhoneCall,
   Sparkles,
-  ChevronDown,
   Waves,
   Mountain,
   SunMedium,
@@ -148,10 +146,12 @@ export default function Navbar() {
             </Link>
 
             {/* Isu Bencana Dropdown Interaktif */}
-            <div className="relative">
+            <div
+              className="relative"
+              onMouseEnter={() => setIssuesDropdownOpen(true)}
+              onMouseLeave={() => setIssuesDropdownOpen(false)}
+            >
               <button
-                onClick={() => setIssuesDropdownOpen(!issuesDropdownOpen)}
-                onMouseEnter={() => setIssuesDropdownOpen(true)}
                 className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-1.5 transition-all duration-150 ${
                   isCurrent("/isu")
                     ? "bg-emerald-900 text-white shadow-sm"
@@ -159,16 +159,10 @@ export default function Navbar() {
                 }`}
               >
                  <span>Jelajah Alam</span>
-                <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    issuesDropdownOpen ? "rotate-180" : ""
-                  }`}
-                />
               </button>
 
               {issuesDropdownOpen && (
                 <div
-                  onMouseLeave={() => setIssuesDropdownOpen(false)}
                   className="absolute top-full left-0 mt-2 w-68 rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 shadow-2xl p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150 ring-1 ring-emerald-950/5"
                 >
                   <div className="text-[10px] font-black text-emerald-800 uppercase tracking-widest px-3 py-1.5 flex items-center justify-between">
@@ -220,31 +214,30 @@ export default function Navbar() {
                   : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
               }`}
             >
-              Tentang Rimba
+              Tentang
             </Link>
 
-            {/* Kontak Darurat */}
+            {/* Kontak */}
             <Link
               to="/contact"
-              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-1.5 transition-all duration-150 ${
+              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${
                 isCurrent("/contact")
-                  ? "bg-rose-600 text-white shadow-md shadow-rose-950/20"
-                  : "text-rose-800 bg-rose-50 hover:bg-rose-100 hover:scale-105 active:scale-95 border border-rose-200/60"
+                  ? "bg-emerald-900 text-white shadow-sm"
+                  : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
               }`}
             >
-              <PhoneCall className="w-3.5 h-3.5 text-rose-600" />
-              <span>Kontak Darurat</span>
+              <span>Kontak</span>
             </Link>
 
-            {/* Pemutar Musik & Ambience Membaca */}
             <div className="pl-1 border-l border-emerald-900/15">
-              <MusicController />
+              <MusicController compact />
             </div>
+
           </nav>
 
           {/* Mobile Actions */}
           <div className="flex md:hidden items-center gap-2">
-            <MusicController />
+            <MusicController compact />
             <Link
               to="/simulasi"
               className="px-3 py-1.5 rounded-full bg-emerald-800 text-white text-xs font-black inline-flex items-center gap-1 shadow-sm"
@@ -326,16 +319,15 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-2.5 rounded-2xl font-bold text-sm text-slate-800 hover:bg-emerald-50"
             >
-              Tentang Rimba & Karakter
+               Tentang
             </Link>
 
             <Link
               to="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-rose-50 text-rose-800 border border-rose-200/70 font-bold text-sm"
+              className="block px-4 py-2.5 rounded-2xl font-bold text-sm text-slate-800 hover:bg-emerald-50"
             >
-              <PhoneCall className="w-4 h-4 text-rose-600" />
-              Kontak Darurat (112, 113, 115, 119)
+              Kontak
             </Link>
           </div>
         )}

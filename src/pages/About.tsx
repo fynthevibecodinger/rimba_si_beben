@@ -12,9 +12,17 @@ import {
   Lightbulb,
   Leaf,
   BookOpen,
-  Link2,
-  GitBranch,
 } from "lucide-react";
+
+function SocialLogo({ type, className = "w-4 h-4" }: { type: "instagram" | "linkedin" | "github"; className?: string }) {
+  if (type === "instagram") {
+    return <svg viewBox="0 0 24 24" className={`${className} fill-none stroke-current`} aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" strokeWidth="2" /><circle cx="12" cy="12" r="4" strokeWidth="2" /><circle cx="17.5" cy="6.5" r="1" className="fill-current stroke-none" /></svg>;
+  }
+  if (type === "linkedin") {
+    return <svg viewBox="0 0 24 24" className={`${className} fill-current`} aria-hidden="true"><path d="M5.1 3.4A2.1 2.1 0 1 1 5 7.6a2.1 2.1 0 0 1 .1-4.2ZM3.3 9h3.6v11.5H3.3V9Zm5.8 0h3.4v1.6h.1c.5-.9 1.7-2 3.6-2 3.8 0 4.5 2.5 4.5 5.8v6.1h-3.6V15c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9v5.6H9.1V9Z" /></svg>;
+  }
+  return <svg viewBox="0 0 24 24" className={`${className} fill-current`} aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.5 21.8c.6.1.8-.3.8-.6v-2.2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1.9 1.8 2.8 1.3.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.3-5.1-5.6 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.1 1.1a10.5 10.5 0 0 1 5.7 0c2.2-1.4 3.1-1.1 3.1-1.1.6 1.6.2 2.8.1 3.1.7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.3-5.1 5.6.4.3.8 1 .8 2v3c0 .3.2.7.8.6A11.2 11.2 0 0 0 12 .8Z" /></svg>;
+}
 
 export default function About() {
   return (
@@ -253,9 +261,9 @@ export default function About() {
                   <div className="min-w-0"><h4 className="text-lg font-bold text-slate-900 font-['Fredoka'] leading-tight">{name}</h4><p className="text-xs text-emerald-700 font-semibold mt-1">{role}</p></div>
                 </div>
                 <div className="border-t border-slate-100 mt-5 pt-4 space-y-2 text-xs text-slate-600">
-                  <div className="flex items-center gap-2"><Link2 className="w-4 h-4 text-pink-600" /><span className="font-semibold w-16">Instagram</span><span className="truncate">{instagram}</span></div>
-                  <div className="flex items-center gap-2"><Link2 className="w-4 h-4 text-sky-700" /><span className="font-semibold w-16">LinkedIn</span><span className="truncate">{linkedin}</span></div>
-                  <div className="flex items-center gap-2"><GitBranch className="w-4 h-4 text-slate-800" /><span className="font-semibold w-16">GitHub</span><span className="truncate">{github}</span></div>
+                  <div className="flex items-center gap-2"><SocialLogo type="instagram" className="w-4 h-4 text-pink-600" /><span className="font-semibold w-16">Instagram</span><span className="truncate">{instagram}</span></div>
+                  <div className="flex items-center gap-2"><SocialLogo type="linkedin" className="w-4 h-4 text-sky-700" /><span className="font-semibold w-16">LinkedIn</span><span className="truncate">{linkedin}</span></div>
+                  <div className="flex items-center gap-2"><SocialLogo type="github" className="w-4 h-4 text-slate-800" /><span className="font-semibold w-16">GitHub</span><span className="truncate">{github}</span></div>
                 </div>
               </div>
             ))}
