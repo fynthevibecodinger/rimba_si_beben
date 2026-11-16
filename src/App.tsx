@@ -1,3 +1,4 @@
+import Gallery from "./pages/Gallery";
 import { RouterProvider, useRouter } from "./router";
 import { AmbientMusicProvider } from "./context/AmbientMusicContext";
 import Navbar from "./components/layout/Navbar";
@@ -28,6 +29,9 @@ function AppContent() {
     if (path === "/contact") {
       return <Contact />;
     }
+    if (path === "/galeri") {
+  return <Gallery />;
+}
     // Default fallback to Home
     return <Home />;
   };
