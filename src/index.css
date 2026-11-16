@@ -23,7 +23,7 @@
     background: var(--cream);
     color: var(--ink);
     font-family: "Plus Jakarta Sans", sans-serif;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   button,
@@ -2732,4 +2732,23 @@ h2 em {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Sleek thin scrollbar for 2-column studio layout */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.3);
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.5);
 }

@@ -17,6 +17,7 @@ import {
   CloudRain,
   Sun,
   Tag,
+  Sliders,
 } from "lucide-react";
 import { ScenarioId } from "../components/lab3d/types";
 
@@ -38,144 +39,395 @@ interface ActionConfig {
 
 const SCENARIO_ACTIONS: Record<ScenarioId, ActionConfig[]> = {
   banjir: [
+    // 5 Aksi Risiko
     {
       id: "betonPenuh",
       label: "Menutup Halaman dengan Beton",
-      description: "Air hujan tidak memiliki tanah terbuka untuk meresap secara alami.",
+      description: "Air hujan kehilangan ruang tanah terbuka untuk meresap alami.",
       isPositive: false,
-      impactBadge: "-35% Resapan",
-      impactNote: "Limpasan air permukaan meningkat 300%, jalanan cepat tergenang banjir.",
+      impactBadge: "-25% Resapan",
+      impactNote: "Limpasan air permukaan meningkat 250%, memicu genangan jalanan.",
     },
     {
       id: "sampahSungai",
       label: "Membuang Sampah ke Sungai",
-      description: "Tumpukan sampah plastik menyumbat palung sungai dan gorong-gorong.",
+      description: "Tumpukan sampah menyumbat gorong-gorong dan memperdangkal sungai.",
       isPositive: false,
       impactBadge: "-25% Aliran",
-      impactNote: "Aliran air tersendat parah dan langsung meluap ke badan jalan.",
+      impactNote: "Debit air tersendat parah dan meluap cepat ke pemukiman.",
     },
+    {
+      id: "tebangHulu",
+      label: "Menebang Pohon di Daerah Hulu",
+      description: "Air hujan dari dataran tinggi langsung meluncur deras ke kota.",
+      isPositive: false,
+      impactBadge: "-20% Resapan",
+      impactNote: "Kecepatan air bah meningkat tajam tanpa hambatan vegetasi.",
+    },
+    {
+      id: "bangunanBantaran",
+      label: "Mendirikan Bangunan di Bantaran Sungai",
+      description: "Menyempitkan lebar sungai sehingga air mudah meluap ke pemukiman.",
+      isPositive: false,
+      impactBadge: "-20% Kapasitas",
+      impactNote: "Kapasitas palung sungai menyempit 40%, memperparah banjir luapan.",
+    },
+    {
+      id: "tutupDrainase",
+      label: "Menutup Saluran Drainase Jalan",
+      description: "Air hujan menggenang di permukaan jalan tanpa jalur pembuangan.",
+      isPositive: false,
+      impactBadge: "-15% Aliran",
+      impactNote: "Air terperangkap di aspal dan merusak pondasi jalan.",
+    },
+    // 5 Solusi Hijau
     {
       id: "biopori",
       label: "Membuat Lubang Resapan Biopori",
-      description: "Pipa silinder mempercepat peresapan air langsung ke akuifer tanah.",
+      description: "Pipa silinder berlubang mempercepat peresapan air hujan ke akuifer tanah.",
       isPositive: true,
-      impactBadge: "+30% Resapan",
-      impactNote: "Meningkatkan daya serap air tanah hingga 40% dan mengisi air tanah.",
+      impactBadge: "+25% Resapan",
+      impactNote: "Meningkatkan daya serap air tanah 35% dan mengisi akuifer.",
     },
     {
-      id: "tanamPohon",
-      label: "Menanam Pohon Mangrove di Tepi Sungai",
-      description: "Akar tunjang mangrove mengikat tebing sungai dan menahan laju air bah.",
+      id: "mangrove",
+      label: "Menanam Pohon Mangrove di Muara",
+      description: "Akar tunjang mangrove menahan gelombang pasang dan banjir rob.",
       isPositive: true,
       impactBadge: "+25% Tegakan",
-      impactNote: "Menahan kecepatan arus air dan mencegah erosi tanggul tanah.",
+      impactNote: "Mengikat tebing sungai dan menahan kecepatan arus air bah.",
+    },
+    {
+      id: "sumurResapan",
+      label: "Membangun Sumur Resapan Warga",
+      description: "Menampung air hujan dari talang atap rumah langsung ke dalam tanah.",
+      isPositive: true,
+      impactBadge: "+20% Resapan",
+      impactNote: "Mencegah air hujan terbuang percuma dan mengisi cadangan sumur.",
+    },
+    {
+      id: "rainGarden",
+      label: "Membuat Taman Hujan (Rain Garden)",
+      description: "Cekungan tanaman hijau yang menyaring sekaligus menyerap limpasan air.",
+      isPositive: true,
+      impactBadge: "+15% Kesehatan",
+      impactNote: "Menyerap polutan limpasan air dan mempercantik tata kota.",
+    },
+    {
+      id: "bersihSungai",
+      label: "Normalisasi & Bersihkan Sungai",
+      description: "Mengangkat sedimen lumpur dan sampah agar kapasitas sungai optimal.",
+      isPositive: true,
+      impactBadge: "+20% Aliran",
+      impactNote: "Memulihkan daya tampung sungai dan memperlancar arus menuju laut.",
     },
   ],
 
   longsor: [
+    // 5 Aksi Risiko
     {
       id: "tebangLiar",
-      label: "Menebang Pohon di Lereng Curam",
-      description: "Menghilangkan perakaran pohon yang membantu mengikat massa tanah.",
+      label: "Menebang Pohon di Lereng (Deforestasi)",
+      description: "Hilangnya akar membuat lapisan tanah atas mudah terlepas saat hujan.",
       isPositive: false,
-      impactBadge: "-35% Kekuatan",
-      impactNote: "Hilangnya ikatan akar membuat massa tanah labil saat hujan deras.",
+      impactBadge: "-30% Kekuatan",
+      impactNote: "Lereng kehilangan paku bumi biologis dan memicu retakan tanah.",
     },
     {
       id: "potongTebing",
-      label: "Mengeruk Kaki Lereng Tanpa Penahan",
-      description: "Mengeruk dinding tebing secara vertikal tanpa dinding penahan.",
+      label: "Memotong Lereng Tanpa Dinding Penahan",
+      description: "Membuat sudut kemiringan tebing terlalu curam dan labil.",
       isPositive: false,
-      impactBadge: "-25% Stabilitas",
-      impactNote: "Gaya penahan lereng hilang, memicu bidang gelincir mendadak.",
+      impactBadge: "-25% Kekuatan",
+      impactNote: "Sudut bidang gelincir lereng menjadi terjal dan rawan runtuh.",
     },
     {
+      id: "rumahKakiBukit",
+      label: "Membangun Rumah Tepat di Bawah Tebing",
+      description: "Berisiko tinggi tertimpa material luncuran tanah saat cuaca ekstrem.",
+      isPositive: false,
+      impactBadge: "-20% Keamanan",
+      impactNote: "Pemukiman berada tepat di zona luncuran berbahaya (run-out zone).",
+    },
+    {
+      id: "limbahLereng",
+      label: "Mengalirkan Air Limbah ke Permukaan Tebing",
+      description: "Membuat tanah terus-menerus basah, berat, dan licin.",
+      isPositive: false,
+      impactBadge: "-15% Kekuatan",
+      impactNote: "Tanah menjadi cepat jenuh air dan meningkatkan beban lereng.",
+    },
+    {
+      id: "lahanMonokultur",
+      label: "Membuka Kebun Sayur Semusim di Lereng Curam",
+      description: "Akar tanaman semusim terlalu pendek untuk mengikat lapisan tanah dalam.",
+      isPositive: false,
+      impactBadge: "-20% Kekuatan",
+      impactNote: "Permukaan tanah terbuka mudah tergerus erosi saat hujan lebat.",
+    },
+    // 5 Solusi Hijau
+    {
       id: "tanamPohon",
-      label: "Menanam Pohon Berakar Dalam & Vetiver",
-      description: "Akar tunjang pohon menembus lapisan lempung hingga batuan dasar sebagai paku bumi alami.",
+      label: "Menanam Pohon Vetiver & Bambu",
+      description: "Akar serabut dalam menjalar mengikat tanah hingga lapisan batuan dasar.",
       isPositive: true,
-      impactBadge: "+35% Paku Bumi",
-      impactNote: "Berfungsi sebagai paku bumi biologis berdaya cengkeram tinggi.",
+      impactBadge: "+30% Kekuatan",
+      impactNote: "Berfungsi sebagai paku bumi alami berdaya cengkeram kuat.",
     },
     {
       id: "terasering",
-      label: "Membuat Terasering Berundak & Saluran Air",
-      description: "Lereng dibuat undakan bertingkat agar air mengalir perlahan dan tidak mengikis tanah.",
+      label: "Membuat Sistem Terasering (Sengkedan)",
+      description: "Membentuk lereng berundak untuk memperlambat kecepatan aliran air hujan.",
       isPositive: true,
-      impactBadge: "+25% Penahan",
-      impactNote: "Mengurangi kecepatan air limpasan dan membuang kejenuhan air lereng.",
+      impactBadge: "+25% Kekuatan",
+      impactNote: "Memecah energi kinetik air limpasan dan mengurangi erosi.",
+    },
+    {
+      id: "bronjong",
+      label: "Memasang Dinding Penahan (Bronjong Batu)",
+      description: "Struktur batu berkawat menahan tekanan tanah di kaki tebing curam.",
+      isPositive: true,
+      impactBadge: "+20% Kekuatan",
+      impactNote: "Menopang kaki lereng dan mencegah bidang gelincir mendadak.",
+    },
+    {
+      id: "drainaseLereng",
+      label: "Membuat Saluran Pembuangan Air Lereng",
+      description: "Mengarahkan aliran air hujan agar tidak mengumpul di retakan tanah.",
+      isPositive: true,
+      impactBadge: "+15% Resapan",
+      impactNote: "Membuang kelebihan air permukaan sebelum menjenuhkan lereng.",
+    },
+    {
+      id: "sensorLereng",
+      label: "Memasang Ekstensometer Peringatan Dini",
+      description: "Sensor mendeteksi pergeseran tanah milimeter dan membunyikan sirine warga.",
+      isPositive: true,
+      impactBadge: "+15% Keamanan",
+      impactNote: "Memberikan waktu evakuasi dini sebelum longsor besar terjadi.",
     },
   ],
 
   kekeringan: [
+    // 5 Aksi Risiko
     {
       id: "borosAir",
-      label: "Memompa Air Tanah Berlebihan (Boros Air)",
-      description: "Air tanah dipompa terus-menerus tanpa waktu resapan pengisian ulang.",
+      label: "Memboroskan Air Bersih Sehari-hari",
+      description: "Penggunaan air berlebihan mempercepat habisnya debit sumur desa.",
       isPositive: false,
-      impactBadge: "-35% Air Tanah",
-      impactNote: "Muka air tanah turun drastis, sumur dangkal warga mengering total.",
+      impactBadge: "-25% Cadangan",
+      impactNote: "Cadangan air bersih di tangki dan sumur menyusut drastis.",
     },
     {
-      id: "bakarJerami",
-      label: "Pembakaran Sisa Panen & Jerami",
-      description: "Membakar mulsa jerami sehingga mikroba mati dan tanah mengeras gersang.",
+      id: "tebangMataAir",
+      label: "Menebang Pohon di Sekitar Mata Air",
+      description: "Tanah kehilangan kemampuan menyimpan cadangan air tanah saat kemarau.",
       isPositive: false,
-      impactBadge: "-20% Kelembapan",
-      impactNote: "Tanah kehilangan bahan organik dan kemampuan menahan kelembapan.",
+      impactBadge: "-30% Resapan",
+      impactNote: "Sumber mata air alami mengering dan debit akuifer anjlok.",
     },
+    {
+      id: "sedotAirTanah",
+      label: "Menyedot Air Tanah Dalam Berlebihan",
+      description: "Menurunkan permukaan akuifer secara drastis dan memicu kekeringan.",
+      isPositive: false,
+      impactBadge: "-25% Cadangan",
+      impactNote: "Muka air tanah turun belasan meter dan sumur dangkal mati total.",
+    },
+    {
+      id: "cemarSungai",
+      label: "Mencemari Aliran Sungai dengan Limbah",
+      description: "Air sungai yang tersisa tidak layak pakai untuk warga maupun pertanian.",
+      isPositive: false,
+      impactBadge: "-20% Kesehatan",
+      impactNote: "Kualitas air memburuk dan mematikan mikroorganisme penyubur.",
+    },
+    {
+      id: "lahanTerbuka",
+      label: "Membiarkan Tanah Kebun Terbuka Tanpa Pelindung",
+      description: "Terik matahari menguapkan kelembapan tanah jauh lebih cepat.",
+      isPositive: false,
+      impactBadge: "-15% Kelembapan",
+      impactNote: "Permukaan tanah cepat merekah gersang dan tanaman layu.",
+    },
+    // 5 Solusi Hijau
     {
       id: "tandonHujan",
-      label: "Tandon Pemanen Air Hujan (Rainwater Tank)",
-      description: "Tangki penampung air hujan dari talang atap rumah untuk menyuplai air saat kemarau.",
+      label: "Memasang Tandon Pemanen Air Hujan",
+      description: "Menampung air saat musim hujan sebagai cadangan stok air kemarau.",
       isPositive: true,
-      impactBadge: "+30% Cadangan",
-      impactNote: "Menyediakan cadangan ratusan liter air tawar tanpa menguras air tanah.",
+      impactBadge: "+25% Cadangan",
+      impactNote: "Menyediakan ratusan liter air tawar mandiri tanpa boros sumur.",
     },
     {
       id: "irigasiTetes",
-      label: "Irigasi Tetes Hemat Air (Drip Irrigation)",
-      description: "Pipa mikro menyalurkan tetesan air langsung ke perakaran tanaman secara presisi.",
+      label: "Menggunakan Irigasi Tetes Pintar",
+      description: "Meneteskan air langsung ke akar tanaman sehingga hemat air hingga 50%.",
       isPositive: true,
-      impactBadge: "+30% Efisiensi",
-      impactNote: "Efisiensi penggunaan air mencapai 90%, tanaman tetap subur di musim kemarau.",
+      impactBadge: "+25% Efisiensi",
+      impactNote: "Efisiensi air hingga 90%, tanaman tetap subur di cuaca terik.",
+    },
+    {
+      id: "reboisasiHulu",
+      label: "Reboisasi Hutan Hulu & Area Mata Air",
+      description: "Memulihkan spons alami hutan untuk mengisi kembali akuifer air tanah.",
+      isPositive: true,
+      impactBadge: "+30% Resapan",
+      impactNote: "Mengembalikan resapan air tanah dan menjaga debit mata air.",
+    },
+    {
+      id: "embungDesa",
+      label: "Membangun Embung / Kolam Retensi Desa",
+      description: "Waduk mini penampung air permukaan untuk mengairi sawah saat kemarau.",
+      isPositive: true,
+      impactBadge: "+20% Cadangan",
+      impactNote: "Menjaga kelembapan mikro lingkungan dan pasokan irigasi warga.",
+    },
+    {
+      id: "mulsaOrganik",
+      label: "Menutup Tanah dengan Mulsa Daun Kering",
+      description: "Mengurangi penguapan air tanah akibat panas terik matahari.",
+      isPositive: true,
+      impactBadge: "+15% Kelembapan",
+      impactNote: "Mempertahankan kelembapan tanah dan melindungi akar tanaman.",
     },
   ],
 
   karhutla: [
+    // 5 Aksi Risiko
     {
       id: "baraApi",
-      label: "Membuka Lahan dengan Api & Puntung",
-      description: "Menyulut vegetasi kering yang dengan cepat merambat ke kubah gambut bawah tanah.",
+      label: "Meninggalkan Bara Api Unggun Menyala",
+      description: "Percikan api tertiup angin kering dan membakar serasah hutan.",
       isPositive: false,
-      impactBadge: "-35% Keamanan",
-      impactNote: "Bara api merambat diam-diam di bawah tanah gambut dan menghasilkan asap tebal.",
+      impactBadge: "-30% Keamanan",
+      impactNote: "Percikan api dengan cepat merambat ke semak belukar kering.",
+    },
+    {
+      id: "bakarLahan",
+      label: "Membuka Lahan dengan Cara Membakar",
+      description: "Api cepat merambat tak terkendali dan menghasilkan kabut asap pekat.",
+      isPositive: false,
+      impactBadge: "-35% Kesehatan",
+      impactNote: "Bara api menyulut kubah gambut tebal dan mengeluarkan asap racun.",
     },
     {
       id: "kanalKering",
-      label: "Membuat Parit Drainase Tanpa Sekat",
-      description: "Air keluar dari kubah gambut alami sehingga tanah menjadi kering kerontang.",
+      label: "Membuat Parit Pengering Lahan Gambut",
+      description: "Gambut yang kering berubah menjadi bahan bakar mudah terbakar di bawah tanah.",
       isPositive: false,
-      impactBadge: "-35% Air Gambut",
-      impactNote: "Lapisan gambut tebal mengering bagaikan spons batu bara yang mudah terbakar.",
+      impactBadge: "-25% Kelembapan",
+      impactNote: "Kubah gambut mengering seperti spons batu bara rawan terbakar.",
     },
     {
+      id: "sampahKaca",
+      label: "Membuang Botol Kaca & Puntung di Hutan",
+      description: "Botol kaca memfokuskan sinar matahari terik menjadi titik api.",
+      isPositive: false,
+      impactBadge: "-20% Keamanan",
+      impactNote: "Efek lensa kaca memicu titik api spontan pada serasah kering.",
+    },
+    {
+      id: "bakarSemak",
+      label: "Membakar Sampah di Dekat Semak Belukar",
+      description: "Rumput ilalang kering sangat mudah menyambar api dalam hitungan detik.",
+      isPositive: false,
+      impactBadge: "-20% Keamanan",
+      impactNote: "Api liar menjalar ke area hutan lindung dan mengancam satwa.",
+    },
+    // 5 Solusi Hijau
+    {
       id: "sekatKanal",
-      label: "Membangun Sekat Kanal Kayu (Rewetting)",
-      description: "Membendung parit drainase agar air tertahan dan membasahi kembali kubah gambut.",
+      label: "Membangun Sekat Kanal Pembasah Gambut",
+      description: "Menahan air di parit agar lahan gambut tetap basah dan tidak mudah terbakar.",
       isPositive: true,
-      impactBadge: "+35% Kebasahan",
-      impactNote: "Muka air kanal naik, tanah gambut basah lembap dan memadamkan bara api.",
+      impactBadge: "+35% Kelembapan",
+      impactNote: "Muka air kanal naik dan membasahi kubah gambut bawah tanah.",
     },
     {
       id: "patroliHutan",
-      label: "Patroli Hutan & Sensor Titik Panas",
-      description: "Memantau titik api awal menggunakan menara pantau, patroli tim, dan sensor drone.",
+      label: "Patroli & Menara Pantau Titik Panas",
+      description: "Mendeteksi kepulan asap lebih awal sebelum api meluas ke hutan lindung.",
       isPositive: true,
-      impactBadge: "+20% Deteksi",
-      impactNote: "Deteksi dini dan respon cepat sebelum percikan api membesar menjadi karhutla luas.",
+      impactBadge: "+20% Keamanan",
+      impactNote: "Deteksi dini titik api memutus kebakaran sebelum menyebar.",
+    },
+    {
+      id: "sekatBakar",
+      label: "Membuat Jalur Sekat Bakar Hijau",
+      description: "Menanam jalur tanaman tahan api berair banyak untuk memutus rambatan api.",
+      isPositive: true,
+      impactBadge: "+20% Keamanan",
+      impactNote: "Memutus jalur perambatan api permukaan antar blok hutan.",
+    },
+    {
+      id: "embungHutan",
+      label: "Menyiapkan Embung Air Pemadam Hutan",
+      description: "Sumber pasokan air cepat di tengah kawasan hutan rawan kebakaran.",
+      isPositive: true,
+      impactBadge: "+25% Cadangan",
+      impactNote: "Menyediakan pasokan air pemadaman tanggap darurat di hutan.",
+    },
+    {
+      id: "papanEdukasi",
+      label: "Memasang Papan Peringatan & Zona Bebas Api",
+      description: "Mengingatkan pengunjung dan warga untuk menjaga ekosistem dan satwa hutan.",
+      isPositive: true,
+      impactBadge: "+15% Kesehatan",
+      impactNote: "Mencegah kelalaian manusia dan menjaga habitat satwa liar.",
     },
   ],
+};
+
+const DEFAULT_ACTIONS: Record<ScenarioId, Record<string, boolean>> = {
+  banjir: {
+    biopori: true,
+    mangrove: true,
+    sumurResapan: true,
+    bersihSungai: true,
+    rainGarden: false,
+    betonPenuh: false,
+    sampahSungai: false,
+    tebangHulu: false,
+    bangunanBantaran: false,
+    tutupDrainase: false,
+  },
+  longsor: {
+    tanamPohon: true,
+    terasering: true,
+    bronjong: true,
+    drainaseLereng: true,
+    sensorLereng: false,
+    tebangLiar: false,
+    potongTebing: false,
+    rumahKakiBukit: false,
+    limbahLereng: false,
+    lahanMonokultur: false,
+  },
+  kekeringan: {
+    tandonHujan: true,
+    irigasiTetes: true,
+    reboisasiHulu: true,
+    embungDesa: true,
+    mulsaOrganik: false,
+    borosAir: false,
+    tebangMataAir: false,
+    sedotAirTanah: false,
+    cemarSungai: false,
+    lahanTerbuka: false,
+  },
+  karhutla: {
+    sekatKanal: true,
+    patroliHutan: true,
+    sekatBakar: true,
+    embungHutan: true,
+    papanEdukasi: false,
+    baraApi: false,
+    bakarLahan: false,
+    kanalKering: false,
+    sampahKaca: false,
+    bakarSemak: false,
+  },
 };
 
 interface ScenarioTheme {
@@ -293,12 +545,9 @@ export default function EcosystemSimulation() {
     description: string;
   } | null>(null);
 
-  // Status Aksi Aktif Tiap Skenario
+  // Status Aksi Aktif Tiap Skenario (Default 10 item per skenario)
   const [actions, setActions] = useState<Record<string, boolean>>({
-    betonPenuh: false,
-    sampahSungai: false,
-    biopori: true,
-    tanamPohon: true,
+    ...DEFAULT_ACTIONS.banjir,
   });
 
   const scenarioMeta: Record<
@@ -343,57 +592,130 @@ export default function EcosystemSimulation() {
     setScenario(newScen);
     setSelectedHotspot(null);
     setActionFilter("all");
+    setActions({ ...DEFAULT_ACTIONS[newScen] });
 
     if (newScen === "banjir") {
       setWeatherIntensity(55);
-      setActions({ betonPenuh: false, sampahSungai: false, biopori: true, tanamPohon: true });
     } else if (newScen === "longsor") {
       setWeatherIntensity(50);
-      setActions({ tebangLiar: false, potongTebing: false, tanamPohon: true, terasering: true });
     } else if (newScen === "kekeringan") {
       setWeatherIntensity(60);
-      setActions({ borosAir: false, bakarJerami: false, tandonHujan: true, irigasiTetes: true });
     } else if (newScen === "karhutla") {
       setWeatherIntensity(65);
-      setActions({ baraApi: false, kanalKering: false, sekatKanal: true, patroliHutan: true });
     }
+  };
+
+  const handleResetActions = () => {
+    setActions({ ...DEFAULT_ACTIONS[scenario] });
   };
 
   const toggleAction = (id: string) => {
     setActions((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // 3 Computed Metrics Calculation
+  // 3 Computed Metrics Calculation (Skala proporsional 10 Aksi)
   const { waterAbsorption, soilStrength, ecosystemHealth } = useMemo(() => {
     let absorption = 50;
     let strength = 50;
 
     if (scenario === "banjir") {
-      if (actions.betonPenuh) absorption -= 35;
-      if (actions.sampahSungai) absorption -= 25;
-      if (actions.biopori) absorption += 30;
-      if (actions.tanamPohon) absorption += 25;
-      strength = 60 + (actions.tanamPohon ? 30 : 0) - (actions.betonPenuh ? 15 : 0);
-    } else if (scenario === "longsor") {
-      if (actions.tebangLiar) strength -= 35;
-      if (actions.potongTebing) strength -= 25;
-      if (actions.tanamPohon || actions.rumputVetiver) strength += 35;
-      if (actions.terasering) strength += 25;
-      absorption = 55 + ((actions.tanamPohon || actions.rumputVetiver) ? 25 : 0) + (actions.terasering ? 15 : 0) - (actions.tebangLiar ? 25 : 0);
-    } else if (scenario === "kekeringan") {
-      if (actions.borosAir || actions.sedotAirDalam) absorption -= 35;
-      if (actions.bakarJerami) absorption -= 20;
-      if (actions.tandonHujan || actions.tandonAir) absorption += 30;
-      if (actions.irigasiTetes) absorption += 30;
-      strength = 45 + ((actions.tandonHujan || actions.tandonAir) ? 25 : 0) + (actions.irigasiTetes ? 20 : 0) - ((actions.borosAir || actions.sedotAirDalam) ? 25 : 0);
-    } else if (scenario === "karhutla") {
-      if (actions.baraApi || actions.bakarLahan) strength -= 35;
-      if (actions.kanalKering) absorption -= 35;
-      if (actions.sekatKanal || actions.sekatGambut) {
-        absorption += 35;
-        strength += 25;
+      // 5 Aksi Risiko
+      if (actions.betonPenuh) absorption -= 20;
+      if (actions.sampahSungai) absorption -= 15;
+      if (actions.tebangHulu) absorption -= 15;
+      if (actions.bangunanBantaran) strength -= 15;
+      if (actions.tutupDrainase) absorption -= 10;
+
+      // 5 Solusi Hijau
+      if (actions.biopori) absorption += 20;
+      if (actions.mangrove) {
+        strength += 20;
+        absorption += 10;
       }
-      if (actions.patroliHutan || actions.patroliDrone) strength += 20;
+      if (actions.sumurResapan) absorption += 15;
+      if (actions.rainGarden) {
+        absorption += 10;
+        strength += 10;
+      }
+      if (actions.bersihSungai) {
+        absorption += 10;
+        strength += 10;
+      }
+    } else if (scenario === "longsor") {
+      // 5 Aksi Risiko
+      if (actions.tebangLiar) strength -= 25;
+      if (actions.potongTebing) strength -= 20;
+      if (actions.rumahKakiBukit) strength -= 15;
+      if (actions.limbahLereng) {
+        strength -= 15;
+        absorption -= 10;
+      }
+      if (actions.lahanMonokultur) {
+        strength -= 15;
+        absorption -= 10;
+      }
+
+      // 5 Solusi Hijau
+      if (actions.tanamPohon) {
+        strength += 25;
+        absorption += 15;
+      }
+      if (actions.terasering) {
+        strength += 20;
+        absorption += 10;
+      }
+      if (actions.bronjong) strength += 20;
+      if (actions.drainaseLereng) {
+        absorption += 15;
+        strength += 10;
+      }
+      if (actions.sensorLereng) strength += 15;
+    } else if (scenario === "kekeringan") {
+      // 5 Aksi Risiko
+      if (actions.borosAir) absorption -= 20;
+      if (actions.tebangMataAir) {
+        absorption -= 25;
+        strength -= 15;
+      }
+      if (actions.sedotAirTanah) absorption -= 25;
+      if (actions.cemarSungai) strength -= 20;
+      if (actions.lahanTerbuka) {
+        strength -= 15;
+        absorption -= 10;
+      }
+
+      // 5 Solusi Hijau
+      if (actions.tandonHujan) absorption += 20;
+      if (actions.irigasiTetes) {
+        strength += 20;
+        absorption += 15;
+      }
+      if (actions.reboisasiHulu) {
+        absorption += 25;
+        strength += 15;
+      }
+      if (actions.embungDesa) absorption += 20;
+      if (actions.mulsaOrganik) strength += 15;
+    } else if (scenario === "karhutla") {
+      // 5 Aksi Risiko
+      if (actions.baraApi) strength -= 25;
+      if (actions.bakarLahan) {
+        strength -= 30;
+        absorption -= 20;
+      }
+      if (actions.kanalKering) absorption -= 25;
+      if (actions.sampahKaca) strength -= 15;
+      if (actions.bakarSemak) strength -= 15;
+
+      // 5 Solusi Hijau
+      if (actions.sekatKanal) {
+        absorption += 30;
+        strength += 15;
+      }
+      if (actions.patroliHutan) strength += 20;
+      if (actions.sekatBakar) strength += 20;
+      if (actions.embungHutan) absorption += 20;
+      if (actions.papanEdukasi) strength += 10;
     }
 
     // Weather impact penalty
@@ -457,7 +779,7 @@ export default function EcosystemSimulation() {
 
     if (
       scenario === "kekeringan" &&
-      (actions.borosAir || actions.sedotAirDalam) &&
+      (actions.borosAir || actions.sedotAirTanah || actions.sedotAirDalam || actions.tebangMataAir) &&
       weatherIntensity > 60 &&
       !actions.tandonHujan &&
       !actions.irigasiTetes
@@ -471,9 +793,10 @@ export default function EcosystemSimulation() {
 
     if (
       scenario === "karhutla" &&
-      (actions.baraApi || actions.bakarLahan) &&
+      (actions.baraApi || actions.bakarLahan || actions.bakarSemak || actions.sampahKaca) &&
       !actions.sekatKanal &&
-      !actions.sekatGambut
+      !actions.sekatGambut &&
+      !actions.embungHutan
     ) {
       return {
         mascotMood: "alert",
@@ -589,13 +912,22 @@ export default function EcosystemSimulation() {
   const currentMeta = scenarioMeta[scenario];
   const currentTheme = SCENARIO_THEMES[scenario];
 
+  const currentScenarioActions = SCENARIO_ACTIONS[scenario];
+  const positiveCount = useMemo(
+    () => currentScenarioActions.filter((a) => a.isPositive).length,
+    [currentScenarioActions]
+  );
+  const negativeCount = useMemo(
+    () => currentScenarioActions.filter((a) => !a.isPositive).length,
+    [currentScenarioActions]
+  );
+
   // Filter actions based on active filter
   const filteredActions = useMemo(() => {
-    const list = SCENARIO_ACTIONS[scenario];
-    if (actionFilter === "positive") return list.filter((a) => a.isPositive);
-    if (actionFilter === "negative") return list.filter((a) => !a.isPositive);
-    return list;
-  }, [scenario, actionFilter]);
+    if (actionFilter === "positive") return currentScenarioActions.filter((a) => a.isPositive);
+    if (actionFilter === "negative") return currentScenarioActions.filter((a) => !a.isPositive);
+    return currentScenarioActions;
+  }, [currentScenarioActions, actionFilter]);
 
   // Weather icon selector
   const WeatherIcon = useMemo(() => {
@@ -699,7 +1031,7 @@ export default function EcosystemSimulation() {
           {/* =========================================================================
               KOLOM KIRI: KANVAS DIORAMA 3D & TELEMETRI GAUGES (7/12 COLS - STICKY)
              ========================================================================= */}
-          <div className="lg:col-span-7 lg:sticky lg:top-6 space-y-4">
+          <div className="lg:col-span-7 lg:sticky lg:top-20 space-y-3.5 self-start">
             
             {/* Kartu Kanvas 3D Interaktif */}
             <div className="rounded-3xl bg-white border border-slate-200/90 shadow-xl overflow-hidden p-3.5 sm:p-4 relative">
@@ -762,7 +1094,7 @@ export default function EcosystemSimulation() {
 
               {/* RENDER KANVAS 3D DENGAN SUSPENSE */}
               {scenario === "banjir" ? (
-                <Suspense fallback={<div className="h-[460px] lg:h-[520px] bg-slate-100 rounded-2xl animate-pulse" />}>
+                <Suspense fallback={<div className="h-[380px] sm:h-[400px] lg:h-[420px] xl:h-[440px] bg-slate-100 rounded-2xl animate-pulse" />}>
                   <DioramaCanvas weatherIntensity={weatherIntensity} scenario="banjir">
                     <FloodDiorama3D
                       weatherIntensity={weatherIntensity}
@@ -774,7 +1106,7 @@ export default function EcosystemSimulation() {
                   </DioramaCanvas>
                 </Suspense>
               ) : scenario === "longsor" ? (
-                <Suspense fallback={<div className="h-[460px] lg:h-[520px] bg-slate-100 rounded-2xl animate-pulse" />}>
+                <Suspense fallback={<div className="h-[380px] sm:h-[400px] lg:h-[420px] xl:h-[440px] bg-slate-100 rounded-2xl animate-pulse" />}>
                   <DioramaCanvas weatherIntensity={weatherIntensity} scenario="longsor">
                     <LandslideDiorama3D
                       weatherIntensity={weatherIntensity}
@@ -786,7 +1118,7 @@ export default function EcosystemSimulation() {
                   </DioramaCanvas>
                 </Suspense>
               ) : scenario === "kekeringan" ? (
-                <Suspense fallback={<div className="h-[460px] lg:h-[520px] bg-slate-100 rounded-2xl animate-pulse" />}>
+                <Suspense fallback={<div className="h-[380px] sm:h-[400px] lg:h-[420px] xl:h-[440px] bg-slate-100 rounded-2xl animate-pulse" />}>
                   <DioramaCanvas weatherIntensity={weatherIntensity} scenario="kekeringan">
                     <DroughtDiorama3D
                       weatherIntensity={weatherIntensity}
@@ -798,7 +1130,7 @@ export default function EcosystemSimulation() {
                   </DioramaCanvas>
                 </Suspense>
               ) : (
-                <Suspense fallback={<div className="h-[460px] lg:h-[520px] bg-slate-100 rounded-2xl animate-pulse" />}>
+                <Suspense fallback={<div className="h-[380px] sm:h-[400px] lg:h-[420px] xl:h-[440px] bg-slate-100 rounded-2xl animate-pulse" />}>
                   <DioramaCanvas weatherIntensity={weatherIntensity} scenario="karhutla">
                     <WildfireDiorama3D
                       weatherIntensity={weatherIntensity}
@@ -854,11 +1186,11 @@ export default function EcosystemSimulation() {
                ========================================================================= */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               {/* Metric 1: Daya Serap Air */}
-              <div className="rounded-2xl bg-white border border-slate-200/90 p-4 shadow-sm relative overflow-hidden">
-                <div className="flex items-center justify-between mb-2">
+              <div className="rounded-2xl bg-white border border-slate-200/90 p-3 sm:p-3.5 shadow-sm relative overflow-hidden">
+                <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
-                      <Droplets className="w-4 h-4" />
+                    <div className="w-6.5 h-6.5 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
+                      <Droplets className="w-3.5 h-3.5" />
                     </div>
                     <span className="text-xs font-bold text-slate-700">Daya Serap Air</span>
                   </div>
@@ -866,7 +1198,7 @@ export default function EcosystemSimulation() {
                     {waterAbsorption}%
                   </span>
                 </div>
-                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden mb-1.5">
+                <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden mb-1">
                   <div
                     className="h-full bg-gradient-to-r from-sky-400 to-blue-600 rounded-full transition-all duration-300"
                     style={{ width: `${waterAbsorption}%` }}
@@ -889,11 +1221,11 @@ export default function EcosystemSimulation() {
               </div>
 
               {/* Metric 2: Kekuatan Tanah & Struktur Lereng */}
-              <div className="rounded-2xl bg-white border border-slate-200/90 p-4 shadow-sm relative overflow-hidden">
-                <div className="flex items-center justify-between mb-2">
+              <div className="rounded-2xl bg-white border border-slate-200/90 p-3 sm:p-3.5 shadow-sm relative overflow-hidden">
+                <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
-                      <ShieldCheck className="w-4 h-4" />
+                    <div className="w-6.5 h-6.5 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+                      <ShieldCheck className="w-3.5 h-3.5" />
                     </div>
                     <span className="text-xs font-bold text-slate-700">Kekuatan Tanah</span>
                   </div>
@@ -901,7 +1233,7 @@ export default function EcosystemSimulation() {
                     {soilStrength}%
                   </span>
                 </div>
-                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden mb-1.5">
+                <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden mb-1">
                   <div
                     className="h-full bg-gradient-to-r from-amber-500 to-emerald-600 rounded-full transition-all duration-300"
                     style={{ width: `${soilStrength}%` }}
@@ -924,11 +1256,11 @@ export default function EcosystemSimulation() {
               </div>
 
               {/* Metric 3: Kesehatan Ekosistem */}
-              <div className="rounded-2xl bg-white border border-slate-200/90 p-4 shadow-sm relative overflow-hidden">
-                <div className="flex items-center justify-between mb-2">
+              <div className="rounded-2xl bg-white border border-slate-200/90 p-3 sm:p-3.5 shadow-sm relative overflow-hidden">
+                <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
                     <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center ${
+                      className={`w-6.5 h-6.5 rounded-lg flex items-center justify-center ${
                         ecosystemHealth > 65
                           ? "bg-emerald-100 text-emerald-800"
                           : ecosystemHealth > 35
@@ -936,7 +1268,7 @@ export default function EcosystemSimulation() {
                           : "bg-rose-100 text-rose-800"
                       }`}
                     >
-                      <HeartPulse className="w-4 h-4" />
+                      <HeartPulse className="w-3.5 h-3.5" />
                     </div>
                     <span className="text-xs font-bold text-slate-700">Kesehatan Alam</span>
                   </div>
@@ -952,7 +1284,7 @@ export default function EcosystemSimulation() {
                     {ecosystemHealth}%
                   </span>
                 </div>
-                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden mb-1.5">
+                <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden mb-1">
                   <div
                     className={`h-full rounded-full transition-all duration-300 ${
                       ecosystemHealth > 65
@@ -984,9 +1316,24 @@ export default function EcosystemSimulation() {
           </div>
 
           {/* =========================================================================
-              KOLOM KANAN: PENDAMPING RIMBA & PANEL KONTROL EKSPERIMEN (5/12 COLS)
+              KOLOM KANAN: PENDAMPING RIMBA & PANEL KONTROL EKSPERIMEN (5/12 COLS - INDEPENDENT SCROLL)
              ========================================================================= */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="lg:col-span-5 space-y-3.5 lg:sticky lg:top-20 lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto lg:pr-1.5 scrollbar-thin self-start">
+            
+            {/* Visual Column Header */}
+            <div className="flex items-center justify-between px-1 text-slate-700">
+              <div className="flex items-center gap-2">
+                <span className="p-1 rounded-lg bg-emerald-100 text-emerald-800">
+                  <Sliders className="w-3.5 h-3.5" />
+                </span>
+                <span className="text-xs font-black uppercase tracking-wider text-slate-800">
+                  Panel Kontrol &amp; Rekayasa
+                </span>
+              </div>
+              <span className="text-[10px] text-slate-400 font-bold hidden sm:inline">
+                Scroll untuk kontrol penuh
+              </span>
+            </div>
             
             {/* 1. MASKOT RIMBA HORIZONTAL COMPANION CARD (SERAGAM DENGAN CARD LAIN) */}
             <div className="rounded-3xl bg-white border border-slate-200/90 p-4.5 sm:p-5 shadow-md">
@@ -1108,54 +1455,67 @@ export default function EcosystemSimulation() {
               </div>
             </div>
 
-            {/* 3. AKSI MANUSIA & REKAYASA LINGKUNGAN DENGAN TOGGLE INTERAKTIF & PILL BADGES */}
-            <div className="rounded-3xl bg-white border border-slate-200/90 p-4.5 sm:p-5 shadow-md space-y-3.5">
-              <div className="flex items-center justify-between pb-2.5 border-b border-slate-100">
-                <div>
-                  <h4 className="font-bold text-sm text-slate-900">
-                    Aksi Manusia &amp; Rekayasa
-                  </h4>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    Klik toggle untuk memicu efek visual 3D
-                  </p>
+            {/* 3. AKSI MANUSIA & REKAYASA LINGKUNGAN (10 ITEM: 5 SOLUSI + 5 RISIKO) */}
+            <div className="rounded-3xl bg-white border border-slate-200/90 p-4 sm:p-4.5 shadow-md space-y-3">
+              {/* Header Kontrol & Filter Sticky */}
+              <div className="space-y-2.5 pb-2.5 border-b border-slate-100">
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <h4 className="font-bold text-sm text-slate-900 leading-tight">
+                      Aksi Manusia &amp; Rekayasa
+                    </h4>
+                    <p className="text-[11px] text-slate-400 mt-0.5">
+                      10 parameter interaktif (5 Solusi + 5 Risiko)
+                    </p>
+                  </div>
+
+                  {/* Tombol Reset Toggle Cepat */}
+                  <button
+                    onClick={handleResetActions}
+                    className="px-2.5 py-1 rounded-xl text-[10px] font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/90 transition-all inline-flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
+                    title="Atur ulang toggle ke kondisi awal skenario"
+                  >
+                    <RotateCcw className="w-3 h-3 text-slate-500" />
+                    <span>Reset Toggle</span>
+                  </button>
                 </div>
 
-                {/* Filter Tabs */}
-                <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-xl text-[10px] font-bold">
+                {/* Filter Tabs dengan Counter Dinamis */}
+                <div className="flex items-center justify-between gap-1 bg-slate-100 p-1 rounded-xl text-[11px] font-bold">
                   <button
                     onClick={() => setActionFilter("all")}
-                    className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                    className={`flex-1 py-1 px-2 rounded-lg transition-all text-center cursor-pointer ${
                       actionFilter === "all"
                         ? "bg-white text-slate-900 shadow-xs font-black"
-                        : "text-slate-500 hover:text-slate-800"
+                        : "text-slate-600 hover:text-slate-900"
                     }`}
                   >
-                    Semua
+                    Semua ({currentScenarioActions.length})
                   </button>
                   <button
                     onClick={() => setActionFilter("positive")}
-                    className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                    className={`flex-1 py-1 px-2 rounded-lg transition-all text-center cursor-pointer ${
                       actionFilter === "positive"
                         ? "bg-emerald-600 text-white shadow-xs font-black"
                         : "text-emerald-700 hover:text-emerald-900"
                     }`}
                   >
-                    Solusi
+                    Solusi ({positiveCount})
                   </button>
                   <button
                     onClick={() => setActionFilter("negative")}
-                    className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                    className={`flex-1 py-1 px-2 rounded-lg transition-all text-center cursor-pointer ${
                       actionFilter === "negative"
                         ? "bg-rose-600 text-white shadow-xs font-black"
                         : "text-rose-700 hover:text-rose-900"
                     }`}
                   >
-                    Risiko
+                    Risiko ({negativeCount})
                   </button>
                 </div>
               </div>
 
-              {/* Daftar Aksi Interaktif */}
+              {/* List Container 10 Aksi (Mengalir Alami Tanpa Inner Scroll Trap) */}
               <div className="space-y-2.5">
                 {filteredActions.map((act) => {
                   const isActive = !!actions[act.id];
@@ -1163,73 +1523,80 @@ export default function EcosystemSimulation() {
                     <div
                       key={act.id}
                       onClick={() => toggleAction(act.id)}
-                      className={`w-full text-left p-3.5 rounded-2xl border transition-all flex items-center justify-between gap-3 cursor-pointer select-none ${
+                      className={`w-full text-left p-3 rounded-2xl border transition-all cursor-pointer select-none ${
                         isActive
                           ? act.isPositive
-                            ? "bg-emerald-50/90 border-emerald-400 text-emerald-950 shadow-xs ring-1 ring-emerald-400/25"
-                            : "bg-rose-50/90 border-rose-400 text-rose-950 shadow-xs ring-1 ring-rose-400/25"
-                          : "bg-slate-50/80 border-slate-200/90 text-slate-600 hover:border-slate-300 hover:bg-slate-100/70"
+                            ? "bg-emerald-50/80 border-emerald-400 text-emerald-950 shadow-xs ring-1 ring-emerald-400/25"
+                            : "bg-rose-50/80 border-rose-400 text-rose-950 shadow-xs ring-1 ring-rose-400/25"
+                          : "bg-slate-50/80 border-slate-200/90 text-slate-700 hover:border-slate-300 hover:bg-slate-100/70"
                       }`}
                     >
-                      <div className="space-y-1 pr-1 flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          <span
-                            className={`px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider ${
-                              act.isPositive
-                                ? "bg-emerald-100 text-emerald-800"
-                                : "bg-rose-100 text-rose-800"
+                      {/* Baris 1: Badge Status & Pill Dampak */}
+                      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                        <span
+                          className={`px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider ${
+                            act.isPositive
+                              ? "bg-emerald-100 text-emerald-800"
+                              : "bg-rose-100 text-rose-800"
+                          }`}
+                        >
+                          {act.isPositive ? "SOLUSI HIJAU" : "AKSI RISIKO"}
+                        </span>
+
+                        <span
+                          className={`px-2 py-0.5 rounded-md text-[9px] font-mono font-black border shadow-2xs ${
+                            act.isPositive
+                              ? "bg-emerald-50 text-emerald-700 border-emerald-300"
+                              : "bg-rose-50 text-rose-700 border-rose-300"
+                          }`}
+                        >
+                          {act.impactBadge}
+                        </span>
+                      </div>
+
+                      {/* Baris 2: Judul Aksi Sejajar Toggle Switch */}
+                      <div className="flex items-center justify-between gap-2.5">
+                        <strong className="text-xs sm:text-sm font-bold text-slate-900 leading-tight flex-1 min-w-0 pr-1">
+                          {act.label}
+                        </strong>
+
+                        {/* iOS-Style Toggle Switch */}
+                        <div className="shrink-0">
+                          <div
+                            className={`w-10 h-5.5 rounded-full transition-colors relative p-0.5 cursor-pointer ${
+                              isActive
+                                ? act.isPositive
+                                  ? "bg-emerald-600"
+                                  : "bg-rose-600"
+                                : "bg-slate-300"
                             }`}
                           >
-                            {act.isPositive ? "SOLUSI HIJAU" : "AKSI RISIKO"}
-                          </span>
-
-                          {/* Pill Badge Indikator Dampak Numerik */}
-                          <span
-                            className={`px-2 py-0.5 rounded-md text-[9px] font-mono font-black border shadow-2xs ${
-                              act.isPositive
-                                ? "bg-emerald-50 text-emerald-700 border-emerald-300"
-                                : "bg-rose-50 text-rose-700 border-rose-300"
-                            }`}
-                          >
-                            {act.impactBadge}
-                          </span>
-
-                          <strong className="text-xs sm:text-sm font-bold block truncate">
-                            {act.label}
-                          </strong>
+                            <div
+                              className={`w-4.5 h-4.5 rounded-full bg-white shadow-md transform transition-transform ${
+                                isActive ? "translate-x-4.5" : "translate-x-0"
+                              }`}
+                            />
+                          </div>
                         </div>
-                        <p className="text-[11px] text-slate-500 leading-snug line-clamp-2">
-                          {act.description}
-                        </p>
-                        {isActive && (
+                      </div>
+
+                      {/* Baris 3: Deskripsi Singkat */}
+                      <p className="text-[11px] text-slate-500 leading-snug line-clamp-1 mt-1">
+                        {act.description}
+                      </p>
+
+                      {/* Baris 4: Efek Aktif (Progressive Disclosure - Muncul Hanya Saat ON) */}
+                      {isActive && (
+                        <div className="mt-2 pt-1.5 border-t border-slate-200/60 animate-in fade-in slide-in-from-top-1 duration-200">
                           <span
-                            className={`text-[10px] font-bold block mt-0.5 ${
+                            className={`text-[10px] font-bold block ${
                               act.isPositive ? "text-emerald-800" : "text-rose-800"
                             }`}
                           >
                             ⚡ {act.impactNote}
                           </span>
-                        )}
-                      </div>
-
-                      {/* iOS-Style Toggle Switch */}
-                      <div className="flex-shrink-0">
-                        <div
-                          className={`w-11 h-6 rounded-full transition-colors relative p-0.5 cursor-pointer ${
-                            isActive
-                              ? act.isPositive
-                                ? "bg-emerald-600"
-                                : "bg-rose-600"
-                              : "bg-slate-300"
-                          }`}
-                        >
-                          <div
-                            className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-transform ${
-                              isActive ? "translate-x-5" : "translate-x-0"
-                            }`}
-                          />
                         </div>
-                      </div>
+                      )}
                     </div>
                   );
                 })}
