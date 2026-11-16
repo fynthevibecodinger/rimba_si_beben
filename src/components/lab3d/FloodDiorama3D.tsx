@@ -4,6 +4,24 @@ import * as THREE from "three";
 import { DioramaProps } from "./types";
 import HotspotPin3D from "./HotspotPin3D";
 
+/**
+ * FloodDiorama3D: Diorama 3D Interaktif Simulasi Banjir & Daerah Aliran Sungai (DAS)
+ * 
+ * Lengkap dengan 10 Parameter Aksi Manusia & Rekayasa:
+ * 5 Aksi Risiko:
+ * 1. betonPenuh: Penutupan halaman dengan semen/beton + genangan air beriak
+ * 2. sampahSungai: Sampah terapung beriak di sungai (dibersihkan jika bersihSungai aktif)
+ * 3. tebangHulu: Hutan hulu digunduli jadi tunggul kayu + limpasan air bah deras berlumpur
+ * 4. bangunanBantaran: Rumah panggung liar menjorok ke sempadan sungai yang terendam luapan
+ * 5. tutupDrainase: Saluran gorong-gorong tersumbat/tertutup semen + air meluap di aspal jalan
+ * 
+ * 5 Solusi Hijau:
+ * 1. biopori: Silinder biopori berpori dengan animasi tetesan peresapan air ke akuifer
+ * 2. mangrove: Hutan mangrove berakar tunjang di muara dengan goyangan kanopi ditiup angin
+ * 3. sumurResapan: Sumur resapan warga dengan pipa talang atap mengalirkan air ke dalam tanah
+ * 4. rainGarden: Taman hujan (cekungan bioswale tanaman & bunga penyerap air limpasan)
+ * 5. bersihSungai: Normalisasi sungai, tanggul batu rapi, dan jaring penahan sampah terapung
+ */
 export default function FloodDiorama3D({
   weatherIntensity,
   xrayMode,
@@ -18,6 +36,13 @@ export default function FloodDiorama3D({
   const rainGroupRef = useRef<THREE.Group>(null);
   const cloudGroupRef = useRef<THREE.Group>(null);
   const bioporiWaterFlowRef = useRef<THREE.Group>(null);
+  const trashGroupRef = useRef<THREE.Group>(null);
+  const upstreamRunoffRef = useRef<THREE.Group>(null);
+  const drainBubblingRef = useRef<THREE.Group>(null);
+  const rainGardenWaterRef = useRef<THREE.Mesh>(null);
+  const sumurFlowRef = useRef<THREE.Group>(null);
+  const mangroveGroupRef = useRef<THREE.Group>(null);
+  const concretePuddlesRef = useRef<THREE.Group>(null);
 
   // Smooth interpolated water heights
   const currentRiverY = useRef(-0.35);
@@ -67,10 +92,16 @@ export default function FloodDiorama3D({
     // C. Kalkulasi Target Ketinggian Air Sungai & Banjir
     // Base height = -0.35. Batas tanggul jalan = 0.38
     const rainLevel = (weatherIntensity / 100) * 0.65;
-    const trashPenalty = actions.sampahSungai ? 0.45 : 0;
-    const bioporiBonus = actions.biopori ? 0.35 : 0;
-    const mangroveBonus = (actions.mangrove || actions.tanamPohon) ? 0.25 : 0;
-    const pavementPenalty = actions.betonPenuh ? 0.3 : 0;
+    const trashPenalty = (actions.sampahSungai && !actions.bersihSungai ? 0.35 : 0) + 
+      (actions.bangunanBantaran ? 0.25 : 0) + 
+      (actions.tutupDrainase ? 0.2 : 0);
+    const bioporiBonus = (actions.biopori ? 0.25 : 0) + 
+      (actions.sumurResapan ? 0.2 : 0) + 
+      (actions.rainGarden ? 0.15 : 0);
+    const mangroveBonus = (actions.mangrove || actions.tanamPohon ? 0.25 : 0) + 
+      (actions.bersihSungai ? 0.25 : 0);
+    const pavementPenalty = (actions.betonPenuh ? 0.25 : 0) + 
+      (actions.tebangHulu ? 0.25 : 0);
 
     // Target ketinggian air sungai
     let targetRiverLevel = -0.35 + rainLevel + trashPenalty + pavementPenalty - bioporiBonus - mangroveBonus;
@@ -81,8 +112,8 @@ export default function FloodDiorama3D({
     const targetFloodOpacity = isOverflowing ? Math.min(0.85, (targetRiverLevel - 0.38) * 2.2) : 0;
 
     // Target volume air tanah / akuifer
-    // Meningkat jika ada biopori + hujan
-    const targetAquifer = 0.8 + (actions.biopori ? 0.6 : 0.1) * (weatherIntensity / 100);
+    const hasResapan = !!(actions.biopori || actions.sumurResapan || actions.rainGarden);
+    const targetAquifer = 0.8 + (hasResapan ? 0.6 : 0.1) * (weatherIntensity / 100);
 
     // D. Interpolasi Lembut (Lerp)
     currentRiverY.current = THREE.MathUtils.lerp(currentRiverY.current, targetRiverLevel, delta * 3.5);
@@ -104,12 +135,85 @@ export default function FloodDiorama3D({
       aquiferWaterRef.current.scale.set(1, currentAquiferScale.current, 1);
     }
 
-    // E. Aliran air biopori animasi
+    // E. Animasi Aliran Air Biopori
     if (bioporiWaterFlowRef.current) {
       bioporiWaterFlowRef.current.visible = actions.biopori && weatherIntensity > 15;
       bioporiWaterFlowRef.current.children.forEach((p, idx) => {
         p.position.y = -0.1 - ((time * 1.5 + idx * 0.3) % 0.8);
       });
+    }
+
+    // F. Animasi Sampah Terapung Beriak di Arus Sungai
+    if (trashGroupRef.current) {
+      trashGroupRef.current.position.y = currentRiverY.current + 0.12 + Math.sin(time * 2.5) * 0.025;
+      trashGroupRef.current.rotation.z = Math.sin(time * 1.8) * 0.05;
+      trashGroupRef.current.rotation.y = Math.cos(time * 1.2) * 0.04;
+    }
+
+    // G. Animasi Limpasan Air Bah Hulu (tebangHulu)
+    if (upstreamRunoffRef.current) {
+      upstreamRunoffRef.current.visible = actions.tebangHulu && weatherIntensity > 20;
+      if (actions.tebangHulu) {
+        upstreamRunoffRef.current.children.forEach((stream, idx) => {
+          // Mengalir deras dari belakang lereng ke sungai
+          const cycle = (time * (2.5 + idx * 0.4)) % 1.0;
+          stream.position.z = -2.6 + cycle * 1.8;
+          stream.position.y = 0.5 - cycle * 0.45;
+          const s = 0.8 + Math.sin(time * 8 + idx) * 0.2;
+          stream.scale.set(s, 1, s);
+        });
+      }
+    }
+
+    // H. Animasi Air Meluap di Saluran Drainase (tutupDrainase)
+    if (drainBubblingRef.current) {
+      drainBubblingRef.current.visible = actions.tutupDrainase && weatherIntensity > 25;
+      if (actions.tutupDrainase) {
+        drainBubblingRef.current.children.forEach((bubble, idx) => {
+          const bCycle = (time * 3 + idx * 0.7) % 1.0;
+          bubble.position.y = 0.48 + bCycle * 0.12;
+          const bScale = Math.sin(bCycle * Math.PI) * 1.2;
+          bubble.scale.set(bScale, bScale, bScale);
+        });
+      }
+    }
+
+    // I. Animasi Genangan Air di Halaman Beton (betonPenuh)
+    if (concretePuddlesRef.current) {
+      concretePuddlesRef.current.visible = actions.betonPenuh && weatherIntensity > 20;
+      if (actions.betonPenuh) {
+        const ripple = 1.0 + Math.sin(time * 3) * 0.05;
+        concretePuddlesRef.current.children.forEach((pud) => {
+          pud.scale.set(ripple, 1, ripple);
+        });
+      }
+    }
+
+    // J. Animasi Aliran Sumur Resapan
+    if (sumurFlowRef.current) {
+      sumurFlowRef.current.visible = actions.sumurResapan && weatherIntensity > 15;
+      if (actions.sumurResapan) {
+        sumurFlowRef.current.children.forEach((drop, idx) => {
+          const flowProgress = (time * 2.2 + idx * 0.4) % 1.0;
+          drop.position.y = 0.45 - flowProgress * 1.2;
+        });
+      }
+    }
+
+    // K. Goyangan Halus Pohon Mangrove
+    if (mangroveGroupRef.current) {
+      mangroveGroupRef.current.children.forEach((tree, idx) => {
+        tree.rotation.z = Math.sin(time * 1.5 + idx * 1.2) * 0.04;
+      });
+    }
+
+    // L. Animasi Peresapan Taman Hujan (rainGarden)
+    if (rainGardenWaterRef.current) {
+      rainGardenWaterRef.current.visible = actions.rainGarden && weatherIntensity > 15;
+      if (actions.rainGarden) {
+        const gardenWaterHeight = 0.38 + Math.sin(time * 2) * 0.01;
+        rainGardenWaterRef.current.position.y = gardenWaterHeight;
+      }
     }
   });
 
@@ -125,16 +229,43 @@ export default function FloodDiorama3D({
       
       {/* Sisi Kiri (Area Pemukiman / Jalan Kota) */}
       <group position={[-1.75, 0, 0]}>
-        {/* Lapisan Rumput Atas */}
+        {/* Lapisan Rumput / Permukaan Atas Halaman */}
         <mesh position={[0, 0.25, 0]} receiveShadow castShadow>
           <boxGeometry args={[2.5, 0.4, 5.5]} />
           <meshStandardMaterial
             color={actions.betonPenuh ? "#94a3b8" : "#40916c"}
-            roughness={0.7}
+            roughness={actions.betonPenuh ? 0.4 : 0.7}
+            metalness={actions.betonPenuh ? 0.1 : 0}
             transparent={isSoilTransparent}
             opacity={soilOpacity}
           />
         </mesh>
+
+        {/* Jika Aksi Semen Penuh (betonPenuh): Genangan Air Beriak di Semen */}
+        {actions.betonPenuh && (
+          <group ref={concretePuddlesRef} position={[0.4, 0.46, 0.3]}>
+            <mesh rotation={[-Math.PI / 2, 0, 0]}>
+              <circleGeometry args={[0.35, 12]} />
+              <meshStandardMaterial
+                color="#38bdf8"
+                roughness={0.1}
+                metalness={0.5}
+                transparent
+                opacity={0.7}
+              />
+            </mesh>
+            <mesh position={[-0.4, 0, 0.8]} rotation={[-Math.PI / 2, 0, 0]}>
+              <circleGeometry args={[0.25, 12]} />
+              <meshStandardMaterial
+                color="#38bdf8"
+                roughness={0.1}
+                metalness={0.5}
+                transparent
+                opacity={0.65}
+              />
+            </mesh>
+          </group>
+        )}
 
         {/* Jalan Aspal & Marka */}
         <mesh position={[-0.4, 0.46, 0]} receiveShadow>
@@ -221,8 +352,8 @@ export default function FloodDiorama3D({
       <mesh position={[-0.55, -0.15, 0]} rotation={[0, 0, -Math.PI / 8]} receiveShadow>
         <boxGeometry args={[0.3, 0.7, 5.5]} />
         <meshStandardMaterial
-          color="#604735"
-          roughness={0.9}
+          color={actions.bersihSungai ? "#64748b" : "#604735"}
+          roughness={0.8}
           transparent={isSoilTransparent}
           opacity={soilOpacity}
         />
@@ -230,8 +361,8 @@ export default function FloodDiorama3D({
       <mesh position={[0.55, -0.15, 0]} rotation={[0, 0, Math.PI / 8]} receiveShadow>
         <boxGeometry args={[0.3, 0.7, 5.5]} />
         <meshStandardMaterial
-          color="#604735"
-          roughness={0.9}
+          color={actions.bersihSungai ? "#64748b" : "#604735"}
+          roughness={0.8}
           transparent={isSoilTransparent}
           opacity={soilOpacity}
         />
@@ -247,8 +378,8 @@ export default function FloodDiorama3D({
       >
         <boxGeometry args={[1.15, 0.25, 5.5]} />
         <meshStandardMaterial
-          color="#0284c7"
-          roughness={0.15}
+          color={actions.bersihSungai ? "#38bdf8" : actions.sampahSungai ? "#0f766e" : "#0284c7"}
+          roughness={actions.bersihSungai ? 0.05 : 0.2}
           metalness={0.3}
           transparent
           opacity={0.88}
@@ -276,15 +407,12 @@ export default function FloodDiorama3D({
          ========================================================================= */}
       <group position={[-1.75, -1.35, 0]}>
         {/* Wadah Rongga Akuifer */}
-        <mesh
-          ref={aquiferWaterRef}
-          position={[0, 0, 0]}
-        >
+        <mesh ref={aquiferWaterRef} position={[0, 0, 0]}>
           <boxGeometry args={[2.1, 0.55, 4.8]} />
           <meshStandardMaterial
-            color={actions.biopori ? "#38bdf8" : "#0284c7"}
-            emissive={actions.biopori ? "#0284c7" : "#000000"}
-            emissiveIntensity={actions.biopori ? 0.35 : 0}
+            color={actions.biopori || actions.sumurResapan ? "#38bdf8" : "#0284c7"}
+            emissive={actions.biopori || actions.sumurResapan ? "#0284c7" : "#000000"}
+            emissiveIntensity={actions.biopori || actions.sumurResapan ? 0.4 : 0}
             roughness={0.2}
             transparent
             opacity={xrayMode ? 0.95 : 0.65}
@@ -300,15 +428,13 @@ export default function FloodDiorama3D({
 
       {/* Gorong-gorong Bawah Tanah (Underground Culvert Pipe) */}
       <group position={[-0.85, 0.05, 0.2]}>
-        {/* Pipa beton silinder mengalirkan air dari bawah kota ke sungai */}
         <mesh rotation={[0, 0, Math.PI / 2]} receiveShadow>
           <cylinderGeometry args={[0.22, 0.22, 0.8, 16]} />
-          <meshStandardMaterial color="#64748b" roughness={0.8} />
+          <meshStandardMaterial color={actions.tutupDrainase ? "#475569" : "#64748b"} roughness={0.8} />
         </mesh>
-        {/* Lubang dalam pipa */}
         <mesh position={[0.41, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.18, 0.18, 0.05, 16]} />
-          <meshStandardMaterial color="#0f172a" />
+          <meshStandardMaterial color={actions.tutupDrainase ? "#78350f" : "#0f172a"} />
         </mesh>
       </group>
 
@@ -317,22 +443,18 @@ export default function FloodDiorama3D({
          ========================================================================= */}
       {/* Rumah 1 (Depan) */}
       <group position={[-2.1, 0.46, 1.3]}>
-        {/* Badan Rumah */}
         <mesh position={[0, 0.35, 0]} castShadow receiveShadow>
           <boxGeometry args={[0.8, 0.7, 0.9]} />
           <meshStandardMaterial color="#fef9c3" roughness={0.6} />
         </mesh>
-        {/* Atap Pelana Genteng */}
         <mesh position={[0, 0.85, 0]} rotation={[0, 0, 0]} castShadow>
           <coneGeometry args={[0.7, 0.45, 4]} />
           <meshStandardMaterial color="#b91c1c" roughness={0.5} />
         </mesh>
-        {/* Pintu Kayu */}
         <mesh position={[0.41, 0.25, 0]}>
           <boxGeometry args={[0.02, 0.45, 0.25]} />
           <meshStandardMaterial color="#854d0e" />
         </mesh>
-        {/* Jendela */}
         <mesh position={[0.41, 0.45, 0.26]}>
           <boxGeometry args={[0.02, 0.2, 0.2]} />
           <meshStandardMaterial color="#38bdf8" roughness={0.2} />
@@ -353,7 +475,6 @@ export default function FloodDiorama3D({
           <boxGeometry args={[0.02, 0.48, 0.25]} />
           <meshStandardMaterial color="#78350f" />
         </mesh>
-        {/* Cerobong Asap */}
         <mesh position={[-0.2, 1.05, 0.2]} castShadow>
           <boxGeometry args={[0.15, 0.35, 0.15]} />
           <meshStandardMaterial color="#94a3b8" />
@@ -382,7 +503,6 @@ export default function FloodDiorama3D({
           <boxGeometry args={[1.3, 0.08, 0.7]} />
           <meshStandardMaterial color="#e2e8f0" roughness={0.7} />
         </mesh>
-        {/* Pagar Jembatan */}
         <mesh position={[0, 0.15, 0.32]}>
           <boxGeometry args={[1.3, 0.15, 0.04]} />
           <meshStandardMaterial color="#64748b" />
@@ -394,56 +514,168 @@ export default function FloodDiorama3D({
       </group>
 
       {/* =========================================================================
-          5. AKSI 1: SAMPAH SUNGAI (PLASTIC & TRASH PILE)
+          5. AKSI RISIKO 1: SAMPAH SUNGAI (FLOATING TRASH WITH BOBBING ANIMATION)
          ========================================================================= */}
-      {actions.sampahSungai && (
-        <group position={[0, -0.22, 0.4]}>
-          {/* Kardus bekas */}
-          <mesh position={[-0.15, 0.08, -0.1]} rotation={[0.2, 0.4, -0.1]} castShadow>
-            <boxGeometry args={[0.25, 0.2, 0.28]} />
+      {actions.sampahSungai && !actions.bersihSungai && (
+        <group ref={trashGroupRef} position={[0, -0.15, 0.4]}>
+          {/* Kardus basah terapung */}
+          <mesh position={[-0.15, 0, -0.1]} rotation={[0.2, 0.4, -0.1]} castShadow>
+            <boxGeometry args={[0.25, 0.15, 0.28]} />
             <meshStandardMaterial color="#b45309" roughness={0.9} />
           </mesh>
-          {/* Kantong kresek / sampah plastik */}
-          <mesh position={[0.12, 0.05, 0.1]} rotation={[-0.1, 0.8, 0.3]} castShadow>
+          {/* Kantong kresek merah & biru */}
+          <mesh position={[0.12, 0.02, 0.1]} rotation={[-0.1, 0.8, 0.3]} castShadow>
             <dodecahedronGeometry args={[0.14, 0]} />
             <meshStandardMaterial color="#ef4444" roughness={0.4} />
           </mesh>
-          <mesh position={[-0.05, 0.14, 0.15]} rotation={[0.4, -0.3, 0.2]}>
+          <mesh position={[-0.05, 0.04, 0.15]} rotation={[0.4, -0.3, 0.2]}>
             <dodecahedronGeometry args={[0.12, 0]} />
             <meshStandardMaterial color="#06b6d4" roughness={0.4} />
           </mesh>
-          {/* Botol / Kaleng terapung */}
-          <mesh position={[0.2, 0.02, -0.2]} rotation={[Math.PI / 2, 0.3, 0.5]}>
+          {/* Kaleng / Botol plastik */}
+          <mesh position={[0.2, 0, -0.2]} rotation={[Math.PI / 2, 0.3, 0.5]}>
             <cylinderGeometry args={[0.04, 0.04, 0.18, 8]} />
             <meshStandardMaterial color="#eab308" metalness={0.6} roughness={0.3} />
           </mesh>
-          {/* Ranting pohon tersangkut */}
-          <mesh position={[-0.2, 0.06, 0.05]} rotation={[0, 0.5, 0.2]}>
-            <cylinderGeometry args={[0.02, 0.03, 0.6, 6]} />
+          <mesh position={[-0.2, 0.02, 0.05]} rotation={[0, 0.5, 0.2]}>
+            <cylinderGeometry args={[0.02, 0.03, 0.5, 6]} />
             <meshStandardMaterial color="#451a03" roughness={1} />
           </mesh>
         </group>
       )}
 
       {/* =========================================================================
-          6. AKSI 2: LUBANG RESAPAN BIOPORI (PERCOLATION CYLINDERS IN YARD)
+          6. AKSI RISIKO 2: DEFORESTASI HULU (tebangHulu) & LIMPASAN AIR BAH
+         ========================================================================= */}
+      <group position={[0, 0, -2.2]}>
+        {/* Bukit Hulu di Belakang */}
+        <mesh position={[0, 0.5, -0.2]} receiveShadow castShadow>
+          <boxGeometry args={[5.5, 0.9, 0.8]} />
+          <meshStandardMaterial
+            color={actions.tebangHulu ? "#785038" : "#2d6a4f"}
+            roughness={0.8}
+            transparent={isSoilTransparent}
+            opacity={soilOpacity}
+          />
+        </mesh>
+
+        {/* Jika tebangHulu: Munculkan Tunggul Pohon Gundul & Kayu Tumbang */}
+        {actions.tebangHulu ? (
+          <group position={[0, 0.95, -0.2]}>
+            {[-1.8, -0.6, 0.7, 1.9].map((xPos, idx) => (
+              <group key={idx} position={[xPos, 0, 0]}>
+                <mesh position={[0, 0.1, 0]}>
+                  <cylinderGeometry args={[0.07, 0.09, 0.2, 6]} />
+                  <meshStandardMaterial color="#5c3a21" />
+                </mesh>
+                <mesh position={[0, 0.205, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                  <circleGeometry args={[0.065, 6]} />
+                  <meshStandardMaterial color="#d4a373" />
+                </mesh>
+                <mesh position={[0.15, 0.06, 0.15]} rotation={[0, 0.5, 1.4]}>
+                  <cylinderGeometry args={[0.06, 0.07, 0.5, 6]} />
+                  <meshStandardMaterial color="#4a2c11" />
+                </mesh>
+              </group>
+            ))}
+
+            {/* Animasi Aliran Bah Rushing Muddy Runoff ke Sungai */}
+            <group ref={upstreamRunoffRef}>
+              {[-0.2, 0, 0.2].map((xOff, idx) => (
+                <mesh key={idx} position={[xOff, 0, 0]}>
+                  <boxGeometry args={[0.16, 0.04, 0.4]} />
+                  <meshStandardMaterial color="#854d0e" roughness={0.3} transparent opacity={0.85} />
+                </mesh>
+              ))}
+            </group>
+          </group>
+        ) : (
+          /* Hutan Hulu Hijau Asri (Normal) */
+          <group position={[0, 0.95, -0.2]}>
+            {[-1.8, -0.8, 0.8, 1.8].map((xPos, idx) => (
+              <group key={idx} position={[xPos, 0, 0]}>
+                <mesh position={[0, 0.25, 0]} castShadow>
+                  <cylinderGeometry args={[0.05, 0.07, 0.5, 6]} />
+                  <meshStandardMaterial color="#451a03" />
+                </mesh>
+                <mesh position={[0, 0.7, 0]} castShadow>
+                  <coneGeometry args={[0.35, 0.8, 6]} />
+                  <meshStandardMaterial color="#1b4332" />
+                </mesh>
+              </group>
+            ))}
+          </group>
+        )}
+      </group>
+
+      {/* =========================================================================
+          7. AKSI RISIKO 3: BANGUNAN LIAR DI BANTARAN SUNGAI (bangunanBantaran)
+         ========================================================================= */}
+      {actions.bangunanBantaran && (
+        <group position={[-0.75, 0.18, 0.9]}>
+          {/* Tiang Panggung Kayu Menancap ke Tebing Sungai */}
+          <mesh position={[-0.15, -0.25, -0.15]}>
+            <cylinderGeometry args={[0.02, 0.02, 0.5, 5]} />
+            <meshStandardMaterial color="#451a03" />
+          </mesh>
+          <mesh position={[0.15, -0.25, -0.15]}>
+            <cylinderGeometry args={[0.02, 0.02, 0.5, 5]} />
+            <meshStandardMaterial color="#451a03" />
+          </mesh>
+          <mesh position={[0.15, -0.32, 0.15]}>
+            <cylinderGeometry args={[0.02, 0.02, 0.65, 5]} />
+            <meshStandardMaterial color="#451a03" />
+          </mesh>
+          {/* Lantai & Dinding Rumah Papan Liar */}
+          <mesh position={[0, 0.05, 0]} castShadow>
+            <boxGeometry args={[0.55, 0.4, 0.5]} />
+            <meshStandardMaterial color="#854d0e" roughness={0.9} />
+          </mesh>
+          {/* Atap Seng Karatan */}
+          <mesh position={[0, 0.32, 0]} rotation={[0, 0, -0.15]} castShadow>
+            <boxGeometry args={[0.62, 0.04, 0.56]} />
+            <meshStandardMaterial color="#9a3412" metalness={0.7} roughness={0.6} />
+          </mesh>
+        </group>
+      )}
+
+      {/* =========================================================================
+          8. AKSI RISIKO 4: TUTUP DRAINASE JALAN (tutupDrainase)
+         ========================================================================= */}
+      {actions.tutupDrainase && (
+        <group position={[-0.85, 0.47, 0.2]}>
+          {/* Plat Cor Semen / Tumpukan Sampah Menutup Grill Drainase */}
+          <mesh position={[0, 0.02, 0]}>
+            <boxGeometry args={[0.35, 0.06, 0.45]} />
+            <meshStandardMaterial color="#64748b" roughness={0.9} />
+          </mesh>
+          {/* Partikel Gelembung / Air Mendidih Meluap dari Saluran Tertutup */}
+          <group ref={drainBubblingRef}>
+            {[-0.08, 0, 0.08].map((xOff, idx) => (
+              <mesh key={idx} position={[xOff, 0.04, (idx - 1) * 0.08]}>
+                <sphereGeometry args={[0.04, 6, 6]} />
+                <meshStandardMaterial color="#38bdf8" transparent opacity={0.8} />
+              </mesh>
+            ))}
+          </group>
+        </group>
+      )}
+
+      {/* =========================================================================
+          9. AKSI SOLUSI 1: LUBANG RESAPAN BIOPORI (biopori)
          ========================================================================= */}
       {actions.biopori && (
         <group position={[-1.35, 0.46, 0]}>
-          {/* Barisan 3 Lubang Biopori di Halaman */}
           {[-0.55, 0, 0.55].map((zOffset, idx) => (
             <group key={idx} position={[0, 0, zOffset]}>
-              {/* Tutup Pori Grill Besi di Permukaan */}
               <mesh position={[0, 0.02, 0]}>
                 <cylinderGeometry args={[0.11, 0.11, 0.04, 16]} />
                 <meshStandardMaterial color="#1e293b" metalness={0.7} roughness={0.3} />
               </mesh>
-              {/* Tutup Hijau Mulsa Kompos */}
               <mesh position={[0, 0.03, 0]}>
                 <cylinderGeometry args={[0.08, 0.08, 0.045, 12]} />
                 <meshStandardMaterial color="#15803d" />
               </mesh>
-              {/* Silinder Pipa Biopori Masuk ke Dalam Tanah */}
               <mesh position={[0, -0.45, 0]}>
                 <cylinderGeometry args={[0.08, 0.08, 0.9, 12]} />
                 <meshStandardMaterial
@@ -469,13 +701,12 @@ export default function FloodDiorama3D({
       )}
 
       {/* =========================================================================
-          7. AKSI 3: POHON MANGROVE / VEGETASI TEPI SUNGAI (MANGROVE BUFFERS)
+          10. AKSI SOLUSI 2: POHON MANGROVE BERAKAR TUNJANG (mangrove)
          ========================================================================= */}
       {(actions.mangrove || actions.tanamPohon) && (
-        <group position={[0.75, 0.35, 0]}>
-          {/* Pohon Mangrove 1 */}
+        <group ref={mangroveGroupRef} position={[0.75, 0.35, 0]}>
+          {/* Pohon Mangrove 1 (Belakang) */}
           <group position={[0, 0, -1.2]}>
-            {/* Akar Tunjang (Stilt Roots) */}
             <mesh position={[-0.1, 0, 0]} rotation={[0, 0, -0.3]}>
               <cylinderGeometry args={[0.03, 0.04, 0.4, 6]} />
               <meshStandardMaterial color="#5c3a21" />
@@ -484,12 +715,10 @@ export default function FloodDiorama3D({
               <cylinderGeometry args={[0.03, 0.04, 0.4, 6]} />
               <meshStandardMaterial color="#5c3a21" />
             </mesh>
-            {/* Batang Utama */}
             <mesh position={[0, 0.35, 0]} castShadow>
               <cylinderGeometry args={[0.06, 0.08, 0.6, 8]} />
               <meshStandardMaterial color="#4a2e1b" roughness={0.8} />
             </mesh>
-            {/* Tajuk Daun Rimbun */}
             <mesh position={[0, 0.85, 0]} castShadow>
               <dodecahedronGeometry args={[0.38, 1]} />
               <meshStandardMaterial color="#15803d" roughness={0.6} />
@@ -522,6 +751,106 @@ export default function FloodDiorama3D({
         </group>
       )}
 
+      {/* =========================================================================
+          11. AKSI SOLUSI 3: SUMUR RESAPAN WARGA (sumurResapan)
+         ========================================================================= */}
+      {actions.sumurResapan && (
+        <group position={[-1.4, 0.46, -1.3]}>
+          {/* Tutup Beton Sumur Resapan di Halaman */}
+          <mesh position={[0, 0.03, 0]}>
+            <cylinderGeometry args={[0.22, 0.22, 0.05, 16]} />
+            <meshStandardMaterial color="#94a3b8" metalness={0.2} roughness={0.8} />
+          </mesh>
+          {/* Pipa Talang Air dari Atap Rumah Masuk ke Sumur */}
+          <mesh position={[-0.3, 0.45, 0]}>
+            <cylinderGeometry args={[0.025, 0.025, 0.9, 8]} />
+            <meshStandardMaterial color="#64748b" />
+          </mesh>
+          {/* Tabung Silinder Resapan Menembus Subsoil ke Akuifer */}
+          <mesh position={[0, -0.65, 0]}>
+            <cylinderGeometry args={[0.2, 0.2, 1.3, 12]} />
+            <meshStandardMaterial
+              color="#38bdf8"
+              transparent
+              opacity={xrayMode ? 0.9 : 0.35}
+              roughness={0.3}
+            />
+          </mesh>
+          {/* Animasi Tetesan Air Hujan Mengalir dari Talang ke Sumur Resapan */}
+          <group ref={sumurFlowRef}>
+            {[0, 1, 2].map((idx) => (
+              <mesh key={idx} position={[0, 0, 0]}>
+                <sphereGeometry args={[0.035, 6, 6]} />
+                <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={0.8} />
+              </mesh>
+            ))}
+          </group>
+        </group>
+      )}
+
+      {/* =========================================================================
+          12. AKSI SOLUSI 4: TAMAN HUJAN / RAIN GARDEN (rainGarden)
+         ========================================================================= */}
+      {actions.rainGarden && (
+        <group position={[-1.25, 0.44, -1.9]}>
+          {/* Cekungan Taman Bioswale */}
+          <mesh position={[0, -0.06, 0]}>
+            <boxGeometry args={[0.9, 0.12, 1.2]} />
+            <meshStandardMaterial color="#365314" roughness={0.9} />
+          </mesh>
+          {/* Kerikil Porus Penyerap di Dasar */}
+          <mesh position={[0, -0.02, 0]}>
+            <boxGeometry args={[0.82, 0.04, 1.1]} />
+            <meshStandardMaterial color="#78716c" roughness={0.9} />
+          </mesh>
+          {/* Air Hujan yang Tertampung di Rain Garden */}
+          <mesh ref={rainGardenWaterRef} position={[0, 0.01, 0]}>
+            <boxGeometry args={[0.8, 0.02, 1.05]} />
+            <meshStandardMaterial color="#38bdf8" transparent opacity={0.6} roughness={0.1} />
+          </mesh>
+          {/* Semak Tanaman Hias Penyerap & Bunga Warna-warni */}
+          {[-0.25, 0, 0.25].map((xOff, idx) => (
+            <group key={idx} position={[xOff, 0.08, (idx - 1) * 0.3]}>
+              <mesh>
+                <dodecahedronGeometry args={[0.1, 0]} />
+                <meshStandardMaterial color={idx === 1 ? "#ec4899" : "#22c55e"} />
+              </mesh>
+            </group>
+          ))}
+        </group>
+      )}
+
+      {/* =========================================================================
+          13. AKSI SOLUSI 5: NORMALISASI SUNGAI & JARING SAMPAH (bersihSungai)
+         ========================================================================= */}
+      {actions.bersihSungai && (
+        <group position={[0, 0, 0]}>
+          {/* Tanggul Pasangan Batu Rapih di Kedua Sisi Sungai */}
+          <mesh position={[-0.58, 0.05, 0]}>
+            <boxGeometry args={[0.08, 0.5, 5.5]} />
+            <meshStandardMaterial color="#94a3b8" roughness={0.7} />
+          </mesh>
+          <mesh position={[0.58, 0.05, 0]}>
+            <boxGeometry args={[0.08, 0.5, 5.5]} />
+            <meshStandardMaterial color="#94a3b8" roughness={0.7} />
+          </mesh>
+          {/* Jaring / Trap Net Penahan Sampah di Sisi Hulu Sungai */}
+          <group position={[0, 0.1, -1.8]}>
+            <mesh rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={[0.03, 0.03, 1.15, 8]} />
+              <meshStandardMaterial color="#eab308" metalness={0.5} />
+            </mesh>
+            {/* Pelampung Kuning Jaring */}
+            {[-0.4, -0.15, 0.15, 0.4].map((xPos, idx) => (
+              <mesh key={idx} position={[xPos, 0, 0]}>
+                <sphereGeometry args={[0.05, 8, 8]} />
+                <meshStandardMaterial color="#facc15" />
+              </mesh>
+            ))}
+          </group>
+        </group>
+      )}
+
       {/* Pepohonan Alami di Area Hutan Kanan (Permanen Hiasan) */}
       <group position={[2.2, 0.45, -0.5]}>
         <mesh position={[0, 0.4, 0]} castShadow>
@@ -545,7 +874,7 @@ export default function FloodDiorama3D({
       </group>
 
       {/* =========================================================================
-          8. EFEK CUACA: PARTIKEL HUJAN & AWAN LOW-POLY
+          14. EFEK CUACA: PARTIKEL HUJAN & AWAN LOW-POLY
          ========================================================================= */}
       {/* Tetesan Hujan 3D */}
       <group ref={rainGroupRef}>
@@ -613,7 +942,7 @@ export default function FloodDiorama3D({
       </group>
 
       {/* =========================================================================
-          9. TIGA (3) HOTSPOT EDUKASI 3D (INTERACTIVE HOTSPOT PINS)
+          15. TIGA (3) HOTSPOT EDUKASI 3D (INTERACTIVE HOTSPOT PINS)
          ========================================================================= */}
       {/* Hotspot 1: Saluran Sungai & Drainase (Kanan Belakang) */}
       <HotspotPin3D

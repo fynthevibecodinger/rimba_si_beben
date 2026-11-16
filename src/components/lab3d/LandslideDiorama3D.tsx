@@ -7,14 +7,20 @@ import HotspotPin3D from "./HotspotPin3D";
 /**
  * LandslideDiorama3D: Diorama 3D Interaktif Tanah Longsor & Lereng Bukit
  * 
- * Fitur:
- * - 3 Lapisan Geologi (Batuan Dasar Abu-abu, Lempung Cokelat Kemerahan, Topsoil Subur)
- * - Terasering Undakan Berjenjang (actions.terasering)
- * - Pepohonan Low-Poly dengan Jaringan Akar Dalam Tembus Batuan Dasar (actions.tanamPohon)
- * - Retakan & Luncuran Massa Longsor Menuju Kaki Bukit (actions.tebangLiar && weatherIntensity > 65)
- * - Mode X-Ray Transparan (xrayMode) memperlihatkan jaring akar dan batas lempung
- * - 2 Rumah Mini di Zona Kaki Lereng
- * - 3 Hotspot Edukasi Sains
+ * Lengkap dengan 10 Parameter Aksi Manusia & Rekayasa:
+ * 5 Aksi Risiko:
+ * 1. tebangLiar: Deforestasi lereng, tunggul kayu, rekahan tanah merekah, memicu luncuran
+ * 2. potongTebing: Pemotongan lereng vertikal tanpa penahan + kerikil runtuh
+ * 3. rumahKakiBukit: Rumah hunian tepat di zona luncuran berbahaya kaki tebing tertimbun
+ * 4. limbahLereng: Pipa pembuangan air limbah menjenuhkan permukaan tebing jadi lumpur licin
+ * 5. lahanMonokultur: Kebun sayur semusim berakar dangkal mudah tergerus di lereng curam
+ * 
+ * 5 Solusi Hijau:
+ * 1. tanamPohon: Vetiver & pohon kayu berakar tunjang dalam mengunci batuan dasar (X-Ray)
+ * 2. terasering: Undakan berjenjang memecah kecepatan aliran air hujan
+ * 3. bronjong: Dinding penahan kawat batu (gabion) di kaki tebing menahan luncuran tanah
+ * 4. drainaseLereng: Saluran beton bertingkat mengalirkan kelebihan air lereng dengan aman
+ * 5. sensorLereng: Ekstensometer pemantau dini tanah dengan lampu sirene LED berkedip
  */
 export default function LandslideDiorama3D({
   weatherIntensity,
@@ -29,7 +35,13 @@ export default function LandslideDiorama3D({
   const cloudGroupRef = useRef<THREE.Group>(null);
   const topsoilMatRef = useRef<THREE.MeshStandardMaterial>(null);
   const houseTiltRef = useRef<THREE.Group>(null);
+  const vulnerableHouseRef = useRef<THREE.Group>(null);
   const crackMeshRef = useRef<THREE.Mesh>(null);
+  const sensorLedRef = useRef<THREE.Mesh>(null);
+  const slopeDrainageFlowRef = useRef<THREE.Group>(null);
+  const wastewaterFlowRef = useRef<THREE.Group>(null);
+  const fallingPebblesRef = useRef<THREE.Group>(null);
+  const treesGroupRef = useRef<THREE.Group>(null);
 
   // Smooth lerp values
   const currentSlide = useRef(0);
@@ -50,11 +62,13 @@ export default function LandslideDiorama3D({
   // Flags kondisi simulasi
   const hasTrees = !!(actions.tanamPohon || actions.rumputVetiver);
   const hasTerracing = !!actions.terasering;
-  const isDeforested = !!actions.tebangLiar;
+  const hasBronjong = !!actions.bronjong;
+  const isDeforested = !!(actions.tebangLiar || actions.lahanMonokultur);
+  const isSteepCut = !!(actions.potongTebing || actions.limbahLereng);
 
-  // Kondisi kritis longsor terjadi jika lereng ditebang liar dan hujan deras > 65
-  // Jika ada terasering dan pohon, risiko longsor tertahan
-  const isLandslideTriggered = isDeforested && weatherIntensity > 65 && !hasTrees;
+  // Kondisi kritis longsor terjadi jika ada aksi risiko & cuaca hujan tinggi tanpa perlindungan bronjong/pohon
+  const isProtected = (hasTrees && hasBronjong) || (hasTerracing && hasBronjong);
+  const isLandslideTriggered = (isDeforested || isSteepCut) && weatherIntensity > 50 && !isProtected;
 
   // 2. Loop Animasi useFrame
   useFrame((state, delta) => {
@@ -84,42 +98,116 @@ export default function LandslideDiorama3D({
       cloudGroupRef.current.position.z = Math.cos(time * 0.28) * 0.3;
     }
 
-    // C. Kalkulasi Luncuran Massa Tanah Longsor (Lerp)
-    const targetSlide = isLandslideTriggered ? 1.0 : 0.0;
+    // C. Luncuran Massa Tanah Longsor (Lerp)
+    // Jika ada bronjong, pergerakan longsor terhambat di kaki lereng
+    const targetSlide = isLandslideTriggered ? (hasBronjong ? 0.35 : 1.0) : 0.0;
     currentSlide.current = THREE.MathUtils.lerp(currentSlide.current, targetSlide, delta * 2.2);
 
     if (slideBlockRef.current) {
-      // Luncuran bergerak miring ke kanan-bawah menuju kaki bukit
       const s = currentSlide.current;
       slideBlockRef.current.position.x = -0.4 + s * 1.45;
       slideBlockRef.current.position.y = 0.95 - s * 0.65;
       slideBlockRef.current.rotation.z = -s * 0.22;
-      slideBlockRef.current.visible = isDeforested;
+      slideBlockRef.current.visible = isDeforested || isSteepCut;
     }
 
     // Retakan tanah di lereng atas merekah saat mendekati longsor
     if (crackMeshRef.current) {
-      const crackIntensity = isDeforested && weatherIntensity > 40 ? Math.min(1, (weatherIntensity - 40) / 40) : 0;
+      const crackIntensity = isDeforested && weatherIntensity > 35 ? Math.min(1, (weatherIntensity - 35) / 45) : 0;
       crackMeshRef.current.scale.set(1, crackIntensity, 1);
       crackMeshRef.current.visible = crackIntensity > 0.05;
     }
 
-    // Rumah mini di kaki bukit sedikit terdorong / miring saat tertimbun material longsor
+    // Rumah mini tertimbun / terdorong
     if (houseTiltRef.current) {
-      const dangerTilt = currentSlide.current > 0.7 ? (currentSlide.current - 0.7) * 0.25 : 0;
+      const dangerTilt = currentSlide.current > 0.6 ? (currentSlide.current - 0.6) * 0.28 : 0;
       houseTiltRef.current.rotation.z = dangerTilt;
       houseTiltRef.current.position.y = -dangerTilt * 0.2;
     }
 
+    if (vulnerableHouseRef.current) {
+      const dangerTilt = currentSlide.current > 0.4 ? (currentSlide.current - 0.4) * 0.45 : 0;
+      vulnerableHouseRef.current.rotation.z = dangerTilt;
+      vulnerableHouseRef.current.position.y = 0.14 - dangerTilt * 0.25;
+      vulnerableHouseRef.current.rotation.x = dangerTilt * 0.3;
+    }
+
     // D. Warna Tanah Menghitam Karena Jenuh Air (Waterlogged mud)
-    const targetSaturation = isDeforested && weatherIntensity > 60 ? (weatherIntensity - 60) / 40 : 0;
+    const targetSaturation = (isDeforested || actions.limbahLereng) && weatherIntensity > 50 ? (weatherIntensity - 50) / 50 : 0;
     currentSoilDarkness.current = THREE.MathUtils.lerp(currentSoilDarkness.current, targetSaturation, delta * 3.0);
 
     if (topsoilMatRef.current) {
-      // Lerp dari cokelat tanah subur (#6b4423) ke lumpur jenuh (#26160d)
       const baseCol = new THREE.Color("#6b4423");
       const wetCol = new THREE.Color("#26160d");
       topsoilMatRef.current.color.copy(baseCol).lerp(wetCol, currentSoilDarkness.current);
+    }
+
+    // E. Animasi Lampu Sensor Peringatan Dini (sensorLereng)
+    if (sensorLedRef.current && actions.sensorLereng) {
+      const mat = sensorLedRef.current.material as THREE.MeshStandardMaterial;
+      if (isLandslideTriggered) {
+        // Bahaya besar: Merah kedip cepat
+        const blink = Math.sin(time * 16) > 0 ? 1 : 0.1;
+        mat.color.set("#ef4444");
+        mat.emissive.set("#ef4444");
+        mat.emissiveIntensity = blink * 2.5;
+      } else if (weatherIntensity > 50) {
+        // Waspada: Kuning kedip sedang
+        const blink = Math.sin(time * 8) > 0 ? 1 : 0.2;
+        mat.color.set("#eab308");
+        mat.emissive.set("#eab308");
+        mat.emissiveIntensity = blink * 1.8;
+      } else {
+        // Aman: Hijau stabil
+        mat.color.set("#22c55e");
+        mat.emissive.set("#22c55e");
+        mat.emissiveIntensity = 0.8;
+      }
+    }
+
+    // F. Animasi Air Mengalir Cepat di Saluran Drainase Lereng (drainaseLereng)
+    if (slopeDrainageFlowRef.current) {
+      slopeDrainageFlowRef.current.visible = actions.drainaseLereng && weatherIntensity > 15;
+      if (actions.drainaseLereng) {
+        slopeDrainageFlowRef.current.children.forEach((waterDrop, idx) => {
+          const flowCycle = (time * 3.2 + idx * 0.35) % 1.0;
+          // Meluncur miring sepanjang saluran V
+          waterDrop.position.x = -1.2 + flowCycle * 2.0;
+          waterDrop.position.y = 0.85 - flowCycle * 0.7;
+        });
+      }
+    }
+
+    // G. Animasi Aliran Air Limbah Mencemari Lereng (limbahLereng)
+    if (wastewaterFlowRef.current) {
+      wastewaterFlowRef.current.visible = actions.limbahLereng;
+      if (actions.limbahLereng) {
+        wastewaterFlowRef.current.children.forEach((drop, idx) => {
+          const flowCycle = (time * 2.0 + idx * 0.4) % 1.0;
+          drop.position.x = -1.1 + flowCycle * 1.3;
+          drop.position.y = 0.78 - flowCycle * 0.5;
+          drop.position.z = -0.5 + flowCycle * 0.2;
+        });
+      }
+    }
+
+    // H. Animasi Kerikil Jatuh pada Tebing Terpotong (potongTebing)
+    if (fallingPebblesRef.current) {
+      fallingPebblesRef.current.visible = actions.potongTebing;
+      if (actions.potongTebing) {
+        fallingPebblesRef.current.children.forEach((peb, idx) => {
+          const fallCycle = (time * (1.5 + idx * 0.5) + idx * 0.8) % 1.0;
+          peb.position.y = 0.65 - fallCycle * 0.5;
+          peb.position.x = -0.15 + Math.sin(time * 5 + idx) * 0.05;
+        });
+      }
+    }
+
+    // I. Goyangan Pohon Terhembus Angin
+    if (treesGroupRef.current) {
+      treesGroupRef.current.children.forEach((tree, idx) => {
+        tree.rotation.z = Math.sin(time * 1.8 + idx) * 0.035;
+      });
     }
   });
 
@@ -149,7 +237,6 @@ export default function LandslideDiorama3D({
       </group>
 
       <group ref={cloudGroupRef} position={[0, 4.5, 0]}>
-        {/* Awan Stylized Low-Poly */}
         <group position={[-1.2, 0, -1.0]}>
           <mesh castShadow position={[0, 0, 0]}>
             <sphereGeometry args={[0.65, 7, 7]} />
@@ -179,8 +266,7 @@ export default function LandslideDiorama3D({
       {/* =========================================================================
           2. POTONGAN 3 LAPISAN GEOLOGI (CROSS-SECTION CUTAWAY)
          ========================================================================= */}
-
-      {/* A. LAPISAN 1: BATUAN DASAR ABU-ABU (BEDROCK / BASEMENT ROCK) */}
+      {/* A. LAPISAN 1: BATUAN DASAR (BEDROCK) */}
       <mesh receiveShadow position={[0, -1.15, 0]}>
         <boxGeometry args={[5.4, 0.9, 5.4]} />
         <meshStandardMaterial
@@ -191,7 +277,6 @@ export default function LandslideDiorama3D({
           opacity={groundOpacity}
         />
       </mesh>
-      {/* Garis batas batuan dasar aksen */}
       <mesh position={[0, -0.7, 2.71]}>
         <boxGeometry args={[5.4, 0.04, 0.02]} />
         <meshBasicMaterial color="#1e293b" />
@@ -201,8 +286,7 @@ export default function LandslideDiorama3D({
         <meshBasicMaterial color="#1e293b" />
       </mesh>
 
-      {/* B. LAPISAN 2: LAPISAN LEMPUNG (CLAY / SUBSOIL - BIDANG GELINCIR) */}
-      {/* Bagian datar bawah kaki lereng (x: 0.5 s/d 2.7) */}
+      {/* B. LAPISAN 2: LAPISAN LEMPUNG (CLAY - BIDANG GELINCIR) */}
       <mesh receiveShadow position={[1.35, -0.4, 0]}>
         <boxGeometry args={[2.7, 0.6, 5.4]} />
         <meshStandardMaterial
@@ -212,7 +296,6 @@ export default function LandslideDiorama3D({
           opacity={groundOpacity}
         />
       </mesh>
-      {/* Bagian lempung miring ke puncak lereng (x: -2.7 s/d 0.0) */}
       <group position={[-0.8, -0.15, 0]} rotation={[0, 0, 0.32]}>
         <mesh receiveShadow position={[0, 0, 0]}>
           <boxGeometry args={[2.8, 0.65, 5.4]} />
@@ -224,7 +307,6 @@ export default function LandslideDiorama3D({
           />
         </mesh>
       </group>
-      {/* Bagian lempung puncak bukit kiri (x: -2.0 s/d -2.7) */}
       <mesh receiveShadow position={[-2.1, 0.35, 0]}>
         <boxGeometry args={[1.2, 0.8, 5.4]} />
         <meshStandardMaterial
@@ -235,7 +317,7 @@ export default function LandslideDiorama3D({
         />
       </mesh>
 
-      {/* Aksen Indikator Bidang Gelincir (Slip Plane Marker) dalam X-Ray */}
+      {/* Aksen Indikator Bidang Gelincir dalam X-Ray */}
       {xrayMode && (
         <group position={[-0.75, 0.22, 0]} rotation={[0, 0, 0.32]}>
           <mesh position={[0, 0, 0]}>
@@ -251,8 +333,7 @@ export default function LandslideDiorama3D({
         </group>
       )}
 
-      {/* C. LAPISAN 3: LAPISAN TOPSOIL SUBUR & PERMUKAAN RUMPUT */}
-      {/* Topsoil kaki lereng datar (zona pemukiman) */}
+      {/* C. LAPISAN 3: LAPISAN TOPSOIL & RUMPUT KAKI LERENG */}
       <mesh receiveShadow position={[1.35, 0.0, 0]}>
         <boxGeometry args={[2.7, 0.22, 5.4]} />
         <meshStandardMaterial
@@ -263,7 +344,6 @@ export default function LandslideDiorama3D({
           opacity={groundOpacity}
         />
       </mesh>
-      {/* Rumput hijau kaki lereng */}
       <mesh receiveShadow position={[1.35, 0.12, 0]}>
         <boxGeometry args={[2.7, 0.04, 5.4]} />
         <meshStandardMaterial
@@ -278,9 +358,7 @@ export default function LandslideDiorama3D({
           3. KONTUR LERENG: LERENG CURAM VS TERASERING BERUNDAK
          ========================================================================= */}
       {!hasTerracing ? (
-        /* Skenario A: Lereng Alami Curam Halus (Tanpa Terasering) */
         <group position={[-0.8, 0.45, 0]} rotation={[0, 0, 0.32]}>
-          {/* Topsoil lereng curam */}
           <mesh receiveShadow castShadow position={[0, 0, 0]}>
             <boxGeometry args={[2.7, 0.24, 5.4]} />
             <meshStandardMaterial
@@ -290,7 +368,6 @@ export default function LandslideDiorama3D({
               opacity={groundOpacity}
             />
           </mesh>
-          {/* Permukaan lereng curam (rumput atau tanah gundul jika ditebang) */}
           <mesh receiveShadow position={[0, 0.13, 0]}>
             <boxGeometry args={[2.7, 0.04, 5.4]} />
             <meshStandardMaterial
@@ -316,7 +393,6 @@ export default function LandslideDiorama3D({
               <boxGeometry args={[0.9, 0.24, 5.38]} />
               <meshStandardMaterial color="#40916c" roughness={0.7} />
             </mesh>
-            {/* Dinding batu penguat tebing undakan (batu kali / talud) */}
             <mesh position={[0.43, -0.06, 0]}>
               <boxGeometry args={[0.08, 0.35, 5.38]} />
               <meshStandardMaterial color="#64748b" roughness={0.9} />
@@ -329,12 +405,10 @@ export default function LandslideDiorama3D({
               <boxGeometry args={[0.95, 0.26, 5.38]} />
               <meshStandardMaterial color="#38a169" roughness={0.7} />
             </mesh>
-            {/* Saluran drainase air di sudut undakan */}
             <mesh position={[-0.38, 0.12, 0]}>
               <boxGeometry args={[0.12, 0.05, 5.38]} />
               <meshStandardMaterial color="#475569" roughness={0.6} />
             </mesh>
-            {/* Dinding batu penguat */}
             <mesh position={[0.45, -0.07, 0]}>
               <boxGeometry args={[0.08, 0.4, 5.38]} />
               <meshStandardMaterial color="#64748b" roughness={0.9} />
@@ -347,7 +421,6 @@ export default function LandslideDiorama3D({
               <boxGeometry args={[0.95, 0.28, 5.38]} />
               <meshStandardMaterial color="#2d6a4f" roughness={0.7} />
             </mesh>
-            {/* Dinding batu penguat */}
             <mesh position={[0.45, -0.08, 0]}>
               <boxGeometry args={[0.08, 0.45, 5.38]} />
               <meshStandardMaterial color="#64748b" roughness={0.9} />
@@ -379,36 +452,107 @@ export default function LandslideDiorama3D({
       </group>
 
       {/* =========================================================================
-          4. RETAKAN TANAH & BLOK LONGSOR YANG MELUNCUR (LANDSLIDE MASS)
+          4. AKSI RISIKO 2: PEMOTONGAN LERENG TERJAL (potongTebing)
          ========================================================================= */}
+      {actions.potongTebing && (
+        <group position={[-0.1, 0.45, 0]}>
+          {/* Potongan Tebing Vertikal Menganga Tanpa Dinding Penahan */}
+          <mesh position={[0, 0, 0]}>
+            <boxGeometry args={[0.14, 0.65, 5.38]} />
+            <meshStandardMaterial color="#78350f" roughness={0.95} />
+          </mesh>
+          {/* Bebatuan Kerikil Kasar yang Runtuh Berjatuhan */}
+          <group ref={fallingPebblesRef}>
+            {[-1.2, 0, 1.2].map((zPos, idx) => (
+              <mesh key={idx} position={[0, 0, zPos]}>
+                <dodecahedronGeometry args={[0.05, 0]} />
+                <meshStandardMaterial color="#475569" roughness={0.9} />
+              </mesh>
+            ))}
+          </group>
+        </group>
+      )}
 
-      {/* A. Retakan Merekah di Kepala Lereng (Fissure Cracks) */}
+      {/* =========================================================================
+          5. AKSI RISIKO 4: LIMBAH CAIR MENJENUHKAN LERENG (limbahLereng)
+         ========================================================================= */}
+      {actions.limbahLereng && (
+        <group position={[-1.2, 0.85, -0.6]}>
+          {/* Pipa Paralon PVC Limbah Menjorok Keluar Lereng */}
+          <mesh rotation={[0, 0, -Math.PI / 6]}>
+            <cylinderGeometry args={[0.03, 0.03, 0.35, 8]} />
+            <meshStandardMaterial color="#cbd5e1" metalness={0.2} roughness={0.4} />
+          </mesh>
+          {/* Saluran Rembesan Lumpur Basah Berminyak di Permukaan Lereng */}
+          <mesh position={[0.4, -0.22, 0.1]} rotation={[-Math.PI / 2, 0, 0.35]}>
+            <planeGeometry args={[0.25, 0.8]} />
+            <meshStandardMaterial color="#1c1917" roughness={0.2} metalness={0.3} transparent opacity={0.85} />
+          </mesh>
+          {/* Animasi Tetesan Air Limbah */}
+          <group ref={wastewaterFlowRef}>
+            {[0, 1, 2].map((idx) => (
+              <mesh key={idx} position={[0, 0, 0]}>
+                <sphereGeometry args={[0.03, 5, 5]} />
+                <meshBasicMaterial color="#334155" />
+              </mesh>
+            ))}
+          </group>
+        </group>
+      )}
+
+      {/* =========================================================================
+          6. AKSI RISIKO 5: KEBUN MONOKULTUR BERAKAR PENDEK (lahanMonokultur)
+         ========================================================================= */}
+      {actions.lahanMonokultur && (
+        <group position={[-1.0, 0.65, 0.6]}>
+          {/* Barisan Petak Sayur Kol / Kubis Semusim di Lereng Curam */}
+          {[-0.6, 0, 0.6].map((zOff, rIdx) => (
+            <group key={rIdx} position={[0, 0, zOff]}>
+              <mesh position={[0, 0.02, 0]} rotation={[0, 0, 0.32]}>
+                <boxGeometry args={[0.4, 0.04, 0.35]} />
+                <meshStandardMaterial color="#713f12" roughness={0.9} />
+              </mesh>
+              {/* Tanaman Kubis Berakar Dangkal */}
+              <mesh position={[0, 0.08, 0]}>
+                <dodecahedronGeometry args={[0.09, 0]} />
+                <meshStandardMaterial color="#84cc16" />
+              </mesh>
+              {/* Akar dangkal sangat pendek (terlihat di X-Ray) */}
+              {xrayMode && (
+                <mesh position={[0, -0.08, 0]}>
+                  <cylinderGeometry args={[0.015, 0.005, 0.12, 4]} />
+                  <meshStandardMaterial color="#a16207" />
+                </mesh>
+              )}
+            </group>
+          ))}
+        </group>
+      )}
+
+      {/* =========================================================================
+          7. RETAKAN TANAH & BLOK LONGSOR YANG MELUNCUR (LANDSLIDE MASS)
+         ========================================================================= */}
       <group ref={crackMeshRef} position={[-1.6, 0.95, 0]}>
-        {/* Garis retakan 1 */}
         <mesh position={[0, 0, -0.8]} rotation={[0, 0.15, 0]}>
           <boxGeometry args={[0.08, 0.14, 1.6]} />
           <meshBasicMaterial color="#180e07" />
         </mesh>
-        {/* Garis retakan 2 */}
         <mesh position={[0.1, 0, 0.9]} rotation={[0, -0.2, 0]}>
           <boxGeometry args={[0.09, 0.15, 1.8]} />
           <meshBasicMaterial color="#180e07" />
         </mesh>
       </group>
 
-      {/* B. Massa Blok Tanah Longsor yang Meluncur (Sliding Mud & Soil Mass) */}
+      {/* Massa Blok Tanah Longsor yang Meluncur */}
       <group ref={slideBlockRef} position={[-0.4, 0.95, 0]}>
-        {/* Bongkahan Utama Tanah Lumpur */}
         <mesh castShadow position={[0, 0, 0]}>
           <boxGeometry args={[1.1, 0.28, 2.2]} />
           <meshStandardMaterial color="#3b2314" roughness={0.95} />
         </mesh>
-        {/* Lapisan lumpur basah berkilau */}
         <mesh position={[0.05, 0.12, 0]}>
           <boxGeometry args={[0.9, 0.08, 2.0]} />
           <meshStandardMaterial color="#22130a" roughness={0.4} />
         </mesh>
-        {/* Serpihan Batu-Batu Kasar yang Terbawa Longsor */}
         <mesh castShadow position={[0.4, 0.15, 0.5]} rotation={[0.4, 0.5, 0.2]}>
           <dodecahedronGeometry args={[0.16, 0]} />
           <meshStandardMaterial color="#475569" roughness={0.9} />
@@ -424,20 +568,16 @@ export default function LandslideDiorama3D({
       </group>
 
       {/* =========================================================================
-          5. PEPOHONAN & JARING-JARING AKAR PENGIKAT (ROOT NETWORK)
+          8. PEPOHONAN & JARING AKAR PENGIKAT (tanamPohon)
          ========================================================================= */}
-
-      {/* Jika Aksi Tanam Pohon / Konservasi Aktif */}
       {hasTrees && (
-        <group position={[0, 0, 0]}>
+        <group ref={treesGroupRef} position={[0, 0, 0]}>
           {/* Pohon 1: Puncak Bukit Kiri */}
           <group position={[-2.1, 1.05, -1.0]}>
-            {/* Batang */}
             <mesh castShadow position={[0, 0.4, 0]}>
               <cylinderGeometry args={[0.08, 0.1, 0.8, 6]} />
               <meshStandardMaterial color="#452c1e" roughness={0.8} />
             </mesh>
-            {/* Tajuk Daun Segitiga Pinus / Cemara */}
             <mesh castShadow position={[0, 1.0, 0]}>
               <coneGeometry args={[0.45, 0.9, 6]} />
               <meshStandardMaterial color="#1b4332" roughness={0.6} />
@@ -449,7 +589,6 @@ export default function LandslideDiorama3D({
 
             {/* JARING AKAR 1: Tembus Lempung Hingga Batuan Dasar */}
             <group position={[0, 0, 0]}>
-              {/* Akar Tunjang Utama (Taproot) */}
               <mesh position={[0, -0.9, 0]}>
                 <cylinderGeometry args={[0.06, 0.03, 1.8, 6]} />
                 <meshStandardMaterial
@@ -459,12 +598,10 @@ export default function LandslideDiorama3D({
                   emissiveIntensity={xrayMode ? 0.4 : 0}
                 />
               </mesh>
-              {/* Cabang Akar Lateral 1 */}
               <mesh position={[0.2, -0.4, 0.15]} rotation={[0, 0, -0.5]}>
                 <cylinderGeometry args={[0.035, 0.015, 0.7, 5]} />
                 <meshStandardMaterial color="#78350f" roughness={0.9} />
               </mesh>
-              {/* Cabang Akar Lateral 2 */}
               <mesh position={[-0.15, -0.6, -0.2]} rotation={[0, 0, 0.4]}>
                 <cylinderGeometry args={[0.03, 0.015, 0.6, 5]} />
                 <meshStandardMaterial color="#78350f" roughness={0.9} />
@@ -478,7 +615,6 @@ export default function LandslideDiorama3D({
               <cylinderGeometry args={[0.09, 0.12, 0.9, 6]} />
               <meshStandardMaterial color="#3e2723" roughness={0.8} />
             </mesh>
-            {/* Tajuk Daun Rimbun Bulat Low-Poly */}
             <mesh castShadow position={[0, 1.15, 0]}>
               <icosahedronGeometry args={[0.55, 1]} />
               <meshStandardMaterial color="#2d6a4f" roughness={0.7} />
@@ -488,7 +624,7 @@ export default function LandslideDiorama3D({
               <meshStandardMaterial color="#40916c" roughness={0.7} />
             </mesh>
 
-            {/* JARING AKAR 2: Cengkeraman Bidang Gelincir */}
+            {/* JARING AKAR 2 */}
             <group position={[0, 0, 0]}>
               <mesh position={[0.05, -0.85, 0]} rotation={[0, 0, -0.1]}>
                 <cylinderGeometry args={[0.07, 0.035, 1.7, 6]} />
@@ -503,53 +639,15 @@ export default function LandslideDiorama3D({
                 <cylinderGeometry args={[0.04, 0.02, 0.8, 5]} />
                 <meshStandardMaterial color="#78350f" roughness={0.9} />
               </mesh>
-              <mesh position={[-0.3, -0.5, 0.25]} rotation={[-0.2, 0, 0.5]}>
-                <cylinderGeometry args={[0.035, 0.015, 0.7, 5]} />
-                <meshStandardMaterial color="#78350f" roughness={0.9} />
-              </mesh>
             </group>
           </group>
 
-          {/* Pohon 3: Lereng Tengah */}
-          <group position={[-0.5, 0.65, -0.9]}>
-            <mesh castShadow position={[0, 0.35, 0]}>
-              <cylinderGeometry args={[0.07, 0.09, 0.7, 6]} />
-              <meshStandardMaterial color="#4e342e" roughness={0.8} />
-            </mesh>
-            <mesh castShadow position={[0, 0.9, 0]}>
-              <coneGeometry args={[0.42, 0.8, 6]} />
-              <meshStandardMaterial color="#1b4332" roughness={0.6} />
-            </mesh>
-            <mesh castShadow position={[0, 1.3, 0]}>
-              <coneGeometry args={[0.3, 0.6, 6]} />
-              <meshStandardMaterial color="#38a169" roughness={0.6} />
-            </mesh>
-
-            {/* JARING AKAR 3: Menembus Batuan Dasar */}
-            <group position={[0, 0, 0]}>
-              <mesh position={[0, -0.75, 0]}>
-                <cylinderGeometry args={[0.05, 0.025, 1.5, 6]} />
-                <meshStandardMaterial
-                  color="#78350f"
-                  roughness={0.9}
-                  emissive={xrayMode ? "#b45309" : "#000000"}
-                  emissiveIntensity={xrayMode ? 0.4 : 0}
-                />
-              </mesh>
-              <mesh position={[0.25, -0.35, 0.15]} rotation={[0, 0, -0.55]}>
-                <cylinderGeometry args={[0.03, 0.015, 0.6, 5]} />
-                <meshStandardMaterial color="#78350f" roughness={0.9} />
-              </mesh>
-            </group>
-          </group>
-
-          {/* Rumpun Rumput Vetiver / Semak Berakar Dalam */}
+          {/* Rumpun Rumput Vetiver Serabut Dalam */}
           <group position={[-0.2, 0.45, 0.4]}>
             <mesh position={[0, 0.08, 0]}>
               <coneGeometry args={[0.22, 0.25, 5]} />
               <meshStandardMaterial color="#48bb78" />
             </mesh>
-            {/* Akar wangi serabut tebal masuk ke dalam */}
             <mesh position={[0, -0.4, 0]}>
               <cylinderGeometry args={[0.025, 0.01, 0.8, 5]} />
               <meshStandardMaterial color="#92400e" />
@@ -558,28 +656,24 @@ export default function LandslideDiorama3D({
         </group>
       )}
 
-      {/* Jika Ditebang Liar (actions.tebangLiar): Tampilkan Tunggul Kayu Bekas Tebasan */}
-      {isDeforested && (
+      {/* Tunggul Kayu Bekas Tebasan (tebangLiar) */}
+      {actions.tebangLiar && (
         <group position={[0, 0, 0]}>
-          {/* Tunggul 1 */}
           <group position={[-1.2, 0.82, 0.8]}>
             <mesh castShadow position={[0, 0.08, 0]}>
               <cylinderGeometry args={[0.09, 0.11, 0.16, 6]} />
               <meshStandardMaterial color="#5c3a21" roughness={0.9} />
             </mesh>
-            {/* Lingkaran tahun potongan kayu */}
             <mesh position={[0, 0.165, 0]} rotation={[-Math.PI / 2, 0, 0]}>
               <circleGeometry args={[0.085, 6]} />
               <meshStandardMaterial color="#d4a373" />
             </mesh>
-            {/* Batang kayu gelondongan tumbang */}
             <mesh castShadow position={[0.25, 0.06, 0.3]} rotation={[0.2, 0.8, 1.5]}>
               <cylinderGeometry args={[0.07, 0.08, 0.65, 6]} />
               <meshStandardMaterial color="#4a2c11" roughness={0.9} />
             </mesh>
           </group>
 
-          {/* Tunggul 2 */}
           <group position={[-0.6, 0.58, -0.7]}>
             <mesh castShadow position={[0, 0.07, 0]}>
               <cylinderGeometry args={[0.08, 0.1, 0.14, 6]} />
@@ -594,96 +688,140 @@ export default function LandslideDiorama3D({
       )}
 
       {/* =========================================================================
-          6. DUA (2) RUMAH MINI DI KAKI BUKIT (PEMUKIMAN ZONA RAWAN)
+          9. AKSI RISIKO 3: RUMAH TEPAT DI KAKI TEBING (rumahKakiBukit)
          ========================================================================= */}
+      {actions.rumahKakiBukit && (
+        <group ref={vulnerableHouseRef} position={[0.7, 0.14, 0.75]}>
+          {/* Pondasi Ringkih */}
+          <mesh position={[0, 0.05, 0]}>
+            <boxGeometry args={[0.55, 0.1, 0.55]} />
+            <meshStandardMaterial color="#94a3b8" />
+          </mesh>
+          {/* Badan Rumah Kayu */}
+          <mesh castShadow position={[0, 0.22, 0]}>
+            <boxGeometry args={[0.5, 0.26, 0.5]} />
+            <meshStandardMaterial color="#78350f" />
+          </mesh>
+          {/* Atap Pelana Genteng Merah Peringatan Bahaya */}
+          <mesh castShadow position={[0, 0.44, 0]}>
+            <coneGeometry args={[0.45, 0.24, 4]} />
+            <meshStandardMaterial color="#ef4444" roughness={0.5} />
+          </mesh>
+        </group>
+      )}
 
-      {/* Rumah 1: Paling Dekat Lereng (Bisa Terdampak Longsor) */}
-      <group ref={houseTiltRef} position={[0.95, 0.14, -0.6]}>
-        {/* Pondasi Beton / Batu Rumah */}
+      {/* Rumah Warga Aman di Kaki Lereng */}
+      <group ref={houseTiltRef} position={[1.4, 0.14, -0.7]}>
         <mesh position={[0, 0.06, 0]}>
           <boxGeometry args={[0.7, 0.12, 0.7]} />
           <meshStandardMaterial color="#cbd5e1" roughness={0.8} />
         </mesh>
-        {/* Badan Rumah Kayu */}
         <mesh castShadow position={[0, 0.28, 0]}>
           <boxGeometry args={[0.62, 0.34, 0.62]} />
           <meshStandardMaterial color="#b45309" roughness={0.7} />
         </mesh>
-        {/* Atap Pelana Genteng Merah */}
-        <mesh castShadow position={[0, 0.56, 0]} rotation={[0, 0, 0]}>
+        <mesh castShadow position={[0, 0.56, 0]}>
           <coneGeometry args={[0.55, 0.32, 4]} />
-          <meshStandardMaterial color="#b91c1c" roughness={0.6} />
-        </mesh>
-        {/* Pintu Rumah */}
-        <mesh position={[0.315, 0.24, 0]}>
-          <boxGeometry args={[0.02, 0.22, 0.14]} />
-          <meshStandardMaterial color="#451a03" />
-        </mesh>
-        {/* Jendela Kuning Hangat */}
-        <mesh position={[0.315, 0.32, 0.16]}>
-          <boxGeometry args={[0.02, 0.1, 0.1]} />
-          <meshStandardMaterial color="#fef08a" emissive="#fef08a" emissiveIntensity={0.5} />
-        </mesh>
-      </group>
-
-      {/* Rumah 2: Di Sisi Kanan Kaki Bukit */}
-      <group position={[1.85, 0.14, 0.7]}>
-        {/* Pondasi */}
-        <mesh position={[0, 0.06, 0]}>
-          <boxGeometry args={[0.8, 0.12, 0.75]} />
-          <meshStandardMaterial color="#94a3b8" roughness={0.8} />
-        </mesh>
-        {/* Badan Rumah Cream / Putih */}
-        <mesh castShadow position={[0, 0.3, 0]}>
-          <boxGeometry args={[0.72, 0.36, 0.68]} />
-          <meshStandardMaterial color="#f8fafc" roughness={0.6} />
-        </mesh>
-        {/* Atap Genteng Hijau Hutan */}
-        <mesh castShadow position={[0, 0.6, 0]} rotation={[0, Math.PI / 4, 0]}>
-          <coneGeometry args={[0.62, 0.36, 4]} />
           <meshStandardMaterial color="#15803d" roughness={0.6} />
         </mesh>
-        {/* Cerobong Asap Bata */}
-        <mesh position={[0.18, 0.7, 0.12]}>
-          <boxGeometry args={[0.08, 0.2, 0.08]} />
-          <meshStandardMaterial color="#7f1d1d" />
+      </group>
+
+      <group position={[2.0, 0.14, 0.8]}>
+        <mesh position={[0, 0.06, 0]}>
+          <boxGeometry args={[0.75, 0.12, 0.75]} />
+          <meshStandardMaterial color="#94a3b8" roughness={0.8} />
         </mesh>
-        {/* Pintu & Jendela */}
-        <mesh position={[0, 0.25, 0.345]}>
-          <boxGeometry args={[0.14, 0.22, 0.02]} />
-          <meshStandardMaterial color="#451a03" />
+        <mesh castShadow position={[0, 0.3, 0]}>
+          <boxGeometry args={[0.68, 0.36, 0.68]} />
+          <meshStandardMaterial color="#f8fafc" roughness={0.6} />
         </mesh>
-        <mesh position={[-0.2, 0.32, 0.345]}>
-          <boxGeometry args={[0.1, 0.1, 0.02]} />
-          <meshStandardMaterial color="#fef08a" emissive="#fef08a" emissiveIntensity={0.4} />
+        <mesh castShadow position={[0, 0.6, 0]} rotation={[0, Math.PI / 4, 0]}>
+          <coneGeometry args={[0.6, 0.36, 4]} />
+          <meshStandardMaterial color="#c2410c" roughness={0.6} />
         </mesh>
       </group>
 
-      {/* Jalan Setapak Kaki Bukit & Pagar Sederhana */}
-      <mesh position={[1.4, 0.13, 0.05]} rotation={[-Math.PI / 2, 0, 0.4]}>
-        <planeGeometry args={[0.35, 4.2]} />
-        <meshStandardMaterial color="#a8a29e" roughness={0.9} />
-      </mesh>
+      {/* =========================================================================
+          10. AKSI SOLUSI 3: DINDING PENAHAN BRONJONG BATU (bronjong)
+         ========================================================================= */}
+      {actions.bronjong && (
+        <group position={[0.45, 0.24, 0]}>
+          {/* Tumpukan Kotak Bronjong Kawat Besi Isi Batu Kali */}
+          {[-1.5, -0.5, 0.5, 1.5].map((zPos, idx) => (
+            <group key={idx} position={[0, 0, zPos]}>
+              <mesh position={[0, 0, 0]}>
+                <boxGeometry args={[0.22, 0.38, 0.95]} />
+                <meshStandardMaterial color="#64748b" metalness={0.4} roughness={0.7} />
+              </mesh>
+              {/* Kawat Penjepit Logam Silang */}
+              <mesh position={[0.115, 0, 0]}>
+                <boxGeometry args={[0.01, 0.36, 0.92]} />
+                <meshStandardMaterial color="#334155" wireframe />
+              </mesh>
+              {/* Batuan Granit Padat di Dalam Keranjang Bronjong */}
+              <mesh position={[0, 0.12, 0]}>
+                <dodecahedronGeometry args={[0.09, 0]} />
+                <meshStandardMaterial color="#475569" roughness={0.9} />
+              </mesh>
+            </group>
+          ))}
+        </group>
+      )}
 
-      {/* Dinding Penahan Tanah (Talud / Bronjong Kaki Bukit) jika Terasering Aktif */}
-      {hasTerracing && (
-        <group position={[0.55, 0.22, -0.3]}>
-          <mesh position={[0, 0, 0]}>
-            <boxGeometry args={[0.12, 0.32, 2.2]} />
-            <meshStandardMaterial color="#64748b" roughness={0.9} />
+      {/* =========================================================================
+          11. AKSI SOLUSI 4: SALURAN DRAINASE LERENG (drainaseLereng)
+         ========================================================================= */}
+      {actions.drainaseLereng && (
+        <group position={[0, 0.25, 0]}>
+          {/* Saluran Beton V Melintang Lereng Mengalirkan Air Hujan */}
+          <mesh position={[-0.2, 0.22, 0]} rotation={[0, 0, -0.42]}>
+            <boxGeometry args={[2.4, 0.08, 0.2]} />
+            <meshStandardMaterial color="#cbd5e1" roughness={0.6} />
           </mesh>
-          <mesh position={[0.04, 0.08, 0]}>
-            <boxGeometry args={[0.06, 0.08, 2.2]} />
-            <meshStandardMaterial color="#475569" roughness={0.8} />
+          {/* Aliran Air Deras yang Aman Terkumpul di Saluran */}
+          <group ref={slopeDrainageFlowRef}>
+            {[0, 1, 2, 3].map((idx) => (
+              <mesh key={idx} position={[0, 0, 0]}>
+                <sphereGeometry args={[0.035, 6, 6]} />
+                <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={0.6} />
+              </mesh>
+            ))}
+          </group>
+        </group>
+      )}
+
+      {/* =========================================================================
+          12. AKSI SOLUSI 5: SENSOR EKSTENSOMETER PERINGATAN DINI (sensorLereng)
+         ========================================================================= */}
+      {actions.sensorLereng && (
+        <group position={[-0.8, 0.92, -1.2]}>
+          {/* Tiang Besi Sensor */}
+          <mesh position={[0, 0.45, 0]}>
+            <cylinderGeometry args={[0.02, 0.025, 0.9, 6]} />
+            <meshStandardMaterial color="#475569" metalness={0.7} />
+          </mesh>
+          {/* Panel Surya Mini */}
+          <mesh position={[0, 0.85, 0.06]} rotation={[-0.5, 0, 0]}>
+            <boxGeometry args={[0.18, 0.02, 0.14]} />
+            <meshStandardMaterial color="#1e3a8a" roughness={0.2} metalness={0.8} />
+          </mesh>
+          {/* Box Sirine & Modul Telemetri */}
+          <mesh position={[0, 0.65, 0]}>
+            <boxGeometry args={[0.1, 0.14, 0.1]} />
+            <meshStandardMaterial color="#f8fafc" />
+          </mesh>
+          {/* Lampu Beacon LED Kedip Peringatan */}
+          <mesh ref={sensorLedRef} position={[0, 0.95, 0]}>
+            <sphereGeometry args={[0.045, 8, 8]} />
+            <meshStandardMaterial color="#22c55e" emissive="#22c55e" emissiveIntensity={1.0} />
           </mesh>
         </group>
       )}
 
       {/* =========================================================================
-          7. TIGA (3) HOTSPOT PIN EDUKASI 3D
+          13. TIGA (3) HOTSPOT PIN EDUKASI 3D
          ========================================================================= */}
-
-      {/* Hotspot 1: Akar Pengikat Tanah (Kiri Belakang Puncak Bukit) */}
+      {/* Hotspot 1: Akar Pengikat Tanah */}
       <HotspotPin3D
         position={[-1.7, 1.55, -1.2]}
         title="Akar Pengikat Tanah"
@@ -694,7 +832,7 @@ export default function LandslideDiorama3D({
         onSelect={onSelectHotspot}
       />
 
-      {/* Hotspot 2: Terasering Lereng (Tengah Depan) */}
+      {/* Hotspot 2: Terasering Lereng */}
       <HotspotPin3D
         position={[-0.1, 0.95, 0.9]}
         title="Terasering Lereng"
@@ -705,7 +843,7 @@ export default function LandslideDiorama3D({
         onSelect={onSelectHotspot}
       />
 
-      {/* Hotspot 3: Zona Rawan Kaki Bukit (Kanan Kaki Lereng) */}
+      {/* Hotspot 3: Zona Rawan Kaki Bukit */}
       <HotspotPin3D
         position={[1.6, 0.75, 0.5]}
         title="Zona Rawan Kaki Bukit"

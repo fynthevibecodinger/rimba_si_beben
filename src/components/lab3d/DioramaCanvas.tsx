@@ -52,7 +52,7 @@ export default function DioramaCanvas({
   const lightIntensity = isExtreme ? 1.4 : 2.0;
 
   return (
-    <div className={`relative w-full h-[460px] lg:h-[520px] rounded-3xl overflow-hidden bg-gradient-to-b ${containerBg} border border-slate-200/90 shadow-inner select-none transition-colors duration-500`}>
+    <div className={`relative w-full h-[380px] sm:h-[400px] lg:h-[420px] xl:h-[440px] rounded-3xl overflow-hidden bg-gradient-to-b ${containerBg} border border-slate-200/90 shadow-inner select-none transition-colors duration-500`}>
       <Suspense fallback={<CanvasLoader />}>
         <Canvas
           shadows
