@@ -1,9 +1,15 @@
+import IssueExtraMaterial from "../data/IssueExtraMaterial";
+import { getExtra } from "../data/issuesExtra";
 import { useState } from "react";
 import { useParams, Link } from "../router";
 import { issuesData, IssueContent } from "../data/issuesData";
 import QuizSection from "../components/quiz/QuizSection";
 import RimbaMascot from "../components/mascot/RimbaMascot";
+import LandslideIcon from "../components/icons/LandslideIcon";
 import {
+  CloudRainWind,
+  DropletOff,
+  FlameKindling,
   Waves,
   Mountain,
   SunMedium,
@@ -50,8 +56,13 @@ export default function IssueDetail() {
       </div>
     );
   }
+  const extra = getExtra(issue.slug);
 
   const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    CloudRainWind,
+    Landslide: LandslideIcon,
+    DropletOff,
+    FlameKindling,
     Waves,
     Mountain,
     SunMedium,
@@ -289,6 +300,8 @@ export default function IssueDetail() {
               </div>
             </div>
           )}
+          
+           <IssueExtraMaterial key={issue.slug} issue={issue} extra={extra} tab={activeTab} />
 
           {/* 3. TAHUKAH KAMU? KOTAK TEKNOLOGI HIJAU */}
           <div className="rounded-3xl bg-gradient-to-r from-emerald-950 to-teal-900 text-white p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 shadow-xl">

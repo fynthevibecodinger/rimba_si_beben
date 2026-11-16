@@ -158,7 +158,6 @@
 
 .eco-hero {
   background: linear-gradient(180deg, #dff4ec 0%, #e9f5e9 52%, #f7f5ee 100%);
-  min-height: 810px;
   overflow: hidden;
   position: relative;
 }
@@ -214,10 +213,8 @@
 
 .eco-hero h1 {
   font-family: Fredoka, sans-serif;
-  font-size: clamp(54px, 6.1vw, 82px);
   letter-spacing: -0.052em;
   line-height: 1.15;
-  margin: 24px 0 22px;
 }
 
 .title-mask {
@@ -438,11 +435,11 @@
   background: #f6d87a;
   border: 18px solid rgb(255 255 255 / 23%);
   border-radius: 50%;
-  height: 120px;
+  height: 110px;
   position: absolute;
-  right: 11%;
-  top: 117px;
-  width: 120px;
+  right: 12%;
+  top: 75px;
+  width: 110px;
 }
 
 .eco-cloud {
@@ -476,21 +473,21 @@
 }
 
 .cloud-a {
-  left: 8%;
-  top: 130px;
+  left: 6%;
+  top: 70px;
 }
 
 .cloud-b {
-  right: 34%;
-  top: 238px;
+  right: 32%;
+  top: 155px;
   transform: scale(0.65);
 }
 
 .orbit-satellite {
   color: var(--river);
-  left: 38%;
+  left: 36%;
   position: absolute;
-  top: 112px;
+  top: 55px;
   z-index: 4;
 }
 
@@ -2231,46 +2228,9 @@ h2 em {
   margin-top: 12px;
 }
 
-footer {
-  align-items: center;
-  background: #102e23;
-  color: #9db8ac;
-  display: flex;
-  font-size: 9px;
-  justify-content: space-between;
-  padding: 28px max(calc((100vw - 1180px) / 2), 20px);
-}
 
-footer .eco-logo {
-  color: white;
-}
-
-footer > div {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-footer a {
-  align-items: center;
-  color: white;
-  display: flex;
-  font-size: 8px;
-  gap: 5px;
-  text-decoration: none;
-}
-
-footer a svg {
-  height: 13px;
-  transform: rotate(180deg);
-}
 
 @media (max-width: 960px) {
-  .eco-hero {
-    min-height: 830px;
-  }
-
   .hero-grid {
     grid-template-columns: 1.3fr 0.7fr;
   }
@@ -2369,10 +2329,6 @@ footer a svg {
 
   .nav-toggle {
     display: block;
-  }
-
-  .eco-hero {
-    min-height: 850px;
   }
 
   .hero-grid {
@@ -2683,19 +2639,7 @@ footer a svg {
     font-size: 19px;
   }
 
-  footer {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 22px;
-  }
 
-  footer > p {
-    display: none;
-  }
-
-  footer > div {
-    align-items: flex-start;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

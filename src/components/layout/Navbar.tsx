@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "../../router";
+import MusicController from "../audio/MusicController";
 import {
   Menu,
   X,
@@ -60,8 +61,8 @@ export default function Navbar() {
         <div
           className={`mx-auto transition-all duration-300 ease-out flex items-center justify-between relative overflow-visible ${
             isScrolled
-              ? "max-w-6xl rounded-2xl sm:rounded-full bg-white/92 backdrop-blur-2xl border border-emerald-800/15 shadow-2xl shadow-emerald-950/15 h-16 px-4 sm:px-6 ring-1 ring-white/60"
-              : "w-full max-w-7xl rounded-none bg-[#f7f5ee]/90 backdrop-blur-xl border-b border-emerald-900/10 shadow-none h-20 px-4 sm:px-6 lg:px-8"
+              ? "max-w-6xl rounded-2xl sm:rounded-full bg-white/92 backdrop-blur-2xl border border-emerald-800/15 shadow-2xl shadow-emerald-950/15 h-14 sm:h-15 px-4 sm:px-6 ring-1 ring-white/60"
+              : "w-full max-w-7xl rounded-none bg-[#f7f5ee]/90 backdrop-blur-xl border-b border-emerald-900/10 shadow-none h-16 px-4 sm:px-6 lg:px-8"
           }`}
         >
           {/* Brand / Logo Maskot Rimba */}
@@ -75,7 +76,7 @@ export default function Navbar() {
           >
             <div
               className={`rounded-2xl bg-gradient-to-br from-[#1b4332] to-[#0e2c20] p-1 flex items-center justify-center shadow-md shadow-emerald-950/15 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-200 ${
-                isScrolled ? "w-9 h-9 sm:w-10 sm:h-10" : "w-11 h-11"
+                isScrolled ? "w-8 h-8 sm:w-9 sm:h-9" : "w-9 h-9 sm:w-10 sm:h-10"
               }`}
             >
               <svg
@@ -231,10 +232,16 @@ export default function Navbar() {
               <PhoneCall className="w-3.5 h-3.5 text-rose-600" />
               <span>Kontak Darurat</span>
             </Link>
+
+            {/* Pemutar Musik & Ambience Membaca */}
+            <div className="pl-1 border-l border-emerald-900/15">
+              <MusicController />
+            </div>
           </nav>
 
           {/* Mobile Actions */}
           <div className="flex md:hidden items-center gap-2">
+            <MusicController />
             <Link
               to="/simulasi"
               className="px-3 py-1.5 rounded-full bg-emerald-800 text-white text-xs font-black inline-flex items-center gap-1 shadow-sm"
