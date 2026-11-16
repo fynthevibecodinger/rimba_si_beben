@@ -16,14 +16,15 @@ const leaves = Array.from({ length: 14 }, (_, index) => ({
   drift: index % 2 === 0 ? 1 : -1,
 }));
 
-const SCROLL_DISTANCE_THRESHOLD = 260;
+const SCROLL_DISTANCE_THRESHOLD = 700;
 
 export default function FallingLeaves() {
   const { path } = useRouter();
+  const scrollLeavesEnabled = path !== "/simulasi" && !path.startsWith("/isu/");
   const leavesRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
   const downwardDistance = useRef(0);
-  const cooldownUntil = useRef(0);
+  const scrollBurstTriggered = useRef(false);
 
   useEffect(() => {
     const leavesElement = leavesRef.current;
@@ -38,12 +39,14 @@ export default function FallingLeaves() {
     triggerBurst();
     lastScrollY.current = window.scrollY;
     downwardDistance.current = 0;
+    scrollBurstTriggered.current = false;
+
+    if (!scrollLeavesEnabled) return;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const scrollDelta = currentScrollY - lastScrollY.current;
       const isScrollingDown = scrollDelta > 0;
-      const canStartBurst = Date.now() >= cooldownUntil.current;
 
       if (isScrollingDown) {
         downwardDistance.current += scrollDelta;
@@ -51,10 +54,13 @@ export default function FallingLeaves() {
         downwardDistance.current = 0;
       }
 
-      if (downwardDistance.current >= SCROLL_DISTANCE_THRESHOLD && canStartBurst) {
+      if (
+        downwardDistance.current >= SCROLL_DISTANCE_THRESHOLD &&
+        !scrollBurstTriggered.current
+      ) {
         triggerBurst();
         downwardDistance.current = 0;
-        cooldownUntil.current = Date.now() + 850;
+        scrollBurstTriggered.current = true;
       }
 
       lastScrollY.current = currentScrollY;
@@ -62,7 +68,7 @@ export default function FallingLeaves() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [path]);
+  }, [path, scrollLeavesEnabled]);
 
   return (
     <div ref={leavesRef} className="falling-leaves" aria-hidden="true">
