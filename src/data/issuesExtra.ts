@@ -41,8 +41,8 @@ export const issuesExtra: Record<string, IssueExtra> = {
       lesson: "Permukaan kedap seperti beton membuat lebih banyak air mengalir di permukaan. Tanah dan tanaman menahan serta menyerap air.",
     },
     glossary: [
-      { term: "Limpasan (air yang mengalir di permukaan)", meaning: "Air hujan yang mengalir di permukaan karena tidak terserap tanah." },
-      { term: "Infiltrasi", meaning: "Proses air meresap ke dalam tanah." },
+      { term: "Air yang mengalir di permukaan", meaning: "Air hujan yang mengalir di atas tanah karena tidak masuk ke dalam tanah." },
+      { term: "Air masuk ke tanah", meaning: "Proses air hujan masuk dan tersimpan di dalam tanah." },
       { term: "Biopori", meaning: "Lubang kecil di tanah untuk membantu air meresap dan tempat sampah organik jadi kompos." },
       { term: "Daerah aliran sungai (DAS)", meaning: "Wilayah dari hulu sampai hilir yang airnya mengalir ke satu sungai." },
       { term: "Kolam retensi", meaning: "Kolam penampung air sementara agar sungai tidak langsung meluap." },
@@ -168,7 +168,7 @@ export const issuesExtra: Record<string, IssueExtra> = {
     },
     glossary: [
       { term: "Gambut", meaning: "Tanah dari sisa tumbuhan yang menumpuk lama dalam kondisi terendam air." },
-      { term: "Hotspot", meaning: "Titik panas yang terdeteksi satelit dan bisa menjadi tanda kebakaran." },
+      { term: "Titik panas", meaning: "Bagian tanah yang sangat panas dan bisa menjadi tanda kebakaran." },
       { term: "Debu asap", meaning: "Debu sangat kecil di udara yang bisa masuk ke paru-paru." },
       { term: "Sekat kanal", meaning: "Bendungan kecil di kanal untuk menahan air di lahan gambut." },
       { term: "ISPU", meaning: "Indeks Standar Pencemar Udara untuk menilai kualitas udara." },

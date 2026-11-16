@@ -11,18 +11,18 @@ interface Props {
 const slugTechSpecs: Record<string, { specs: string[]; liveLabel: string }> = {
   banjir: {
     specs: ["Bertenaga Surya Mandiri", "Frekuensi Ultrasonik 40 kHz", "Latensi Kirim: 12ms"],
-    liveLabel: "Telemetri IoT Sensor Ultrasonik",
+    liveLabel: "Data Sensor Tinggi Air",
   },
   "tanah-longsor": {
-    specs: ["Sensor Extensometer Wire (EWS)", "Presisi Pergerakan ±0.1 mm", "Transmisi GSM/LoRa Real-time"],
+    specs: ["Sensor Gerak Lereng", "Mengukur gerakan hingga ±0.1 mm", "Mengirim data lewat jaringan"],
     liveLabel: "Sensor EWS — PVMBG",
   },
   kekeringan: {
-    specs: ["Sensor Kelembapan Tanah IoT", "Indeks Anomali El Niño (ONI)", "Data BMKG: Dasarian Curah Hujan"],
-    liveLabel: "Telemetri Sensor Hidrometeorologi",
+    specs: ["Sensor Kebasahan Tanah", "Melihat perubahan musim El Niño", "Data hujan dari BMKG"],
+    liveLabel: "Data Sensor Cuaca",
   },
   "kebakaran-hutan": {
-    specs: ["Resolusi Spasial Satelit: 375 m", "Sensor Suhu Anomali: >45°C", "Sinkronisasi SiPongi KLHK Real-time"],
+    specs: ["Satelit melihat area 375 m", "Mencari tanah bersuhu di atas 45°C", "Data SiPongi KLHK langsung"],
     liveLabel: "Pemantauan Satelit Terra/Aqua MODIS",
   },
 };

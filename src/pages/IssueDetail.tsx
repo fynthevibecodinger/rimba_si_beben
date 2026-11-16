@@ -65,7 +65,7 @@ const disasterTips: Record<string, { mood: RimbaMood; text: string }[]> = {
     },
     {
       mood: "scan",
-      text: "Sensor kelembapan tanah EWS memantau tingkat kejenuhan air pada lapisan bidang gelincir lereng secara real-time.",
+      text: "Sensor tanah memantau seberapa basah lereng. Jika terlalu basah, warga bisa mendapat peringatan lebih awal.",
     },
     {
       mood: "celebrate",
@@ -87,7 +87,7 @@ const disasterTips: Record<string, { mood: RimbaMood; text: string }[]> = {
     },
     {
       mood: "scan",
-      text: "Satelit cuaca memantau indeks anomali El Niño dan kelembapan lapisan vegetasi untuk mendeteksi potensi kemarau ekstrem.",
+      text: "Satelit cuaca melihat perubahan musim dan kondisi tanaman untuk mengetahui kemungkinan kemarau panjang.",
     },
     {
       mood: "celebrate",
@@ -101,7 +101,7 @@ const disasterTips: Record<string, { mood: RimbaMood; text: string }[]> = {
   "kebakaran-hutan": [
     {
       mood: "alert",
-      text: "Gunakan masker respiratorik standar N95 atau KF94 saat indeks ISPU memerah. Masker kain biasa tidak mampu menyaring partikel mikroskopis PM2.5!",
+      text: "Pakai masker N95 atau KF94 saat udara penuh asap. Masker kain biasa belum cukup untuk menyaring debu asap yang sangat kecil!",
     },
     {
       mood: "think",
@@ -109,7 +109,7 @@ const disasterTips: Record<string, { mood: RimbaMood; text: string }[]> = {
     },
     {
       mood: "scan",
-      text: "Sistem satelit SiPongi KLHK mendeteksi titik panas (hotspot) anomali suhu tanah di atas 45°C dengan ketelitian spasial tinggi.",
+      text: "Satelit SiPongi KLHK mencari titik tanah yang sangat panas agar kebakaran bisa diketahui lebih cepat.",
     },
     {
       mood: "celebrate",
@@ -627,7 +627,7 @@ export default function IssueDetail() {
                         <Leaf className="w-5 h-5" />
                       </div>
                       <span className="text-xs font-black text-emerald-900 uppercase tracking-wider">
-                        1. Ekologis &amp; Alam
+                        1. Alam dan Lingkungan
                       </span>
                     </div>
                     <ul className="space-y-2.5">

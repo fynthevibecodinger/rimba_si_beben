@@ -105,7 +105,7 @@ export default function InteractiveAnalogy({ slug, analogyText }: InteractiveAna
                 <span className="font-bold text-sm text-emerald-950">Tanah Terbuka &amp; Rumput (Spons)</span>
               </div>
               <span className="text-[11px] font-black uppercase text-emerald-700 px-2 py-0.5 rounded-full bg-emerald-100">
-                Infiltrasi Sehat
+                Air Masuk ke Tanah
               </span>
             </div>
 
@@ -182,7 +182,7 @@ export default function InteractiveAnalogy({ slug, analogyText }: InteractiveAna
                 <span className="font-bold text-sm text-rose-950">Beton &amp; Aspal Padat (Lantai Kedap)</span>
               </div>
               <span className="text-[11px] font-black uppercase text-rose-700 px-2 py-0.5 rounded-full bg-rose-100">
-                Limpasan Ekstrem
+                Air Mengalir Deras
               </span>
             </div>
 
@@ -231,7 +231,7 @@ export default function InteractiveAnalogy({ slug, analogyText }: InteractiveAna
               {/* Concrete impermeable layer */}
               <div className="relative z-20 space-y-1.5 mt-auto">
                 <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
-                  <span className="text-rose-800 font-bold">Limpasan Permukaan (Run-off):</span>
+                  <span className="text-rose-800 font-bold">Air yang Mengalir di Permukaan:</span>
                   <span className="font-mono font-black text-rose-600">{Math.round(concreteRunoff)}%</span>
                 </div>
                 {/* Progress bar of runoff */}
@@ -250,7 +250,7 @@ export default function InteractiveAnalogy({ slug, analogyText }: InteractiveAna
 
             <div className="p-3 bg-rose-50 text-[11px] font-medium text-rose-900 border-t border-rose-200 flex items-center gap-2">
               <AlertOctagon className="w-4 h-4 text-rose-600 flex-shrink-0" />
-              <span>90%+ air terbuang menjadi limpasan deras yang membebani selokan dan sungai.</span>
+              <span>Lebih dari 90% air mengalir deras ke selokan dan sungai.</span>
             </div>
           </div>
         </div>

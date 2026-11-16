@@ -82,13 +82,13 @@ export const issuesData: Record<string, IssueContent> = {
   // ======================================================== 1. BANJIR
   banjir: {
     slug: "banjir",
-    title: "Banjir & Genangan Ekstrem",
+    title: "Banjir & Genangan",
     subtitle: "Dari hulu ke hilir: sungai, drainase perkotaan, dan solusi infiltrasi berbasis alam",
     tagline: "Air selalu mencari jalan. Saat tanah tertutup beton dan selokan tersumbat, jalannya adalah rumah kita.",
     themeColor: "#0284c7",
     accentBg: "from-sky-500/20 to-blue-600/10",
     threatLevel: "Sangat Tinggi",
-    heroBadge: "Hidrometeorologi Basah",
+    heroBadge: "Air Meluap",
     icon: "CloudRainWind",
     realPhoto: {
       src: "/images/disasters/banjir.jpg",
@@ -368,7 +368,7 @@ export const issuesData: Record<string, IssueContent> = {
     themeColor: "#8d5b4c",
     accentBg: "from-amber-700/20 to-stone-800/10",
     threatLevel: "Tinggi",
-    heroBadge: "Geohidrologi Lereng",
+    heroBadge: "Tanah Bergerak",
     icon: "Landslide",
     realPhoto: {
       src: "/images/disasters/tanah-longsor.jpg",
@@ -648,7 +648,7 @@ export const issuesData: Record<string, IssueContent> = {
     themeColor: "#d97706",
     accentBg: "from-amber-500/20 to-yellow-600/10",
     threatLevel: "Sedang",
-    heroBadge: "Hidrometeorologi Kering",
+    heroBadge: "Kekurangan Air",
     icon: "DropletOff",
     realPhoto: {
       src: "/images/disasters/kekeringan.jpg",
@@ -928,7 +928,7 @@ export const issuesData: Record<string, IssueContent> = {
     themeColor: "#dc2626",
     accentBg: "from-red-600/20 to-orange-700/10",
     threatLevel: "Kritis",
-    heroBadge: "Emisi & Karhutla",
+    heroBadge: "Kebakaran dan Asap",
     icon: "FlameKindling",
     realPhoto: {
       src: "/images/disasters/kebakaran-hutan.jpg",

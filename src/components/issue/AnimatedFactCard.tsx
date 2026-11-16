@@ -31,7 +31,7 @@ const factDetails: Record<string, Record<string, string>> = {
     "≤ 12 L":
       "Satu menit membiarkan keran air wastafel mengalir penuh sama dengan membuang 10 hingga 12 liter air bersih. Menutup keran saat menggosok gigi dapat menghemat ratusan liter air setiap minggunya!",
     "El Niño":
-      "Anomali suhu permukaan laut Pasifik ekuator menghambat pembentukan awan konvektif di Indonesia. Akibatnya, awal musim hujan bisa tertunda hingga berbulan-bulan, menipiskan cadangan mata air.",
+       "Perubahan suhu laut di sekitar Pasifik dapat menghambat terbentuknya awan hujan di Indonesia. Akibatnya, musim hujan bisa datang lebih lambat dan persediaan air berkurang.",
     Mulsa:
       "Lapisan mulsa organik dari dedaunan kering atau jerami menjaga suhu tanah tetap sejuk hingga 5°C lebih dingin dan menurunkan penguapan hingga 70%, menjaga tanah tetap gembur dan lembap.",
   },
@@ -55,7 +55,7 @@ export default function AnimatedFactCard({ facts, themeColor, slug }: Props) {
   const getDetailedInfo = (value: string) => {
     return (
       factDetails[slug]?.[value] ||
-      "Fakta kunci ini merupakan parameter penting dalam pemantauan dan mitigasi bencana hidrometeorologi terpadu."
+       "Fakta ini membantu kita memantau dan mencegah bencana yang berkaitan dengan cuaca."
     );
   };
 
