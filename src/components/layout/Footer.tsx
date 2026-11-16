@@ -10,8 +10,15 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-[#173a2d] text-white pt-8 pb-6 border-t-4 border-emerald-500">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="relative w-full overflow-hidden bg-[#173a2d] text-white pt-8 pb-6 border-t-4 border-emerald-500">
+      <img
+        src="/images/Misty%20Rainforest%20Valley%20Waterfall.svg"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center opacity-55"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#12382b]/55 via-[#173a2d]/65 to-[#102c21]/78" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Emergency Hotlines Grid */}
         <div className="mb-8 rounded-2xl bg-emerald-950/55 border border-emerald-700/30 p-4 md:p-5 backdrop-blur-md">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">

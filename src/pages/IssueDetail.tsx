@@ -189,6 +189,7 @@ export default function IssueDetail() {
   const [activeTab, setActiveTab] = useState<"sebab" | "dampak" | "aksi">("sebab");
   const [actionFilter, setActionFilter] = useState<"semua" | "rumah" | "sekolah" | "lingkungan">("semua");
   const [tipIndex, setTipIndex] = useState(0);
+  const [openImpact, setOpenImpact] = useState<"environmental" | "health" | "social">("environmental");
 
   const normalizedSlug = slug === "kekeringan-air" ? "kekeringan" : slug;
   const issue: IssueContent | undefined = normalizedSlug
@@ -511,82 +512,55 @@ export default function IssueDetail() {
                   </p>
                 </div>
 
-                {/* Dua Kolom Kontras: Faktor Alam vs Aktivitas Manusia */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                  {issue.sections.causeAndEffect.naturalFactors && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      className="lg:col-span-5 rounded-3xl bg-gradient-to-b from-sky-50 to-white border-2 border-sky-200/80 p-6 space-y-4 shadow-2xs"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-9 h-9 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-xs">
-                          <CloudLightning className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-black uppercase tracking-wider text-sky-700 block">
-                            Pemicu Alami
-                          </span>
-                          <h4 className="font-black text-sm sm:text-base text-slate-900 font-['Fredoka']">
-                            Dinamika Alam &amp; Cuaca
-                          </h4>
-                        </div>
-                      </div>
-                      <ul className="space-y-3">
-                        {issue.sections.causeAndEffect.naturalFactors.map((nat, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 bg-white p-3 rounded-xl border border-sky-100"
-                          >
-                            <span className="w-5 h-5 rounded-full bg-sky-100 text-sky-800 flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
-                              {i + 1}
-                            </span>
-                            <span className="leading-relaxed">{nat}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  )}
+                 {/* Penyebab dibuat menjadi satu alur sederhana, bukan dua kumpulan card. */}
+                 <motion.div
+                   initial={{ opacity: 0, y: 15 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   viewport={{ once: true }}
+                   className="rounded-3xl border border-slate-200 bg-slate-50/70 p-5 sm:p-7 space-y-7"
+                 >
+                   {issue.sections.causeAndEffect.naturalFactors && (
+                     <div className="space-y-3">
+                       <div className="flex items-center gap-3">
+                         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
+                           <CloudLightning className="h-5 w-5" />
+                         </span>
+                         <div>
+                           <h4 className="font-black text-base text-slate-900 font-['Fredoka']">Pemicu alami</h4>
+                           <p className="text-xs text-slate-500">Hal dari alam yang memulai bencana.</p>
+                         </div>
+                       </div>
+                       <ul className="space-y-2 pl-12">
+                         {issue.sections.causeAndEffect.naturalFactors.map((nat, i) => (
+                           <li key={i} className="flex items-start gap-2.5 text-sm text-slate-700 leading-relaxed">
+                             <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" />
+                             <span>{nat}</span>
+                           </li>
+                         ))}
+                       </ul>
+                     </div>
+                   )}
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className={`${
-                      issue.sections.causeAndEffect.naturalFactors
-                        ? "lg:col-span-7"
-                        : "lg:col-span-12"
-                    } rounded-3xl bg-gradient-to-b from-amber-50 to-white border-2 border-amber-200/80 p-6 space-y-4 shadow-2xs`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow-xs">
-                        <Users className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 block">
-                          Faktor Memperparah
-                        </span>
-                        <h4 className="font-black text-sm sm:text-base text-slate-900 font-['Fredoka']">
-                          Aktivitas Manusia yang Mengganggu Alam
-                        </h4>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {issue.sections.causeAndEffect.humanActivities.map((act, i) => (
-                        <div
-                          key={i}
-                          className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 bg-white p-3.5 rounded-xl border border-amber-100"
-                        >
-                          <span className="w-5 h-5 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
-                            {i + 1}
-                          </span>
-                          <span className="leading-relaxed">{act}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </div>
+                   <div className="border-t border-slate-200 pt-7 space-y-3">
+                     <div className="flex items-center gap-3">
+                       <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
+                         <Users className="h-5 w-5" />
+                       </span>
+                       <div>
+                         <h4 className="font-black text-base text-slate-900 font-['Fredoka']">Faktor memperparah</h4>
+                         <p className="text-xs text-slate-500">Kebiasaan manusia yang membuat dampaknya lebih besar.</p>
+                       </div>
+                     </div>
+                     <ul className="space-y-2 pl-12">
+                       {issue.sections.causeAndEffect.humanActivities.map((act, i) => (
+                         <li key={i} className="flex items-start gap-2.5 text-sm text-slate-700 leading-relaxed">
+                           <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                           <span>{act}</span>
+                         </li>
+                       ))}
+                     </ul>
+                   </div>
+                 </motion.div>
 
                 {/* Alur Efek Domino Ekosistem */}
                 <div className="flex flex-col items-center">
@@ -625,109 +599,72 @@ export default function IssueDetail() {
                 transition={{ duration: 0.2 }}
                 className="space-y-6"
               >
-                <div className="pl-5 border-l-4 border-rose-500">
-                  <span className="text-[11px] font-black uppercase tracking-widest text-rose-600">
-                    Analisis 3 Aspek Kehidupan
-                  </span>
-                  <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">
-                    Dampak Nyata terhadap Alam, Kesehatan &amp; Masyarakat
-                  </h3>
-                </div>
+                 <div className="max-w-2xl">
+                   <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">
+                     Apa yang terdampak?
+                   </span>
+                   <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka'] mt-1">
+                     Dampak bencana di sekitar kita
+                   </h3>
+                   <p className="text-sm text-slate-600 mt-1 leading-relaxed">
+                     Lihat tiga bagian dampaknya satu per satu supaya lebih mudah dipahami.
+                   </p>
+                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="p-6 rounded-3xl bg-gradient-to-b from-emerald-50 to-white border-2 border-emerald-200 space-y-4 shadow-2xs"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
-                        <Leaf className="w-5 h-5" />
-                      </div>
-                      <span className="text-xs font-black text-emerald-900 uppercase tracking-wider">
-                        1. Alam dan Lingkungan
-                      </span>
-                    </div>
-                    <ul className="space-y-2.5">
-                      {issue.sections.impact.environmental.map((item, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-2 text-xs sm:text-sm text-slate-800 bg-white p-3 rounded-xl border border-emerald-100"
-                        >
-                          <span className="text-emerald-600 font-black">•</span>
-                          <span className="leading-relaxed">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
+                 <div className="rounded-3xl border border-slate-200 bg-slate-50/70 p-4 sm:p-6 space-y-2">
+                   {[
+                     { id: "environmental" as const, title: "Alam dan lingkungan", hint: "Apa yang berubah di alam?", icon: Leaf, items: issue.sections.impact.environmental },
+                     ...(issue.sections.impact.healthSafety ? [{ id: "health" as const, title: "Kesehatan dan keselamatan", hint: "Apa pengaruhnya bagi tubuh dan keamanan?", icon: HeartPulse, items: issue.sections.impact.healthSafety }] : []),
+                     { id: "social" as const, title: "Masyarakat dan pelajar", hint: "Bagaimana kegiatan sehari-hari terdampak?", icon: Building2, items: issue.sections.impact.socialEconomic },
+                   ].map((section) => {
+                     const open = openImpact === section.id;
+                     const Icon = section.icon;
+                     return (
+                       <div key={section.id} className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+                         <button
+                           type="button"
+                           onClick={() => setOpenImpact(open ? "environmental" : section.id)}
+                           className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-slate-50 transition-colors"
+                         >
+                           <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${open ? "bg-emerald-700 text-white" : "bg-slate-100 text-slate-500"}`}>
+                             <Icon className="h-4.5 w-4.5" />
+                           </span>
+                           <span className="min-w-0 flex-1">
+                             <strong className="block text-sm font-black text-slate-900">{section.title}</strong>
+                             <span className="block text-xs text-slate-500 mt-0.5">{section.hint}</span>
+                           </span>
+                           <span className="text-lg text-slate-400" aria-hidden="true">{open ? "−" : "+"}</span>
+                         </button>
+                         {open && (
+                           <div className="border-t border-slate-100 px-4 pb-4 pt-3 pl-16">
+                             <ul className="space-y-2">
+                               {section.items.map((item, idx) => (
+                                 <li key={idx} className="flex items-start gap-2 text-sm text-slate-700 leading-relaxed">
+                                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+                                   <span>{item}</span>
+                                 </li>
+                               ))}
+                             </ul>
+                           </div>
+                         )}
+                       </div>
+                     );
+                   })}
+                 </div>
 
-                  {issue.sections.impact.healthSafety && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.06 }}
-                      className="p-6 rounded-3xl bg-gradient-to-b from-amber-50 to-white border-2 border-amber-200 space-y-4 shadow-2xs"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-9 h-9 rounded-xl bg-amber-600 text-white flex items-center justify-center">
-                          <HeartPulse className="w-5 h-5" />
-                        </div>
-                        <span className="text-xs font-black text-amber-900 uppercase tracking-wider">
-                          2. Kesehatan &amp; Keselamatan
-                        </span>
-                      </div>
-                      <ul className="space-y-2.5">
-                        {issue.sections.impact.healthSafety.map((item, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-start gap-2 text-xs sm:text-sm text-slate-800 bg-white p-3 rounded-xl border border-amber-100"
-                          >
-                            <span className="text-amber-600 font-black">•</span>
-                            <span className="leading-relaxed">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  )}
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.12 }}
-                    className="p-6 rounded-3xl bg-gradient-to-b from-rose-50 to-white border-2 border-rose-200 space-y-4 shadow-2xs"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center">
-                        <Building2 className="w-5 h-5" />
-                      </div>
-                      <span className="text-xs font-black text-rose-900 uppercase tracking-wider">
-                        3. Sosial &amp; Pelajar
-                      </span>
-                    </div>
-                    <ul className="space-y-2.5">
-                      {issue.sections.impact.socialEconomic.map((item, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-2 text-xs sm:text-sm text-slate-800 bg-white p-3 rounded-xl border border-rose-100"
-                        >
-                          <span className="text-rose-600 font-black">•</span>
-                          <span className="leading-relaxed">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-slate-900 text-white text-xs sm:text-sm flex items-start gap-3">
-                  <ShieldAlert className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-amber-300">Zona &amp; Kelompok Paling Rentan: </strong>
-                    <span className="text-slate-200">{issue.sections.impact.vulnerabilityNote}</span>
-                  </div>
-                </div>
+                 <div
+                   className="p-5 rounded-2xl border text-xs sm:text-sm flex items-start gap-3"
+                   style={{
+                     backgroundColor: `${issue.themeColor}12`,
+                     borderColor: `${issue.themeColor}45`,
+                   }}
+                 >
+                   <ShieldAlert className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: issue.themeColor }} />
+                   <div>
+                     <strong className="font-black" style={{ color: issue.themeColor }}>Zona &amp; Kelompok Paling Rentan: </strong>
+                     <span className="text-slate-700">{issue.sections.impact.vulnerabilityNote}</span>
+                   </div>
+                 </div>
               </motion.div>
             )}
 
@@ -741,18 +678,24 @@ export default function IssueDetail() {
                 transition={{ duration: 0.2 }}
                 className="space-y-6"
               >
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                  <div className="pl-5 border-l-4 border-emerald-600">
-                    <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">
-                      Panduan Praktis Pelajar
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                      <CheckCircle className="h-5 w-5" />
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">
-                      Langkah Konkret Kesiapsiagaan
-                    </h3>
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700">
+                        Aksi yang bisa dilakukan
+                      </span>
+                      <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka'] mt-0.5">
+                        Langkah kesiapsiagaan
+                      </h3>
+                      <p className="text-sm text-slate-600 mt-1">Pilih kebiasaan yang sesuai dengan tempatmu.</p>
+                    </div>
                   </div>
 
                   {/* Filter Lokasi */}
-                  <div className="flex flex-wrap gap-1.5 bg-slate-100 p-1.5 rounded-2xl border border-slate-200/80 self-start">
+                  <div className="flex flex-wrap gap-1.5 bg-slate-50 p-1 rounded-xl border border-slate-200 self-start">
                     {[
                       { id: "semua", label: "Semua Lokasi" },
                       { id: "rumah", label: "🏠 Di Rumah" },
@@ -766,7 +709,7 @@ export default function IssueDetail() {
                             loc.id as "semua" | "rumah" | "sekolah" | "lingkungan"
                           )
                         }
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${
                           actionFilter === loc.id
                             ? "bg-emerald-800 text-white shadow-xs"
                             : "text-slate-600 hover:text-slate-900"
@@ -778,7 +721,7 @@ export default function IssueDetail() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
                   {filteredActions.map((act, idx) => {
                     const isPencegahan = act.type === "pencegahan";
                     const locationLabels: Record<string, string> = {
@@ -793,34 +736,32 @@ export default function IssueDetail() {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: idx * 0.04 }}
-                        className={`p-5 rounded-3xl border-2 transition-all shadow-2xs ${
-                          isPencegahan
-                            ? "bg-gradient-to-br from-emerald-50/80 to-white border-emerald-200 hover:border-emerald-400"
-                            : "bg-gradient-to-br from-amber-50/80 to-white border-amber-200 hover:border-amber-400"
-                        }`}
+                        className="group flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-all hover:-translate-y-0.5 hover:shadow-sm"
                       >
-                        <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white" style={{ backgroundColor: issue.themeColor }}>
+                          {idx + 1}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
                           {act.location && (
-                            <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white border border-slate-200 text-slate-700">
+                            <span className="text-[10px] font-bold text-slate-500">
                               {locationLabels[act.location] || act.location}
                             </span>
                           )}
                           <span
-                            className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
-                              isPencegahan
-                                ? "bg-emerald-600 text-white"
-                                : "bg-amber-600 text-white"
-                            }`}
+                            className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full text-white"
+                            style={{ backgroundColor: issue.themeColor }}
                           >
                             {isPencegahan ? "Langkah Pencegahan" : "Penyelamatan Diri"}
                           </span>
                         </div>
-                        <h4 className="font-black text-base text-slate-900 mb-1.5 font-['Fredoka']">
+                        <h4 className="font-black text-base text-slate-900 mb-1 font-['Fredoka']">
                           {act.title}
                         </h4>
                         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                           {act.description}
                         </p>
+                        </div>
                       </motion.div>
                     );
                   })}
@@ -914,40 +855,50 @@ export default function IssueDetail() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             {ALL_ISSUES.map((item, idx) => {
               const Icon = item.icon;
-              const isCurrent = item.slug === normalizedSlug;
-              const isNext = item.slug === nextItem.slug;
+               const isCurrent = item.slug === normalizedSlug;
+               const isNext = item.slug === nextItem.slug;
+               const itemTheme = issuesData[item.slug]?.themeColor ?? "#64748b";
 
               return (
                 <Link
                   key={item.slug}
                   to={`/isu/${item.slug}`}
-                  className={`relative p-4 rounded-2xl border-2 transition-all flex flex-col justify-between group ${
-                    isCurrent
-                      ? "bg-slate-900 text-white border-slate-900 shadow-lg ring-2 ring-emerald-500/50 cursor-default"
-                      : isNext
-                      ? "bg-gradient-to-b from-emerald-50/70 to-white text-slate-800 border-emerald-400 shadow-md hover:shadow-lg cursor-pointer ring-1 ring-emerald-400/30"
-                      : "bg-slate-50/60 hover:bg-white text-slate-800 border-slate-200/90 hover:border-slate-300 hover:shadow-md cursor-pointer"
+                   className={`relative p-4 rounded-2xl border-2 transition-all flex flex-col justify-between group ${
+                     isCurrent
+                       ? "text-white shadow-lg cursor-default"
+                       : isNext
+                       ? "bg-white text-slate-800 shadow-md hover:shadow-lg cursor-pointer"
+                       : "bg-slate-50/60 hover:bg-white text-slate-800 border-slate-200/90 hover:border-slate-300 hover:shadow-md cursor-pointer"
                   }`}
+                  style={{
+                    backgroundColor: isCurrent ? itemTheme : `${itemTheme}0d`,
+                    borderColor: isCurrent ? itemTheme : `${itemTheme}55`,
+                    boxShadow: isCurrent
+                      ? `0 0 0 3px ${itemTheme}35`
+                      : isNext
+                        ? `0 0 0 1px ${itemTheme}25`
+                        : undefined,
+                  }}
                 >
                   <div>
                     {/* Top row: Icon & Status Badge */}
                     <div className="flex items-center justify-between mb-3">
                       <div
                         className={`w-10 h-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 ${
-                          isCurrent
-                            ? "bg-white/10 text-emerald-400"
-                            : `${item.bgLight} ${item.accent} border ${item.borderLight}`
+                           isCurrent
+                             ? "bg-white/15 text-white"
+                             : `${item.bgLight} ${item.accent} border ${item.borderLight}`
                         }`}
                       >
                         <Icon className="w-5 h-5" />
                       </div>
 
                       {isCurrent ? (
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 shadow-xs">
+                         <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/90 shadow-xs" style={{ color: itemTheme }}>
                           Sedang Dibaca
                         </span>
                       ) : isNext ? (
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-600 text-white shadow-xs animate-pulse">
+                         <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full text-white shadow-xs" style={{ backgroundColor: itemTheme }}>
                           Selanjutnya →
                         </span>
                       ) : (
@@ -962,7 +913,7 @@ export default function IssueDetail() {
                       className={`font-black text-sm sm:text-base font-['Fredoka'] mb-1 ${
                         isCurrent
                           ? "text-white"
-                          : "text-slate-900 group-hover:text-emerald-900"
+                           : "text-slate-900"
                       }`}
                     >
                       {item.title}
@@ -980,16 +931,16 @@ export default function IssueDetail() {
                   <div
                     className={`mt-4 pt-3 border-t flex items-center justify-between text-xs font-bold ${
                       isCurrent
-                        ? "border-white/10 text-emerald-300"
-                        : "border-slate-100 text-slate-500 group-hover:text-emerald-800"
+                         ? "border-white/20 text-white/80"
+                         : "border-slate-100 text-slate-500"
                     }`}
                   >
                     <span>{isCurrent ? "Materi Aktif" : isNext ? "Pilihan Disarankan" : "Buka Topik Ini"}</span>
                     <ArrowRight
                       className={`w-3.5 h-3.5 transition-transform ${
                         isCurrent
-                          ? "text-emerald-300"
-                          : "text-slate-400 group-hover:translate-x-1 group-hover:text-emerald-700"
+                           ? "text-white"
+                           : "text-slate-400 group-hover:translate-x-1"
                       }`}
                     />
                   </div>

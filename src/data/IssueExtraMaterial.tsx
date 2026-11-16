@@ -87,7 +87,10 @@ const caseStudies: Record<
 
 export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
   const [openMyth, setOpenMyth] = useState<number | null>(0);
-  const [caseTab, setCaseTab] = useState<"chronology" | "rootCause" | "solution">("chronology");
+  const [mythIndex, setMythIndex] = useState(0);
+  const [mythAnswer, setMythAnswer] = useState<"mitos" | "fakta" | null>(null);
+  const [caseTab, setCaseTab] = useState<"chronology" | "rootCause" | "solution" | null>("chronology");
+  const [storyOpen, setStoryOpen] = useState(false);
   const [done, setDone] = useState<boolean[]>(
     extra?.challenge7Days.map(() => false) ?? []
   );
@@ -114,66 +117,65 @@ export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
           transition={{ duration: 0.3 }}
           className="space-y-10"
         >
-          {/* 1. Kartu Analogi & Cerita Ilustrasi dengan Visual Editorial */}
-          {extra && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              {/* Kartu Gampangnya Begini (5 kolom) */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="lg:col-span-5 relative overflow-hidden p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-sky-50 via-white to-cyan-50/70 border-2 border-sky-200/80 shadow-sm flex flex-col justify-between"
-              >
-                <div className="absolute -right-6 -top-6 w-28 h-28 rounded-full bg-sky-200/30 pointer-events-none" />
-                <div className="space-y-4 relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-600 text-white text-xs font-black uppercase tracking-wider shadow-xs">
-                    <Lightbulb className="w-3.5 h-3.5" />
-                    <span>Gampangnya Begini</span>
-                  </div>
-                  <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-semibold">
-                    &ldquo;{extra.analogy}&rdquo;
-                  </p>
-                </div>
-                <div className="mt-5 pt-3 border-t border-sky-200/70 flex items-center gap-2 text-xs text-sky-900 font-bold">
-                  <span className="w-2 h-2 rounded-full bg-sky-500" />
-                  <span>Konsep Sains Sederhana • {issue.heroBadge}</span>
-                </div>
-              </motion.div>
+           {/* 1. Penjelasan utama dan cerita tambahan */}
+           {extra && (
+             <div className="space-y-4">
+               {/* Penjelasan utama */}
+               <motion.div
+                 initial={{ opacity: 0, y: 16 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm"
+               >
+                 <div className="relative z-10 max-w-3xl">
+                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 text-white text-xs font-black uppercase tracking-wider">
+                     <Lightbulb className="w-3.5 h-3.5" />
+                     <span>Pahami dengan mudah</span>
+                   </div>
+                   <p className="text-base sm:text-lg text-slate-800 leading-relaxed font-semibold mt-4">
+                     &ldquo;{extra.analogy}&rdquo;
+                   </p>
+                 </div>
+               </motion.div>
 
-              {/* Kartu Cerita Ilustrasi (7 kolom) */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.08 }}
-                className="lg:col-span-7 relative overflow-hidden p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-amber-50/90 via-orange-50/40 to-white border-2 border-amber-200/80 shadow-sm flex flex-col justify-between"
-              >
-                <div className="absolute -right-4 -bottom-6 text-8xl font-black text-amber-500/10 select-none pointer-events-none font-['Fredoka']">
-                  P5
-                </div>
-                <div className="space-y-4 relative z-10">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500 text-white text-xs font-black uppercase tracking-wider shadow-xs">
-                      <BookOpen className="w-3.5 h-3.5" />
-                      <span>Kisah Pelajar Siaga</span>
-                    </div>
-                    <span className="text-[11px] font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full">
-                      Ilustrasi Edukatif
-                    </span>
-                  </div>
-                  <h4 className="text-base sm:text-lg font-black text-slate-900 font-['Fredoka']">
-                    {extra.story.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    {extra.story.text}
-                  </p>
-                </div>
-                <div className="mt-5 pt-3 border-t border-amber-200/70 text-xs text-amber-900 font-bold">
-                  💡 Refleksi: Perubahan besar selalu dimulai dari kebiasaan kecil di sekitar kita.
-                </div>
-              </motion.div>
-            </div>
-          )}
+               {/* Cerita tambahan dibuat sekunder agar tidak bersaing dengan penjelasan utama */}
+               <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+                 <button
+                   type="button"
+                   onClick={() => setStoryOpen((open) => !open)}
+                   className="w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-4 text-left hover:bg-slate-50 transition-colors"
+                 >
+                   <span className="flex items-center gap-3">
+                     <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-600">
+                       <BookOpen className="h-4 w-4" />
+                     </span>
+                     <span>
+                       <strong className="block text-sm font-black text-slate-900">Baca contoh ceritanya</strong>
+                       <span className="block text-xs text-slate-500 mt-0.5">Contoh sederhana dari kehidupan pelajar.</span>
+                     </span>
+                   </span>
+                   <span className="text-xl text-slate-400" aria-hidden="true">{storyOpen ? "−" : "+"}</span>
+                 </button>
+
+                 <AnimatePresence initial={false}>
+                   {storyOpen && (
+                     <motion.div
+                       initial={{ height: 0, opacity: 0 }}
+                       animate={{ height: "auto", opacity: 1 }}
+                       exit={{ height: 0, opacity: 0 }}
+                       className="overflow-hidden"
+                     >
+                       <div className="border-t border-slate-100 px-4 sm:px-5 pb-5 pt-4 space-y-3">
+                         <h4 className="text-base font-black text-slate-900 font-['Fredoka']">{extra.story.title}</h4>
+                         <p className="text-sm text-slate-700 leading-relaxed">{extra.story.text}</p>
+                         <p className="text-xs text-slate-500 font-semibold">💡 Perubahan besar bisa dimulai dari kebiasaan kecil.</p>
+                       </div>
+                     </motion.div>
+                   )}
+                 </AnimatePresence>
+               </div>
+             </div>
+           )}
 
           {/* 2. Kartu Fakta Angka & Statistik Kunci */}
           {quickFacts && (
@@ -216,76 +218,73 @@ export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
                 </h4>
               </div>
 
-              {/* Tombol Navigasi Studi Kasus */}
-              <div className="p-6 sm:p-7 space-y-5 bg-slate-50/60">
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    { id: "chronology", label: "1. Kronologi Peristiwa" },
-                    { id: "rootCause", label: "2. Akar Masalah" },
-                    { id: "solution", label: "3. Solusi & Pelajaran" },
-                  ].map((item) => {
-                    const active = caseTab === item.id;
-                    return (
-                      <button
-                        key={item.id}
-                        onClick={() =>
-                          setCaseTab(item.id as "chronology" | "rootCause" | "solution")
-                        }
-                        className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
-                          active
-                            ? "bg-slate-900 text-white shadow-sm"
-                            : "bg-white text-slate-600 border border-slate-200 hover:border-slate-400"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Isi Tab Studi Kasus */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={caseTab}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
-                    className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs"
-                  >
-                    {caseTab === "chronology" && (
-                      <div className="space-y-1.5">
-                        <span className="text-xs font-black uppercase tracking-wider text-sky-700 block">
-                          Bagaimana Peristiwa Terjadi:
-                        </span>
-                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                          {currentCase.chronology}
-                        </p>
-                      </div>
-                    )}
-                    {caseTab === "rootCause" && (
-                      <div className="space-y-1.5">
-                        <span className="text-xs font-black uppercase tracking-wider text-amber-700 block">
-                          Faktor Utama Penyebab Bencana:
-                        </span>
-                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                          {currentCase.rootCause}
-                        </p>
-                      </div>
-                    )}
-                    {caseTab === "solution" && (
-                      <div className="space-y-1.5">
-                        <span className="text-xs font-black uppercase tracking-wider text-emerald-700 block">
-                          Langkah Pencegahan yang Terbukti Efektif:
-                        </span>
-                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                          {currentCase.solution}
-                        </p>
-                      </div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+               {/* Isi studi kasus dibuat sebagai accordion ringkas */}
+               <div className="p-4 sm:p-6 space-y-2 bg-slate-50/60">
+                 {[
+                   {
+                     id: "chronology" as const,
+                     number: "01",
+                     title: "Kronologi peristiwa",
+                     description: "Apa yang terjadi?",
+                     text: currentCase.chronology,
+                   },
+                   {
+                     id: "rootCause" as const,
+                     number: "02",
+                     title: "Akar masalah",
+                     description: "Mengapa hal ini bisa terjadi?",
+                     text: currentCase.rootCause,
+                   },
+                   {
+                     id: "solution" as const,
+                     number: "03",
+                     title: "Solusi",
+                     description: "Apa yang bisa dilakukan?",
+                     text: currentCase.solution,
+                   },
+                 ].map((item) => {
+                   const open = caseTab === item.id;
+                   return (
+                     <div key={item.id} className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+                       <button
+                         type="button"
+                         onClick={() => setCaseTab(open ? null : item.id)}
+                         className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-slate-50 transition-colors"
+                       >
+                         <span
+                           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-black ${open ? "text-white" : "bg-slate-100 text-slate-500"}`}
+                           style={open ? { backgroundColor: issue.themeColor } : undefined}
+                         >
+                           {item.number}
+                         </span>
+                         <span className="min-w-0 flex-1">
+                           <strong className="block text-sm font-black text-slate-900">{item.title}</strong>
+                           <span className="block text-xs text-slate-500 mt-0.5">{item.description}</span>
+                         </span>
+                         <span className="text-lg text-slate-400" aria-hidden="true">{open ? "−" : "+"}</span>
+                       </button>
+                       <AnimatePresence initial={false}>
+                         {open && (
+                           <motion.div
+                             initial={{ height: 0, opacity: 0 }}
+                             animate={{ height: "auto", opacity: 1 }}
+                             exit={{ height: 0, opacity: 0 }}
+                             className="overflow-hidden"
+                           >
+                             <p className="border-t border-slate-100 px-4 pb-4 pt-3 pl-[4.25rem] text-sm text-slate-700 leading-relaxed">
+                               {item.text}
+                             </p>
+                           </motion.div>
+                         )}
+                       </AnimatePresence>
+                     </div>
+                   );
+                 })}
+                 <div className="flex items-start gap-2.5 px-1 pt-3 text-xs text-slate-500">
+                   <span className="text-base" aria-hidden="true">💡</span>
+                   <p><strong className="text-slate-700">Pembelajaran:</strong> memahami urutan peristiwa membantu kita memilih tindakan yang tepat.</p>
+                 </div>
+               </div>
             </motion.div>
           )}
 
@@ -308,71 +307,73 @@ export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
           transition={{ duration: 0.3 }}
           className="space-y-8"
         >
-          {/* Kartu Mitos atau Fakta */}
-          {mythsAndFacts && (
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 font-['Fredoka'] flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-amber-600" />
-                  <span>Uji Pemahaman: Mitos atau Fakta?</span>
-                </h3>
-                <span className="text-xs text-slate-500 font-semibold">
-                  Klik kartu untuk membuka fakta ilmiahnya
-                </span>
-              </div>
+           {/* Mitos atau fakta dibuat ringan dan mudah dipindai */}
+           {mythsAndFacts && (
+             <div className="space-y-3">
+               <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm">
+                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-white shadow-sm" style={{ backgroundColor: issue.themeColor }}>
+                   <HelpCircle className="h-5 w-5" />
+                 </span>
+                 <div>
+                   <span className="text-[10px] font-black uppercase tracking-[0.16em]" style={{ color: issue.themeColor }}>Tantangan singkat</span>
+                   <h3 className="text-xl sm:text-2xl font-black text-slate-900 font-['Fredoka'] mt-0.5">
+                     Menurutmu, mitos atau fakta?
+                   </h3>
+                   <p className="text-sm text-slate-600 mt-1">Pilih pernyataan, lalu buka jawabannya.</p>
+                 </div>
+               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {mythsAndFacts.map((m, i) => {
-                  const open = openMyth === i;
-                  return (
-                    <motion.button
-                      key={i}
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.99 }}
-                      onClick={() => setOpenMyth(open ? null : i)}
-                      className={`text-left p-6 rounded-3xl border-2 transition-all shadow-xs ${
-                        open
-                          ? "bg-gradient-to-br from-emerald-50 to-teal-50/70 border-emerald-400 text-emerald-950"
-                          : "bg-gradient-to-br from-rose-50/80 to-orange-50/50 border-rose-200 hover:border-rose-300 text-rose-950"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <span
-                          className={`text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full ${
-                            open
-                              ? "bg-emerald-600 text-white"
-                              : "bg-rose-600 text-white"
-                          }`}
-                        >
-                          {open ? "✅ Fakta Ilmiah" : "❓ Mitos Populer"}
-                        </span>
-                        <span className="text-xs text-slate-500 font-bold">
-                          {open ? "Sembunyikan ▲" : "Cek Fakta ▼"}
-                        </span>
-                      </div>
-
-                      <p className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-                        &ldquo;{m.myth}&rdquo;
-                      </p>
-
-                      <AnimatePresence>
-                        {open && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="pt-3 mt-3 border-t border-emerald-200 text-xs sm:text-sm text-slate-700 leading-relaxed overflow-hidden"
-                          >
-                            <strong className="text-emerald-900">Faktanya:</strong>{" "}
-                            {m.fact}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.button>
-                  );
-                })}
-              </div>
+               {(() => {
+                 const current = mythsAndFacts[mythIndex];
+                 const answered = mythAnswer !== null;
+                 // Semua pernyataan di materi ini adalah mitos yang kemudian diluruskan oleh fakta.
+                 const isCorrect = mythAnswer === "mitos";
+                 return (
+                   <div className="rounded-3xl border-2 bg-white p-5 sm:p-7 shadow-sm" style={{ borderColor: `${issue.themeColor}45` }}>
+                     <div className="flex items-center justify-between gap-3 mb-5">
+                       <span className="text-xs font-black uppercase tracking-wider" style={{ color: issue.themeColor }}>
+                         Pernyataan {mythIndex + 1} dari {mythsAndFacts.length}
+                       </span>
+                       <div className="flex gap-1.5" aria-label="Progress pertanyaan">
+                         {mythsAndFacts.map((_, index) => <span key={index} className="h-1.5 w-6 rounded-full" style={{ backgroundColor: index <= mythIndex ? issue.themeColor : `${issue.themeColor}20` }} />)}
+                       </div>
+                     </div>
+                     <p className="text-lg sm:text-xl font-black text-slate-900 leading-relaxed text-center max-w-2xl mx-auto">
+                       &ldquo;{current.myth}&rdquo;
+                     </p>
+                     <p className="text-xs text-slate-500 text-center mt-5">Pilih jawabanmu:</p>
+                     <div className="grid grid-cols-2 gap-3 mt-2 max-w-sm mx-auto">
+                       {(["mitos", "fakta"] as const).map((answer) => (
+                         <button
+                           key={answer}
+                           type="button"
+                           disabled={answered}
+                           onClick={() => setMythAnswer(answer)}
+                           className={`rounded-2xl px-4 py-3 text-sm font-black capitalize transition-all ${
+                             answered && mythAnswer === answer
+                               ? isCorrect ? "bg-emerald-600 text-white" : "bg-rose-500 text-white"
+                               : answered ? "bg-slate-100 text-slate-400" : "bg-slate-100 text-slate-800 hover:text-white"
+                           }`}
+                           style={!answered ? { } : undefined}
+                           onMouseEnter={(event) => { if (!answered) event.currentTarget.style.backgroundColor = issue.themeColor; }}
+                           onMouseLeave={(event) => { if (!answered) event.currentTarget.style.backgroundColor = ""; }}
+                         >
+                           {answer === "mitos" ? "❓ Mitos" : "✅ Fakta"}
+                         </button>
+                       ))}
+                     </div>
+                     {answered && (
+                       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-5 rounded-2xl p-4 text-sm leading-relaxed" style={{ backgroundColor: `${issue.themeColor}10` }}>
+                         <strong className="block font-black mb-1" style={{ color: isCorrect ? "#15803d" : "#be123c" }}>{isCorrect ? "Benar! 🎉" : "Belum tepat, tidak apa-apa!"}</strong>
+                         <span className="text-slate-700">{current.fact}</span>
+                         <button type="button" onClick={() => { if (mythIndex < mythsAndFacts.length - 1) { setMythIndex((index) => index + 1); setMythAnswer(null); } else { setMythIndex(0); setMythAnswer(null); } }} className="mt-4 w-full rounded-xl px-4 py-2.5 text-sm font-black text-white" style={{ backgroundColor: issue.themeColor }}>
+                           {mythIndex < mythsAndFacts.length - 1 ? "Pernyataan berikutnya →" : "Ulangi dari awal ↻"}
+                         </button>
+                       </motion.div>
+                     )}
+                   </div>
+                 );
+               })()}
             </div>
           )}
 
@@ -417,39 +418,43 @@ export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
         >
           {/* Timeline Kesiapsiagaan: Sebelum, Saat, Sesudah */}
           {readiness && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Layers className="w-5 h-5 text-emerald-700" />
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 font-['Fredoka']">
-                  Peta Waktu Kesiapsiagaan Bencana
-                </h3>
+            <div className="space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-white shadow-sm" style={{ backgroundColor: issue.themeColor }}>
+                    <Layers className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.16em]" style={{ color: issue.themeColor }}>Urutan kesiapsiagaan</span>
+                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 font-['Fredoka'] mt-0.5">
+                      Sebelum, saat, dan sesudah bencana
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-xs font-bold text-slate-500 sm:pb-1">Ikuti dari kiri ke kanan</span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="relative rounded-3xl p-4 sm:p-6 overflow-hidden" style={{ backgroundColor: `${issue.themeColor}09`, border: `1px solid ${issue.themeColor}30` }}>
+                <div className="hidden md:block absolute left-[12%] right-[12%] top-[3.25rem] h-px" style={{ backgroundColor: `${issue.themeColor}45` }} />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative">
                 {[
                   {
                     step: "01",
                     label: "Sebelum Bencana",
                     badge: "Pencegahan & Keselamatan",
                     items: readiness.before,
-                    cls: "bg-emerald-50/90 border-emerald-300 text-emerald-950",
-                    badgeCls: "bg-emerald-600 text-white",
                   },
                   {
                     step: "02",
                     label: "Saat Kejadian",
                     badge: "Tanggap Darurat",
                     items: readiness.during,
-                    cls: "bg-amber-50/90 border-amber-300 text-amber-950",
-                    badgeCls: "bg-amber-600 text-white",
                   },
                   {
                     step: "03",
                     label: "Sesudah Kejadian",
                     badge: "Pemulihan & Evaluasi",
                     items: readiness.after,
-                    cls: "bg-sky-50/90 border-sky-300 text-sky-950",
-                    badgeCls: "bg-sky-600 text-white",
                   },
                 ].map((col, colIdx) => (
                   <motion.div
@@ -457,31 +462,32 @@ export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: colIdx * 0.1, duration: 0.35 }}
-                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                    className={`relative overflow-hidden p-5 rounded-3xl border-2 ${col.cls} flex flex-col justify-between shadow-xs`}
+                    transition={{ delay: colIdx * 0.08, duration: 0.3 }}
+                    className="relative rounded-2xl bg-white border p-5 shadow-sm"
+                    style={{ borderColor: `${issue.themeColor}30` }}
                   >
-                    <span className="absolute right-4 top-2 text-4xl font-black opacity-10 font-['Fredoka'] select-none">
-                      {col.step}
-                    </span>
-                    <div className="space-y-3 relative z-10">
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl text-sm font-black text-white shadow-sm" style={{ backgroundColor: issue.themeColor }}>
+                        {col.step}
+                      </span>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Fase {colIdx + 1}</span>
+                    </div>
+                    <div className="min-w-0 space-y-4">
                       <div>
-                        <span
-                          className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${col.badgeCls}`}
-                        >
+                        <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: issue.themeColor }}>
                           {col.badge}
                         </span>
-                        <h4 className="font-black text-base text-slate-900 mt-1.5 font-['Fredoka']">
+                        <h4 className="font-black text-lg text-slate-900 mt-1 font-['Fredoka']">
                           {col.label}
                         </h4>
                       </div>
-                      <ul className="space-y-2.5">
+                      <ul className="space-y-3">
                         {col.items.map((t, i) => (
                           <li
                             key={i}
-                            className="text-xs sm:text-sm text-slate-800 flex items-start gap-2"
+                            className="text-sm text-slate-700 flex items-start gap-2.5"
                           >
-                            <ArrowRight className="w-3.5 h-3.5 text-slate-500 flex-shrink-0 mt-1" />
+                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: issue.themeColor }} />
                             <span className="leading-relaxed">{t}</span>
                           </li>
                         ))}
@@ -489,6 +495,7 @@ export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
                     </div>
                   </motion.div>
                 ))}
+                </div>
               </div>
             </div>
           )}
