@@ -16,10 +16,13 @@ const leaves = Array.from({ length: 14 }, (_, index) => ({
   drift: index % 2 === 0 ? 1 : -1,
 }));
 
+const SCROLL_DISTANCE_THRESHOLD = 260;
+
 export default function FallingLeaves() {
   const { path } = useRouter();
   const leavesRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
+  const downwardDistance = useRef(0);
   const cooldownUntil = useRef(0);
 
   useEffect(() => {
@@ -34,14 +37,23 @@ export default function FallingLeaves() {
 
     triggerBurst();
     lastScrollY.current = window.scrollY;
+    downwardDistance.current = 0;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > lastScrollY.current;
+      const scrollDelta = currentScrollY - lastScrollY.current;
+      const isScrollingDown = scrollDelta > 0;
       const canStartBurst = Date.now() >= cooldownUntil.current;
 
-      if (isScrollingDown && canStartBurst) {
+      if (isScrollingDown) {
+        downwardDistance.current += scrollDelta;
+      } else if (scrollDelta < 0) {
+        downwardDistance.current = 0;
+      }
+
+      if (downwardDistance.current >= SCROLL_DISTANCE_THRESHOLD && canStartBurst) {
         triggerBurst();
+        downwardDistance.current = 0;
         cooldownUntil.current = Date.now() + 850;
       }
 
