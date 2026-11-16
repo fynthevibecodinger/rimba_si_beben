@@ -33,6 +33,7 @@ interface RangerProfile {
   impactStat: string;
   featured?: boolean;
   image: string;
+  fallbackImage: string;
   summary: string;
   fullStory: string;
   quote: string;
@@ -53,6 +54,8 @@ const rangersData: RangerProfile[] = [
     featured: true,
     image:
       "https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?auto=format&fit=crop&w=1000&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1000&q=80",
     summary:
       "Kelompok lima pemuda asal Bandung yang viral karena aksi nyata turun langsung membersihkan sungai-sungai penuh sampah hingga pesisir pantai terkotor di Indonesia.",
     fullStory:
@@ -73,6 +76,8 @@ const rangersData: RangerProfile[] = [
     impactStat: "100+ Penghalang Sungai & Jutaan Kg Sampah Terkelola",
     image:
       "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80",
     summary:
       "Organisasi lingkungan yang memasang jaring penghalang sampah (trash barriers) di aliran sungai serta memilah sampah secara sistematis sebelum hanyut ke laut.",
     fullStory:
@@ -93,6 +98,8 @@ const rangersData: RangerProfile[] = [
     impactStat: "Digerakkan Pelajar di 50+ Lokasi Dunia",
     image:
       "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=900&q=80",
     summary:
       "Gerakan yang didirikan oleh dua kakak-beradik pelajar di Bali untuk mengedukasi generasi muda mengurangi kantong plastik sekali pakai yang menyumbat selokan dan mencemari tanah.",
     fullStory:
@@ -112,7 +119,9 @@ const rangersData: RangerProfile[] = [
     location: "Sumatera, Kalimantan & Sulawesi",
     impactStat: "Garda Terdepan Pemadaman & Patroli Karhutla",
     image:
-      "https://images.unsplash.com/photo-1602980085566-6c459f23fa46?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1000&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=80",
     summary:
       "Brigade pengendalian kebakaran hutan dan lahan dari KLHK yang berjuang memadamkan api bawah tanah gambut serta berpatroli menjaga langit Nusantara tetap bebas kabut asap.",
     fullStory:
@@ -133,6 +142,8 @@ const rangersData: RangerProfile[] = [
     impactStat: "Ribuan Pohon Teradopsi & Edukasi Publik",
     image:
       "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80",
     summary:
       "Gerakan terbuka yang mengajak anak muda kota mengenal, mencintai, dan ikut menjaga hutan Indonesia lewat musik, seni, lari amal, dan program adopsi pohon.",
     fullStory:
@@ -153,6 +164,8 @@ const rangersData: RangerProfile[] = [
     impactStat: "Penguatan Tebing Rawan Longsor & Embung Warga",
     image:
       "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80",
     summary:
       "Kolaborasi relawan desa, mahasiswa, dan pegiat konservasi tanah yang menanam rumput vetiver berakar dalam di tebing curam serta membangun penampungan air hujan di wilayah kering.",
     fullStory:
@@ -164,13 +177,12 @@ const rangersData: RangerProfile[] = [
   },
 ];
 
-/* Maskot Asli Rimba (Sesuai Identitas Brand di Navbar) + Orbit Elemen Alam */
+/* Maskot Rimba Full-Body Lengkap */
 function OfficialRimbaMascot({ size = "lg" }: { size?: "sm" | "lg" }) {
   const isLarge = size === "lg";
 
   return (
     <div className="relative flex items-center justify-center select-none">
-      {/* Cincin Orbit Luar (Hanya di Hero Besar) */}
       {isLarge && (
         <>
           <motion.div
@@ -201,56 +213,74 @@ function OfficialRimbaMascot({ size = "lg" }: { size?: "sm" | "lg" }) {
         </>
       )}
 
-      {/* Lencana Utama Maskot Rimba Asli */}
       <motion.div
-        animate={{ y: [0, -8, 0], rotate: [0, 2, -2, 0] }}
-        transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-        className={`relative z-10 rounded-full bg-gradient-to-br from-[#1b4332] to-[#081c15] border-4 border-amber-300/80 shadow-2xl shadow-black/40 flex items-center justify-center ${
-          isLarge ? "w-36 h-36 sm:w-44 sm:h-44 p-4" : "w-24 h-24 p-2.5"
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+        className={`relative z-10 flex items-center justify-center ${
+          isLarge ? "w-48 h-52 sm:w-56 sm:h-60" : "w-28 h-32"
         }`}
       >
-        <div className="absolute inset-0 rounded-full bg-amber-300/15 blur-md -z-10" />
+        <div className="absolute inset-6 rounded-full bg-amber-300/20 blur-2xl -z-10" />
 
-        {/* Ilustrasi Asli Maskot Rangkong Rimba (viewBox 90 35 240 180) */}
         <svg
-          viewBox="90 35 240 180"
+          viewBox="0 0 280 300"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          className="w-full h-full drop-shadow-md"
+          className="w-full h-full drop-shadow-2xl"
         >
-          {/* Badan & Syal Hijau/Kuning */}
+          <polygon points="88,215 54,258 98,238" fill="#182b23" />
+          <polygon points="94,225 76,252 104,238" fill="#fef3c7" />
+
+          <motion.g
+            animate={{ rotate: [0, -9, 2, 0] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transformOrigin: "92px 175px" }}
+          >
+            <path
+              d="M94 166 C62 162, 42 140, 26 116 C20 108, 12 114, 18 124 C32 148, 46 172, 56 184 L42 196 C38 202, 46 208, 54 202 L66 192 C76 196, 88 192, 96 184 Z"
+              fill="#182b23"
+            />
+          </motion.g>
+
+          <rect x="122" y="246" width="12" height="24" rx="4" fill="#e59a24" />
+          <rect x="104" y="264" width="36" height="11" rx="5.5" fill="#e59a24" />
+          <rect x="162" y="246" width="12" height="24" rx="4" fill="#e59a24" />
+          <rect x="158" y="264" width="36" height="11" rx="5.5" fill="#e59a24" />
+
+          <ellipse cx="146" cy="196" rx="58" ry="56" fill="#182b23" />
+
           <path
-            d="M148 205 C148 168, 232 168, 232 205 Z"
-            fill="#143627"
+            d="M104 156 C126 148, 166 148, 188 156 L192 232 C164 244, 128 244, 100 232 Z"
+            fill="#23533a"
           />
           <path
-            d="M156 172 Q190 190 224 172 L218 186 Q190 200 162 186 Z"
-            fill="#f59e0b"
+            d="M114 164 L146 184 L178 164"
+            stroke="#52b788"
+            strokeWidth="4.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <line
+            x1="146"
+            y1="184"
+            x2="146"
+            y2="238"
+            stroke="#52b788"
+            strokeWidth="4"
+          />
+          <circle cx="146" cy="184" r="5.5" fill="#fbbf24" />
+          <rect x="116" y="198" width="20" height="18" rx="3" fill="#163a28" />
+          <rect x="156" y="198" width="20" height="18" rx="3" fill="#163a28" />
+
+          <circle cx="136" cy="96" r="52" fill="#182b23" />
+
+          <path
+            d="M104 96 C104 64, 162 64, 164 100 C164 132, 112 134, 104 96 Z"
+            fill="#f8f6ee"
           />
 
-          {/* Kepala Burung Rangkong */}
-          <circle cx="184" cy="134" r="38" fill="#1e293b" />
-          <path
-            d="M158 134 C158 116, 204 116, 206 138 C206 154, 166 156, 158 134 Z"
-            fill="#fef3c7"
-          />
+          <circle cx="116" cy="112" r="8.5" fill="#f3cfc3" />
 
-          {/* Paruh Besar & Cula Rangkong Khas Logo Rimba */}
-          <path
-            d="M198 122 C245 116, 295 130, 308 146 C276 154, 230 152, 198 146 Z"
-            fill="#f59e0b"
-          />
-          <path
-            d="M198 146 C234 150, 272 150, 294 156 C264 164, 224 162, 198 156 Z"
-            fill="#d97706"
-          />
-          <path
-            d="M196 108 C226 96, 264 104, 270 122 C244 120, 218 120, 196 122 Z"
-            fill="#ef4444"
-          />
-
-          {/* Mata Berkedip */}
           <motion.g
             animate={{ scaleY: [1, 1, 0.1, 1, 1] }}
             transition={{
@@ -258,17 +288,95 @@ function OfficialRimbaMascot({ size = "lg" }: { size?: "sm" | "lg" }) {
               repeat: Infinity,
               times: [0, 0.46, 0.5, 0.54, 1],
             }}
-            style={{ transformOrigin: "178px 130px" }}
+            style={{ transformOrigin: "136px 88px" }}
           >
-            <circle cx="178" cy="130" r="8.5" fill="#ffffff" />
-            <circle cx="180.5" cy="130" r="4.5" fill="#0f172a" />
-            <circle cx="182" cy="128" r="1.8" fill="#ffffff" />
+            <circle cx="136" cy="88" r="11" fill="#132a1e" />
+            <circle cx="132" cy="84" r="3.5" fill="#ffffff" />
           </motion.g>
 
-          {/* Topi Rimba Hijau */}
-          <ellipse cx="182" cy="98" rx="52" ry="11" fill="#65a30d" />
-          <path d="M148 98 C152 70, 212 70, 216 98 Z" fill="#4d7c0f" />
-          <rect x="150" y="90" width="64" height="6" rx="3" fill="#fbbf24" />
+          <path
+            d="M150 76 C192 68, 244 82, 262 104 C228 118, 184 120, 152 114 Z"
+            fill="#f4b333"
+            stroke="#9c5a25"
+            strokeWidth="4.5"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M148 72 C174 52, 224 54, 244 74 C216 82, 182 86, 154 88 Z"
+            fill="#e59a24"
+            stroke="#9c5a25"
+            strokeWidth="4.5"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M168 68 C190 60, 214 62, 226 70 C206 74, 186 76, 168 74 Z"
+            fill="#fbd36b"
+          />
+
+          <path
+            d="M98 56 C102 22, 172 22, 176 56 Z"
+            fill="#9c6644"
+          />
+          <path
+            d="M97 50 Q137 56 177 50 L178 58 Q137 64 96 58 Z"
+            fill="#2d6a4f"
+          />
+          <path
+            d="M84 62 Q137 52 190 62 L185 72 Q137 62 89 72 Z"
+            fill="#7f4f24"
+          />
+          <path
+            d="M150 48 C154 34, 174 30, 184 34 C178 46, 162 52, 150 48 Z"
+            fill="#40916c"
+          />
+
+          <g transform="translate(178, 172)">
+            <rect
+              x="0"
+              y="0"
+              width="78"
+              height="62"
+              rx="14"
+              fill="#132a1e"
+            />
+            <rect
+              x="9"
+              y="8"
+              width="60"
+              height="40"
+              rx="8"
+              fill="#d8f3dc"
+            />
+            <polygon points="39,14 51,28 39,42 27,28" fill="#10b981" />
+            <line
+              x1="31"
+              y1="36"
+              x2="47"
+              y2="20"
+              stroke="#ffffff"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+            <line
+              x1="14"
+              y1="54"
+              x2="32"
+              y2="54"
+              stroke="#40916c"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+            <circle cx="39" cy="54" r="3" fill="#10b981" />
+            <line
+              x1="46"
+              y1="54"
+              x2="64"
+              y2="54"
+              stroke="#40916c"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </g>
         </svg>
       </motion.div>
     </div>
@@ -309,9 +417,8 @@ export default function Gallery() {
 
   return (
     <div className="w-full pb-24 overflow-x-clip">
-      {/* 1. HERO BANNER DENGAN ELEMEN LATAR ALAM & MASKOT RIMBA ASLI */}
+      {/* 1. HERO BANNER */}
       <section className="bg-gradient-to-br from-[#072b1b] via-[#0e482e] to-[#15613f] text-white pt-12 pb-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Elemen Latar 1: Pola Grid Topografi Halus */}
         <div
           aria-hidden="true"
           className="absolute inset-0 opacity-[0.07] pointer-events-none"
@@ -323,11 +430,9 @@ export default function Gallery() {
           }}
         />
 
-        {/* Elemen Latar 2: Cahaya Aurora Hijau-Emas */}
         <div className="absolute -top-28 -left-24 w-96 h-96 rounded-full bg-emerald-400/15 blur-3xl pointer-events-none" />
         <div className="absolute top-10 right-10 w-80 h-80 rounded-full bg-amber-400/15 blur-3xl pointer-events-none" />
 
-        {/* Elemen Latar 3: Siluet Pegunungan & Pepohonan Rimba di Bagian Bawah Hero */}
         <svg
           viewBox="0 0 1440 160"
           fill="none"
@@ -346,7 +451,6 @@ export default function Gallery() {
           />
         </svg>
 
-        {/* Partikel Kunang-kunang Melayang */}
         {[
           { top: "16%", left: "8%", delay: 0, size: "w-2.5 h-2.5" },
           { top: "64%", left: "26%", delay: 1.1, size: "w-2 h-2" },
@@ -369,7 +473,6 @@ export default function Gallery() {
         ))}
 
         <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Kolom Kiri: Judul & Statistik */}
           <div className="lg:col-span-7 space-y-5">
             <motion.div
               initial={{ opacity: 0, x: -16 }}
@@ -399,7 +502,6 @@ export default function Gallery() {
               Kenali para pejuang lingkungan di Indonesia yang bergerak nyata membersihkan sungai, menjaga hutan gambut, dan merawat lereng. Ikuti gerakan mereka dan jadilah bagian dari perubahan!
             </motion.p>
 
-            {/* Mini Pills Statistik */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -417,7 +519,6 @@ export default function Gallery() {
             </motion.div>
           </div>
 
-          {/* Kolom Kanan: Maskot Rimba Asli + Orbit Elemen + Speech Bubble */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -425,7 +526,6 @@ export default function Gallery() {
             className="lg:col-span-5 flex flex-col items-center justify-center py-4"
           >
             <div className="relative flex flex-col items-center gap-5">
-              {/* Balon Ucapan Maskot */}
               <motion.button
                 type="button"
                 whileHover={{ scale: 1.03 }}
@@ -456,16 +556,14 @@ export default function Gallery() {
                 </AnimatePresence>
               </motion.button>
 
-              {/* Maskot Asli dengan Cincin Orbit */}
               <OfficialRimbaMascot size="lg" />
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* 2. FILTER ANIMATIF, PENCARIAN & GRID KARTU RANGER */}
+      {/* 2. FILTER, PENCARIAN & GRID KARTU RANGER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 space-y-8">
-        {/* Filter & Search Bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -477,7 +575,6 @@ export default function Gallery() {
               <span>Fokus Gerakan Ranger:</span>
             </div>
 
-            {/* Search Input */}
             <div className="relative w-full md:w-72">
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
@@ -490,7 +587,6 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Filter Pills dengan Sliding Active Indicator */}
           <div className="flex flex-wrap gap-2 pt-1 border-t border-slate-100">
             {categories.map((cat) => {
               const active = selectedCategory === cat.id;
@@ -518,7 +614,6 @@ export default function Gallery() {
           </div>
         </motion.div>
 
-        {/* Cards Grid dengan Staggered Spring Animation */}
         {filteredRangers.length === 0 ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -571,16 +666,18 @@ export default function Gallery() {
                   }`}
                 >
                   <div>
-                    {/* Foto & Badge */}
-                    <div className="relative h-56 overflow-hidden bg-slate-100">
+                    <div className="relative h-56 overflow-hidden bg-emerald-950">
                       <img
                         src={ranger.image}
                         alt={ranger.name}
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = ranger.fallbackImage;
+                        }}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                      {/* Top Badges */}
                       <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2">
                         <span className="px-3 py-1 rounded-full bg-emerald-950/90 backdrop-blur-xs text-amber-300 text-[11px] font-black shadow-xs">
                           {ranger.categoryLabel}
@@ -597,7 +694,6 @@ export default function Gallery() {
                         )}
                       </div>
 
-                      {/* Nama & Lokasi di Bawah Foto */}
                       <div className="absolute bottom-3.5 left-4 right-4 text-white space-y-0.5">
                         <p className="text-[11px] font-semibold text-emerald-200 flex items-center gap-1">
                           <MapPin className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />
@@ -609,7 +705,6 @@ export default function Gallery() {
                       </div>
                     </div>
 
-                    {/* Konten Kartu */}
                     <div className="p-5 space-y-3.5">
                       <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[11px] font-bold text-amber-950 w-full">
                         <Award className="w-4 h-4 text-amber-600 flex-shrink-0" />
@@ -620,7 +715,6 @@ export default function Gallery() {
                         {ranger.summary}
                       </p>
 
-                      {/* Quote Mini */}
                       <div className="p-3.5 rounded-2xl bg-[#f7f5ee] border border-emerald-900/10 text-xs text-slate-700 italic flex items-start gap-2">
                         <Quote className="w-4 h-4 text-emerald-700 flex-shrink-0 mt-0.5" />
                         <span>&ldquo;{ranger.quote}&rdquo;</span>
@@ -628,7 +722,6 @@ export default function Gallery() {
                     </div>
                   </div>
 
-                  {/* Footer Promosi Akun & Detail */}
                   <div className="px-5 py-3.5 bg-emerald-50/70 border-t border-emerald-100 flex items-center justify-between gap-2">
                     {ranger.instagram ? (
                       <a
@@ -657,7 +750,7 @@ export default function Gallery() {
           </motion.div>
         )}
 
-        {/* 3. BANNER AJAKAN PELAJAR + MASKOT RIMBA ASLI */}
+        {/* 3. BANNER AJAKAN PELAJAR */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -708,10 +801,14 @@ export default function Gallery() {
               onClick={(e) => e.stopPropagation()}
               className="max-w-2xl w-full rounded-3xl bg-white overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto"
             >
-              <div className="relative h-64 sm:h-72 bg-slate-900">
+              <div className="relative h-64 sm:h-72 bg-emerald-950">
                 <img
                   src={activeRanger.image}
                   alt={activeRanger.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = activeRanger.fallbackImage;
+                  }}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
@@ -748,7 +845,6 @@ export default function Gallery() {
                   &ldquo;{activeRanger.quote}&rdquo;
                 </blockquote>
 
-                {/* Tombol Ikuti / Promosi Akun Ranger */}
                 <div className="pt-2 flex flex-wrap gap-3">
                   {activeRanger.instagram && (
                     <a
