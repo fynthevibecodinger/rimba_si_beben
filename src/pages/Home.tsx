@@ -104,7 +104,7 @@ export default function Home() {
 
               {/* Deskripsi Jelas & Terbaca */}
               <p className="text-base sm:text-lg text-[#305345] font-medium max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                 Kenali hubungan antara perubahan lingkungan dan risiko bencana melalui materi interaktif, 
+                 Kenali hubungan antara perubahan lingkungan dan bencana melalui materi yang mudah dipahami, 
                  simulasi ekosistem, serta panduan aksi sederhana untuk menjaga alam alam, pengelolaan sampah, dan penghijauan.
               </p>
 
@@ -218,7 +218,7 @@ export default function Home() {
           </h2>
           <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
              Setiap isu memiliki hubungan dengan cara kita memperlakukan alam. Pilih materi di bawah 
-             untuk memahami sebab-akibat ekologis, langkah pencegahan, dan aksi nyata melalui kuis interaktif.
+              untuk memahami penyebab bencana, cara mencegahnya, dan aksi nyata melalui kuis.
           </p>
         </div>
 
@@ -242,7 +242,7 @@ export default function Home() {
              </div>
              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                {[
-                 { icon: Leaf, title: "Konservasi Alam", text: "Jelajahi cara menjaga hutan, sungai, dan destinasi wisata tetap lestari." },
+                  { icon: Leaf, title: "Menjaga Alam", text: "Pelajari cara menjaga hutan, sungai, dan tempat wisata tetap bersih." },
                  { icon: Recycle, title: "Kelola Sampah", text: "Pilah, gunakan kembali, dan kurangi sampah dari sumbernya." },
                   { icon: TreePine, title: "Hijaukan Lingkungan", text: "Tanam dan rawat pohon di sekitar rumah dan lingkungan tempat tinggal." },
                ].map(({ icon: Icon, title, text }) => (

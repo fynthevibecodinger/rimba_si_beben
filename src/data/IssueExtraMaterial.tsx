@@ -41,15 +41,15 @@ const caseStudies: Record<
     statBadge: "6–9 Jam Waktu Aliran Hulu ke Hilir",
     title: "Mengapa Hujan Lebat di Puncak Bisa Merendam Permukiman Jakarta?",
     chronology:
-      "Saat hujan ekstrem mengguyur kawasan hulu Puncak Bogor, jutaan meter kubik air mengalir memasuki Sungai Ciliwung. Di sepanjang aliran tengah hingga hilir, sempadan sungai menyempit akibat bangunan dan sampah plastik sehingga air meluap ke permukiman dalam hitungan jam.",
+      "Saat hujan sangat deras di daerah atas Puncak Bogor, banyak air mengalir ke Sungai Ciliwung. Di sepanjang sungai, tepinya menyempit karena bangunan dan sampah plastik. Akibatnya, air meluap ke rumah warga dalam beberapa jam.",
     rootCause:
-      "Berkurangnya tutupan hutan resapan di hulu dan tertutupnya permukaan tanah kota oleh beton menghambat proses infiltrasi alami tanah.",
+      "Berkurangnya hutan di daerah atas dan banyaknya beton di kota membuat air hujan sulit masuk ke tanah.",
     solution:
       "Revitalisasi daerah resapan hulu, pembangunan kolam retensi & sumur biopori warga, serta sistem sensor tinggi muka air EWS di pintu air.",
   },
   "tanah-longsor": {
     region: "Perbukitan Banjarnegara • Jawa Tengah",
-    tag: "Studi Kasus Geohidrologi Lereng",
+    tag: "Contoh Tanah Longsor",
     statBadge: "3–4 Meter Kedalaman Akar Vetiver",
     title: "Mengunci Lereng Curam dengan Sabuk Hijau Rumput Vetiver",
     chronology:
@@ -276,7 +276,7 @@ export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
                     {caseTab === "solution" && (
                       <div className="space-y-1.5">
                         <span className="text-xs font-black uppercase tracking-wider text-emerald-700 block">
-                          Langkah Mitigasi yang Terbukti Efektif:
+                          Langkah Pencegahan yang Terbukti Efektif:
                         </span>
                         <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                           {currentCase.solution}
@@ -430,7 +430,7 @@ export default function IssueExtraMaterial({ issue, extra, tab }: Props) {
                   {
                     step: "01",
                     label: "Sebelum Bencana",
-                    badge: "Pencegahan & Mitigasi",
+                    badge: "Pencegahan & Keselamatan",
                     items: readiness.before,
                     cls: "bg-emerald-50/90 border-emerald-300 text-emerald-950",
                     badgeCls: "bg-emerald-600 text-white",

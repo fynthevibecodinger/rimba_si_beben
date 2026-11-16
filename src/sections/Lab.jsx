@@ -31,7 +31,7 @@ export default function Lab({
         <div className="lab-heading" data-reveal>
           <div>
             <span className="section-tag">
-              <Activity /> LABORATORIUM MITIGASI
+              <Activity /> LAB BELAJAR BENCANA
             </span>
             <h2>
               Eksperimen: <em>{risk.title}</em>

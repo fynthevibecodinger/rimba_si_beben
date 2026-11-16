@@ -127,11 +127,6 @@ export default function IssueCard({ issue, index }: IssueCardProps) {
         {/* Header Badges with Index, Optimized Icon, & Frosted Right Badge */}
         <div className="flex items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-3">
-            {/* Index Badge */}
-            <span className="font-mono text-xs font-black px-2 py-1 rounded-lg bg-white/90 backdrop-blur-xs text-slate-600 border border-slate-200/80 shadow-xs">
-              0{index + 1}
-            </span>
-
             {/* Icon Art with Scene Symbol */}
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md p-2 relative border border-white/60 backdrop-blur-xs transition-transform group-hover:scale-105"
