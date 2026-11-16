@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useRouter } from "../../router";
 
 const leafAssets = [
   "/images/Glossy Tropical Green Leaf.svg",
   "/images/Windblown Glossy Green Leaf.svg",
 ];
 
-const leaves = Array.from({ length: 18 }, (_, index) => ({
+const leaves = Array.from({ length: 14 }, (_, index) => ({
   id: index,
   asset: leafAssets[index % leafAssets.length],
   left: `${(index * 31 + 7) % 101}%`,
@@ -16,11 +17,22 @@ const leaves = Array.from({ length: 18 }, (_, index) => ({
 }));
 
 export default function FallingLeaves() {
-  const [fallBurst, setFallBurst] = useState(1);
+  const { path } = useRouter();
+  const leavesRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
   const cooldownUntil = useRef(0);
 
   useEffect(() => {
+    const leavesElement = leavesRef.current;
+    if (!leavesElement) return;
+
+    const triggerBurst = () => {
+      leavesElement.classList.remove("is-falling");
+      void leavesElement.offsetWidth;
+      leavesElement.classList.add("is-falling");
+    };
+
+    triggerBurst();
     lastScrollY.current = window.scrollY;
 
     const handleScroll = () => {
@@ -29,7 +41,7 @@ export default function FallingLeaves() {
       const canStartBurst = Date.now() >= cooldownUntil.current;
 
       if (isScrollingDown && canStartBurst) {
-        setFallBurst((current) => current + 1);
+        triggerBurst();
         cooldownUntil.current = Date.now() + 850;
       }
 
@@ -38,10 +50,10 @@ export default function FallingLeaves() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [path]);
 
   return (
-    <div key={fallBurst} className={`falling-leaves ${fallBurst > 0 ? "is-falling" : ""}`} aria-hidden="true">
+    <div ref={leavesRef} className="falling-leaves" aria-hidden="true">
       {leaves.map((leaf) => (
         <img
           key={leaf.id}
