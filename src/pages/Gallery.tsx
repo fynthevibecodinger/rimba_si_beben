@@ -18,6 +18,9 @@ import {
   Waves,
   Star,
   MessageCircle,
+  Trees,
+  Leaf,
+  Compass,
 } from "lucide-react";
 
 interface RangerProfile {
@@ -161,110 +164,114 @@ const rangersData: RangerProfile[] = [
   },
 ];
 
-/* Komponen Maskot Rimba Animatif */
-function RimbaMascot({ size = "lg" }: { size?: "sm" | "lg" }) {
-  const dimensions = size === "lg" ? "w-44 h-44 sm:w-52 sm:h-52" : "w-28 h-28";
+/* Maskot Asli Rimba (Sesuai Identitas Brand di Navbar) + Orbit Elemen Alam */
+function OfficialRimbaMascot({ size = "lg" }: { size?: "sm" | "lg" }) {
+  const isLarge = size === "lg";
 
   return (
-    <motion.div
-      animate={{ y: [0, -10, 0], rotate: [0, 1.5, -1.5, 0] }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      className={`relative ${dimensions} select-none flex items-center justify-center`}
-    >
-      {/* Aura Cahaya Hangat di Belakang Maskot */}
+    <div className="relative flex items-center justify-center select-none">
+      {/* Cincin Orbit Luar (Hanya di Hero Besar) */}
+      {isLarge && (
+        <>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+            className="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full border border-dashed border-amber-300/35 pointer-events-none"
+          >
+            <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-emerald-900 border border-amber-300/60 flex items-center justify-center text-amber-300 shadow-md">
+              <Leaf className="w-3.5 h-3.5" />
+            </span>
+            <span className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-emerald-900 border border-sky-300/60 flex items-center justify-center text-sky-300 shadow-md">
+              <Waves className="w-3.5 h-3.5" />
+            </span>
+          </motion.div>
+
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+            className="absolute w-52 h-52 sm:w-56 sm:h-56 rounded-full border border-emerald-300/20 pointer-events-none"
+          >
+            <span className="absolute top-1/2 -right-3.5 -translate-y-1/2 w-7 h-7 rounded-full bg-emerald-900 border border-emerald-300/60 flex items-center justify-center text-emerald-300 shadow-md">
+              <Trees className="w-3.5 h-3.5" />
+            </span>
+            <span className="absolute top-1/2 -left-3.5 -translate-y-1/2 w-7 h-7 rounded-full bg-emerald-900 border border-amber-300/60 flex items-center justify-center text-amber-300 shadow-md">
+              <Compass className="w-3.5 h-3.5" />
+            </span>
+          </motion.div>
+        </>
+      )}
+
+      {/* Lencana Utama Maskot Rimba Asli */}
       <motion.div
-        animate={{ scale: [1, 1.12, 1], opacity: [0.35, 0.6, 0.35] }}
-        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-3 rounded-full bg-amber-300/30 blur-xl"
-      />
-
-      <svg
-        viewBox="0 0 240 240"
-        className="w-full h-full drop-shadow-2xl relative z-10"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+        animate={{ y: [0, -8, 0], rotate: [0, 2, -2, 0] }}
+        transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+        className={`relative z-10 rounded-full bg-gradient-to-br from-[#1b4332] to-[#081c15] border-4 border-amber-300/80 shadow-2xl shadow-black/40 flex items-center justify-center ${
+          isLarge ? "w-36 h-36 sm:w-44 sm:h-44 p-4" : "w-24 h-24 p-2.5"
+        }`}
       >
-        {/* Lingkaran Lencana Rimba */}
-        <circle cx="120" cy="124" r="96" fill="#062c1b" stroke="#fbbf24" strokeWidth="5" />
-        <circle cx="120" cy="124" r="84" fill="#0d4a2f" />
+        <div className="absolute inset-0 rounded-full bg-amber-300/15 blur-md -z-10" />
 
-        {/* Sayap Kiri Melambai */}
-        <motion.path
-          animate={{ rotate: [0, -8, 0] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "72px 148px" }}
-          d="M72 135 C42 138, 34 166, 56 178 C70 184, 82 168, 84 152 Z"
-          fill="#1b4332"
-          stroke="#34d399"
-          strokeWidth="2.5"
-        />
-
-        {/* Sayap Kanan Melambai */}
-        <motion.path
-          animate={{ rotate: [0, 10, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "168px 148px" }}
-          d="M168 135 C198 132, 208 162, 186 176 C172 184, 158 168, 156 152 Z"
-          fill="#1b4332"
-          stroke="#34d399"
-          strokeWidth="2.5"
-        />
-
-        {/* Badan Rimba */}
-        <path
-          d="M80 188 C80 144, 160 144, 160 188 Z"
-          fill="#143d29"
-        />
-        {/* Syal Pramuka / Ranger Kuning Emas */}
-        <path
-          d="M86 146 Q120 164 154 146 L148 162 Q120 176 92 162 Z"
-          fill="#fbbf24"
-        />
-        <polygon points="120,160 112,182 128,182" fill="#f59e0b" />
-
-        {/* Kepala Rangkong */}
-        <circle cx="118" cy="112" r="36" fill="#1e293b" />
-        {/* Pipi Putih Cerah */}
-        <path
-          d="M96 112 C96 96, 134 96, 136 116 C136 130, 102 132, 96 112 Z"
-          fill="#fef3c7"
-        />
-
-        {/* Paruh Besar Rangkong Khas */}
-        <path
-          d="M128 102 C164 98, 188 110, 192 122 C172 128, 146 126, 128 122 Z"
-          fill="#f59e0b"
-        />
-        <path
-          d="M128 122 C152 124, 174 124, 184 128 C166 135, 142 134, 128 129 Z"
-          fill="#d97706"
-        />
-        {/* Cula (Casque) di Atas Paruh */}
-        <path
-          d="M126 92 C146 84, 168 90, 170 103 C154 102, 138 102, 126 102 Z"
-          fill="#ef4444"
-        />
-
-        {/* Mata Ekspresif Berkedip */}
-        <motion.g
-          animate={{ scaleY: [1, 1, 0.1, 1, 1] }}
-          transition={{ duration: 4.5, repeat: Infinity, times: [0, 0.46, 0.5, 0.54, 1] }}
-          style={{ transformOrigin: "112px 108px" }}
+        {/* Ilustrasi Asli Maskot Rangkong Rimba (viewBox 90 35 240 180) */}
+        <svg
+          viewBox="90 35 240 180"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          className="w-full h-full drop-shadow-md"
         >
-          <circle cx="112" cy="108" r="7.5" fill="#ffffff" />
-          <circle cx="114" cy="108" r="4" fill="#0f172a" />
-          <circle cx="115.5" cy="106.5" r="1.5" fill="#ffffff" />
-        </motion.g>
+          {/* Badan & Syal Hijau/Kuning */}
+          <path
+            d="M148 205 C148 168, 232 168, 232 205 Z"
+            fill="#143627"
+          />
+          <path
+            d="M156 172 Q190 190 224 172 L218 186 Q190 200 162 186 Z"
+            fill="#f59e0b"
+          />
 
-        {/* Topi Rimba Ranger */}
-        <ellipse cx="116" cy="80" rx="44" ry="9" fill="#65a30d" />
-        <path
-          d="M88 80 C90 58, 142 58, 144 80 Z"
-          fill="#4d7c0f"
-        />
-        <rect x="90" y="74" width="52" height="5" rx="2.5" fill="#fbbf24" />
-      </svg>
-    </motion.div>
+          {/* Kepala Burung Rangkong */}
+          <circle cx="184" cy="134" r="38" fill="#1e293b" />
+          <path
+            d="M158 134 C158 116, 204 116, 206 138 C206 154, 166 156, 158 134 Z"
+            fill="#fef3c7"
+          />
+
+          {/* Paruh Besar & Cula Rangkong Khas Logo Rimba */}
+          <path
+            d="M198 122 C245 116, 295 130, 308 146 C276 154, 230 152, 198 146 Z"
+            fill="#f59e0b"
+          />
+          <path
+            d="M198 146 C234 150, 272 150, 294 156 C264 164, 224 162, 198 156 Z"
+            fill="#d97706"
+          />
+          <path
+            d="M196 108 C226 96, 264 104, 270 122 C244 120, 218 120, 196 122 Z"
+            fill="#ef4444"
+          />
+
+          {/* Mata Berkedip */}
+          <motion.g
+            animate={{ scaleY: [1, 1, 0.1, 1, 1] }}
+            transition={{
+              duration: 4.5,
+              repeat: Infinity,
+              times: [0, 0.46, 0.5, 0.54, 1],
+            }}
+            style={{ transformOrigin: "178px 130px" }}
+          >
+            <circle cx="178" cy="130" r="8.5" fill="#ffffff" />
+            <circle cx="180.5" cy="130" r="4.5" fill="#0f172a" />
+            <circle cx="182" cy="128" r="1.8" fill="#ffffff" />
+          </motion.g>
+
+          {/* Topi Rimba Hijau */}
+          <ellipse cx="182" cy="98" rx="52" ry="11" fill="#65a30d" />
+          <path d="M148 98 C152 70, 212 70, 216 98 Z" fill="#4d7c0f" />
+          <rect x="150" y="90" width="64" height="6" rx="3" fill="#fbbf24" />
+        </svg>
+      </motion.div>
+    </div>
   );
 }
 
@@ -302,36 +309,72 @@ export default function Gallery() {
 
   return (
     <div className="w-full pb-24 overflow-x-clip">
-      {/* 1. HERO BANNER ANIMATIF + MASKOT RIMBA */}
-      <section className="bg-gradient-to-br from-[#08301e] via-[#0e482e] to-[#145e3d] text-white pt-12 pb-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Partikel Kunang-kunang / Daun Melayang */}
+      {/* 1. HERO BANNER DENGAN ELEMEN LATAR ALAM & MASKOT RIMBA ASLI */}
+      <section className="bg-gradient-to-br from-[#072b1b] via-[#0e482e] to-[#15613f] text-white pt-12 pb-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Elemen Latar 1: Pola Grid Topografi Halus */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 opacity-[0.07] pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(#fbbf24 1.25px, transparent 1.25px), radial-gradient(#34d399 1.25px, #072b1b 1.25px)",
+            backgroundSize: "36px 36px",
+            backgroundPosition: "0 0, 18px 18px",
+          }}
+        />
+
+        {/* Elemen Latar 2: Cahaya Aurora Hijau-Emas */}
+        <div className="absolute -top-28 -left-24 w-96 h-96 rounded-full bg-emerald-400/15 blur-3xl pointer-events-none" />
+        <div className="absolute top-10 right-10 w-80 h-80 rounded-full bg-amber-400/15 blur-3xl pointer-events-none" />
+
+        {/* Elemen Latar 3: Siluet Pegunungan & Pepohonan Rimba di Bagian Bawah Hero */}
+        <svg
+          viewBox="0 0 1440 160"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 w-full h-24 sm:h-32 object-cover pointer-events-none opacity-30"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 120 L180 55 L340 105 L520 35 L740 110 L960 40 L1180 95 L1340 48 L1440 85 L1440 160 L0 160 Z"
+            fill="#041d12"
+          />
+          <path
+            d="M0 135 Q240 85 480 125 T960 115 T1440 125 L1440 160 L0 160 Z"
+            fill="#052416"
+          />
+        </svg>
+
+        {/* Partikel Kunang-kunang Melayang */}
         {[
-          { top: "18%", left: "12%", delay: 0, size: "w-2.5 h-2.5" },
-          { top: "68%", left: "28%", delay: 1.2, size: "w-2 h-2" },
-          { top: "24%", left: "54%", delay: 0.6, size: "w-3 h-3" },
-          { top: "74%", left: "82%", delay: 1.8, size: "w-2.5 h-2.5" },
+          { top: "16%", left: "8%", delay: 0, size: "w-2.5 h-2.5" },
+          { top: "64%", left: "26%", delay: 1.1, size: "w-2 h-2" },
+          { top: "22%", left: "50%", delay: 0.6, size: "w-3 h-3" },
+          { top: "70%", left: "88%", delay: 1.6, size: "w-2.5 h-2.5" },
+          { top: "32%", left: "92%", delay: 0.9, size: "w-2 h-2" },
         ].map((dot, idx) => (
           <motion.span
             key={idx}
-            animate={{ y: [0, -18, 0], opacity: [0.2, 0.75, 0.2] }}
+            animate={{ y: [0, -18, 0], opacity: [0.25, 0.85, 0.25] }}
             transition={{
-              duration: 4 + idx,
+              duration: 3.8 + idx,
               repeat: Infinity,
               delay: dot.delay,
               ease: "easeInOut",
             }}
             style={{ top: dot.top, left: dot.left }}
-            className={`absolute rounded-full bg-amber-300/60 blur-[1px] pointer-events-none ${dot.size}`}
+            className={`absolute rounded-full bg-amber-300/70 blur-[1px] pointer-events-none ${dot.size}`}
           />
         ))}
 
         <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Kolom Kiri: Judul & Statistik Singkat */}
+          {/* Kolom Kiri: Judul & Statistik */}
           <div className="lg:col-span-7 space-y-5">
             <motion.div
               initial={{ opacity: 0, x: -16 }}
               animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xs border border-amber-300/30 text-xs font-black uppercase tracking-wider text-amber-300"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xs border border-amber-300/35 text-xs font-black uppercase tracking-wider text-amber-300"
             >
               <ShieldCheck className="w-4 h-4" />
               <span>Jejak Ranger Lingkungan Nusantara</span>
@@ -363,32 +406,32 @@ export default function Gallery() {
               transition={{ delay: 0.18 }}
               className="flex flex-wrap gap-3 pt-1"
             >
-              <div className="px-3.5 py-2 rounded-2xl bg-white/10 border border-white/15 flex items-center gap-2 text-xs font-bold">
+              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-xs border border-white/15 flex items-center gap-2 text-xs font-bold">
                 <Users className="w-4 h-4 text-amber-300" />
                 <span>6+ Gerakan Inspiratif</span>
               </div>
-              <div className="px-3.5 py-2 rounded-2xl bg-white/10 border border-white/15 flex items-center gap-2 text-xs font-bold">
+              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-xs border border-white/15 flex items-center gap-2 text-xs font-bold">
                 <Waves className="w-4 h-4 text-sky-300" />
                 <span>Mitigasi 4 Bencana Ekologis</span>
               </div>
             </motion.div>
           </div>
 
-          {/* Kolom Kanan: Maskot Rimba + Speech Bubble Interaktif */}
+          {/* Kolom Kanan: Maskot Rimba Asli + Orbit Elemen + Speech Bubble */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.15, type: "spring", stiffness: 140 }}
-            className="lg:col-span-5 flex flex-col items-center justify-center"
+            className="lg:col-span-5 flex flex-col items-center justify-center py-4"
           >
-            <div className="relative flex flex-col sm:flex-row lg:flex-col items-center gap-4">
-              {/* Balon Ucapan Maskot (Bisa Diklik untuk Ganti Pesan) */}
+            <div className="relative flex flex-col items-center gap-5">
+              {/* Balon Ucapan Maskot */}
               <motion.button
                 type="button"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setTipIndex((prev) => (prev + 1) % mascotTips.length)}
-                className="max-w-xs p-4 rounded-3xl bg-white text-slate-900 shadow-2xl border-2 border-amber-300 text-left relative cursor-pointer group"
+                className="max-w-xs p-4 rounded-3xl bg-white text-slate-900 shadow-2xl border-2 border-amber-300 text-left relative z-20 cursor-pointer group"
               >
                 <div className="flex items-center justify-between gap-2 mb-1">
                   <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 flex items-center gap-1">
@@ -413,8 +456,8 @@ export default function Gallery() {
                 </AnimatePresence>
               </motion.button>
 
-              {/* Karakter Maskot Rimba */}
-              <RimbaMascot size="lg" />
+              {/* Maskot Asli dengan Cincin Orbit */}
+              <OfficialRimbaMascot size="lg" />
             </div>
           </motion.div>
         </div>
@@ -614,7 +657,7 @@ export default function Gallery() {
           </motion.div>
         )}
 
-        {/* 3. BANNER AJAKAN PELAJAR + MASKOT RIMBA KECIL */}
+        {/* 3. BANNER AJAKAN PELAJAR + MASKOT RIMBA ASLI */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -622,7 +665,7 @@ export default function Gallery() {
           className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-900 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border border-emerald-700/40"
         >
           <div className="flex flex-col sm:flex-row items-center gap-5 relative z-10 text-center sm:text-left">
-            <RimbaMascot size="sm" />
+            <OfficialRimbaMascot size="sm" />
             <div className="space-y-2 max-w-xl">
               <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-emerald-950 bg-amber-300 px-3.5 py-1 rounded-full">
                 <Sparkles className="w-3.5 h-3.5" />
