@@ -29,7 +29,49 @@ import {
   HeartPulse,
   Leaf,
   Building2,
+  ArrowRight,
+  ArrowLeft,
+  Sparkles,
 } from "lucide-react";
+
+export const ALL_ISSUES = [
+  {
+    slug: "banjir",
+    title: "Banjir & Genangan",
+    subtitle: "Infiltrasi air hujan, sumur resapan, dan biopori perkotaan",
+    icon: Waves,
+    accent: "text-sky-600",
+    bgLight: "bg-sky-50",
+    borderLight: "border-sky-200",
+  },
+  {
+    slug: "tanah-longsor",
+    title: "Tanah Longsor",
+    subtitle: "Kestabilan lereng kritis, akar pohon vetiver, dan bidang gelincir",
+    icon: Mountain,
+    accent: "text-amber-800",
+    bgLight: "bg-amber-50",
+    borderLight: "border-amber-200",
+  },
+  {
+    slug: "kekeringan",
+    title: "Kekeringan Air",
+    subtitle: "Konservasi akuifer tanah, panen air hujan, dan irigasi tetes presisi",
+    icon: SunMedium,
+    accent: "text-amber-600",
+    bgLight: "bg-orange-50",
+    borderLight: "border-orange-200",
+  },
+  {
+    slug: "kebakaran-hutan",
+    title: "Kebakaran Hutan",
+    subtitle: "Ekosistem gambut, pembasahan sekat kanal, dan mitigasi kabut asap",
+    icon: Flame,
+    accent: "text-rose-600",
+    bgLight: "bg-rose-50",
+    borderLight: "border-rose-200",
+  },
+];
 
 const disasterTips: Record<string, { mood: RimbaMood; text: string }[]> = {
   banjir: [
@@ -147,31 +189,24 @@ export default function IssueDetail() {
   const [activeTab, setActiveTab] = useState<"sebab" | "dampak" | "aksi">("sebab");
   const [actionFilter, setActionFilter] = useState<"semua" | "rumah" | "sekolah" | "lingkungan">("semua");
   const [tipIndex, setTipIndex] = useState(0);
-  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
   const normalizedSlug = slug === "kekeringan-air" ? "kekeringan" : slug;
   const issue: IssueContent | undefined = normalizedSlug
     ? issuesData[normalizedSlug]
     : undefined;
 
-  const issueKeys = Object.keys(issuesData);
-  const currentIndex = issueKeys.indexOf(normalizedSlug || "");
-  const nextKey =
-    currentIndex >= 0 && currentIndex + 1 < issueKeys.length
-      ? issueKeys[currentIndex + 1]
-      : issueKeys[0];
-  const nextIssue = issuesData[nextKey];
+  const currentIndex = ALL_ISSUES.findIndex((item) => item.slug === normalizedSlug);
+  const nextItem =
+    currentIndex >= 0 && currentIndex + 1 < ALL_ISSUES.length
+      ? ALL_ISSUES[currentIndex + 1]
+      : ALL_ISSUES[0];
+  const nextIssue = issuesData[nextItem.slug];
 
-  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    setMouseOffset({ x, y });
-  };
-
-  const handleHeroMouseLeave = () => {
-    setMouseOffset({ x: 0, y: 0 });
-  };
+  const prevItem =
+    currentIndex > 0
+      ? ALL_ISSUES[currentIndex - 1]
+      : ALL_ISSUES[ALL_ISSUES.length - 1];
+  const prevIssue = issuesData[prevItem.slug];
 
   const handleMascotClick = () => {
     const tips = disasterTips[issue?.slug ?? ""] ?? [];
@@ -225,21 +260,11 @@ export default function IssueDetail() {
 
   return (
     <div className="w-full pb-20">
-      {/* 1. HERO BANNER — ILLUSTRATED SVG LANDSCAPE + MASCOT SPEECH BUBBLE */}
-      <section
-        onMouseMove={handleHeroMouseMove}
-        onMouseLeave={handleHeroMouseLeave}
-        className="w-full pt-10 pb-20 relative overflow-hidden text-white min-h-[520px] flex flex-col justify-center"
-      >
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            x: mouseOffset.x * -16,
-            y: mouseOffset.y * -10,
-          }}
-        >
+      {/* 1. HERO BANNER — ILLUSTRATED SVG LANDSCAPE + MASCOT SPEECH BUBBLE (STABIL TANPA HOVER JITTER) */}
+      <section className="w-full pt-10 pb-20 relative overflow-hidden text-white min-h-[520px] flex flex-col justify-center">
+        <div className="absolute inset-0 pointer-events-none">
           <HeroThematicEffect slug={issue.slug} />
-        </motion.div>
+        </div>
 
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-black/65 via-black/35 to-transparent" />
 
@@ -319,24 +344,18 @@ export default function IssueDetail() {
             </motion.div>
 
             {/* RIGHT: Rimba Mascot + Speech Bubble */}
-            <motion.div
-              className="lg:col-span-5 flex flex-col items-center justify-center"
-              style={{
-                x: mouseOffset.x * 20,
-                y: mouseOffset.y * 14,
-              }}
-            >
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
               {(() => {
                 const tips = disasterTips[issue.slug] ?? [];
                 const currentTip = tips[tipIndex % (tips.length || 1)];
                 return currentTip ? (
                   <motion.div
                     key={tipIndex}
-                    initial={{ opacity: 0, scale: 0.92, y: -6 }}
+                    initial={{ opacity: 0, scale: 0.95, y: -4 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ type: "spring" as const, stiffness: 400, damping: 25 }}
                     onClick={handleMascotClick}
-                    className="w-full max-w-[280px] sm:max-w-[300px] bg-white/95 backdrop-blur-sm rounded-2xl p-3 sm:p-3.5 shadow-xl border border-emerald-800/15 cursor-pointer hover:border-emerald-400 transition-all mb-2 select-none relative group hover:scale-[1.02] z-20"
+                    className="w-full max-w-[280px] sm:max-w-[300px] bg-white/95 backdrop-blur-sm rounded-2xl p-3 sm:p-3.5 shadow-xl border border-emerald-800/15 cursor-pointer transition-all mb-2 select-none relative group z-20"
                     title="Klik untuk tips siaga berikutnya!"
                   >
                     <div className="flex items-center justify-between gap-2 mb-1">
@@ -388,12 +407,12 @@ export default function IssueDetail() {
               </motion.div>
 
               <div
-                className="mt-1 inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-200 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 hover:bg-amber-400 hover:text-slate-950 transition-all shadow-sm cursor-pointer select-none"
+                className="mt-1 inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-200 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 transition-all shadow-sm cursor-pointer select-none"
                 onClick={handleMascotClick}
               >
                 💬 Klik Rimba untuk Tips Siaga!
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -843,6 +862,161 @@ export default function IssueDetail() {
           nextTitle={nextIssue?.title}
           issueSlug={issue.slug}
         />
+      </section>
+
+      {/* 5. NAVIGASI MATERI DIPALING BAWAH: TOMBOL NEXT & PILIHAN ISU LAIN */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="rounded-3xl bg-white border border-slate-200/90 shadow-xl p-6 sm:p-8">
+          
+          {/* Header & Quick Next Action */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-5 border-b border-slate-100">
+            <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full border border-emerald-300/60 inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                  Eksplorasi Jelajah Alam
+                </span>
+                <span className="text-xs font-bold text-slate-400">
+                  Topik {currentIndex + 1} dari {ALL_ISSUES.length}
+                </span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black font-['Fredoka'] text-slate-900 tracking-tight">
+                Lanjut ke Isu Bencana Berikutnya
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+                Pilih topik di bawah ini atau langsung tekan tombol untuk melanjutkan ke materi selanjutnya.
+              </p>
+            </div>
+
+            {/* Tombol Utama Next ke Isu Selanjutnya */}
+            <div className="flex items-center gap-2.5 self-start md:self-auto shrink-0">
+              <Link
+                to={`/isu/${prevItem.slug}`}
+                className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
+                title={`Kembali ke isu sebelumnya: ${prevItem.title}`}
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span className="hidden sm:inline">Sebelumnya</span>
+              </Link>
+
+              <Link
+                to={`/isu/${nextItem.slug}`}
+                className="px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs sm:text-sm transition-all inline-flex items-center gap-2 cursor-pointer shadow-md shadow-emerald-950/20 active:scale-95 group"
+                title={`Lanjut ke isu berikutnya: ${nextItem.title}`}
+              >
+                <span>Lanjut: {nextItem.title}</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-amber-300" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Grid 4 Pilihan Isu Bencana (Pilihan Mau Next ke Mananya) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {ALL_ISSUES.map((item, idx) => {
+              const Icon = item.icon;
+              const isCurrent = item.slug === normalizedSlug;
+              const isNext = item.slug === nextItem.slug;
+
+              return (
+                <Link
+                  key={item.slug}
+                  to={`/isu/${item.slug}`}
+                  className={`relative p-4 rounded-2xl border-2 transition-all flex flex-col justify-between group ${
+                    isCurrent
+                      ? "bg-slate-900 text-white border-slate-900 shadow-lg ring-2 ring-emerald-500/50 cursor-default"
+                      : isNext
+                      ? "bg-gradient-to-b from-emerald-50/70 to-white text-slate-800 border-emerald-400 shadow-md hover:shadow-lg cursor-pointer ring-1 ring-emerald-400/30"
+                      : "bg-slate-50/60 hover:bg-white text-slate-800 border-slate-200/90 hover:border-slate-300 hover:shadow-md cursor-pointer"
+                  }`}
+                >
+                  <div>
+                    {/* Top row: Icon & Status Badge */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div
+                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 ${
+                          isCurrent
+                            ? "bg-white/10 text-emerald-400"
+                            : `${item.bgLight} ${item.accent} border ${item.borderLight}`
+                        }`}
+                      >
+                        <Icon className="w-5 h-5" />
+                      </div>
+
+                      {isCurrent ? (
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 shadow-xs">
+                          Sedang Dibaca
+                        </span>
+                      ) : isNext ? (
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-600 text-white shadow-xs animate-pulse">
+                          Selanjutnya →
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold text-slate-400 group-hover:text-slate-600">
+                          Topik {idx + 1}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Title & Subtitle */}
+                    <h4
+                      className={`font-black text-sm sm:text-base font-['Fredoka'] mb-1 ${
+                        isCurrent
+                          ? "text-white"
+                          : "text-slate-900 group-hover:text-emerald-900"
+                      }`}
+                    >
+                      {item.title}
+                    </h4>
+                    <p
+                      className={`text-xs line-clamp-2 leading-relaxed ${
+                        isCurrent ? "text-slate-300" : "text-slate-500"
+                      }`}
+                    >
+                      {item.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Bottom link indicator */}
+                  <div
+                    className={`mt-4 pt-3 border-t flex items-center justify-between text-xs font-bold ${
+                      isCurrent
+                        ? "border-white/10 text-emerald-300"
+                        : "border-slate-100 text-slate-500 group-hover:text-emerald-800"
+                    }`}
+                  >
+                    <span>{isCurrent ? "Materi Aktif" : isNext ? "Pilihan Disarankan" : "Buka Topik Ini"}</span>
+                    <ArrowRight
+                      className={`w-3.5 h-3.5 transition-transform ${
+                        isCurrent
+                          ? "text-emerald-300"
+                          : "text-slate-400 group-hover:translate-x-1 group-hover:text-emerald-700"
+                      }`}
+                    />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Quick Shortcuts Bar */}
+          <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <Link
+              to="/"
+              className="text-slate-500 hover:text-slate-900 font-bold inline-flex items-center gap-1.5 transition-colors"
+            >
+              <span>← Beranda Utama</span>
+            </Link>
+
+            <Link
+              to="/simulasi"
+              className="text-emerald-800 hover:text-emerald-950 font-black inline-flex items-center gap-1.5 transition-colors bg-emerald-50 hover:bg-emerald-100 px-3.5 py-1.5 rounded-xl border border-emerald-200 shadow-2xs"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <span>Simulasikan Bencana di Laboratorium 3D →</span>
+            </Link>
+          </div>
+
+        </div>
       </section>
     </div>
   );

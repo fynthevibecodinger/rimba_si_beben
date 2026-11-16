@@ -937,7 +937,7 @@ export default function EcosystemSimulation() {
   }, [scenario]);
 
   return (
-    <div className="w-full pb-20 bg-slate-50/50">
+    <div className="w-full pb-20 bg-slate-50/50 overflow-x-clip">
       {/* =========================================================================
           1. HEADER BANNER UTAMA LABORATORIUM 3D
          ========================================================================= */}
@@ -953,8 +953,8 @@ export default function EcosystemSimulation() {
                  Diorama Belajar Bencana
               </h1>
               <p className="text-white/80 text-xs sm:text-sm md:text-base leading-relaxed">
-                Jelajahi potongan lanskap 3D secara langsung. Lihat bagaimana cuaca ekstrem,
-                 kebiasaan manusia, dan cara menjaga alam memengaruhi air dan tanah.
+                Eksplorasi potongan balok lanskap 3D secara <em className="not-italic font-semibold text-white">real-time</em>. Uji bagaimana cuaca ekstrem,
+                kebiasaan manusia, dan solusi konservasi mempengaruhi aliran air, tanah, dan akuifer bumi.
               </p>
             </div>
 
@@ -1031,21 +1031,25 @@ export default function EcosystemSimulation() {
           {/* =========================================================================
               KOLOM KIRI: KANVAS DIORAMA 3D & TELEMETRI GAUGES (7/12 COLS - STICKY)
              ========================================================================= */}
-          <div className="lg:col-span-7 lg:sticky lg:top-20 space-y-3.5 self-start">
+          <div className="lg:col-span-7 lg:sticky lg:top-24 space-y-3.5 self-start">
             
             {/* Kartu Kanvas 3D Interaktif */}
             <div className="rounded-3xl bg-white border border-slate-200/90 shadow-xl overflow-hidden p-3.5 sm:p-4 relative">
               
-              {/* Toolbar Atas Kanvas 3D */}
+              {/* Toolbar Atas Kanvas 3D: Judul Skenario Aktif & View Toggles */}
               <div className="flex flex-wrap items-center justify-between gap-2.5 mb-3 px-1">
-                <div className="flex items-center gap-2">
-                  <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black shadow-xs ${currentTheme.viewportBadgeBg}`}>
+                {/* Judul Skenario Aktif + Status Singkat */}
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black shadow-xs shrink-0 ${currentTheme.viewportBadgeBg}`}>
                     <span className={`w-2 h-2 rounded-full animate-ping ${currentTheme.viewportPingColor}`} />
                      <span>Diorama 3D</span>
                   </span>
                   <span className="text-xs text-slate-600 font-bold hidden sm:inline">
                     {currentMeta.title.split(":")[0]}
                   </span>
+                  <strong className="text-xs sm:text-sm font-bold text-slate-800 truncate">
+                    {currentMeta.title.replace(/^Diorama 3D\s*/, "")}
+                  </strong>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1064,7 +1068,7 @@ export default function EcosystemSimulation() {
                     }
                   >
                     <Tag className={`w-3.5 h-3.5 ${showHotspotLabels ? "text-amber-300" : "text-slate-400"}`} />
-                    <span>{showHotspotLabels ? "Label Pin: Tampil" : "Label Pin: Sembunyi"}</span>
+                    <span>{showHotspotLabels ? "Pin: Tampil" : "Pin: Sembunyi"}</span>
                   </button>
 
                   {/* Tombol Toggle Mode X-Ray Tanah */}
@@ -1080,12 +1084,12 @@ export default function EcosystemSimulation() {
                     {xrayMode ? (
                       <>
                         <Eye className="w-3.5 h-3.5 text-cyan-200" />
-                        <span>Mode X-Ray: AKTIF</span>
+                        <span>X-Ray: ON</span>
                       </>
                     ) : (
                       <>
                         <Layers className="w-3.5 h-3.5 text-slate-500" />
-                        <span>X-Ray Lapisan Tanah</span>
+                        <span>X-Ray</span>
                       </>
                     )}
                   </button>
@@ -1184,12 +1188,12 @@ export default function EcosystemSimulation() {
             {/* =========================================================================
                 TIGA (3) UKURAN DATA LANGSUNG
                ========================================================================= */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <div className="grid grid-cols-3 gap-3">
               {/* Metric 1: Daya Serap Air */}
               <div className="rounded-2xl bg-white border border-slate-200/90 p-3 sm:p-3.5 shadow-sm relative overflow-hidden">
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
-                    <div className="w-6.5 h-6.5 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center shrink-0">
                       <Droplets className="w-3.5 h-3.5" />
                     </div>
                     <span className="text-xs font-bold text-slate-700">Daya Serap Air</span>
@@ -1215,7 +1219,7 @@ export default function EcosystemSimulation() {
                         : "text-rose-600"
                     }`}
                   >
-                    {waterAbsorption > 65 ? "Optimal" : waterAbsorption > 35 ? "Sedang" : "Kritis"}
+                    {waterAbsorption > 65 ? "Optimal" : waterAbsorption > 35 ? "Sedang" : "Kritis Rendah"}
                   </span>
                 </div>
               </div>
@@ -1224,7 +1228,7 @@ export default function EcosystemSimulation() {
               <div className="rounded-2xl bg-white border border-slate-200/90 p-3 sm:p-3.5 shadow-sm relative overflow-hidden">
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
-                    <div className="w-6.5 h-6.5 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
                       <ShieldCheck className="w-3.5 h-3.5" />
                     </div>
                     <span className="text-xs font-bold text-slate-700">Kekuatan Tanah</span>
@@ -1260,7 +1264,7 @@ export default function EcosystemSimulation() {
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
                     <div
-                      className={`w-6.5 h-6.5 rounded-lg flex items-center justify-center ${
+                      className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 ${
                         ecosystemHealth > 65
                           ? "bg-emerald-100 text-emerald-800"
                           : ecosystemHealth > 35
@@ -1316,9 +1320,9 @@ export default function EcosystemSimulation() {
           </div>
 
           {/* =========================================================================
-              KOLOM KANAN: PENDAMPING RIMBA & PANEL KONTROL EKSPERIMEN (5/12 COLS - INDEPENDENT SCROLL)
+              KOLOM KANAN: PENDAMPING RIMBA & PANEL KONTROL EKSPERIMEN (5/12 COLS - UNIFIED PAGE SCROLL)
              ========================================================================= */}
-          <div className="lg:col-span-5 space-y-3.5 lg:sticky lg:top-20 lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto lg:pr-1.5 scrollbar-thin self-start">
+          <div className="lg:col-span-5 space-y-3.5 self-start">
             
             {/* Visual Column Header */}
             <div className="flex items-center justify-between px-1 text-slate-700">
@@ -1331,7 +1335,7 @@ export default function EcosystemSimulation() {
                 </span>
               </div>
               <span className="text-[10px] text-slate-400 font-bold hidden sm:inline">
-                Scroll untuk kontrol penuh
+                10 Parameter Interaktif
               </span>
             </div>
             
@@ -1515,8 +1519,8 @@ export default function EcosystemSimulation() {
                 </div>
               </div>
 
-              {/* List Container 10 Aksi (Mengalir Alami Tanpa Inner Scroll Trap) */}
-              <div className="space-y-2.5">
+              {/* List Container 10 Aksi (Maksimal 360px dengan Scrollbar Tipis) */}
+              <div className="max-h-[360px] overflow-y-auto pr-2 space-y-2.5 scrollbar-thin">
                 {filteredActions.map((act) => {
                   const isActive = !!actions[act.id];
                   return (
