@@ -60,7 +60,7 @@ export default function CanalBlockingDiagram() {
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-black uppercase tracking-wider mb-1.5 border border-emerald-400/30">
             <Layers className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Praktik Aksi Nyata Mitigasi</span>
+            <span>Contoh Aksi Nyata</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-black font-['Fredoka'] text-white">
             Simulasi Pembangunan Sekat Kanal (Canal Blocking)

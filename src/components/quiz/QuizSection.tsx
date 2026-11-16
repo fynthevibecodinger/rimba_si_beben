@@ -28,19 +28,19 @@ interface QuizSectionProps {
 const badgeMap: Record<string, { title: string; subtitle: string; icon: string; bg: string }> = {
   banjir: {
     title: "Pahlawan Siaga Banjir",
-    subtitle: "Menguasai prinsip infiltrasi tanah, lubang biopori, dan evakuasi kelistrikan aman.",
+    subtitle: "Memahami cara air masuk ke tanah, lubang biopori, dan cara aman saat ada listrik.",
     icon: "🌊",
     bg: "from-sky-500/20 to-blue-600/30",
   },
   "tanah-longsor": {
     title: "Penjaga Lereng Tangguh",
-    subtitle: "Paham peran akar vetiver, deteksi retakan tebing, dan arah evakuasi samping.",
+    subtitle: "Memahami manfaat akar vetiver, tanda retakan tebing, dan arah lari yang aman.",
     icon: "⛰️",
     bg: "from-amber-600/20 to-stone-700/30",
   },
   kekeringan: {
     title: "Sahabat Mata Air",
-    subtitle: "Ahli konservasi air rumah tangga, pemanfaatan mulsa, dan efisiensi air bersih.",
+    subtitle: "Pintar menghemat air di rumah, memakai daun kering, dan menjaga air bersih.",
     icon: "💧",
     bg: "from-amber-500/20 to-yellow-600/30",
   },
@@ -310,8 +310,8 @@ export default function QuizSection({
               Skor Akhir: {finalScore}%
             </h4>
             <p className="text-slate-600 text-sm mt-2 max-w-md mx-auto">
-              {passed
-                ? "Luar biasa! Kamu telah menguasai prinsip mitigasi hidrometeorologi dengan sangat baik."
+               {passed
+                 ? "Luar biasa! Kamu sudah tahu cara menjaga alam dan bersiap menghadapi bencana."
                 : "Kerja bagus! Teruslah membaca materi dan berlatih agar semakin siap menghadapi bahaya."}
             </p>
           </div>

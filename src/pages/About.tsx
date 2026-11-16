@@ -45,7 +45,7 @@ export default function About() {
              Membangun Generasi Peduli Alam dan Tangguh Bencana
           </h1>
           <p className="text-emerald-100/90 text-sm sm:text-base mt-4 leading-relaxed max-w-2xl mx-auto">
-             Media pembelajaran interaktif berbasis web yang menghubungkan menjaga alam alam, pengelolaan lingkungan,
+             Media belajar di web yang membantu anak-anak menjaga alam, merawat lingkungan,
              dan kesiapan bencana untuk pelajar Indonesia.
           </p>
           <div className="flex flex-wrap justify-center gap-2 mt-6">
@@ -125,7 +125,7 @@ export default function About() {
               membuat pelajar kesulitan menghubungkan ancaman di sekitar mereka dengan aksi nyata.
             </p>
             <p className="text-sm text-emerald-100/85 leading-relaxed mt-4">
-              Rimba hadir sebagai ruang belajar yang ramah, visual, dan interaktif agar setiap pelajar dapat
+               Rimba hadir sebagai ruang belajar yang ramah, menarik, dan mudah dipahami agar setiap pelajar dapat
               mengenali risiko, mengambil keputusan yang tepat, serta ikut menjaga lingkungan di sekitarnya.
             </p>
           </div>

@@ -80,7 +80,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 text-[11px] text-emerald-300 font-medium">
               <Shield className="w-4 h-4 text-emerald-400" />
-              Didukung data terbuka PetaBencana.id dan BMKG
+                Menggunakan data dari PetaBencana.id dan BMKG
             </div>
           </div>
 
