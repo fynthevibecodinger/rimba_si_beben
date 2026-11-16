@@ -53,6 +53,13 @@ export default function Contact() {
     <div className="w-full pb-20">
       {/* Header Banner */}
       <section className="relative overflow-hidden bg-[#12382b] text-white pt-16 pb-28">
+        <img
+          src="/images/Serene%20Green%20Valley%20with%20Wind%20Turbines%20(1).svg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#12382b]/75 via-[#12382b]/55 to-[#12382b]/35" />
         <div className="absolute -right-28 -top-32 h-80 w-80 rounded-full bg-emerald-400/15 blur-3xl" />
         <div className="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-teal-300/10 blur-3xl" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">

@@ -28,8 +28,15 @@ export default function About() {
   return (
     <div className="w-full pb-20">
       {/* Header Banner */}
-      <section className="bg-gradient-to-b from-[#1b4332] via-[#2d6a4f] to-[#173a2d] text-white pt-14 pb-20 text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+       <section className="relative overflow-hidden bg-[#173a2d] text-white pt-14 pb-20 text-center">
+         <img
+           src="/images/Serene%20Green%20Valley%20with%20Wind%20Turbines%20(1).svg"
+           alt=""
+           aria-hidden="true"
+           className="absolute inset-0 h-full w-full object-cover object-center opacity-65"
+         />
+         <div className="absolute inset-0 bg-gradient-to-b from-[#12382b]/50 via-[#1b4332]/55 to-[#173a2d]/75" />
+         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
           <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
              Tempat Belajar tentang Alam
