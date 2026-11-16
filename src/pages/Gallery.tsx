@@ -13,6 +13,11 @@ import {
   Quote,
   ArrowRight,
   Award,
+  Search,
+  Users,
+  Trees,
+  Waves,
+  Star,
 } from "lucide-react";
 
 interface RangerProfile {
@@ -23,6 +28,7 @@ interface RangerProfile {
   categoryLabel: string;
   location: string;
   impactStat: string;
+  featured?: boolean;
   image: string;
   summary: string;
   fullStory: string;
@@ -41,8 +47,9 @@ const rangersData: RangerProfile[] = [
     categoryLabel: "Bersih Sungai & Cegah Banjir",
     location: "Bandung & Seluruh Nusantara",
     impactStat: "Ratusan Ton Sampah Sungai & Pantai Terangkat",
+    featured: true,
     image:
-      "https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?auto=format&fit=crop&w=1000&q=80",
     summary:
       "Kelompok lima pemuda asal Bandung yang viral karena aksi nyata turun langsung membersihkan sungai-sungai penuh sampah hingga pesisir pantai terkotor di Indonesia.",
     fullStory:
@@ -156,6 +163,7 @@ const rangersData: RangerProfile[] = [
 
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState<string>("semua");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeRanger, setActiveRanger] = useState<RangerProfile | null>(null);
 
   const categories = [
@@ -166,48 +174,138 @@ export default function Gallery() {
     { id: "konservasi", label: "Konservasi Lereng & Air" },
   ];
 
-  const filteredRangers =
-    selectedCategory === "semua"
-      ? rangersData
-      : rangersData.filter((r) => r.category === selectedCategory);
+  const filteredRangers = rangersData.filter((r) => {
+    const matchesCategory =
+      selectedCategory === "semua" || r.category === selectedCategory;
+    const q = searchQuery.toLowerCase().trim();
+    const matchesSearch =
+      !q ||
+      r.name.toLowerCase().includes(q) ||
+      r.location.toLowerCase().includes(q) ||
+      r.summary.toLowerCase().includes(q);
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <div className="w-full pb-20">
-      {/* 1. HERO BANNER */}
-      <section className="bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-900 text-white pt-14 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-xs border border-white/20 text-xs font-black uppercase tracking-wider text-amber-300">
-            <ShieldCheck className="w-4 h-4" />
-            <span>Jejak Ranger Lingkungan Nusantara</span>
+    <div className="w-full pb-24">
+      {/* 1. HERO BANNER YANG LEBIH DINAMIS & BERISI */}
+      <section className="bg-gradient-to-br from-[#0a3622] via-[#0e482e] to-[#135c3c] text-white pt-14 pb-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Dekorasi Cahaya & Lingkaran Latar */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 w-80 h-80 rounded-full bg-emerald-400/10 blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          {/* Kolom Kiri: Judul & Narasi */}
+          <div className="lg:col-span-7 space-y-5">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xs border border-amber-300/30 text-xs font-black uppercase tracking-wider text-amber-300"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Jejak Ranger Lingkungan Nusantara</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="text-4xl sm:text-5xl lg:text-[52px] font-black font-['Fredoka'] leading-[1.12] tracking-tight"
+            >
+              Galeri Ranger &amp;{" "}
+              <span className="text-amber-300">Komunitas Penjaga Alam</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-sm sm:text-base text-emerald-100/90 max-w-2xl leading-relaxed"
+            >
+              Kenali para pejuang lingkungan di Indonesia yang bergerak nyata membersihkan sungai, menjaga hutan gambut, dan merawat lereng. Ikuti gerakan mereka dan jadilah bagian dari perubahan!
+            </motion.p>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black font-['Fredoka'] leading-tight max-w-3xl">
-            Galeri Ranger &amp; Komunitas Penjaga Alam
-          </h1>
+          {/* Kolom Kanan: Kartu Sorotan Dampak */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.12 }}
+            className="lg:col-span-5 grid grid-cols-2 gap-3.5"
+          >
+            <div className="p-4 rounded-3xl bg-white/10 backdrop-blur-md border border-white/15 space-y-1.5">
+              <div className="w-9 h-9 rounded-2xl bg-amber-400/20 text-amber-300 flex items-center justify-center">
+                <Users className="w-5 h-5" />
+              </div>
+              <p className="text-2xl font-black font-['Fredoka'] text-white">
+                6+ Gerakan
+              </p>
+              <p className="text-xs text-emerald-100/80">
+                Komunitas &amp; brigade aksi nyata Nusantara
+              </p>
+            </div>
 
-          <p className="text-sm sm:text-base text-emerald-100/90 max-w-2xl leading-relaxed">
-            Kenali para pejuang lingkungan di Indonesia yang bergerak nyata membersihkan sungai, menjaga hutan gambut, dan merawat lereng. Ikuti gerakan mereka dan jadilah bagian dari perubahan!
-          </p>
+            <div className="p-4 rounded-3xl bg-white/10 backdrop-blur-md border border-white/15 space-y-1.5">
+              <div className="w-9 h-9 rounded-2xl bg-sky-400/20 text-sky-300 flex items-center justify-center">
+                <Waves className="w-5 h-5" />
+              </div>
+              <p className="text-2xl font-black font-['Fredoka'] text-white">
+                4 Bencana
+              </p>
+              <p className="text-xs text-emerald-100/80">
+                Cegah banjir, longsor, kekeringan &amp; karhutla
+              </p>
+            </div>
+
+            <div className="col-span-2 p-4 rounded-3xl bg-gradient-to-r from-amber-400/20 to-emerald-400/15 backdrop-blur-md border border-amber-300/25 flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-amber-400 text-emerald-950 flex items-center justify-center flex-shrink-0 shadow-md">
+                <Trees className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs font-black uppercase tracking-wider text-amber-300">
+                  Misi Pelajar P5
+                </p>
+                <p className="text-xs sm:text-sm text-white/95 font-medium leading-snug">
+                  Klik kartu ranger untuk membaca kisah aksi mereka &amp; dukung langsung kanal resmi mereka.
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* 2. FILTER & GRID KARTU RANGER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20 space-y-8">
-        {/* Filter Bar */}
-        <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 shadow-lg flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-600">
-            <Filter className="w-4 h-4 text-emerald-700" />
-            <span>Fokus Gerakan:</span>
+      {/* 2. FILTER, PENCARIAN & GRID KARTU RANGER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 space-y-8">
+        {/* Filter & Search Bar */}
+        <div className="p-4 sm:p-5 rounded-3xl bg-white border border-emerald-900/10 shadow-xl shadow-emerald-950/5 space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-900">
+              <Filter className="w-4 h-4 text-emerald-700" />
+              <span>Fokus Gerakan Ranger:</span>
+            </div>
+
+            {/* Search Input */}
+            <div className="relative w-full md:w-72">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Cari komunitas atau kota..."
+                className="w-full pl-10 pr-4 py-2 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-emerald-700 focus:bg-white transition-all"
+              />
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2">
+
+          <div className="flex flex-wrap gap-2 pt-1 border-t border-slate-100">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
                   selectedCategory === cat.id
-                    ? "bg-emerald-800 text-white shadow-xs"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    ? "bg-emerald-900 text-white shadow-md shadow-emerald-900/20 scale-[1.02]"
+                    : "bg-slate-100/90 text-slate-600 hover:bg-emerald-50 hover:text-emerald-900"
                 }`}
               >
                 {cat.label}
@@ -217,106 +315,143 @@ export default function Gallery() {
         </div>
 
         {/* Cards Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {filteredRangers.map((ranger) => (
-            <motion.div
-              key={ranger.id}
-              layout
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -6 }}
-              onClick={() => setActiveRanger(ranger)}
-              className="group rounded-3xl bg-white border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between"
+        {filteredRangers.length === 0 ? (
+          <div className="p-12 rounded-3xl bg-white border border-slate-200 text-center space-y-3">
+            <p className="text-lg font-black font-['Fredoka'] text-slate-800">
+              Komunitas tidak ditemukan
+            </p>
+            <p className="text-xs text-slate-500">
+              Coba kata kunci lain atau pilih filter &ldquo;Semua Ranger&rdquo;.
+            </p>
+            <button
+              onClick={() => {
+                setSelectedCategory("semua");
+                setSearchQuery("");
+              }}
+              className="px-4 py-2 rounded-xl bg-emerald-900 text-white text-xs font-bold"
             >
-              <div>
-                {/* Foto & Badge */}
-                <div className="relative h-52 overflow-hidden bg-slate-100">
-                  <img
-                    src={ranger.image}
-                    alt={ranger.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
-                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-emerald-950/85 backdrop-blur-xs text-amber-300 text-[11px] font-black">
-                    {ranger.categoryLabel}
-                  </span>
-                  <div className="absolute bottom-3 left-4 right-4 text-white">
-                    <p className="text-[11px] font-semibold text-emerald-200 flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-amber-300" />
-                      {ranger.location}
+              Reset Filter
+            </button>
+          </div>
+        ) : (
+          <motion.div
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
+          >
+            {filteredRangers.map((ranger) => (
+              <motion.div
+                key={ranger.id}
+                layout
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -7 }}
+                onClick={() => setActiveRanger(ranger)}
+                className={`group rounded-3xl bg-white overflow-hidden transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+                  ranger.featured
+                    ? "border-2 border-amber-400 shadow-lg shadow-amber-500/10 hover:shadow-2xl"
+                    : "border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-emerald-300"
+                }`}
+              >
+                <div>
+                  {/* Foto & Badge */}
+                  <div className="relative h-56 overflow-hidden bg-slate-100">
+                    <img
+                      src={ranger.image}
+                      alt={ranger.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                    {/* Top Badges */}
+                    <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2">
+                      <span className="px-3 py-1 rounded-full bg-emerald-950/90 backdrop-blur-xs text-amber-300 text-[11px] font-black shadow-xs">
+                        {ranger.categoryLabel}
+                      </span>
+                      {ranger.featured && (
+                        <span className="px-2.5 py-1 rounded-full bg-amber-400 text-emerald-950 text-[10px] font-black inline-flex items-center gap-1 shadow-xs">
+                          <Star className="w-3 h-3 fill-emerald-950" />
+                          Sorotan
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Nama & Lokasi di Bawah Foto */}
+                    <div className="absolute bottom-3.5 left-4 right-4 text-white space-y-0.5">
+                      <p className="text-[11px] font-semibold text-emerald-200 flex items-center gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />
+                        <span>{ranger.location}</span>
+                      </p>
+                      <h3 className="text-xl font-black font-['Fredoka'] leading-tight group-hover:text-amber-300 transition-colors">
+                        {ranger.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Konten Kartu */}
+                  <div className="p-5 space-y-3.5">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[11px] font-bold text-amber-950 w-full">
+                      <Award className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                      <span className="truncate">{ranger.impactStat}</span>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      {ranger.summary}
                     </p>
-                    <h3 className="text-xl font-black font-['Fredoka'] leading-tight">
-                      {ranger.name}
-                    </h3>
+
+                    {/* Quote Mini */}
+                    <div className="p-3.5 rounded-2xl bg-[#f7f5ee] border border-emerald-900/10 text-xs text-slate-700 italic flex items-start gap-2">
+                      <Quote className="w-4 h-4 text-emerald-700 flex-shrink-0 mt-0.5" />
+                      <span>&ldquo;{ranger.quote}&rdquo;</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Konten Kartu */}
-                <div className="p-5 space-y-3.5">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 text-[11px] font-bold text-amber-900">
-                    <Award className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
-                    <span>{ranger.impactStat}</span>
-                  </div>
+                {/* Footer Promosi Akun & Detail */}
+                <div className="px-5 py-3.5 bg-emerald-50/70 border-t border-emerald-100 flex items-center justify-between gap-2">
+                  {ranger.instagram ? (
+                    <a
+                      href={`https://instagram.com/${ranger.instagram}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1.5 text-xs font-black text-emerald-950 hover:text-pink-600 transition-colors"
+                    >
+                      <AtSign className="w-3.5 h-3.5 text-pink-600" />
+                      <span>{ranger.instagram}</span>
+                    </a>
+                  ) : (
+                    <span className="text-xs font-bold text-emerald-900">
+                      Komunitas Hijau
+                    </span>
+                  )}
 
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {ranger.summary}
-                  </p>
-
-                  {/* Quote Mini */}
-                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 text-xs text-slate-700 italic flex items-start gap-2">
-                    <Quote className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span>&ldquo;{ranger.quote}&rdquo;</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Promosi Akun & Detail */}
-              <div className="px-5 py-3.5 bg-emerald-50/60 border-t border-emerald-100 flex items-center justify-between gap-2">
-                {ranger.instagram ? (
-                  <a
-                    href={`https://instagram.com/${ranger.instagram}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1.5 text-xs font-black text-emerald-900 hover:text-emerald-700 transition-colors"
-                  >
-                    <AtSign className="w-4 h-4 text-pink-600" />
-                    <span>{ranger.instagram}</span>
-                  </a>
-                ) : (
-                  <span className="text-xs font-bold text-emerald-900">
-                    Komunitas Hijau
+                  <span className="text-xs font-black text-emerald-800 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                    Lihat Kisah <ArrowRight className="w-3.5 h-3.5" />
                   </span>
-                )}
-
-                <span className="text-xs font-black text-emerald-800 group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
-                  Profil &amp; Aksi <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
 
         {/* 3. BANNER AJAKAN PELAJAR JADI RANGER */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-300 text-slate-950 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-emerald-950 bg-white/60 px-3 py-1 rounded-full">
+        <div className="p-7 sm:p-9 rounded-3xl bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-900 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-emerald-700/40">
+          <div className="absolute -right-12 -bottom-12 w-56 h-56 rounded-full bg-amber-400/15 blur-2xl pointer-events-none" />
+          <div className="space-y-2.5 max-w-2xl relative z-10">
+            <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-emerald-950 bg-amber-300 px-3.5 py-1 rounded-full">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Giliran Kamu Beraksi!</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black font-['Fredoka']">
               Siap Menjadi Ranger Lingkungan di Sekolahmu?
             </h2>
-            <p className="text-xs sm:text-sm font-medium text-slate-800 leading-relaxed">
+            <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
               Mulai dari memilah sampah plastik, membuat lubang biopori, hingga menghemat air di rumah. Pelajari panduan lengkap mitigasi 4 bencana sekarang!
             </p>
           </div>
           <Link
             to="/isu/banjir"
-            className="px-6 py-3.5 rounded-2xl bg-emerald-950 text-white font-black text-xs sm:text-sm hover:bg-emerald-900 transition-colors inline-flex items-center gap-2 shadow-md flex-shrink-0"
+            className="relative z-10 px-6 py-3.5 rounded-2xl bg-amber-400 text-emerald-950 font-black text-xs sm:text-sm hover:bg-amber-300 transition-colors inline-flex items-center gap-2 shadow-lg flex-shrink-0"
           >
             <span>Mulai Aksi Nyata</span>
             <ArrowRight className="w-4 h-4" />
@@ -347,10 +482,10 @@ export default function Gallery() {
                   alt={activeRanger.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                 <button
                   onClick={() => setActiveRanger(null)}
-                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition-colors"
+                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition-colors cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
