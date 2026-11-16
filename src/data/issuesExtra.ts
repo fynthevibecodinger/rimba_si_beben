@@ -46,6 +46,7 @@ export const issuesExtra: Record<string, IssueExtra> = {
       { term: "Biopori", meaning: "Lubang kecil di tanah untuk membantu air meresap dan tempat sampah organik jadi kompos." },
       { term: "Daerah aliran sungai (DAS)", meaning: "Wilayah dari hulu sampai hilir yang airnya mengalir ke satu sungai." },
       { term: "Kolam retensi", meaning: "Kolam penampung air sementara agar sungai tidak langsung meluap." },
+      { term: "Daerah tangkapan air (catchment area)", meaning: "Wilayah permukaan lahan yang mengumpulkan air hujan dan mengalirkannya ke satu titik, seperti sungai atau waduk." },
     ],
     challenge7Days: [
       "Hari 1: Cek selokan di depan rumah. Ada sampah yang menyumbat?",
@@ -87,6 +88,7 @@ export const issuesExtra: Record<string, IssueExtra> = {
       { term: "Drainase lereng", meaning: "Saluran yang mengalirkan air keluar dari lereng agar tanah tidak jenuh." },
       { term: "Jenuh air", meaning: "Kondisi tanah penuh air sehingga bobotnya naik dan ikatannya melemah." },
       { term: "Vetiver (akar wangi)", meaning: "Rumput berakar dalam yang sering ditanam untuk memperkuat lereng." },
+      { term: "Erosi", meaning: "Pengikisan lapisan atas tanah oleh air hujan atau angin, yang mengurangi kesuburan dan kestabilan lereng." },
     ],
     challenge7Days: [
       "Hari 1: Lihat lereng atau tebing di sekitarmu. Ada retakan atau pohon miring?",
@@ -128,6 +130,7 @@ export const issuesExtra: Record<string, IssueExtra> = {
       { term: "El Niño", meaning: "Fenomena iklim yang bisa membuat musim kemarau di Indonesia lebih kering." },
       { term: "Mulsa", meaning: "Penutup permukaan tanah, misalnya daun kering, untuk menahan penguapan." },
       { term: "Irigasi tetes", meaning: "Cara menyiram dengan menetes langsung ke akar agar hemat air." },
+      { term: "Neraca air", meaning: "Perbandingan antara jumlah air yang masuk (hujan) dan keluar (penguapan, pemakaian) di suatu wilayah dalam periode tertentu." },
     ],
     challenge7Days: [
       "Hari 1: Catat berapa kali kamu menyalakan keran hari ini.",
@@ -169,6 +172,7 @@ export const issuesExtra: Record<string, IssueExtra> = {
       { term: "Debu asap", meaning: "Debu sangat kecil di udara yang bisa masuk ke paru-paru." },
       { term: "Sekat kanal", meaning: "Bendungan kecil di kanal untuk menahan air di lahan gambut." },
       { term: "ISPU", meaning: "Indeks Standar Pencemar Udara untuk menilai kualitas udara." },
+      { term: "Smoldering (pembakaran nir-oksigen)", meaning: "Jenis pembakaran lambat tanpa api nyala yang terjadi di dalam tanah gambut kering, sangat sulit dipadamkan." },
     ],
     challenge7Days: [
       "Hari 1: Cek kualitas udara di aplikasi atau situs resmi.",
