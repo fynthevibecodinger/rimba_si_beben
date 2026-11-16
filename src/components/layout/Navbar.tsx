@@ -18,7 +18,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [issuesDropdownOpen, setIssuesDropdownOpen] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === "/" || location.pathname === "";
+  const isHome = location.pathname === "/" || location.pathname === "" || location.pathname === "/galeri";
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);

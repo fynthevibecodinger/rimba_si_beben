@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "../router";
+import RimbaMascot, { RimbaMood } from "../components/mascot/RimbaMascot";
+import EcoLandscape from "../components/hero/EcoLandscape";
 import {
   Sparkles,
   MapPin,
@@ -21,6 +23,7 @@ import {
   Trees,
   Leaf,
   Compass,
+  Volume2,
 } from "lucide-react";
 
 interface RangerProfile {
@@ -388,12 +391,21 @@ export default function Gallery() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeRanger, setActiveRanger] = useState<RangerProfile | null>(null);
   const [tipIndex, setTipIndex] = useState<number>(0);
+  const [mascotMood, setMascotMood] = useState<RimbaMood>("wave");
 
   const mascotTips = [
     "Halo Sobat Rimba! Klik salah satu kartu ranger untuk lihat aksi keren mereka!",
     "Tau nggak? Membersihkan 1 selokan dari plastik bisa cegah banjir di lingkunganmu!",
     "Yuk follow akun komunitas favoritmu biar makin terinspirasi aksi P5!",
   ];
+
+  const mascotTipMoods: RimbaMood[] = ["wave", "celebrate", "scan"];
+
+  const handleRimbaClick = () => {
+    const nextIndex = (tipIndex + 1) % mascotTips.length;
+    setTipIndex(nextIndex);
+    setMascotMood(mascotTipMoods[nextIndex]);
+  };
 
   const categories = [
     { id: "semua", label: "Semua Ranger" },
@@ -418,20 +430,21 @@ export default function Gallery() {
   return (
     <div className="w-full pb-24 overflow-x-clip">
       {/* 1. HERO BANNER */}
-      <section className="bg-gradient-to-br from-[#072b1b] via-[#0e482e] to-[#15613f] text-white pt-12 pb-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="eco-hero relative overflow-visible bg-gradient-to-b from-[#dff4ec] via-[#e9f5e9] to-[#f7f5ee] text-[#173a2d] min-h-[620px] lg:min-h-[680px] pt-10 pb-14 sm:pt-14 sm:pb-16 lg:pt-16 lg:pb-20 border-b border-emerald-900/10 flex flex-col justify-center">
+        <EcoLandscape />
         <div
           aria-hidden="true"
           className="absolute inset-0 opacity-[0.07] pointer-events-none"
           style={{
             backgroundImage:
-              "radial-gradient(#fbbf24 1.25px, transparent 1.25px), radial-gradient(#34d399 1.25px, #072b1b 1.25px)",
+              "radial-gradient(#2d6a4f 1.1px, transparent 1.1px), radial-gradient(#52b788 1.1px, #eef4eb 1.1px)",
             backgroundSize: "36px 36px",
             backgroundPosition: "0 0, 18px 18px",
           }}
         />
 
-        <div className="absolute -top-28 -left-24 w-96 h-96 rounded-full bg-emerald-400/15 blur-3xl pointer-events-none" />
-        <div className="absolute top-10 right-10 w-80 h-80 rounded-full bg-amber-400/15 blur-3xl pointer-events-none" />
+        <div className="absolute -top-28 -left-24 w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-10 right-10 w-80 h-80 rounded-full bg-[#8d5b4c]/10 blur-3xl pointer-events-none" />
 
         <svg
           viewBox="0 0 1440 160"
@@ -443,11 +456,11 @@ export default function Gallery() {
         >
           <path
             d="M0 120 L180 55 L340 105 L520 35 L740 110 L960 40 L1180 95 L1340 48 L1440 85 L1440 160 L0 160 Z"
-            fill="#041d12"
+            fill="#c6dfcd"
           />
           <path
             d="M0 135 Q240 85 480 125 T960 115 T1440 125 L1440 160 L0 160 Z"
-            fill="#052416"
+            fill="#b5d5c0"
           />
         </svg>
 
@@ -468,16 +481,17 @@ export default function Gallery() {
               ease: "easeInOut",
             }}
             style={{ top: dot.top, left: dot.left }}
-            className={`absolute rounded-full bg-amber-300/70 blur-[1px] pointer-events-none ${dot.size}`}
+            className={`absolute rounded-full bg-emerald-600/50 blur-[1px] pointer-events-none ${dot.size}`}
           />
         ))}
 
-        <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 space-y-5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, x: -16 }}
               animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xs border border-amber-300/35 text-xs font-black uppercase tracking-wider text-amber-300"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-emerald-700/20 shadow-md shadow-emerald-950/5 text-xs font-extrabold uppercase tracking-widest text-emerald-800"
             >
               <ShieldCheck className="w-4 h-4" />
               <span>Jejak Ranger Lingkungan Nusantara</span>
@@ -487,17 +501,17 @@ export default function Gallery() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.06 }}
-              className="text-4xl sm:text-5xl lg:text-[52px] font-black font-['Fredoka'] leading-[1.12] tracking-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-black font-['Fredoka'] leading-[1.14] tracking-tight"
             >
               Galeri Ranger &amp;{" "}
-              <span className="text-amber-300">Komunitas Penjaga Alam</span>
+              <span className="text-[#2d6a4f] underline decoration-emerald-400/60 decoration-wavy decoration-2">Komunitas Penjaga Alam</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.12 }}
-              className="text-sm sm:text-base text-emerald-100/90 max-w-2xl leading-relaxed"
+              className="text-base sm:text-lg text-[#305345] font-medium max-w-2xl leading-relaxed mx-auto lg:mx-0"
             >
               Kenali para pejuang lingkungan di Indonesia yang bergerak nyata membersihkan sungai, menjaga hutan gambut, dan merawat lereng. Ikuti gerakan mereka dan jadilah bagian dari perubahan!
             </motion.p>
@@ -506,14 +520,14 @@ export default function Gallery() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.18 }}
-              className="flex flex-wrap gap-3 pt-1"
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2"
             >
-              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-xs border border-white/15 flex items-center gap-2 text-xs font-bold">
-                <Users className="w-4 h-4 text-amber-300" />
+              <div className="px-3.5 py-2 rounded-xl bg-white/85 backdrop-blur-xs border border-white shadow-xs flex items-center gap-2 text-xs font-bold">
+                <Users className="w-4 h-4 text-emerald-700" />
                 <span>6+ Gerakan Inspiratif</span>
               </div>
-              <div className="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-xs border border-white/15 flex items-center gap-2 text-xs font-bold">
-                <Waves className="w-4 h-4 text-sky-300" />
+              <div className="px-3.5 py-2 rounded-xl bg-white/85 backdrop-blur-xs border border-white shadow-xs flex items-center gap-2 text-xs font-bold">
+                <Waves className="w-4 h-4 text-sky-700" />
                 <span>Mitigasi 4 Bencana Ekologis</span>
               </div>
             </motion.div>
@@ -523,42 +537,44 @@ export default function Gallery() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.15, type: "spring", stiffness: 140 }}
-            className="lg:col-span-5 flex flex-col items-center justify-center py-4"
+            className="lg:col-span-5 flex flex-col items-center justify-center relative pt-2 lg:pt-0 z-20 overflow-visible"
           >
-            <div className="relative flex flex-col items-center gap-5">
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setTipIndex((prev) => (prev + 1) % mascotTips.length)}
-                className="max-w-xs p-4 rounded-3xl bg-white text-slate-900 shadow-2xl border-2 border-amber-300 text-left relative z-20 cursor-pointer group"
+            <div
+              className="relative flex flex-col items-center w-full max-w-sm cursor-pointer select-none overflow-visible"
+              onClick={handleRimbaClick}
+              title="Klik Rimba untuk mengganti pesan"
+            >
+              <motion.div
+                key={tipIndex}
+                initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleRimbaClick();
+                }}
+                className="relative z-30 w-full max-w-sm rounded-2xl bg-white/95 px-4 py-3.5 shadow-xl border-2 border-emerald-800/15 text-left cursor-pointer hover:border-emerald-500 transition-all select-none"
+                title="Klik untuk mengganti pesan Rimba"
               >
-                <div className="flex items-center justify-between gap-2 mb-1">
-                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 flex items-center gap-1">
-                    <MessageCircle className="w-3.5 h-3.5 text-amber-500" />
-                    Kata Rimba
+                <div className="flex items-center justify-between gap-2 mb-1.5">
+                  <span className="flex items-center gap-2 font-['Fredoka'] font-black text-sm text-emerald-800">
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-ping" />
+                    Hai, aku Rimba!
                   </span>
-                  <span className="text-[10px] font-bold text-slate-400 group-hover:text-emerald-700">
-                    Klik ganti pesan ↻
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-300/50">
+                    Tips {tipIndex + 1}/{mascotTips.length}
                   </span>
                 </div>
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={tipIndex}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-xs sm:text-sm font-bold text-slate-800 leading-snug"
-                  >
-                    &ldquo;{mascotTips[tipIndex]}&rdquo;
-                  </motion.p>
-                </AnimatePresence>
-              </motion.button>
-
-              <OfficialRimbaMascot size="lg" />
+                <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">{mascotTips[tipIndex]}</p>
+                <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-emerald-700 font-bold">
+                  <span className="inline-flex items-center gap-1"><Volume2 className="h-3.5 w-3.5" /> Tips Peduli Alam</span>
+                  <span className="text-slate-400 font-normal">Klik untuk ganti ↻</span>
+                </div>
+                <div className="absolute -bottom-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-emerald-800/10 bg-white" />
+              </motion.div>
+              <RimbaMascot mood={mascotMood} size="lg" />
             </div>
           </motion.div>
+          </div>
         </div>
       </section>
 
@@ -567,7 +583,7 @@ export default function Gallery() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 sm:p-5 rounded-3xl bg-white border border-emerald-900/10 shadow-xl shadow-emerald-950/5 space-y-4"
+          className="p-4 sm:p-5 rounded-3xl bg-white/90 border border-emerald-900/10 shadow-xl shadow-emerald-950/5 space-y-4"
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-900">
@@ -604,7 +620,7 @@ export default function Gallery() {
                     <motion.span
                       layoutId="activeGalleryTab"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                      className="absolute inset-0 rounded-full bg-emerald-900 shadow-md shadow-emerald-900/20"
+                      className="absolute inset-0 rounded-full bg-emerald-700 shadow-md shadow-emerald-900/20"
                     />
                   )}
                   <span className="relative z-10">{cat.label}</span>
@@ -666,7 +682,7 @@ export default function Gallery() {
                   }`}
                 >
                   <div>
-                    <div className="relative h-56 overflow-hidden bg-emerald-950">
+                      <div className="relative h-56 overflow-hidden bg-emerald-900">
                       <img
                         src={ranger.image}
                         alt={ranger.name}
@@ -679,35 +695,35 @@ export default function Gallery() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                       <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2">
-                        <span className="px-3 py-1 rounded-full bg-emerald-950/90 backdrop-blur-xs text-amber-300 text-[11px] font-black shadow-xs">
+                        <span className="px-3 py-1 rounded-full bg-emerald-900/90 backdrop-blur-xs text-emerald-100 text-[11px] font-black shadow-xs">
                           {ranger.categoryLabel}
                         </span>
                         {ranger.featured && (
                           <motion.span
                             animate={{ rotate: [-2, 2, -2] }}
                             transition={{ duration: 2.5, repeat: Infinity }}
-                            className="px-2.5 py-1 rounded-full bg-amber-400 text-emerald-950 text-[10px] font-black inline-flex items-center gap-1 shadow-xs"
+                            className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 text-[10px] font-black inline-flex items-center gap-1 shadow-xs"
                           >
-                            <Star className="w-3 h-3 fill-emerald-950" />
+                            <Star className="w-3 h-3 fill-emerald-700" />
                             Sorotan
                           </motion.span>
                         )}
                       </div>
 
                       <div className="absolute bottom-3.5 left-4 right-4 text-white space-y-0.5">
-                        <p className="text-[11px] font-semibold text-emerald-200 flex items-center gap-1">
-                          <MapPin className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />
+                        <p className="text-[11px] font-semibold text-emerald-100 flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-emerald-200 flex-shrink-0" />
                           <span>{ranger.location}</span>
                         </p>
-                        <h3 className="text-xl font-black font-['Fredoka'] leading-tight group-hover:text-amber-300 transition-colors">
+                        <h3 className="text-xl font-black font-['Fredoka'] leading-tight group-hover:text-emerald-200 transition-colors">
                           {ranger.name}
                         </h3>
                       </div>
                     </div>
 
                     <div className="p-5 space-y-3.5">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[11px] font-bold text-amber-950 w-full">
-                        <Award className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#f7f5ee] border border-emerald-900/10 text-[11px] font-bold text-emerald-950 w-full">
+                          <Award className="w-4 h-4 text-emerald-700 flex-shrink-0" />
                         <span className="truncate">{ranger.impactStat}</span>
                       </div>
 
@@ -758,7 +774,7 @@ export default function Gallery() {
           className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-900 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border border-emerald-700/40"
         >
           <div className="flex flex-col sm:flex-row items-center gap-5 relative z-10 text-center sm:text-left">
-            <OfficialRimbaMascot size="sm" />
+            <RimbaMascot mood="celebrate" size="sm" />
             <div className="space-y-2 max-w-xl">
               <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-emerald-950 bg-amber-300 px-3.5 py-1 rounded-full">
                 <Sparkles className="w-3.5 h-3.5" />
