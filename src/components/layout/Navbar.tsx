@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "../../router";
+import { motion, AnimatePresence } from "motion/react";
 import MusicController from "../audio/MusicController";
 import {
   Menu,
@@ -18,7 +19,20 @@ export default function Navbar() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [issuesDropdownOpen, setIssuesDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIssuesDropdownOpen(false);
+      }
+    };
+    if (issuesDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [issuesDropdownOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,7 +64,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full transition-all duration-300 pointer-events-none">
+    <header className="sticky top-0 z-[100] w-full transition-all duration-300 pointer-events-none">
       {/* Outer wrapper that pads when floating */}
       <div
         className={`w-full transition-all duration-300 ease-out pointer-events-auto ${
@@ -145,15 +159,21 @@ export default function Navbar() {
             </Link>
 
             {/* Isu Bencana Dropdown Interaktif */}
-            <div className="relative">
+            <div
+              ref={dropdownRef}
+              className="relative z-[110]"
+              onMouseEnter={() => setIssuesDropdownOpen(true)}
+              onMouseLeave={() => setIssuesDropdownOpen(false)}
+            >
               <button
                 onClick={() => setIssuesDropdownOpen(!issuesDropdownOpen)}
-                onMouseEnter={() => setIssuesDropdownOpen(true)}
                 className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-1.5 transition-all duration-150 ${
                   isCurrent("/isu")
                     ? "bg-emerald-900 text-white shadow-sm"
                     : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
                 }`}
+                aria-expanded={issuesDropdownOpen}
+                aria-haspopup="true"
               >
                 <span>Materi 4 Bencana</span>
                 <ChevronDown
@@ -163,37 +183,45 @@ export default function Navbar() {
                 />
               </button>
 
-              {issuesDropdownOpen && (
-                <div
-                  onMouseLeave={() => setIssuesDropdownOpen(false)}
-                  className="absolute top-full left-0 mt-2 w-68 rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 shadow-2xl p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150 ring-1 ring-emerald-950/5"
-                >
-                  <div className="text-[10px] font-black text-emerald-800 uppercase tracking-widest px-3 py-1.5 flex items-center justify-between">
-                    <span>Isu Hidrometeorologi</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  </div>
-                  <div className="space-y-1">
-                    {issuesList.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={item.slug}
-                          to={`/isu/${item.slug}`}
-                          onClick={() => setIssuesDropdownOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2 rounded-2xl hover:bg-emerald-50/80 transition-all text-xs sm:text-sm font-bold text-slate-800 group"
-                        >
-                          <div
-                            className={`p-2 rounded-xl ${item.bg} ${item.color} group-hover:scale-110 transition-transform`}
-                          >
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <span className="group-hover:text-emerald-900">{item.title}</span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+              <AnimatePresence>
+                {issuesDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ transformOrigin: "top left" }}
+                    className="absolute top-full left-0 pt-2 w-72 z-[120]"
+                  >
+                    <div className="rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 shadow-2xl p-2.5 ring-1 ring-emerald-950/10">
+                      <div className="text-[10px] font-black text-emerald-800 uppercase tracking-widest px-3 py-1.5 flex items-center justify-between">
+                        <span>Isu Hidrometeorologi</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      </div>
+                      <div className="space-y-1 mt-1">
+                        {issuesList.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <Link
+                              key={item.slug}
+                              to={`/isu/${item.slug}`}
+                              onClick={() => setIssuesDropdownOpen(false)}
+                              className="flex items-center gap-3 px-3 py-2 rounded-2xl hover:bg-emerald-50/90 transition-all text-xs sm:text-sm font-bold text-slate-800 group"
+                            >
+                              <div
+                                className={`p-2 rounded-xl ${item.bg} ${item.color} group-hover:scale-110 transition-transform`}
+                              >
+                                <Icon className="w-4 h-4" />
+                              </div>
+                              <span className="group-hover:text-emerald-900">{item.title}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Tombol Lab Simulasi Interaktif dengan Efek Shimmer */}
