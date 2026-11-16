@@ -6,37 +6,31 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function useGaspAnimation(rootRef: RefObject<HTMLElement | null>) {
   useEffect(() => {
-    if (!rootRef.current) return;
+     if (!rootRef.current) return;
+
+     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const context = gsap.context(() => {
       // Reveal animations for marked sections
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
+       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element, index) => {
         gsap.fromTo(
           element,
-          { y: 50, opacity: 0 },
+           { y: reduceMotion ? 0 : 42, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.85,
+             duration: reduceMotion ? 0.2 : 0.8,
+             delay: reduceMotion ? 0 : Math.min(index * 0.04, 0.2),
             ease: "power3.out",
             scrollTrigger: { trigger: element, start: "top 86%", once: true },
           }
         );
       });
 
-      // Parallax mountains
-      gsap.to(".mountain-far", {
-        y: 65,
-        scrollTrigger: { trigger: ".eco-hero", start: "top top", end: "bottom top", scrub: 1 },
-      });
+       // Staggered title mask slide-up reveal
+       if (reduceMotion) return;
 
-      gsap.to(".mountain-near", {
-        y: 30,
-        scrollTrigger: { trigger: ".eco-hero", start: "top top", end: "bottom top", scrub: 1 },
-      });
-
-      // Staggered title mask slide-up reveal
-      gsap.from(".title-mask span", {
+       gsap.from(".title-mask span", {
         yPercent: 110,
         stagger: 0.08,
         duration: 0.9,

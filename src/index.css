@@ -23,7 +23,7 @@
     background: var(--cream);
     color: var(--ink);
     font-family: "Plus Jakarta Sans", sans-serif;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   button,
@@ -158,7 +158,6 @@
 
 .eco-hero {
   background: linear-gradient(180deg, #dff4ec 0%, #e9f5e9 52%, #f7f5ee 100%);
-  min-height: 810px;
   overflow: hidden;
   position: relative;
 }
@@ -214,10 +213,8 @@
 
 .eco-hero h1 {
   font-family: Fredoka, sans-serif;
-  font-size: clamp(54px, 6.1vw, 82px);
   letter-spacing: -0.052em;
   line-height: 1.15;
-  margin: 24px 0 22px;
 }
 
 .title-mask {
@@ -438,11 +435,11 @@
   background: #f6d87a;
   border: 18px solid rgb(255 255 255 / 23%);
   border-radius: 50%;
-  height: 120px;
+  height: 110px;
   position: absolute;
-  right: 11%;
-  top: 117px;
-  width: 120px;
+  right: 12%;
+  top: 75px;
+  width: 110px;
 }
 
 .eco-cloud {
@@ -476,21 +473,21 @@
 }
 
 .cloud-a {
-  left: 8%;
-  top: 130px;
+  left: 6%;
+  top: 70px;
 }
 
 .cloud-b {
-  right: 34%;
-  top: 238px;
+  right: 32%;
+  top: 155px;
   transform: scale(0.65);
 }
 
 .orbit-satellite {
   color: var(--river);
-  left: 38%;
+  left: 36%;
   position: absolute;
-  top: 112px;
+  top: 55px;
   z-index: 4;
 }
 
@@ -518,12 +515,14 @@
 }
 
 .mountain-far {
+  animation: mountainBreath 18s ease-in-out infinite;
   background: #94c7a1;
   height: 390px;
   opacity: 0.65;
 }
 
 .mountain-near {
+  animation: mountainBreathNear 14s ease-in-out infinite;
   background: #4d956a;
   bottom: 50px;
   clip-path: polygon(
@@ -541,6 +540,7 @@
 }
 
 .forest-layer {
+  animation: canopySway 9s ease-in-out infinite;
   bottom: 80px;
   height: 130px;
   position: absolute;
@@ -570,6 +570,7 @@
 }
 
 .eco-river {
+  animation: riverLight 8s ease-in-out infinite;
   background: linear-gradient(90deg, #bde9f2, #2ba9d1);
   bottom: 0;
   clip-path: polygon(38% 0, 62% 0, 77% 100%, 20% 100%);
@@ -582,6 +583,7 @@
 }
 
 .eco-house {
+  animation: houseFloat 7s ease-in-out infinite;
   background: #f7edd7;
   bottom: 76px;
   height: 70px;
@@ -717,6 +719,78 @@
     transform: rotate(360deg);
   }
 }
+
+.eco-sun-art {
+  background: radial-gradient(circle at 40% 38%, #fff7c4 0 18%, #f6d87a 45%, #efbf5e 100%);
+  border: 14px solid rgb(255 255 255 / 25%);
+  border-radius: 50%;
+  box-shadow: 0 0 45px rgb(246 216 122 / 30%);
+  height: 118px;
+  position: absolute;
+  right: 12%;
+  top: 66px;
+  width: 118px;
+  z-index: 0;
+}
+
+.eco-scene {
+  inset: 0;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  /* Keep the new illustrated landscape above legacy background decorations,
+     while the Hero content remains above it with z-10. */
+  z-index: 5;
+}
+
+.eco-landscape-art {
+  display: block;
+  inset: 0;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  /* The latest artwork is a wide 2048x768 panorama. Keep the complete
+     vertical composition visible while letting the wrapper cover the Hero. */
+  object-position: center center;
+  position: absolute;
+  width: 100%;
+}
+
+.eco-trees-art { animation: canopySway 10s ease-in-out infinite; transform-origin: 50% 100%; }
+.eco-river-art { animation: riverLight 8s ease-in-out infinite; transform-origin: center; opacity: .82; }
+.eco-house-art { animation: houseFloat 8s ease-in-out infinite; transform-origin: 50% 100%; }
+.eco-forest-detail { animation: forestBreath 13s ease-in-out infinite; transform-origin: 50% 100%; }
+
+@keyframes mountainBreath {
+  0%, 100% { transform: translate3d(0, 0, 0) scaleX(1); }
+  50% { transform: translate3d(-7px, 3px, 0) scaleX(1.012); }
+}
+
+@keyframes mountainBreathNear {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(5px, 2px, 0); }
+}
+
+@keyframes canopySway {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(3px, -2px, 0); }
+}
+
+@keyframes riverLight {
+  0%, 100% { filter: saturate(0.95) brightness(1); opacity: 0.78; }
+  50% { filter: saturate(1.1) brightness(1.06); opacity: 0.9; }
+}
+
+@keyframes houseFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes forestBreath {
+  0%, 100% { transform: translateY(0) scaleX(1); }
+  50% { transform: translateY(-1px) scaleX(1.012); }
+}
+
 
 @keyframes signalPulse {
   50% {
@@ -2231,46 +2305,9 @@ h2 em {
   margin-top: 12px;
 }
 
-footer {
-  align-items: center;
-  background: #102e23;
-  color: #9db8ac;
-  display: flex;
-  font-size: 9px;
-  justify-content: space-between;
-  padding: 28px max(calc((100vw - 1180px) / 2), 20px);
-}
 
-footer .eco-logo {
-  color: white;
-}
-
-footer > div {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-footer a {
-  align-items: center;
-  color: white;
-  display: flex;
-  font-size: 8px;
-  gap: 5px;
-  text-decoration: none;
-}
-
-footer a svg {
-  height: 13px;
-  transform: rotate(180deg);
-}
 
 @media (max-width: 960px) {
-  .eco-hero {
-    min-height: 830px;
-  }
-
   .hero-grid {
     grid-template-columns: 1.3fr 0.7fr;
   }
@@ -2369,10 +2406,6 @@ footer a svg {
 
   .nav-toggle {
     display: block;
-  }
-
-  .eco-hero {
-    min-height: 850px;
   }
 
   .hero-grid {
@@ -2683,19 +2716,7 @@ footer a svg {
     font-size: 19px;
   }
 
-  footer {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 22px;
-  }
 
-  footer > p {
-    display: none;
-  }
-
-  footer > div {
-    align-items: flex-start;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2711,4 +2732,23 @@ footer a svg {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Sleek thin scrollbar for 2-column studio layout */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.3);
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.5);
 }

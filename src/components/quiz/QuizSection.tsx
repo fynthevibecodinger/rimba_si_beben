@@ -210,7 +210,7 @@ export default function QuizSection({ quiz, issueTitle, nextSlug, nextTitle }: Q
             </h4>
             <p className="text-slate-600 text-sm mt-2">
               {calculateScore() >= 70
-                ? "Hebat! Kamu telah menguasai prinsip mitigasi hidrometeorologi dengan sangat baik."
+                 ? "Hebat! Kamu sudah memahami cara menjaga alam dan bersiap menghadapi bencana."
                 : "Kerja bagus! Teruslah membaca dan berlatih agar semakin siap menghadapi bahaya."}
             </p>
           </div>

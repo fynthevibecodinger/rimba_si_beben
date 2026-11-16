@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 840" width="1600" height="840" role="img" aria-labelledby="title desc">
+<title id="title">Rimba — Natural eco landscape background</title>
+<desc id="desc">A fresh, layered green valley with blue sky, soft clouds, distant mountains, a winding river, trees, and wind turbines. Designed as a clean website hero background with open space on the left.</desc>
+<defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#62c4f4"/><stop offset=".58" stop-color="#bcecf4"/><stop offset="1" stop-color="#e3f6df"/></linearGradient>
+  <linearGradient id="farHill" x2="0" y2="1"><stop stop-color="#9edbd0"/><stop offset="1" stop-color="#75bba7"/></linearGradient>
+  <linearGradient id="midHill" x2="0" y2="1"><stop stop-color="#7fc78d"/><stop offset="1" stop-color="#438e6b"/></linearGradient>
+  <linearGradient id="frontHill" x2="0" y2="1"><stop stop-color="#a9dc75"/><stop offset="1" stop-color="#4e9b61"/></linearGradient>
+  <linearGradient id="river" x2=".1" y2="1"><stop stop-color="#b9f0e9"/><stop offset=".45" stop-color="#64c8d1"/><stop offset="1" stop-color="#319cae"/></linearGradient>
+  <linearGradient id="riverShine" x2="1" y2="0"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".65"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="cloud" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#e9f8fa"/></linearGradient>
+  <filter id="soft" x="-20%" y="-30%" width="140%" height="160%"><feGaussianBlur stdDeviation="16"/></filter>
+  <g id="tree">
+    <path d="M0 0v65" stroke="#6b7950" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="-17" cy="-13" r="28" fill="#398b63"/><circle cx="13" cy="-25" r="34" fill="#4ca66c"/>
+    <circle cx="31" cy="-3" r="25" fill="#6cbd70"/><circle cx="-8" cy="-39" r="23" fill="#78c979"/>
+    <circle cx="-30" cy="3" r="17" fill="#2e7958"/>
+  </g>
+  <g id="turbine" stroke="#f8ffff" stroke-linecap="round" fill="none">
+    <path d="M0 0L-3 180" stroke-width="8"/>
+    <circle r="7" fill="#f8ffff" stroke="none"/>
+    <path d="M0 0L-9 -102Q-10 -111 -5 -111Q1 -111 2 -103L5 -2Z" fill="#fff" stroke="none"/>
+    <path d="M0 0L91 43Q99 47 96 52Q93 57 85 52L-2 5Z" fill="#fff" stroke="none"/>
+    <path d="M0 0L-80 63Q-88 69 -92 64Q-95 59 -87 53L-3 -4Z" fill="#fff" stroke="none"/>
+  </g>
+</defs>
+
+<!-- sky and distant atmosphere -->
+<rect width="1600" height="840" fill="url(#sky)"/>
+<ellipse cx="760" cy="500" rx="720" ry="120" fill="#fff" opacity=".22" filter="url(#soft)"/>
+<!-- soft cloud banks -->
+<g fill="url(#cloud)" opacity=".88">
+ <path d="M-80 350c-5-47 33-84 79-83 15-65 99-83 139-30 58-8 94 42 80 88 51 20 50 83-2 100H-30c-40-8-62-34-50-75z"/>
+ <path d="M1235 333c-3-43 31-73 71-70 15-57 84-70 119-25 45-7 78 32 66 72 44 16 45 68 0 86h-239c-40-7-54-35-17-63z"/>
+ <path d="M1020 290c8-26 39-39 64-25 16-36 63-40 84-7 27-1 43 19 37 42h-185z" opacity=".7"/>
+</g>
+<!-- distant mountain layers -->
+<path d="M0 505L150 450 275 470 420 420 560 470 710 395 835 455 1000 365 1120 430 1260 385 1410 448 1600 390V680H0Z" fill="#b1e0df" opacity=".78"/>
+<path d="M340 520L590 425 735 467 875 420 1040 490 1215 405 1390 477 1600 435V680H340Z" fill="#8bcbd0" opacity=".55"/>
+<path d="M0 570Q170 485 350 548T710 530Q900 465 1080 520T1390 495Q1510 475 1600 510V730H0Z" fill="url(#farHill)"/>
+<!-- mountain highlight -->
+<path d="M550 505Q760 430 915 472Q1045 492 1130 460Q1005 510 880 500Q715 478 550 530Z" fill="#d7f2e9" opacity=".5"/>
+<!-- distant tree line -->
+<path d="M0 600Q170 535 310 575T610 565Q790 520 980 568T1320 545Q1480 525 1600 565V740H0Z" fill="#4d9e7c" opacity=".72"/>
+<g opacity=".72" fill="#398b6c">
+ <circle cx="70" cy="578" r="37"/><circle cx="112" cy="562" r="48"/><circle cx="160" cy="582" r="34"/>
+ <circle cx="390" cy="582" r="38"/><circle cx="440" cy="565" r="44"/><circle cx="490" cy="585" r="31"/>
+ <circle cx="1180" cy="570" r="38"/><circle cx="1230" cy="548" r="49"/><circle cx="1280" cy="574" r="35"/>
+ <circle cx="1460" cy="560" r="46"/><circle cx="1515" cy="550" r="54"/><circle cx="1570" cy="574" r="39"/>
+</g>
+<!-- wind turbines on right ridge -->
+<g transform="translate(1370 455) scale(.72)"><use href="#turbine"/></g>
+<g transform="translate(1490 430) scale(.95)"><use href="#turbine"/></g>
+<g transform="translate(1285 485) scale(.52)"><use href="#turbine"/></g>
+<!-- middle rolling hills -->
+<path d="M0 635Q180 560 360 620Q540 680 700 610Q865 540 1035 600Q1225 665 1390 575Q1515 520 1600 565V840H0Z" fill="url(#midHill)"/>
+<path d="M0 690Q190 610 370 660Q520 705 690 650Q850 590 1010 655Q1185 710 1360 635Q1500 580 1600 620V840H0Z" fill="#69ad72" opacity=".8"/>
+<!-- river winding through valley -->
+<path d="M610 840Q690 780 790 744Q900 704 865 660Q840 630 760 624Q690 618 705 588Q724 558 850 566Q980 575 1080 615Q1185 658 1320 640Q1410 628 1600 675L1600 840Z" fill="url(#river)"/>
+<path d="M610 840Q690 780 790 744Q900 704 865 660Q840 630 760 624Q690 618 705 588Q724 558 850 566Q980 575 1080 615Q1185 658 1320 640Q1410 628 1600 675" fill="none" stroke="#e4ffff" stroke-width="7" opacity=".7"/>
+<path d="M650 824Q770 756 840 725Q925 686 886 650" fill="none" stroke="url(#riverShine)" stroke-width="15" stroke-linecap="round"/>
+<path d="M900 595Q1000 594 1080 632M1120 650Q1220 682 1320 661M760 778Q820 748 858 730" fill="none" stroke="#eaffff" stroke-width="5" opacity=".6" stroke-linecap="round"/>
+<!-- foreground banks -->
+<path d="M0 710Q160 660 330 710Q500 755 655 730Q750 714 805 744Q700 815 620 840H0Z" fill="url(#frontHill)"/>
+<path d="M1600 700Q1450 655 1330 700Q1210 748 1090 740Q1010 735 950 770Q1100 835 1190 840H1600Z" fill="url(#frontHill)"/>
+<!-- grassy texture -->
+<g stroke="#d5f19b" stroke-width="3" stroke-linecap="round" opacity=".6">
+ <path d="M80 720l-9-20m17 24 4-23m255 31-5-18m14 22 10-25m108 30-2-19m16 22 8-17"/>
+ <path d="M1190 759l-4-21m17 23 10-25m120 5-6-20m18 23 11-24m130-3-5-20m17 23 9-19"/>
+</g>
+<!-- shrubs and trees in foreground -->
+<g>
+ <use href="#tree" transform="translate(120 666) scale(1.25)"/>
+ <use href="#tree" transform="translate(320 692) scale(.72)"/>
+ <use href="#tree" transform="translate(520 716) scale(.62)"/>
+ <use href="#tree" transform="translate(1160 708) scale(.7)"/>
+ <use href="#tree" transform="translate(1450 664) scale(1.05)"/>
+ <use href="#tree" transform="translate(1550 690) scale(.78)"/>
+</g>
+<!-- tiny wildflowers -->
+<g fill="#fff6c5">
+ <circle cx="1090" cy="760" r="4"/><circle cx="1110" cy="748" r="3"/><circle cx="1140" cy="775" r="4"/>
+ <circle cx="1250" cy="742" r="3"/><circle cx="1300" cy="765" r="4"/><circle cx="1380" cy="720" r="3"/>
+ <circle cx="250" cy="730" r="3"/><circle cx="280" cy="744" r="4"/><circle cx="460" cy="752" r="3"/>
+</g>
+<!-- soft framing foliage -->
+<g filter="url(#soft)" opacity=".55">
+ <ellipse cx="-20" cy="830" rx="180" ry="90" fill="#246d50"/>
+ <ellipse cx="1610" cy="825" rx="190" ry="95" fill="#246d50"/>
+</g>
+<g fill="#2f7954">
+ <path d="M0 840Q10 765 65 730Q72 790 35 840Z"/><path d="M35 840Q65 760 135 750Q120 815 75 840Z"/>
+ <path d="M1600 840Q1570 755 1510 735Q1515 800 1555 840Z"/><path d="M1560 840Q1515 780 1450 785Q1480 830 1520 840Z"/>
+</g>
+<g fill="#69b95f">
+ <path d="M0 810Q20 755 80 745Q65 800 20 830Z"/><path d="M1600 800Q1570 750 1515 755Q1530 805 1580 830Z"/>
+</g>
+</svg>

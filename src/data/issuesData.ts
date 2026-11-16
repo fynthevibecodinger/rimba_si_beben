@@ -13,6 +13,24 @@ export interface StudentActionItem {
   iconName: string;
 }
 
+// ===== BARU =====
+export interface QuickFact {
+  value: string;
+  label: string;
+}
+
+export interface MythFact {
+  myth: string;
+  fact: string;
+}
+
+export interface ReadinessPlan {
+  before: string[]; // sebelum bencana
+  during: string[]; // saat bencana
+  after: string[]; // sesudah bencana
+}
+// =================
+
 export interface IssueSections {
   causeAndEffect: {
     title: string;
@@ -32,6 +50,16 @@ export interface IssueSections {
     description: string;
     factHighlight: string;
   };
+  quickFacts: QuickFact[];
+  mythsAndFacts: MythFact[];
+  readiness: ReadinessPlan;
+}
+
+export interface RealDisasterPhoto {
+  src: string;
+  fallbackSrc: string;
+  alt: string;
+  caption: string;
 }
 
 export interface IssueContent {
@@ -44,491 +72,727 @@ export interface IssueContent {
   threatLevel: "Tinggi" | "Kritis" | "Sedang" | "Sangat Tinggi";
   heroBadge: string;
   icon: string;
+  realPhoto: RealDisasterPhoto;
   sections: IssueSections;
   quiz: QuizQuestion[];
 }
 
 export const issuesData: Record<string, IssueContent> = {
+  // ======================================================== BANJIR
   banjir: {
     slug: "banjir",
     title: "Banjir & Genangan Ekstrem",
-    subtitle: "Dinamika Daerah Aliran Sungai, Drainase Kota, dan Solusi Berbasis Alam",
-    tagline: "Air mencari jalannya. Ketika pori tanah tertutup beton dan sungai tersumbat, bencana terjadi.",
+    subtitle: "Dari hulu ke hilir: sungai, drainase kota, dan solusi berbasis alam",
+    tagline: "Air selalu mencari jalan. Saat tanah tertutup beton dan sungai tersumbat, jalannya adalah rumah kita.",
     themeColor: "#0284c7",
     accentBg: "from-sky-500/20 to-blue-600/10",
     threatLevel: "Sangat Tinggi",
-    heroBadge: "Hidrometeorologi Basah",
-    icon: "Waves",
+    heroBadge: "Banjir karena Hujan",
+    icon: "CloudRainWind",
+    realPhoto: {
+      src: "/images/disasters/banjir.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=600&q=80",
+      alt: "Dokumentasi nyata banjir merendam permukiman warga",
+      caption: "Dokumentasi Riil Banjir",
+    },
     sections: {
       causeAndEffect: {
-        title: "Mengapa Air Meluap dan Menggenang?",
+        title: "Kenapa Air Meluap dan Menggenang?",
         description:
-          "Banjir bukan sekadar karena curah hujan deras. Ketika permukaan tanah ditutup aspal dan beton tanpa daerah resapan, koefisien limpasan (run-off) meningkat hingga 80%. Air hujan tidak sempat terserap ke akuifer tanah dan langsung meluncur ke sungai yang mendangkal akibat sedimentasi dan sampah.",
+          "Hujan deras hanyalah pemicu. Penyebab sebenarnya ada di darat: permukaan yang tertutup aspal dan beton membuat air tidak bisa meresap, sehingga hampir semuanya menjadi air yang mengalir di permukaan. Air itu langsung mengalir ke selokan dan sungai yang sudah dangkal karena sedimen dan sampah, lalu meluap dalam hitungan jam.",
         humanActivities: [
-          "Alih fungsi sempadan sungai dan rawa retensi menjadi pemukiman padat.",
-          "Membuang sampah rumah tangga dan limbah padat ke saluran drainase.",
-          "Pengecoran halaman rumah tanpa menyisakan tanah terbuka atau lubang biopori.",
-          "Penggundulan hutan hulu yang menurunkan kemampuan akar pohon mengikat air.",
+          "Mengubah sempadan sungai dan rawa penampung air menjadi permukiman padat.",
+          "Membuang sampah rumah tangga ke selokan dan sungai.",
+          "Menyemen seluruh halaman tanpa menyisakan tanah terbuka atau lubang resapan.",
+          "Membuka hutan di wilayah hulu sehingga tidak ada lagi akar yang menahan dan menyimpan air.",
         ],
         ecologicalProcess:
-          "Siklus infiltrasi air terputus. Tanah kehilangan kemampuan menahan air, sehingga kapasitas tampung sungai terlampaui dalam hitungan jam.",
+           "Air hujan tidak lagi masuk ke tanah. Air pun menumpuk di permukaan dan membuat sungai cepat penuh.",
       },
       impact: {
         environmental: [
-          "Pencemaran sumber air minum warga oleh bakteri E. coli dan limbah lumpur.",
-          "Kerusakan ekosistem riparian dan hilangnya vegetasi pelindung tebing sungai.",
-          "Penyebaran penyakit leptospirosis, diare, dan infeksi kulit pascabencana.",
+          "Air bersih tercemar lumpur, limbah, dan bakteri sehingga sumber air minum tidak layak pakai.",
+          "Vegetasi di tepi sungai rusak dan tebing mudah terkikis.",
+          "Meningkatnya risiko leptospirosis, diare, dan penyakit kulit setelah banjir surut.",
         ],
         socialEconomic: [
-          "Lumpuhnya mobilitas pelajar ke sekolah dan jalur logistik ekonomi warga.",
-          "Kerugian material perabotan rumah, dokumen kependudukan, dan alat elektronik.",
+          "Sekolah libur, jalan terputus, dan distribusi barang terhambat.",
+          "Perabot, dokumen penting, dan perangkat elektronik rusak dan butuh biaya besar untuk diganti.",
         ],
         vulnerabilityNote:
-          "Anak-anak dan lansia di wilayah dataran rendah memiliki kerentanan fisik tertinggi saat arus deras datang mendadak di malam hari.",
+          "Anak-anak, lansia, dan penyandang disabilitas di dataran rendah paling rentan, terutama saat air naik cepat di malam hari.",
       },
       studentActions: [
         {
           type: "pencegahan",
-          title: "Bikin Lubang Biopori di Sekolah / Rumah",
+          title: "Buat Lubang Biopori di Rumah atau Sekolah",
           description:
-            "Buat lubang silindris sedalam 100 cm dan isi dengan sampah organik untuk mempercepat peresapan air ke tanah hingga 40%.",
+            "Lubang silindris berdiameter sekitar 10 cm dan sedalam sekitar 100 cm, diisi sampah organik, membantu air hujan meresap dan menghasilkan kompos.",
           iconName: "Drill",
         },
         {
           type: "pencegahan",
-          title: "Operasi Bersih Saluran Air (Pilah Sampah)",
+          title: "Kerja Bakti Bersih Selokan",
           description:
-            "Pastikan selokan di sekitar kelas dan rumah bebas dari plastik kemasan makanan dan botol yang kerap menyumbat gorong-gorong.",
+            "Pastikan saluran air di sekitar kelas dan rumah bebas dari plastik kemasan dan botol yang sering menyumbat gorong-gorong.",
           iconName: "Trash2",
         },
         {
           type: "penyelamatan",
-          title: "Siapkan Tas Siaga Bencana (TSB) 3S",
+          title: "Siapkan Tas Siaga Bencana",
           description:
-            "Simpan dokumen rapor/akta dalam plastik kedap air, senter, peluit, obat darurat, dan makanan kering untuk 3 hari pertama.",
+            "Isi dengan dokumen penting dalam plastik kedap air, senter, peluit, obat pribadi, power bank, dan makanan tahan lama.",
           iconName: "ShieldAlert",
         },
         {
           type: "penyelamatan",
-          title: "Matikan Aliran MCB Listrik & Jauhi Tiang",
+          title: "Matikan Listrik Sebelum Air Masuk",
           description:
-            "Saat air mulai masuk semata kaki, segera matikan sekring listrik utama dan hindari genangan yang dekat dengan tiang listrik atau kabel putus.",
+            "Bila air mulai masuk rumah, matikan MCB utama dan jauhi tiang listrik atau kabel putus. Air dan listrik adalah kombinasi yang mematikan.",
           iconName: "ZapOff",
         },
       ],
       greenTechTrivia: {
-        techName: "Sensor Ultrasonik IoT Telemetri Pintu Air",
+         techName: "Alat Pengukur Tinggi Air",
         category: "IoT Sensor",
         description:
-          "Perangkat pintar bertenaga surya yang dipasang di atas jembatan sungai untuk mengukur ketinggian muka air secara nirkabel real-time ke dasbor BPBD tiap 60 detik.",
+          "Sensor bertenaga surya di jembatan atau pintu air mengukur tinggi muka air dan mengirim datanya secara nirkabel ke pusat pemantauan secara berkala.",
         factHighlight:
-          "Memberi peringatan dini 3-6 jam sebelum gelombang air bah mencapai pemukiman hilir, menyelamatkan ribuan nyawa!",
+          "Kenaikan air di hulu terbaca lebih cepat, sehingga warga hilir punya waktu tambahan untuk mengungsi.",
+      },
+      quickFacts: [
+        { value: "10 × 100 cm", label: "Ukuran umum lubang biopori (diameter × kedalaman)" },
+        { value: "MCB", label: "Hal pertama yang dimatikan saat air masuk rumah" },
+        { value: "Hulu–hilir", label: "Banjir kota sering berawal dari kerusakan di hulu" },
+      ],
+      mythsAndFacts: [
+        {
+          myth: "Banjir terjadi hanya karena hujan terlalu deras.",
+          fact: "Hujan deras hanya pemicu. Hilangnya daerah resapan, sungai dangkal, dan drainase tersumbat membuat air tidak punya tempat pergi.",
+        },
+        {
+          myth: "Banjir setinggi mata kaki masih aman diterobos.",
+          fact: "Arus deras setinggi betis pun bisa menjatuhkan orang dewasa, dan air banjir bisa membawa kotoran serta aliran listrik.",
+        },
+      ],
+      readiness: {
+        before: [
+          "Kenali jalur dan titik kumpul menyelamatkan diri terdekat.",
+          "Simpan nomor darurat dan pantau informasi cuaca resmi.",
+        ],
+        during: [
+          "Matikan listrik, naik ke tempat lebih tinggi, dan ikuti arahan petugas.",
+          "Jangan berjalan atau berkendara menembus arus air.",
+        ],
+        after: [
+          "Cuci tangan dengan sabun dan jangan minum air yang belum dimasak.",
+          "Bersihkan rumah memakai sepatu bot dan sarung tangan, lalu laporkan kerusakan ke RT atau desa.",
+        ],
       },
     },
     quiz: [
       {
         id: 1,
-        question:
-          "Mengapa penutupan seluruh halaman rumah dengan semen/beton memperparah bahaya banjir?",
+        question: "Mengapa halaman rumah yang seluruhnya disemen memperparah risiko banjir?",
         options: [
-          "Karena air hujan menguap lebih cepat ke awan",
-          "Karena tanah kehilangan kemampuan infiltrasi sehingga air langsung meluncur menjadi limpasan permukaan",
-          "Karena beton menarik gravitasi air lebih kuat",
-          "Karena saluran air menjadi lebih bersih tanpa tanah",
+          "Air hujan menguap lebih cepat ke awan",
+          "Tanah tidak bisa menyerap air sehingga air langsung mengalir di permukaan ke selokan dan sungai",
+          "Beton menarik air lebih kuat",
+          "Selokan menjadi lebih bersih tanpa tanah",
         ],
         correctIndex: 1,
         explanation:
-          "Beton bersifat kedap air (impermeable). Tanpa tanah terbuka atau biopori, hingga 80% air hujan menjadi air larian (runoff) yang membebani selokan dan sungai.",
+          "Beton kedap air. Tanpa tanah terbuka atau biopori, sebagian besar air hujan mengalir di permukaan yang membebani drainase.",
       },
       {
         id: 2,
-        question:
-          "Tindakan paling kritis yang harus dilakukan pertama kali saat air banjir mulai menggenangi dalam rumah adalah...",
+        question: "Apa tindakan paling penting saat air mulai masuk ke dalam rumah?",
         options: [
-          "Mencari barang mainan yang hanyut di halaman",
-          "Mematikan saklar listrik utama (MCB) dan mencabut steker elektronik",
-          "Menunggu air mencapai setinggi pinggang sebelum evakuasi",
-          "Membuka semua keran air agar pipa tidak pecah",
+          "Mencari mainan yang hanyut",
+          "Mematikan listrik utama (MCB) dan mencabut steker",
+          "Menunggu air setinggi pinggang baru mengungsi",
+          "Membuka semua keran agar pipa tidak pecah",
         ],
         correctIndex: 1,
         explanation:
-          "Air adalah konduktor listrik yang berbahaya. Mematikan saklar MCB mencegah sengatan arus listrik (electrocution) yang fatal di dalam air.",
+          "Air menghantarkan listrik. Mematikan MCB mencegah sengatan listrik di dalam air.",
       },
       {
         id: 3,
-        question:
-          "Teknologi hijau apa yang efektif menangkap air hujan di tingkat rumah tangga sebelum meluap ke jalan?",
+        question: "Teknologi sederhana apa yang menangkap air hujan di tingkat rumah tangga sebelum meluap ke jalan?",
         options: [
-          "Sistem Pemanenan Air Hujan (Rainwater Harvesting) & Sumur Resapan",
-          "Penggunaan AC berkapasitas besar",
-          "Pemasangan aspal sintetis",
+          "Pemanenan air hujan dan sumur resapan",
+          "AC berkapasitas besar",
+          "Aspal sintetis",
           "Pagar seng bertingkat",
         ],
         correctIndex: 0,
         explanation:
-          "Pemanenan air hujan menampung air hujan dari talang untuk disaring dan digunakan kembali, sedangkan kelebihannya disalurkan ke sumur resapan.",
+          "Air dari talang ditampung untuk dipakai kembali, sedangkan kelebihannya dialirkan ke sumur resapan.",
+      },
+      {
+        id: 4,
+        question: "Mengapa kerusakan hutan di hulu bisa menyebabkan banjir di kota hilir?",
+        options: [
+          "Karena hutan menghasilkan lebih banyak hujan di kota",
+          "Karena tanpa akar dan tanah yang menyerap air, aliran ke sungai menjadi lebih cepat dan besar",
+          "Karena sungai menjadi lebih dalam",
+          "Karena air laut naik ke hulu",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Hutan hulu menahan dan menyimpan air. Bila rusak, air mengalir cepat ke hilir dan membawa sedimen yang mendangkalkan sungai.",
+      },
+      {
+        id: 5,
+        question: "Apa fungsi sensor tinggi muka air bertenaga surya di sungai?",
+        options: [
+          "Menghentikan hujan",
+          "Memberi data dan peringatan dini agar warga hilir punya waktu bersiap",
+          "Membersihkan sampah otomatis",
+          "Menurunkan permukaan sungai",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Sensor mengirim data kenaikan air secara berkala sehingga peringatan bisa diberikan sebelum air tiba di permukiman.",
       },
     ],
   },
 
+  // ======================================================== TANAH LONGSOR
   "tanah-longsor": {
     slug: "tanah-longsor",
     title: "Tanah Longsor & Pergerakan Lereng",
-    subtitle: "Kekuatan Akar Vegetasi, Kemiringan Lereng, dan Bahaya Erosi Lahan",
-    tagline: "Akar pohon adalah paku bumi alami. Ketika lereng ditebas, gravitasi mengambil alih.",
+    subtitle: "Akar, kemiringan, dan air: tiga penentu kestabilan lereng",
+    tagline: "Akar pohon adalah paku bumi alami. Saat lereng gundul, gravitasi yang berkuasa.",
     themeColor: "#8d5b4c",
     accentBg: "from-amber-700/20 to-stone-800/10",
     threatLevel: "Tinggi",
-    heroBadge: "Geohidrologi Lereng",
-    icon: "Mountain",
+    heroBadge: "Longsor di Lereng",
+    icon: "Landslide",
+    realPhoto: {
+      src: "/images/disasters/tanah-longsor.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1618588507085-c79565432917?auto=format&fit=crop&w=600&q=80",
+      alt: "Dokumentasi nyata longsor pada tebing lereng curam",
+      caption: "Dokumentasi Riil Tanah Longsor",
+    },
     sections: {
       causeAndEffect: {
-        title: "Bagaimana Massa Tanah Bisa Tiba-Tiba Ambles?",
+        title: "Bagaimana Tanah Bisa Tiba-Tiba Meluncur?",
         description:
-          "Tanah longsor terjadi ketika gaya pendorong (berat massa tanah jenuh air dan gravitasi) melebihi gaya penahan (kohesi tanah dan ikatan akar). Hujan berdurasi panjang meresap ke dalam tanah dan tertahan di atas lapisan batuan kedap (bidang gelincir), melumasi tanah sehingga meluncur menuruni lereng dengan kecepatan tinggi.",
+          "Longsor terjadi ketika gaya pendorong (berat tanah jenuh air dan gravitasi) lebih besar daripada gaya penahan (kohesi tanah dan ikatan akar). Hujan yang lama meresap dan tertahan di atas lapisan kedap air, melumasi bidang gelincir hingga massa tanah di atasnya meluncur ke bawah.",
         humanActivities: [
-          "Pemotongan tebing bukit secara tegak (90 derajat) untuk jalan atau bangunan tanpa terasering.",
-          "Penebangan pohon berakar dalam (seperti beringin, aren, bambu) di lereng terjal.",
-          "Pembuatan kolam ikan atau persawahan basah di puncak tebing yang menambah beban massa tanah.",
-          "Kurangnya drainase lereng sehingga air rembesan terjebak dan memicu rekahan tanah.",
+          "Memotong tebing secara tegak tanpa terasering atau dinding penahan.",
+          "Menebang pohon berakar dalam di lereng terjal.",
+          "Membuat kolam atau sawah basah di puncak lereng sehingga beban air bertambah.",
+          "Tidak membuat drainase lereng, sehingga air rembesan menumpuk dan membuka retakan.",
         ],
         ecologicalProcess:
-          "Hilangnya perakaran pohon berarti hilangnya jaring pengikat mekanis. Kejenuhan air mengubah tanah lempung menjadi lumpur cair yang mudah menggelincir.",
+          "Tanpa jaring akar, tanah kehilangan ikatan mekanis. Tanah lempung yang jenuh air berubah menjadi lumpur yang mudah mengalir.",
       },
       impact: {
         environmental: [
-          "Timbunan sedimen tebal yang merusak lapisan humus tanah subur di dasar lembah.",
-          "Terputusnya hulu sungai dan pembentukan bendung alam labil yang berpotensi memicu banjir bandang.",
-          "Kehancuran habitat satwa liar pegunungan.",
+          "Material longsor menimbun tanah subur dan merusak lahan di dasar lembah.",
+          "Longsoran bisa membendung sungai dan berisiko memicu banjir bandang saat bendungan alami jebol.",
+          "Habitat satwa di lereng dan tepi hutan hilang.",
         ],
         socialEconomic: [
-          "Tertimbunnya pemukiman warga dalam hitungan detik tanpa waktu penyelamatan panjang.",
-          "Terputusnya akses jalan penghubung antardaerah di kawasan pegunungan.",
+          "Rumah dan lahan tertimbun dalam waktu singkat, sehingga waktu menyelamatkan diri sangat pendek.",
+          "Jalan penghubung antardesa terputus dan bantuan sulit masuk.",
         ],
         vulnerabilityNote:
-          "Perumahan di lereng dengan kemiringan di atas 20 derajat sangat berisiko tinggi saat curah hujan akumulatif 3 hari melebihi 100 mm.",
+          "Permukiman di lereng curam (di atas sekitar 20°) sangat berisiko ketika hujan berhari-hari membuat tanah jenuh air.",
       },
       studentActions: [
         {
           type: "pencegahan",
-          title: "Tanam Rumput Vetiver & Pohon Berakar Tunggang",
+          title: "Tanam Vetiver dan Pohon Berakar Dalam",
           description:
-            "Akar rumput Vetiver (akar wangi) dapat menembus tanah hingga kedalaman 3-4 meter, mengikat lapisan tanah secara alami bagaikan jangkar biologis.",
+            "Akar wangi (vetiver) bisa menembus tanah hingga beberapa meter dan mengikat tanah seperti jangkar hidup. Pilih jenis lokal yang sesuai lereng.",
           iconName: "Sprout",
         },
         {
           type: "pencegahan",
-          title: "Laporkan Retakan Tanah Melengkung di Lereng",
+          title: "Laporkan Retakan atau Pohon Miring",
           description:
-            "Jika melihat retakan tanah seperti tapal kuda atau pohon/tiang listrik yang mulai miring, segera laporkan ke guru, RT, atau BPBD.",
+            "Retakan melengkung di tanah, pohon atau tiang yang mulai miring, dan air keruh yang muncul tiba-tiba perlu dilaporkan ke RT, guru, atau BPBD.",
           iconName: "AlertTriangle",
         },
         {
           type: "penyelamatan",
-          title: "Kenali Tanda Suara Gemuruh dari Atas Bukit",
+          title: "Kenali Suara Gemuruh dari Atas Bukit",
           description:
-            "Suara gemuruh seperti dentuman atau ranting patah bersahut-sahutan menandakan pergerakan lereng telah dimulai. Jangan kembali untuk mengambil barang!",
+            "Gemuruh atau suara ranting patah beruntun bisa jadi tanda lereng mulai bergerak. Segera menjauh dan jangan kembali mengambil barang.",
           iconName: "Volume2",
         },
         {
           type: "penyelamatan",
-          title: "Evakuasi Tegak Lurus Menjauhi Jalur Luncuran",
+          title: "Lari ke Samping, Bukan ke Bawah",
           description:
-            "Lari ke arah samping (tegak lurus terhadap jalur luncuran longsor), bukan lari ke arah lembah searah jalannya lumpur.",
+            "Hindari jalur luncuran. Bergeraklah tegak lurus ke samping menuju tanah yang stabil, bukan searah lumpur menuruni lembah.",
           iconName: "CornerUpRight",
         },
       ],
       greenTechTrivia: {
-        techName: "Extensometer Digital & Sensor Tiltmeter Nirkabel",
+        techName: "Extensometer dan Tiltmeter Nirkabel",
         category: "IoT Sensor",
         description:
-          "Sensor pengukur pergeseran tanah tingkat milimeter yang dihubungkan ke sirine otomatis bertenaga surya. Saat retakan melebar lebih dari batas aman, sirine desa akan meraung.",
+          "Alat ini mengukur pergeseran dan kemiringan tanah hingga skala milimeter. Jika retakan melebar melewati batas aman, sirine desa otomatis berbunyi.",
         factHighlight:
-          "Telah dipasang di ratusan titik rawan longsor di Jawa dan Sumatera oleh PVMBG dan universitas riset nasional.",
+          "Sistem peringatan dini longsor berbasis sensor telah diuji dan dipasang di sejumlah daerah rawan di Indonesia.",
+      },
+      quickFacts: [
+        { value: "> 20°", label: "Kemiringan lereng yang mulai dianggap rawan" },
+        { value: "3–4 m", label: "Kedalaman akar vetiver yang bisa menembus tanah" },
+        { value: "Samping", label: "Arah lari yang benar saat longsor, bukan ke bawah" },
+      ],
+      mythsAndFacts: [
+        {
+          myth: "Longsor hanya terjadi di gunung yang tinggi.",
+          fact: "Longsor bisa terjadi di tebing galian jalan, tanggul, dan lereng di sekitar permukiman, termasuk di perbukitan rendah.",
+        },
+        {
+          myth: "Pohon apa pun pasti memperkuat lereng.",
+          fact: "Jenis pohon harus sesuai. Akar dalam dan tajuk ringan membantu, sedangkan pohon yang terlalu berat atau berakar dangkal di lereng curam bisa menambah risiko.",
+        },
+      ],
+      readiness: {
+        before: [
+          "Cari tahu apakah rumah atau sekolahmu berada di zona rawan longsor.",
+          "Siapkan jalur dan titik kumpul menyelamatkan diri yang tidak melewati kaki lereng.",
+        ],
+        during: [
+          "Jauhi lereng dan alur sungai kecil di bawahnya, lalu lari ke samping jalur luncuran.",
+          "Lindungi kepala dan jangan kembali ke zona longsor.",
+        ],
+        after: [
+          "Waspadai longsor susulan, terutama bila hujan berlanjut.",
+          "Jangan mendekati area longsoran sebelum dinyatakan aman oleh petugas.",
+        ],
       },
     },
     quiz: [
       {
         id: 1,
-        question:
-          "Mengapa rumput Vetiver (akar wangi) sangat direkomendasikan ditanam di lereng bukit rawan longsor?",
+        question: "Mengapa rumput vetiver (akar wangi) direkomendasikan di lereng rawan longsor?",
         options: [
-          "Karena aromanya mengusir hama serangga",
-          "Karena akarnya mampu tumbuh menembus hingga 3-4 meter ke bawah mengunci struktur tanah",
-          "Karena rumput ini tidak membutuhkan air sama sekali",
-          "Karena warnanya membuat lereng terlihat indah dari satelit",
+          "Aromanya mengusir serangga",
+          "Akarnya menembus dalam dan mengunci struktur tanah",
+          "Tidak butuh air sama sekali",
+          "Terlihat indah dari satelit",
         ],
         correctIndex: 1,
         explanation:
-          "Akar Vetiver memiliki kekuatan tarik yang setara dengan kawat baja ringan dan menembus sangat dalam, berfungsi sebagai paku bumi biologis.",
+          "Akar vetiver panjang, rapat, dan kuat sehingga berfungsi sebagai paku bumi biologis.",
       },
       {
         id: 2,
-        question:
-          "Jika kamu berada di lereng bukit dan mendengar suara gemuruh serta melihat pohon mulai miring, arah evakuasi yang benar adalah...",
+        question: "Kamu di lereng dan mendengar gemuruh sementara pohon mulai miring. Ke mana sebaiknya bergerak?",
         options: [
-          "Lari searah ke dasar lembah mengikuti luncuran tanah",
-          "Bersembunyi di balik pohon besar di lereng",
-          "Lari ke arah samping (tegak lurus terhadap jalur luncuran longsor) menuju tanah stabil",
-          "Merekam video dengan ponsel di tepi tebing",
+          "Lari searah ke dasar lembah",
+          "Bersembunyi di balik pohon besar",
+          "Lari ke samping, tegak lurus jalur luncuran, menuju tanah stabil",
+          "Merekam video di tepi tebing",
         ],
         correctIndex: 2,
         explanation:
-          "Luncuran tanah dan lumpur bergerak sangat cepat ke arah dasar lereng. Berlari ke samping (lateral) adalah satu-satunya cara keluar dari jalur hempasan.",
+          "Longsoran bergerak cepat menuruni lereng. Bergerak ke samping adalah cara paling masuk akal untuk keluar dari jalurnya.",
       },
       {
         id: 3,
-        question:
-          "Aktivitas manusia yang paling sering memicu ketidakstabilan lereng adalah...",
+        question: "Aktivitas manusia apa yang paling sering mengganggu kestabilan lereng?",
         options: [
-          "Membuat terasering bertingkat",
-          "Memotong tebing bukit secara tegak lurus untuk bangunan tanpa dinding penahan",
-          "Menanam pohon buah di pekarangan datar",
+          "Membuat terasering",
+          "Memotong tebing tegak untuk bangunan tanpa dinding penahan",
+          "Menanam pohon buah di lahan datar",
           "Membuat jalur pendakian berkelok",
         ],
         correctIndex: 1,
         explanation:
-          "Memotong lereng tegak lurus menghilangkan bidang penahan kaki lereng, membuat massa tanah di atasnya kehilangan penopang dan mudah runtuh.",
+          "Pemotongan tegak menghilangkan penopang kaki lereng sehingga massa tanah di atasnya mudah runtuh.",
+      },
+      {
+        id: 4,
+        question: "Mengapa hujan berhari-hari lebih berbahaya bagi lereng daripada hujan singkat yang deras?",
+        options: [
+          "Air hujan lama lebih asam",
+          "Tanah menjadi jenuh air sehingga bobotnya naik dan ikatannya melemah",
+          "Hujan lama membuat pohon tumbuh cepat",
+          "Hujan lama menaikkan suhu tanah",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Air yang terus meresap menambah berat tanah dan melumasi bidang gelincir, sehingga gaya penahan menurun.",
+      },
+      {
+        id: 5,
+        question: "Tanda alam mana yang perlu segera dilaporkan di sekitar lereng?",
+        options: [
+          "Burung berkicau di pagi hari",
+          "Retakan tanah melengkung dan tiang atau pohon yang mulai miring",
+          "Rumput tumbuh subur",
+          "Embun di pagi hari",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Retakan melengkung dan kemiringan benda adalah tanda awal pergerakan tanah yang perlu ditindaklanjuti.",
       },
     ],
   },
 
+  // ======================================================== KEKERINGAN
   kekeringan: {
     slug: "kekeringan",
     title: "Kekeringan & Krisis Air Bersih",
-    subtitle: "Dampak El Niño, Cadangan Air Tanah, dan Konservasi Air Cerdas",
-    tagline: "Air adalah sumber kehidupan. Menjaga mata air hari ini adalah menyelamatkan napas esok hari.",
+    subtitle: "El Niño, cadangan air tanah, dan kebiasaan hemat air",
+    tagline: "Air bukan hanya soal hujan. Menjaga mata air hari ini berarti menjaga hidup kita esok hari.",
     themeColor: "#d97706",
     accentBg: "from-amber-500/20 to-yellow-600/10",
     threatLevel: "Sedang",
-    heroBadge: "Hidrometeorologi Kering",
-    icon: "SunMedium",
+    heroBadge: "Kekeringan karena Kemarau",
+    icon: "DropletOff",
+    realPhoto: {
+      src: "/images/disasters/kekeringan.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+      alt: "Dokumentasi nyata tanah sawah retak akibat kemarau panjang",
+      caption: "Dokumentasi Riil Kekeringan",
+    },
     sections: {
       causeAndEffect: {
-        title: "Mengapa Sumur Mengering dan Sawah Pecah-Pecah?",
+        title: "Kenapa Sumur Kering dan Sawah Retak?",
         description:
-          "Kekeringan meteorologis terjadi ketika curah hujan berada jauh di bawah normal akibat anomali iklim seperti fenomena El Niño. Namun, kekeringan hidrologis diperparah oleh rusaknya daerah tangkapan air (catchment area), penyedotan air tanah secara berlebihan tanpa pengisian kembali, dan degradasi humus yang menurunkan kapasitas simpan air (water holding capacity).",
+          "Kekeringan karena kurang hujan muncul saat hujan jauh di bawah normal, misalnya akibat El Niño. Namun dampaknya diperparah oleh kerusakan daerah tangkapan air, pengambilan air tanah yang melebihi pengisian ulang, dan tanah yang miskin humus sehingga tidak mampu menyimpan air.",
         humanActivities: [
-          "Eksploitasi air tanah dalam secara masif oleh industri tanpa izin konservasi.",
-          "Pengurukan dan pengeringan rawa atau danau alami yang berfungsi sebagai reservoir penyimpan air.",
-          "Praktik pertanian monokultur intensif tanpa mulsa penutup tanah.",
-          "Pemborosan air bersih dalam konsumsi harian dan kebocoran pipa jaringan air.",
+          "Mengambil air tanah dalam secara besar-besaran tanpa upaya menjaga alam.",
+          "Menguruk rawa dan danau yang berfungsi sebagai tandon air alami.",
+          "Bertani tanpa mulsa atau penutup tanah sehingga air cepat menguap.",
+          "Boros air dan membiarkan pipa bocor dalam jangka lama.",
         ],
         ecologicalProcess:
-          "Muka air tanah (water table) turun drastis. Vegetasi layu permanen, mikroorganisme tanah mati, dan terjadi intrusi air laut ke sumur-sumur pesisir.",
+          "Muka air tanah turun, tanaman layu, mikroorganisme tanah berkurang, dan di wilayah pesisir air asin bisa merembes ke sumur.",
       },
       impact: {
         environmental: [
-          "Gagal panen (puso) massal pada komoditas pangan pokok seperti padi dan jagung.",
-          "Kematian satwa liar karena dehidrasi dan hilangnya kubangan air di habitat alami.",
-          "Degradasi struktur tanah menjadi debu yang memicu badai debu lokal.",
+          "Gagal panen padi, jagung, dan tanaman pangan lainnya.",
+          "Satwa liar kesulitan mendapat air karena kubangan dan mata air mengering.",
+          "Tanah yang kehilangan struktur mudah menjadi debu dan terbawa angin.",
         ],
         socialEconomic: [
-          "Melonjaknya harga bahan pangan dan krisis air bersih bagi keluarga prasejahtera.",
-          "Meningkatnya risiko malnutrisi dan penyakit kulit akibat sanitasi yang buruk.",
+          "Harga pangan naik dan keluarga prasejahtera paling sulit mengakses air bersih.",
+          "Sanitasi memburuk sehingga penyakit kulit dan gangguan pencernaan meningkat.",
         ],
         vulnerabilityNote:
-          "Kawasan Nusa Tenggara dan Jawa bagian selatan menjadi zona paling rentan terhadap kekeringan musiman berkepanjangan.",
+          "Nusa Tenggara dan sebagian wilayah selatan Jawa termasuk kawasan yang rentan terhadap kemarau panjang.",
       },
       studentActions: [
         {
           type: "pencegahan",
-          title: "Gerakan 4 Menit Tutup Keran Saat Gosok Gigi",
+          title: "Tutup Keran Saat Menyikat Gigi",
           description:
-            "Menutup keran air saat menyikat gigi atau mencuci sabun menghemat hingga 12 liter air bersih per orang setiap harinya.",
+            "Keran yang dibiarkan mengalir bisa membuang beberapa liter air dalam hitungan menit. Pakai gayung atau gelas, lalu tutup keran saat tidak dipakai.",
           iconName: "Droplet",
         },
         {
           type: "pencegahan",
-          title: "Daur Ulang Air Bilasan Wudhu & Cucian Beras",
+          title: "Pakai Ulang Air Bilasan",
           description:
-            "Gunakan air bekas bilasan wudhu atau cucian beras untuk menyiram tanaman di taman sekolah daripada dibuang percuma.",
+            "Air bekas cucian beras atau bilasan sayur bisa menyiram tanaman di taman sekolah, selama tidak mengandung sabun atau deterjen.",
           iconName: "RotateCcw",
         },
         {
           type: "penyelamatan",
-          title: "Konsumsi Air Matang Bersih & Lindungi Wadah Air",
+          title: "Jaga Kebersihan Air Minum dan Penampungan",
           description:
-            "Pastikan air minum dimasak hingga mendidih dan tutuplah ember penampungan air rapat-rapat agar tidak menjadi sarang jentik nyamuk DBD.",
+            "Masak air minum sampai mendidih dan tutup rapat ember penampung agar tidak menjadi sarang jentik nyamuk.",
           iconName: "CheckCircle",
         },
         {
           type: "penyelamatan",
-          title: "Laporkan Krisis Air ke Pihak Desa / PDAM untuk Tangki Darurat",
+          title: "Laporkan Krisis Air ke RT atau Desa",
           description:
-            "Koordinasikan dengan guru atau ketua RT untuk mengajukan drop air bersih mobil tangki BPBD saat sumur warga mulai kering total.",
+            "Bila sumur warga mulai kering, koordinasikan dengan guru atau ketua RT untuk mengajukan bantuan air bersih lewat BPBD atau PDAM.",
           iconName: "Truck",
         },
       ],
       greenTechTrivia: {
-        techName: "Irigasi Tetes Presisi Bertenaga Surya & Satelit Soil Moisture",
+        techName: "Irigasi Tetes Tenaga Surya dan Data Kelembapan Tanah Satelit",
         category: "Nature-based Solutions",
         description:
-          "Sistem penyiraman berbasis pipa mikro yang meneteskan air langsung ke akar tanaman dengan efisiensi 95%, dipadukan data kelembapan tanah satelit SMAP.",
+          "Pipa mikro meneteskan air langsung ke akar tanaman, sehingga jauh lebih hemat dibanding menggenangi lahan. Data kelembapan tanah dari satelit membantu menentukan kapan penyiraman benar-benar dibutuhkan.",
         factHighlight:
-          "Menghemat penggunaan air pertanian hingga 60% dibanding metode genangan konvensional di daerah lahan kering!",
+          "Irigasi tetes bisa menghemat air pertanian dalam jumlah besar di lahan kering dibanding irigasi genangan.",
+      },
+      quickFacts: [
+        { value: "≤ 12 L", label: "Air terbuang per menit bila keran dibiarkan mengalir" },
+        { value: "El Niño", label: "Fenomena yang bisa memperpanjang musim kemarau" },
+        { value: "Mulsa", label: "Penutup tanah yang menahan penguapan air" },
+      ],
+      mythsAndFacts: [
+        {
+          myth: "Kekeringan hanya karena tidak ada hujan.",
+          fact: "Hujan yang kurang adalah pemicu, tetapi kerusakan tangkapan air dan pemakaian air yang boros membuat dampaknya jauh lebih berat.",
+        },
+        {
+          myth: "Sumur yang dalam pasti aman dari kekeringan.",
+          fact: "Jika air diambil lebih cepat daripada pengisian ulangnya, muka air tanah tetap turun walau sumurnya dalam.",
+        },
+      ],
+      readiness: {
+        before: [
+          "Siapkan wadah penampung air tertutup dan atur pemakaian air keluarga.",
+          "Pasang penampung air hujan dan tanam penutup tanah di kebun.",
+        ],
+        during: [
+          "Prioritaskan air untuk minum, memasak, dan kebersihan dasar.",
+          "Siram tanaman pagi atau sore dan gunakan air bekas yang aman.",
+        ],
+        after: [
+          "Perbaiki pipa bocor dan bersihkan tandon sebelum hujan datang.",
+          "Lanjutkan kebiasaan hemat air walau musim hujan sudah tiba.",
+        ],
       },
     },
     quiz: [
       {
         id: 1,
-        question:
-          "Manakah kebiasaan sehari-hari pelajar yang paling signifikan menghemat air bersih?",
+        question: "Kebiasaan pelajar mana yang paling menghemat air bersih?",
         options: [
-          "Membiarkan keran mengalir saat menyabuni piring atau menggosok gigi",
-          "Menutup keran air saat tidak digunakan dan memakai wadah gayung terkontrol",
-          "Mencuci sepeda motor dengan selang bertekanan tinggi setiap hari",
-          "Membuang air sisa minum botol ke selokan",
+          "Membiarkan keran mengalir saat menyabuni piring",
+          "Menutup keran saat tidak dipakai dan memakai gayung",
+          "Mencuci motor dengan selang setiap hari",
+          "Membuang sisa air minum ke selokan",
         ],
         correctIndex: 1,
         explanation:
-          "Membiarkan keran mengalir memboroskan hingga 9-12 liter per menit. Penggunaan gayung atau mematikan keran menghemat ribuan liter air per bulan.",
+          "Keran yang dibiarkan mengalir membuang banyak air. Memakai gayung dan menutup keran menghemat ribuan liter per bulan.",
       },
       {
         id: 2,
-        question:
-          "Mengapa air bekas cucian beras sangat baik dimanfaatkan kembali untuk menyiram tanaman?",
+        question: "Mengapa air bekas cucian beras baik untuk menyiram tanaman?",
         options: [
-          "Karena air cucian beras mengandung pestisida beracun",
-          "Karena kaya nutrisi vitamin B dan pati yang menyuburkan mikroba tanah tanpa membuang air bersih baru",
-          "Karena membuat tanaman berbuah beras secara instan",
-          "Karena tanaman tidak menyukai air hujan",
+          "Mengandung pestisida",
+          "Mengandung sedikit nutrisi dan pati yang dapat membantu mikroba tanah, serta mengurangi pemakaian air bersih baru",
+          "Membuat tanaman berbuah beras",
+          "Tanaman tidak suka air hujan",
         ],
         correctIndex: 1,
         explanation:
-          "Air cucian beras mengandung nutrisi organik mikro yang menyuburkan tanah sekaligus mempraktikkan prinsip sirkular reuse air.",
+          "Pemakaian ulang air bilasan menerapkan prinsip reuse. Hindari air bercampur sabun atau deterjen.",
       },
       {
         id: 3,
-        question:
-          "Fenomena iklim global yang sering menyebabkan musim kemarau lebih panjang dan kering di Indonesia adalah...",
+        question: "Fenomena iklim yang sering membuat kemarau di Indonesia lebih kering dan panjang adalah...",
         options: ["La Niña", "El Niño", "Angin Monsun Barat", "Efek Coriolis"],
         correctIndex: 1,
         explanation:
-          "El Niño menyebabkan pemanasan suhu permukaan laut di Samudra Pasifik timur, memindahkan pembentukan awan hujan menjauhi kepulauan Indonesia.",
+          "El Niño menggeser pembentukan awan hujan menjauhi wilayah Indonesia sehingga curah hujan berkurang.",
+      },
+      {
+        id: 4,
+        question: "Apa fungsi mulsa pada kebun atau lahan pertanian?",
+        options: [
+          "Membuat tanaman cepat berbunga",
+          "Menutup permukaan tanah agar air tidak cepat menguap",
+          "Mengusir hujan",
+          "Menambah panas tanah",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Mulsa menurunkan penguapan, menjaga kelembapan, dan melindungi tanah dari terik matahari.",
+      },
+      {
+        id: 5,
+        question: "Mengapa air tampungan perlu ditutup rapat?",
+        options: [
+          "Agar air tidak terasa dingin",
+          "Agar tidak menjadi sarang jentik nyamuk dan tidak tercemar",
+          "Agar air cepat menguap",
+          "Agar ember tidak berkarat",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Air tergenang yang terbuka mudah menjadi tempat berkembang biak nyamuk dan rawan tercemar kotoran.",
       },
     ],
   },
 
+  // ======================================================== KARHUTLA
   "kebakaran-hutan": {
     slug: "kebakaran-hutan",
     title: "Kebakaran Hutan & Lahan (Karhutla)",
-    subtitle: "Kerentanan Gambut, Titik Panas Hotspot, dan Penjagaan Kualitas Udara",
-    tagline: "Gambut yang terbakar di bawah tanah melepaskan karbon ribuan tahun. Sekali menyala, sulit padam.",
+    subtitle: "Gambut, titik panas, dan udara bersih yang kita butuhkan",
+    tagline: "Gambut yang terbakar melepas karbon yang tersimpan ribuan tahun. Sekali menyala, sangat sulit dipadamkan.",
     themeColor: "#dc2626",
     accentBg: "from-red-600/20 to-orange-700/10",
     threatLevel: "Kritis",
     heroBadge: "Emisi & Karhutla",
-    icon: "Flame",
+    icon: "FlameKindling",
+    realPhoto: {
+      src: "/images/disasters/kebakaran-hutan.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1602980085566-6c459f23fa46?auto=format&fit=crop&w=600&q=80",
+      alt: "Dokumentasi nyata kebakaran hutan dan lahan gambut dengan kabut asap tebal",
+      caption: "Dokumentasi Riil Karhutla",
+    },
     sections: {
       causeAndEffect: {
-        title: "Mengapa Lahan Gambut Indonesia Begitu Mudah Membara?",
+        title: "Kenapa Lahan Gambut Mudah Terbakar?",
         description:
-          "Lahan gambut tropis adalah tumpukan bahan organik tumbuhan purba sedalam bermeter-meter yang terendam air. Ketika kanal buatan mengeringkan gambut untuk perkebunan, kubah gambut menjadi kering bagaikan spons berisi bahan bakar batu bara muda. Percikan api kecil dari puntung rokok atau pembukaan lahan dengan cara membakar (slash-and-burn) langsung memicu kebakaran bawah tanah (smoldering) yang menyebar tanpa terlihat di permukaan.",
+          "Gambut adalah tumpukan sisa tumbuhan yang selama ribuan tahun terendam air. Saat dikeringkan lewat kanal untuk perkebunan, gambut menjadi kering dan mudah terbakar. Percikan kecil dari puntung rokok atau pembukaan lahan dengan membakar bisa memicu api yang menjalar di bawah tanah tanpa terlihat dari permukaan.",
         humanActivities: [
-          "Pembukaan lahan perkebunan dengan metode membakar karena biayanya paling murah.",
-          "Pembuatan parit/kanal drainase ilegal yang mengeringkan air alami dari kubah gambut.",
-          "Membuang puntung rokok atau meninggalkan api unggun kemah yang belum padam total di area hutan.",
-          "Perambahan kawasan konservasi hutan lindung untuk aktivitas tambang liar.",
+          "Membuka lahan dengan cara membakar karena dianggap murah.",
+          "Membuat parit atau kanal yang mengeringkan kubah gambut.",
+          "Membuang puntung rokok atau meninggalkan api unggun yang belum padam total.",
+          "Merambah kawasan hutan lindung dan menjaga alam.",
         ],
         ecologicalProcess:
-          "Api gambut membakar di bawah tanah (sub-surface) tanpa oksigen terbuka, menghasilkan asap karbon monoksida pekat dan partikulat halus PM2.5 yang mematikan pernapasan.",
+          "Api gambut bisa menyala diam-diam di bawah tanah dan menghasilkan asap tebal yang berbahaya.",
       },
       impact: {
         environmental: [
-          "Pelepasan megaton gas rumah kaca (CO2) ke atmosfer yang mempercepat pemanasan global.",
-          "Hilangnya keanekaragaman hayati satwa langka seperti Orangutan, Harimau Sumatera, dan Burung Rangkong.",
-          "Kerusakan lapisan kubah gambut yang membutuhkan ratusan tahun untuk terbentuk kembali.",
+          "Pelepasan karbon dalam jumlah besar yang mempercepat pemanasan global.",
+          "Hilangnya habitat satwa seperti orangutan, harimau Sumatra, dan burung rangkong.",
+          "Lapisan gambut rusak dan butuh waktu sangat lama untuk pulih.",
         ],
         socialEconomic: [
-          "Krisis Infeksi Saluran Pernapasan Akut (ISPA) massal pada jutaan anak sekolah.",
-          "Sekolah diliburkan berbulan-bulan dan penerbangan bandara lumpuh total akibat kabut asap tebal.",
+          "Kasus gangguan pernapasan meningkat, termasuk pada anak sekolah.",
+          "Sekolah diliburkan dan penerbangan terganggu akibat kabut asap.",
         ],
         vulnerabilityNote:
-          "Provinsi Riau, Jambi, Sumatera Selatan, serta Kalimantan Tengah dan Barat menjadi wilayah langganan ancaman karhutla setiap puncak kemarau.",
+          "Riau, Jambi, Sumatra Selatan, serta Kalimantan Tengah dan Barat sering terdampak karhutla pada puncak kemarau.",
       },
       studentActions: [
         {
           type: "pencegahan",
-          title: "Katakan TIDAK pada Pembakaran Sampah Terbuka",
+          title: "Jangan Bakar Sampah di Tempat Terbuka",
           description:
-            "Jangan pernah membakar sampah daun kering atau plastik di pekarangan. Asapnya meracuni udara dan percikan apinya mudah tertiup angin memicu kebakaran.",
+            "Membakar daun kering atau plastik mencemari udara dan percikan apinya bisa tertiup angin lalu memicu kebakaran lahan.",
           iconName: "ShieldX",
         },
         {
           type: "pencegahan",
-          title: "Dukung Program Sekat Kanal (Canal Blocking) Gambut",
+          title: "Dukung Pembasahan Kembali Gambut",
           description:
-            "Pelajari dan dukung upaya rewetting (pembasahan kembali) ekosistem gambut dengan membangun sekat kanal agar air gambut tetap terjaga tinggi.",
+            "Pelajari dan dukung cara menjaga lahan gambut tetap basah agar tidak mudah terbakar.",
           iconName: "Layers",
         },
         {
           type: "penyelamatan",
-          title: "Gunakan Masker N95 / KF94 Saat ISPU Memburuk",
+          title: "Pakai Masker N95 atau KF94 Saat Udara Buruk",
           description:
-            "Partikel kabut asap karhutla berukuran PM2.5 yang sangat halus. Masker kain biasa tidak mampu menyaringnya, gunakan masker berstandar N95.",
-          iconName: "Smile",
+            "Debu asap sangat kecil. Masker N95 atau KF94 lebih baik untuk melindungi napas jika kabut asap tebal.",
+          iconName: "HeartPulse",
         },
         {
           type: "penyelamatan",
-          title: "Buat Ruang Aman Berudara Bersih (Safe Room) di Rumah",
+          title: "Buat Ruang Aman di Rumah",
           description:
-            "Tutup celah ventilasi jendela dengan kain basah, kurangi aktivitas luar ruangan, dan nyalakan penjernih udara (air purifier) sederhana jika tersedia.",
+            "Tutup celah jendela dan ventilasi, kurangi aktivitas luar ruangan, dan gunakan penjernih udara bila tersedia.",
           iconName: "Home",
         },
       ],
       greenTechTrivia: {
-        techName: "Satelit Penginderaan Jauh SNPP/VIIRS Hotspot & Drone Pemadam",
+        techName: "Satelit Hotspot VIIRS dan Patroli Drone",
         category: "Satelit & Penginderaan Jauh",
         description:
-          "Sensor radiometer spektral satelit mengidentifikasi anomali panas permukaan tanah (titik api) beresolusi 375 meter setiap 12 jam untuk memandu tim darat Manggala Agni.",
+          "Sensor termal satelit mendeteksi anomali panas di permukaan tanah sehingga titik api bisa dipetakan dan tim darat dapat dikirim lebih cepat.",
         factHighlight:
-          "Data titik panas satelit kini dapat diakses langsung oleh masyarakat via aplikasi Sipongi KLHK dan PetaBencana!",
+          "Data titik panas dapat dilihat publik lewat sumber resmi seperti SiPongi KLHK dan platform pemetaan bencana.",
+      },
+      quickFacts: [
+        { value: "PM2.5", label: "Partikel asap halus, sekitar 30 kali lebih kecil dari lebar rambut" },
+        { value: "N95 / KF94", label: "Jenis masker yang disarankan saat kabut asap" },
+        { value: "Di bawah tanah", label: "Api gambut bisa membara tanpa terlihat di permukaan" },
+      ],
+      mythsAndFacts: [
+        {
+          myth: "Kalau asap di permukaan sudah hilang, api pasti sudah padam.",
+          fact: "Api gambut bisa terus membara di bawah tanah dan muncul kembali, sehingga pembasahan harus sampai ke lapisan dalam.",
+        },
+        {
+          myth: "Masker kain biasa sudah cukup melindungi dari kabut asap.",
+          fact: "Masker kain tidak menyaring partikel PM2.5 dengan baik. Masker N95 atau KF94 yang terpasang rapat jauh lebih efektif.",
+        },
+      ],
+      readiness: {
+        before: [
+          "Cek indeks kualitas udara (ISPU) dan siapkan masker N95 atau KF94 di rumah.",
+          "Ketahui nomor darurat dan lokasi posko kesehatan terdekat.",
+        ],
+        during: [
+          "Tetap di dalam ruangan dengan jendela tertutup dan kurangi aktivitas fisik di luar.",
+          "Jika melihat titik api, laporkan lokasinya dan jangan mendekat.",
+        ],
+        after: [
+          "Bersihkan debu dan abu di rumah menggunakan kain basah.",
+          "Periksakan diri ke fasilitas kesehatan bila batuk, sesak, atau mata perih berlanjut.",
+        ],
       },
     },
     quiz: [
       {
         id: 1,
-        question:
-          "Mengapa api pada kebakaran lahan gambut sangat sulit dipadamkan dibandingkan hutan tanah mineral?",
+        question: "Mengapa kebakaran gambut jauh lebih sulit dipadamkan daripada kebakaran di tanah mineral?",
         options: [
-          "Karena pohon di lahan gambut terbuat dari besi",
-          "Karena api membakar lapisan organik di bawah permukaan tanah (smoldering fire) hingga bermeter-meter dalamnya",
-          "Karena lahan gambut tidak bisa disiram air",
-          "Karena satwa liar menghalangi petugas pemadam",
+          "Pohon gambut terbuat dari besi",
+          "Api membakar lapisan organik di bawah permukaan hingga bermeter-meter dalamnya",
+          "Gambut tidak bisa disiram air",
+          "Satwa menghalangi petugas",
         ],
         correctIndex: 1,
         explanation:
-          "Api gambut membakar lapisan bahan organik padat di bawah tanah. Pemadaman dari udara sering hanya membasahi permukaan sementara bara di kedalaman 2 meter tetap menyala.",
+          "Bara di dalam gambut bisa bertahan jauh di bawah tanah, sehingga air di permukaan saja sering tidak cukup.",
       },
       {
         id: 2,
-        question:
-          "Masker jenis apa yang paling efektif melindungi saluran pernapasan dari partikel debu halus berbahaya (PM2.5) kabut asap karhutla?",
-        options: [
-          "Masker kain tipis bergambar",
-          "Syal atau sapu tangan kering",
-          "Masker berstandar filtrasi N95 / KF94",
-          "Masker scuba satu lapis",
-        ],
+        question: "Masker apa yang paling efektif menyaring partikel PM2.5 dari kabut asap?",
+        options: ["Masker kain tipis bergambar", "Syal atau sapu tangan kering", "Masker N95 atau KF94", "Masker selam satu lapis"],
         correctIndex: 2,
         explanation:
-          "Partikel PM2.5 berukuran 30 kali lebih kecil dari sehelai rambut. Hanya masker dengan efisiensi filtrasi standar seperti N95 atau KF94 yang mampu menyaring partikel mikroskopis ini.",
+          "PM2.5 sangat kecil dan hanya bisa disaring dengan baik oleh masker berstandar filtrasi tinggi seperti N95 atau KF94 yang terpasang rapat.",
       },
       {
         id: 3,
-        question:
-          "Teknologi satelit seperti MODIS dan VIIRS membantu penanganan kebakaran hutan dengan cara...",
+        question: "Bagaimana satelit seperti MODIS dan VIIRS membantu menangani karhutla?",
         options: [
-          "Menyemprotkan air langsung dari orbit antariksa",
-          "Mendeteksi anomali suhu panas permukaan (hotspot titik api) secara real-time dari luar angkasa",
-          "Menurunkan hujan salju buatan",
-          "Mematikan sinyal internet di sekitar hutan",
+          "Menyiram api dari orbit",
+          "Mendeteksi anomali panas permukaan (hotspot) sehingga titik api bisa dipetakan",
+          "Menurunkan salju buatan",
+          "Mematikan sinyal di sekitar hutan",
         ],
         correctIndex: 1,
         explanation:
-          "Sensor termal satelit mendeteksi radiasi inframerah dari panas kebakaran, memberikan koordinat akurat titik api kepada petugas darat sebelum api meluas.",
+          "Sensor inframerah mendeteksi panas dari kebakaran dan memberi koordinat awal bagi petugas di lapangan.",
+      },
+      {
+        id: 4,
+        question: "Apa tujuan pembuatan sekat kanal di lahan gambut?",
+        options: [
+          "Mempercepat air keluar dari gambut",
+          "Menahan air agar gambut tetap basah dan sulit terbakar",
+          "Menambah jalur kendaraan",
+          "Membuat gambut cepat kering",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Sekat kanal menahan air di dalam gambut sehingga tinggi muka air tanah terjaga dan risiko kebakaran turun.",
+      },
+      {
+        id: 5,
+        question: "Jika kamu melihat titik api di area hutan, apa yang sebaiknya dilakukan?",
+        options: [
+          "Mendekat untuk merekam video",
+          "Melaporkan lokasinya ke pihak berwenang dan menjauh dari sumber api",
+          "Membiarkannya karena pasti padam sendiri",
+          "Menambah ranting kering agar cepat habis",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Keselamatan diri utama. Laporkan lokasi dengan jelas kepada petugas atau pihak desa lalu menjauh ke arah yang aman.",
       },
     ],
   },
 };
+
+export const issuesList: IssueContent[] = Object.values(issuesData);
+
+export const getIssue = (slug: string): IssueContent | undefined => issuesData[slug];

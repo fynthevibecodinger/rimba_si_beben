@@ -3,71 +3,60 @@ import { Phone, Shield, ArrowUpRight, Heart, Sparkles } from "lucide-react";
 
 export default function Footer() {
   const emergencyNumbers = [
-    { number: "112", label: "Panggilan Darurat Umum", desc: "BPBD & Tanggap Bencana Terpadu" },
+    { number: "112", label: "Nomor Darurat Umum", desc: "BPBD & Tanggap Bencana Terpadu" },
     { number: "113", label: "Pemadam Kebakaran", desc: "Karhutla & Evakuasi Api" },
     { number: "115", label: "BASARNAS (SAR)", desc: "Pencarian Korban Banjir & Longsor" },
-    { number: "119", label: "Kemenkes / Ambulans", desc: "Gawat Darurat Medis & ISPA" },
+    { number: "119", label: "Kemenkes / Ambulans", desc: "Gawat Darurat Medis & gangguan pernapasan" },
   ];
 
   return (
-    <footer className="w-full bg-[#173a2d] text-white pt-16 pb-12 border-t-4 border-emerald-500">
+    <footer className="w-full bg-[#173a2d] text-white pt-8 pb-6 border-t-4 border-emerald-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Emergency Hotlines Grid */}
-        <div className="mb-14 rounded-3xl bg-emerald-950/70 border border-emerald-700/30 p-6 md:p-8 backdrop-blur-md">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div className="mb-8 rounded-2xl bg-emerald-950/55 border border-emerald-700/30 p-4 md:p-5 backdrop-blur-md">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-bold uppercase tracking-wider mb-2">
-                <Phone className="w-3.5 h-3.5 animate-pulse text-rose-400" />
-                Nomor Penting Bebas Pulsa
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold font-['Fredoka'] text-white">
-                Kontak Darurat Bencana Nasional
+              <h3 className="flex items-center gap-2 text-base md:text-lg font-bold font-['Fredoka'] text-white">
+                <Phone className="w-4 h-4 text-rose-300" />
+                Nomor Darurat
               </h3>
-              <p className="text-sm text-emerald-200/80">
-                Hubungi segera saat berada dalam situasi bahaya atau memerlukan evakuasi cepat.
-              </p>
+              <p className="text-xs text-emerald-200/70">Hubungi saat membutuhkan bantuan segera.</p>
             </div>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs md:text-sm self-start md:self-auto transition-colors"
+              className="inline-flex items-center gap-1 text-xs font-bold text-emerald-300 hover:text-white transition-colors"
             >
-              Info Kontak Lengkap
+              Info lengkap
               <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
             {emergencyNumbers.map((item) => (
               <a
                 key={item.number}
                 href={`tel:${item.number}`}
-                className="group flex flex-col p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-200"
+                className="group flex items-center gap-2 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-200"
               >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-2xl md:text-3xl font-black font-mono text-amber-400 group-hover:scale-105 transition-transform">
+                <div className="flex items-center justify-between shrink-0">
+                  <span className="text-xl md:text-2xl font-black font-mono text-amber-400 group-hover:scale-105 transition-transform">
                     {item.number}
                   </span>
-                  <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400">
-                    <Phone className="w-4 h-4" />
-                  </div>
                 </div>
-                <strong className="text-xs md:text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+                <strong className="text-[11px] md:text-xs leading-tight font-bold text-white group-hover:text-emerald-300 transition-colors">
                   {item.label}
                 </strong>
-                <span className="text-[11px] text-emerald-200/60 mt-1 line-clamp-1">
-                  {item.desc}
-                </span>
               </a>
             ))}
           </div>
         </div>
 
         {/* Middle Navigation Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-emerald-800/60">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-10 pb-7 border-b border-emerald-800/60">
           {/* Brand Info */}
-          <div className="md:col-span-2 space-y-4">
+          <div className="sm:col-span-1 space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-600 flex items-center justify-center p-1 shadow-lg">
+              <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center p-1 shadow-lg">
                 <svg viewBox="90 35 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8">
                   <ellipse cx="170" cy="139" rx="77" ry="73" fill="#263E38" />
                   <path d="M128 111c-17 31-11 66 17 86 30 2 51-13 62-39-7-31-36-53-79-47Z" fill="#FAF6E9" />
@@ -80,26 +69,25 @@ export default function Footer() {
                 </svg>
               </div>
               <div>
-                <span className="font-extrabold text-2xl font-['Fredoka'] text-white">Rimba</span>
+                <span className="font-extrabold text-xl font-['Fredoka'] text-white">Rimba</span>
                 <span className="block text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-                  Edukasi Siaga Bencana Hidrometeorologi
+                   Edukasi Lingkungan &amp; Kesiapsiagaan
                 </span>
               </div>
             </div>
-            <p className="text-sm text-emerald-200/80 leading-relaxed max-w-md">
-              Platform literasi sains dan mitigasi bencana interaktif berbasis web untuk generasi muda Indonesia. 
-              Mengintegrasikan kurikulum merdeka dengan simulasi fisika lingkungan dan teknologi hijau nyata.
+            <p className="text-xs text-emerald-200/80 leading-relaxed max-w-md">
+               Belajar menjaga alam dan bersiap menghadapi bencana melalui cara yang mudah dan menyenangkan.
             </p>
-            <div className="flex items-center gap-2 text-xs text-emerald-300 font-medium">
+            <div className="flex items-center gap-2 text-[11px] text-emerald-300 font-medium">
               <Shield className="w-4 h-4 text-emerald-400" />
-              Didukung data terbuka PetaBencana.id & BMKG
+              Didukung data terbuka PetaBencana.id dan BMKG
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="font-bold text-sm text-white uppercase tracking-wider font-mono">
-              4 Isu Bencana
+               Jelajah Alam
             </h4>
             <ul className="space-y-2 text-sm text-emerald-200/80">
               <li>
@@ -128,18 +116,18 @@ export default function Footer() {
           {/* Feature Links */}
           <div className="space-y-3">
             <h4 className="font-bold text-sm text-white uppercase tracking-wider font-mono">
-              Fitur Utama
+               Jelajahi Rimba
             </h4>
             <ul className="space-y-2 text-sm text-emerald-200/80">
               <li>
                 <Link to="/simulasi" className="hover:text-white transition-colors flex items-center gap-1.5 font-bold text-emerald-300">
                   <Sparkles className="w-4 h-4 text-amber-400" />
-                  Laboratorium Simulasi
+                   Tempat Mencoba dan Belajar
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="hover:text-white transition-colors">
-                  Mengenal Karakter Rimba
+                   Tentang Rimba
                 </Link>
               </li>
               <li>
@@ -164,7 +152,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Credits */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-emerald-300/60 text-center md:text-left">
+         <div className="pt-5 flex flex-col md:flex-row items-center justify-between gap-2 text-[11px] text-emerald-300/60 text-center md:text-left">
           <p>© {new Date().getFullYear()} Petualangan Siaga Bencana Bersama Sigi & Rimba. Hak Cipta Dilindungi.</p>
           <p className="flex items-center gap-1 justify-center">
             Dibuat untuk mencerdaskan generasi tangguh bencana Indonesia <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />

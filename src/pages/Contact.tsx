@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import RimbaMascot from "../components/mascot/RimbaMascot";
-import { Phone, Send, CheckCircle2, AlertCircle, Sparkles, Building, Mail, User, MessageSquare } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Building, Mail, User, MessageSquare, Link2, Globe, MapPin, ArrowUpRight, Sparkles } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -14,37 +14,6 @@ export default function Contact() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
 
-  const emergencyContacts = [
-    {
-      number: "112",
-      name: "Panggilan Darurat Umum",
-      agency: "Kemenkominfo & Pemda / BPBD",
-      description: "Nomor tunggal darurat untuk semua jenis musibah bencana alam, banjir, pohon tumbang, dan evakuasi.",
-      badge: "Bebas Pulsa 24 Jam",
-    },
-    {
-      number: "113",
-      name: "Pemadam Kebakaran",
-      agency: "Dinas Pemadam Kebakaran & Penyelamatan",
-      description: "Penanganan kebakaran rumah, gedung, kebakaran semak/lahan (karhutla), serta evakuasi hewan berbisa.",
-      badge: "Siaga 24 Jam",
-    },
-    {
-      number: "115",
-      name: "Badan Nasional Pencarian dan Pertolongan",
-      agency: "BASARNAS",
-      description: "Operasi Search and Rescue (SAR) korban tertimbun longsor, hanyut banjir bandang, dan kecelakaan perairan.",
-      badge: "Operasi Darurat",
-    },
-    {
-      number: "119",
-      name: "Sistem Penanggulangan Gawat Darurat Terpadu",
-      agency: "Kementerian Kesehatan RI",
-      description: "Layanan ambulans gawat darurat medis, korban cedera fisik, hipotermia, dan keracunan asap pekat.",
-      badge: "Layanan Medis",
-    },
-  ];
-
   const validate = () => {
     const newErrors: Record<string, string> = {};
     if (!formData.name.trim()) newErrors.name = "Nama lengkap wajib diisi.";
@@ -53,7 +22,7 @@ export default function Contact() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Format email tidak valid.";
     }
-    if (!formData.school.trim()) newErrors.school = "Nama sekolah atau instansi wajib diisi.";
+    if (!formData.school.trim()) newErrors.school = "Nama lingkungan atau komunitas wajib diisi.";
     if (!formData.message.trim() || formData.message.trim().length < 10) {
       newErrors.message = "Pesan minimal berisi 10 karakter.";
     }
@@ -83,90 +52,48 @@ export default function Contact() {
   return (
     <div className="w-full pb-20">
       {/* Header Banner */}
-      <section className="bg-gradient-to-b from-[#1b4332] to-[#173a2d] text-white pt-12 pb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-3">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold uppercase tracking-wider">
-            <Phone className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
-            Layanan Komunikasi &amp; Bantuan
-          </span>
-          <h1 className="text-3xl sm:text-5xl font-black font-['Fredoka']">
-            Kontak Darurat &amp; Suara Pelajar
-          </h1>
-          <p className="text-emerald-100/90 text-sm sm:text-base leading-relaxed">
-            Simpan nomor kontak darurat nasional di ponselmu dan bagikan masukan untuk pengembangan 
-            media pembelajaran literasi bencana ini.
-          </p>
+      <section className="relative overflow-hidden bg-[#12382b] text-white pt-16 pb-28">
+        <img
+          src="/images/Serene%20Green%20Valley%20with%20Wind%20Turbines%20(1).svg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#12382b]/75 via-[#12382b]/55 to-[#12382b]/35" />
+        <div className="absolute -right-28 -top-32 h-80 w-80 rounded-full bg-emerald-400/15 blur-3xl" />
+        <div className="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-teal-300/10 blur-3xl" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-400/15 text-emerald-200 border border-emerald-300/25 text-xs font-bold uppercase tracking-[0.16em]">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" /> Hubungi Rimba
+            </span>
+            <h1 className="text-4xl sm:text-6xl font-black font-['Fredoka'] leading-[1.05] mt-5 max-w-2xl">
+              Satu pesan kecil, <span className="text-emerald-300">dampak besar.</span>
+            </h1>
+            <p className="text-emerald-100/80 text-sm sm:text-base leading-relaxed mt-5 max-w-xl">
+              Punya pertanyaan, cerita, atau ide untuk membuat belajar tentang alam jadi lebih seru? Ceritakan kepada kami.
+            </p>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-3 text-xs font-bold text-emerald-100/80">
+            <span className="px-3 py-2 rounded-full bg-white/10 border border-white/10">Ramah pelajar</span>
+            <span className="px-3 py-2 rounded-full bg-white/10 border border-white/10">Terbuka untuk ide</span>
+            <span className="px-3 py-2 rounded-full bg-white/10 border border-white/10">Belajar bersama</span>
+          </div>
         </div>
       </section>
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 space-y-12">
-        {/* Section 1: Emergency Numbers */}
-        <div className="rounded-3xl bg-white border border-slate-200 p-6 sm:p-10 shadow-xl">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
-              <Phone className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-['Fredoka']">
-                Hotline Bebas Pulsa Nasional (Emergency Call)
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500">
-                Layanan aktif 24 jam sehari dari seluruh operator telepon seluler di Indonesia
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {emergencyContacts.map((contact) => (
-              <div
-                key={contact.number}
-                className="rounded-2xl border-2 border-slate-100 bg-slate-50/60 p-5 flex flex-col justify-between hover:border-rose-400 hover:bg-rose-50/30 transition-all group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-4xl font-black font-mono text-rose-600 tracking-tight">
-                      {contact.number}
-                    </span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 uppercase">
-                      {contact.badge}
-                    </span>
-                  </div>
-                  <strong className="text-sm font-bold text-slate-900 block mb-0.5">
-                    {contact.name}
-                  </strong>
-                  <span className="text-[11px] font-semibold text-emerald-800 block mb-2">
-                    {contact.agency}
-                  </span>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {contact.description}
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-slate-200/60">
-                  <a
-                    href={`tel:${contact.number}`}
-                    className="w-full py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs inline-flex items-center justify-center gap-2 shadow-sm transition-colors"
-                  >
-                    <Phone className="w-3.5 h-3.5" />
-                    Panggil Sekarang
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Section 2: Controlled Feedback Form */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-14 space-y-10 relative z-10">
+        {/* Formulir Kontak */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Form Area */}
-          <div className="lg:col-span-8 rounded-3xl bg-white border border-slate-200 p-6 sm:p-10 shadow-xl">
+          <div className="lg:col-span-7 rounded-[2rem] bg-white border border-slate-200/80 p-6 sm:p-10 shadow-[0_20px_60px_rgba(23,58,45,0.12)]">
             <div className="mb-6">
-              <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block mb-1">
-                Formulir Komunikasi
+               <span className="text-xs font-black text-emerald-700 uppercase tracking-[0.16em] block mb-2">
+                 Kirim pesan
               </span>
-              <h3 className="text-2xl font-black text-slate-900 font-['Fredoka']">
-                Kirim Saran, Cerita, atau Ide Mitigasi Sekolahmu
+               <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka'] leading-tight">
+                  Ceritakan idemu kepada kami
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 mt-1">
                 Punya pengalaman aksi penanaman pohon, ide penambahan simulasi, atau saran materi? Tuliskan di sini!
@@ -200,7 +127,7 @@ export default function Contact() {
                   {/* Name */}
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700">
-                      Nama Lengkap Pelajar / Pengajar <span className="text-rose-500">*</span>
+                       Nama Lengkap <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -234,7 +161,7 @@ export default function Contact() {
                         type="email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="nama@sekolah.sch.id"
+                         placeholder="nama@email.com"
                         className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
                           errors.email
                             ? "border-rose-400 bg-rose-50/50 focus:border-rose-500"
@@ -254,7 +181,7 @@ export default function Contact() {
                   {/* School / City */}
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700">
-                      Asal Sekolah / Komunitas <span className="text-rose-500">*</span>
+                       Asal Lingkungan / Komunitas <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <Building className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -262,7 +189,7 @@ export default function Contact() {
                         type="text"
                         value={formData.school}
                         onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                        placeholder="Contoh: SMPN 1 Nusantara"
+                         placeholder="Contoh: Komunitas Rimba Nusantara"
                         className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
                           errors.school
                             ? "border-rose-400 bg-rose-50/50 focus:border-rose-500"
@@ -290,7 +217,7 @@ export default function Contact() {
                       <option value="saran_materi">Usulan Materi Isu Baru</option>
                       <option value="ide_simulasi">Ide Fitur Simulasi Ekosistem</option>
                       <option value="laporan_bug">Laporan Masalah Tampilan / Bug</option>
-                      <option value="kerjasama_p5">Kolaborasi Projek P5 Sekolah</option>
+                       <option value="kerjasama_p5">Kolaborasi Aksi Peduli Lingkungan</option>
                     </select>
                   </div>
                 </div>
@@ -336,14 +263,65 @@ export default function Contact() {
           </div>
 
           {/* Right Mascot Sidebar */}
-          <div className="lg:col-span-4 flex flex-col items-center justify-center p-6 rounded-3xl bg-emerald-50/70 border border-emerald-200">
-            <RimbaMascot
+           <div className="lg:col-span-5 min-h-[390px] flex flex-col items-center justify-center p-6 rounded-[2rem] bg-gradient-to-br from-emerald-900 via-[#1f6048] to-teal-900 border border-emerald-700/30 shadow-[0_20px_60px_rgba(23,58,45,0.18)] relative overflow-hidden">
+             <div className="absolute -right-10 -top-10 w-36 h-36 rounded-full border border-white/10" />
+             <div className="absolute -right-3 -top-3 w-20 h-20 rounded-full border border-white/10" />
+             <div className="relative z-10 text-center mb-1">
+               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-200">Ruang untukmu</span>
+             </div>
+             <RimbaMascot
               mood="celebrate"
-              speech="Setiap ide darimu adalah benih pohon yang melindungi masa depan kita bersama!"
+               speech="Setiap ide darimu membantu Rimba tumbuh lebih baik!"
               size="lg"
             />
           </div>
         </div>
+
+        {/* Informasi Resmi dan Media Sosial */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="rounded-[2rem] bg-white border border-slate-200/80 p-6 sm:p-8 shadow-[0_14px_40px_rgba(23,58,45,0.08)]">
+            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">Informasi Resmi</span>
+            <h2 className="text-2xl font-black text-slate-900 font-['Fredoka'] mt-2">Temukan Rimba</h2>
+            <div className="mt-5 space-y-3 text-sm text-slate-600">
+              <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-emerald-700" /><span>halo@rimba-edukasi.id</span></div>
+              <div className="flex items-center gap-3"><MapPin className="w-4 h-4 text-emerald-700" /><span>Indonesia</span></div>
+              <div className="flex items-center gap-3"><Globe className="w-4 h-4 text-emerald-700" /><span>Media belajar lingkungan untuk pelajar Indonesia</span></div>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] bg-gradient-to-br from-emerald-900 to-[#12382b] text-white p-6 sm:p-8 shadow-[0_14px_40px_rgba(23,58,45,0.16)]">
+            <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider">Media Sosial</span>
+            <h2 className="text-2xl font-black font-['Fredoka'] mt-2">Ikuti perjalanan Rimba</h2>
+            <p className="text-sm text-emerald-100/80 mt-2">Lihat cerita, kegiatan, dan tips menjaga alam.</p>
+            <div className="flex flex-wrap gap-3 mt-5">
+              <a href="#instagram" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-sm font-bold transition-colors"><Link2 className="w-4 h-4" /> Instagram <ArrowUpRight className="w-3.5 h-3.5" /></a>
+              <a href="#youtube" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-sm font-bold transition-colors"><Globe className="w-4 h-4" /> YouTube <ArrowUpRight className="w-3.5 h-3.5" /></a>
+            </div>
+          </div>
+        </section>
+
+        {/* Pertanyaan yang Sering Ditanyakan */}
+        <section className="rounded-[2rem] bg-white border border-slate-200/80 p-6 sm:p-10 shadow-[0_14px_40px_rgba(23,58,45,0.08)]">
+          <div className="max-w-2xl mb-5">
+            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">FAQ</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka'] mt-2">Pertanyaan yang Sering Ditanyakan</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {[
+              ["Untuk siapa Rimba dibuat?", "Rimba dibuat untuk pelajar, guru, keluarga, dan siapa saja yang ingin belajar menjaga alam."],
+              ["Apakah semua materi bisa dipakai gratis?", "Ya. Materi, simulasi, dan kuis di Rimba dapat digunakan untuk belajar."],
+              ["Bagaimana cara memberi saran?", "Isi formulir di atas dengan nama, email, dan pesanmu. Kami akan membaca setiap masukan."],
+              ["Apakah Rimba memberikan bantuan darurat?", "Rimba adalah media belajar. Untuk nomor darurat, lihat daftar kontak penting di Footer."],
+            ].map(([question, answer]) => (
+              <details key={question} className="group rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                <summary className="cursor-pointer list-none font-bold text-sm text-slate-800 flex items-center justify-between gap-3">
+                  {question}<span className="text-emerald-700 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <p className="text-sm text-slate-600 leading-relaxed mt-3">{answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
