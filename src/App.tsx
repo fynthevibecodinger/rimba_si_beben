@@ -12,7 +12,7 @@ import Contact from "./pages/Contact";
 function AppContent() {
   const { path } = useRouter();
 
-  // Route matching
+  // Route matchingg
   const renderPage = () => {
     if (path === "/" || path === "") {
       return <Home />;
