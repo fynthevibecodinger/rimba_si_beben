@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "../../router";
 import MusicController from "../audio/MusicController";
 import {
@@ -9,6 +9,7 @@ import {
   Mountain,
   SunMedium,
   Flame,
+  ChevronDown,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -18,6 +19,64 @@ export default function Navbar() {
   const [issuesDropdownOpen, setIssuesDropdownOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/" || location.pathname === "";
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIssuesDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setIssuesDropdownOpen(false);
+    }, 200);
+  };
+
+  const handleToggleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIssuesDropdownOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIssuesDropdownOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIssuesDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    setIssuesDropdownOpen(false);
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -145,49 +204,72 @@ export default function Navbar() {
               Beranda
             </Link>
 
-            {/* Isu Bencana Dropdown Interaktif */}
+            {/* Isu Bencana Dropdown Interaktif (Dapat Diklik dan Dihover dengan Mulus) */}
             <div
+              ref={dropdownRef}
               className="relative"
-              onMouseEnter={() => setIssuesDropdownOpen(true)}
-              onMouseLeave={() => setIssuesDropdownOpen(false)}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-1.5 transition-all duration-150 ${
-                  isCurrent("/isu")
+                type="button"
+                onClick={handleToggleClick}
+                aria-expanded={issuesDropdownOpen}
+                aria-haspopup="true"
+                className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-1.5 transition-all duration-150 cursor-pointer select-none ${
+                  isCurrent("/isu") || issuesDropdownOpen
                     ? "bg-emerald-900 text-white shadow-sm"
                     : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
                 }`}
               >
-                 <span>Jelajah Alam</span>
+                <span>Jelajah Alam</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    issuesDropdownOpen
+                      ? "rotate-180 text-emerald-300"
+                      : isCurrent("/isu")
+                      ? "text-emerald-200"
+                      : "text-slate-400 group-hover:text-emerald-800"
+                  }`}
+                />
               </button>
 
               {issuesDropdownOpen && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-68 rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 shadow-2xl p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150 ring-1 ring-emerald-950/5"
+                  className="absolute top-full left-0 pt-2 w-68 z-50 animate-in fade-in zoom-in-95 duration-150"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  <div className="text-[10px] font-black text-emerald-800 uppercase tracking-widest px-3 py-1.5 flex items-center justify-between">
-                    <span>Masalah Alam dan Cuaca</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  </div>
-                  <div className="space-y-1">
-                    {issuesList.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={item.slug}
-                          to={`/isu/${item.slug}`}
-                          onClick={() => setIssuesDropdownOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2 rounded-2xl hover:bg-emerald-50/80 transition-all text-xs sm:text-sm font-bold text-slate-800 group"
-                        >
-                          <div
-                            className={`p-2 rounded-xl ${item.bg} ${item.color} group-hover:scale-110 transition-transform`}
+                  <div className="rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 shadow-2xl p-2.5 ring-1 ring-emerald-950/5">
+                    <div className="text-[10px] font-black text-emerald-800 uppercase tracking-widest px-3 py-1.5 flex items-center justify-between">
+                      <span>Masalah Alam dan Cuaca</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    </div>
+                    <div className="space-y-1">
+                      {issuesList.map((item) => {
+                        const Icon = item.icon;
+                        const isItemActive = location.pathname === `/isu/${item.slug}`;
+                        return (
+                          <Link
+                            key={item.slug}
+                            to={`/isu/${item.slug}`}
+                            onClick={() => setIssuesDropdownOpen(false)}
+                            className={`flex items-center gap-3 px-3 py-2 rounded-2xl transition-all text-xs sm:text-sm font-bold group ${
+                              isItemActive
+                                ? "bg-emerald-100/80 text-emerald-900 shadow-2xs"
+                                : "text-slate-800 hover:bg-emerald-50/80 hover:text-emerald-900"
+                            }`}
                           >
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <span className="group-hover:text-emerald-900">{item.title}</span>
-                        </Link>
-                      );
-                    })}
+                            <div
+                              className={`p-2 rounded-xl ${item.bg} ${item.color} group-hover:scale-110 transition-transform`}
+                            >
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            <span className="group-hover:text-emerald-900">{item.title}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               )}
