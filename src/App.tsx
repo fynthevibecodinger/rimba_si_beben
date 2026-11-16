@@ -8,6 +8,7 @@ import IssueDetail from "./pages/IssueDetail";
 import EcosystemSimulation from "./pages/EcosystemSimulation";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import FallingLeaves from "./components/common/FallingLeaves";
 
 function AppContent() {
   const { path } = useRouter();
@@ -38,6 +39,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f7f5ee] text-[#173a2d] font-['Plus_Jakarta_Sans',sans-serif]">
+      <FallingLeaves />
       <Navbar />
       <main className="flex-1">
         {renderPage()}

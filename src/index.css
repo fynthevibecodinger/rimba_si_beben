@@ -19,11 +19,63 @@
     scroll-behavior: smooth;
   }
 
-  body {
+body {
     background: var(--cream);
     color: var(--ink);
     font-family: "Plus Jakarta Sans", sans-serif;
     overflow-x: clip;
+  }
+
+  .falling-leaves {
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: fixed;
+    z-index: 40;
+  }
+
+  .falling-leaf {
+    filter: drop-shadow(0 3px 5px rgb(27 67 50 / 22%));
+    height: var(--leaf-size);
+    left: var(--leaf-left);
+    object-fit: contain;
+    opacity: 0;
+    position: absolute;
+    top: -12vh;
+    transform: translate3d(0, -12vh, 0) rotate(0deg);
+    width: var(--leaf-size);
+  }
+
+  .falling-leaves.is-falling .falling-leaf {
+    animation: leafFall var(--leaf-duration) var(--leaf-delay) linear both;
+  }
+
+  @keyframes leafFall {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, -12vh, 0) rotate(0deg) scale(0.8);
+    }
+    12% {
+      opacity: 0.96;
+    }
+    50% {
+      transform: translate3d(calc(var(--leaf-drift) * 8vw), 52vh, 0)
+        rotate(calc(var(--leaf-drift) * 180deg)) scale(1);
+    }
+    88% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(calc(var(--leaf-drift) * -7vw), 116vh, 0)
+        rotate(calc(var(--leaf-drift) * 360deg)) scale(0.9);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .falling-leaves {
+      display: none;
+    }
   }
 
   button,
