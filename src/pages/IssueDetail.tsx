@@ -301,7 +301,7 @@ export default function IssueDetail() {
             </div>
           )}
           
-           <IssueExtraMaterial key={issue.slug} issue={issue} extra={extra} />
+           <IssueExtraMaterial key={issue.slug} issue={issue} extra={extra} tab={activeTab} />
 
           {/* 3. TAHUKAH KAMU? KOTAK TEKNOLOGI HIJAU */}
           <div className="rounded-3xl bg-gradient-to-r from-emerald-950 to-teal-900 text-white p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 shadow-xl">
