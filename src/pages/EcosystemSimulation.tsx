@@ -28,22 +28,22 @@ const SCENARIO_ACTIONS: Record<SimulationScenario, ActionConfig[]> = {
   banjir: [
     {
       id: "betonPenuh",
-      label: "Halaman 100% Ditutup Semen/Beton",
-      description: "Menghilangkan seluruh ruang tanah terbuka tempat peresapan air hujan alami.",
+      label: "Menutup Semua Halaman dengan Beton",
+      description: "Air hujan tidak punya tanah untuk meresap.",
       isPositive: false,
        impactNote: "Air lebih sulit masuk ke tanah, sehingga banyak air mengalir di permukaan.",
     },
     {
       id: "sampahSungai",
-      label: "Buang Sampah Padat ke Aliran Sungai",
-      description: "Menyumbat gorong-gorong dan mendangkalkan dasar sungai.",
+      label: "Membuang Sampah ke Sungai",
+      description: "Sampah menyumbat saluran dan membuat sungai lebih dangkal.",
       isPositive: false,
-      impactNote: "Kapasitas debit sungai berkurang 60%, air cepat meluap ke jalan.",
+      impactNote: "Ruang sungai untuk menampung air berkurang banyak, air cepat meluap ke jalan.",
     },
     {
       id: "biopori",
-      label: "Pasang Lubang Resapan Biopori Massal",
-      description: "Lubang silinder berisi kompos mempercepat peresapan air ke dalam tanah.",
+      label: "Membuat Banyak Lubang Resapan",
+      description: "Lubang berisi kompos membantu air masuk ke tanah.",
       isPositive: true,
       impactNote: "Meningkatkan daya serap air tanah hingga 40%.",
     },
@@ -59,39 +59,39 @@ const SCENARIO_ACTIONS: Record<SimulationScenario, ActionConfig[]> = {
   longsor: [
     {
       id: "tebangLiar",
-      label: "Penebangan Pohon di Lereng Curam",
-      description: "Menggunduli pohon penyangga untuk perladangan atau kayu bakar.",
+      label: "Menebang Pohon di Lereng Curam",
+      description: "Menghilangkan pohon yang membantu menahan tanah.",
       isPositive: false,
       impactNote: "Hilangnya ikatan akar membuat massa tanah labil saat hujan.",
     },
     {
       id: "potongTebing",
-      label: "Pemotongan Kaki Lereng 90° Tegak",
-      description: "Mengeruk dinding tebing secara vertikal tanpa dinding penahan (retaining wall).",
+      label: "Memotong Kaki Lereng Terlalu Tegak",
+      description: "Membuat tebing tegak tanpa penahan.",
       isPositive: false,
       impactNote: "Gaya penahan lereng hilang, memicu bidang gelincir mendadak.",
     },
     {
       id: "rumputVetiver",
-      label: "Penanaman Rumput Akar Vetiver",
-      description: "Akar wangi menjalar 3-4 meter ke bawah mengunci struktur tanah batuan.",
+      label: "Menanam Rumput Berakar Kuat",
+      description: "Akar yang panjang membantu menahan tanah di lereng.",
       isPositive: true,
       impactNote: "Berfungsi sebagai paku bumi biologis berdaya cengkeram tinggi.",
     },
     {
       id: "terasering",
-      label: "Pembuatan Terasering & Saluran Drainase Lereng",
-      description: "Membagi lereng terjal menjadi undakan bertingkat dengan parit pembuangan air.",
+      label: "Membuat Teras dan Saluran Air",
+      description: "Lereng dibuat bertingkat agar air mengalir lebih pelan.",
       isPositive: true,
-      impactNote: "Mengurangi kecepatan air limpasan dan membuang kejenuhan air lereng.",
+      impactNote: "Mengurangi kecepatan air limpasan dan membuang terlalu banyak air di lereng.",
     },
   ],
 
   kekeringan: [
     {
       id: "sedotAirDalam",
-      label: "Penyedotan Air Tanah Tak Terkendali",
-      description: "Eksploitasi sumur bor industri tanpa pengisian ulang (recharge).",
+      label: "Mengambil Air Tanah Berlebihan",
+      description: "Air tanah terus diambil tanpa diberi waktu untuk terisi kembali.",
       isPositive: false,
       impactNote: "Muka air tanah turun drastis, sumur dangkal warga mengering.",
     },
@@ -104,8 +104,8 @@ const SCENARIO_ACTIONS: Record<SimulationScenario, ActionConfig[]> = {
     },
     {
       id: "tandonAir",
-      label: "Pembangunan Embung & Pemanenan Hujan",
-      description: "Kolam retensi desa untuk menampung limpasan air hujan saat musim basah.",
+      label: "Membuat Kolam dan Menampung Air Hujan",
+      description: "Air hujan disimpan untuk dipakai saat musim kemarau.",
       isPositive: true,
       impactNote: "Menyediakan cadangan ratusan ribu liter air untuk masa paceklik.",
     },
@@ -121,29 +121,29 @@ const SCENARIO_ACTIONS: Record<SimulationScenario, ActionConfig[]> = {
   karhutla: [
     {
       id: "kanalKering",
-      label: "Pembuatan Kanal Ilegal Mengeringkan Gambut",
-      description: "Membuat parit besar yang mengalirkan air alami dari kubah gambut.",
+      label: "Membuat Parit yang Mengeringkan Gambut",
+      description: "Air keluar dari lahan gambut sehingga tanah menjadi kering.",
       isPositive: false,
       impactNote: "Lapisan gambut tebal mengering bagaikan spons batu bara muda.",
     },
     {
       id: "bakarLahan",
-      label: "Pembukaan Lahan dengan Membakar (Slash & Burn)",
-      description: "Memicu titik api terbuka untuk membersihkan semak belukar secara cepat.",
+      label: "Membuka Lahan dengan Membakar",
+      description: "Api untuk membersihkan lahan bisa menyebar tanpa terkendali.",
       isPositive: false,
        impactNote: "Bara api bisa merambat diam-diam di bawah tanah.",
     },
     {
       id: "sekatGambut",
-       label: "Membasahi Kembali Lahan Gambut",
-       description: "Menahan air di parit agar lahan gambut tetap basah dan tidak mudah terbakar.",
+       label: "Menjaga Lahan Gambut Tetap Basah",
+       description: "Air ditahan agar gambut tidak mudah terbakar.",
       isPositive: true,
       impactNote: "Mencegah gambut kering sehingga api tidak dapat menyala di bawah tanah.",
     },
     {
       id: "patroliDrone",
-       label: "Sensor Panas & Patroli Udara",
-       description: "Mencari titik panas lebih awal dengan sensor dan pesawat tanpa awak.",
+       label: "Mencari Titik Api dari Udara",
+       description: "Titik api dicari lebih awal dengan sensor dan drone.",
       isPositive: true,
       impactNote: "Memadamkan percikan api sebelum membesar menjadi bencana asap lintas batas.",
     },
@@ -165,31 +165,31 @@ export default function EcosystemSimulation() {
     { title: string; subtitle: string; icon: any; weatherLabel: string; weatherUnit: string }
   > = {
     banjir: {
-      title: "Banjir: Daerah Aliran Sungai & Perkotaan",
+      title: "Banjir: Sungai dan Kota",
       subtitle: "Lihat bagaimana beton dan sampah dapat membuat air lebih cepat menggenang.",
       icon: Waves,
       weatherLabel: "Curah Hujan Ekstrem",
       weatherUnit: "mm / hari",
     },
     longsor: {
-      title: "Tanah Longsor: Stabilitas Lereng Bukit",
+      title: "Tanah Longsor: Lereng yang Kuat",
       subtitle: "Lihat perbedaan lereng yang ditanami pohon dan lereng yang gundul saat hujan.",
       icon: Mountain,
-      weatherLabel: "Intensitas Hujan Akumulatif",
+      weatherLabel: "Banyaknya Hujan",
       weatherUnit: "% kejenuhan",
     },
     kekeringan: {
       title: "Kekeringan: Desa & Lahan Pertanian",
       subtitle: "Lihat bagaimana menampung air dan menyiram dengan hemat membantu tanaman saat kemarau.",
       icon: SunMedium,
-      weatherLabel: "Indeks Suhu & Kemarau Panas",
-      weatherUnit: "°C / radiasi",
+      weatherLabel: "Panas dan Kemarau",
+      weatherUnit: "tingkat panas",
     },
     karhutla: {
-      title: "Karhutla: Ekosistem Hutan Rawa Gambut",
+      title: "Kebakaran Hutan: Lahan Gambut",
       subtitle: "Lihat bagaimana menjaga lahan gambut tetap basah dapat mencegah kebakaran.",
       icon: Flame,
-      weatherLabel: "Kekeringan Musim & Angin Kering",
+      weatherLabel: "Kemarau dan Angin Kering",
       weatherUnit: "% kekeringan",
     },
   };
@@ -360,7 +360,7 @@ export default function EcosystemSimulation() {
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                 <span className="text-xs uppercase tracking-wider block opacity-75">Pilih cerita</span>
+                 <span className="text-xs uppercase tracking-wider block opacity-75">Pilih masalah</span>
                     <strong className="text-sm capitalize">{scen}</strong>
                   </div>
                 </button>
@@ -387,10 +387,10 @@ export default function EcosystemSimulation() {
 
              {/* 3 Hasil yang Terlihat Sekarang */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {/* Metric 1: Daya Serap Air */}
+              {/* Metric 1: Kemampuan Tanah Menyerap Air */}
               <div className="rounded-2xl bg-white border border-slate-200 p-4 shadow-sm">
                 <div className="flex items-center justify-between text-xs text-slate-500 font-bold mb-1">
-                  <span>Daya Serap Air</span>
+                  <span>Kemampuan Tanah Menyerap Air</span>
                   <span className="font-mono text-slate-800">{waterAbsorption}%</span>
                 </div>
                 <div className="w-full h-3 rounded-full bg-slate-100 overflow-hidden">
@@ -405,7 +405,7 @@ export default function EcosystemSimulation() {
               {/* Metric 2: Kekuatan Tanah/Akar */}
               <div className="rounded-2xl bg-white border border-slate-200 p-4 shadow-sm">
                 <div className="flex items-center justify-between text-xs text-slate-500 font-bold mb-1">
-                  <span>Kekuatan Tanah / Akar</span>
+                  <span>Kekuatan Tanah dan Akar</span>
                   <span className="font-mono text-slate-800">{soilStrength}%</span>
                 </div>
                 <div className="w-full h-3 rounded-full bg-slate-100 overflow-hidden">
@@ -414,7 +414,7 @@ export default function EcosystemSimulation() {
                     style={{ width: `${soilStrength}%` }}
                   />
                 </div>
-                <span className="text-[11px] text-slate-400 mt-1 block">Kohesi lereng & perakaran</span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Kekuatan lereng dan akar</span>
               </div>
 
               {/* Metric 3: Kesehatan Ekosistem */}
@@ -437,7 +437,7 @@ export default function EcosystemSimulation() {
                     style={{ width: `${ecosystemHealth}%` }}
                   />
                 </div>
-                <span className="text-[11px] text-slate-400 mt-1 block">Indeks daya lentur alam</span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Seberapa kuat alam menghadapi gangguan</span>
               </div>
             </div>
           </div>
@@ -449,7 +449,7 @@ export default function EcosystemSimulation() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-slate-800 font-bold text-sm">
                   <Sliders className="w-4 h-4 text-emerald-700" />
-                  <span>Kondisi Cuaca Ekstrem</span>
+                  <span>Seberapa Buruk Cuacanya</span>
                 </div>
                 <span className="px-2.5 py-0.5 rounded-lg bg-emerald-100 text-emerald-900 font-mono font-bold text-xs">
                   {weatherIntensity} {currentMeta.weatherUnit}
@@ -472,7 +472,7 @@ export default function EcosystemSimulation() {
                 <div className="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>Tenang (0)</span>
                   <span>Normal (50)</span>
-                  <span>Bencana Ekstrem (100)</span>
+                  <span>Sangat Buruk (100)</span>
                 </div>
               </div>
             </div>
@@ -505,11 +505,11 @@ export default function EcosystemSimulation() {
                         <div className="flex items-center gap-1.5">
                           {act.isPositive ? (
                             <span className="px-2 py-0.5 rounded-md bg-emerald-200/80 text-emerald-900 text-[10px] font-black uppercase">
-                              Solusi Hijau
+                              Pilihan Baik
                             </span>
                           ) : (
                             <span className="px-2 py-0.5 rounded-md bg-rose-200/80 text-rose-900 text-[10px] font-black uppercase">
-                              Aksi Perusak
+                              Pilihan yang Merusak
                             </span>
                           )}
                           <strong className="text-xs sm:text-sm font-bold block">{act.label}</strong>

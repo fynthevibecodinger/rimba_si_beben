@@ -147,7 +147,7 @@ export default function LiveDisasterStats() {
                 </span>
               </div>
                <p className="text-xs text-slate-500">
-                 Laporan masyarakat terverifikasi di wilayah Nusantara via PetaBencana.id & BPBD
+                 Laporan masyarakat terverifikasi di wilayah Nusantara dari PetaBencana.id dan BPBD
                </p>
                <p className="text-[11px] text-slate-400 mt-1">Angka menunjukkan jumlah laporan dalam 7 hari terakhir, bukan prediksi kejadian.</p>
             </div>
@@ -237,7 +237,7 @@ export default function LiveDisasterStats() {
         <div className="mt-5 flex items-center gap-2 text-xs text-slate-500 bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-100">
           <Activity className="w-4 h-4 text-emerald-600 flex-shrink-0" />
           <span>
-            Setiap detik, sensor alam dan laporan warga membantu kesiapsiagaan kita menyelamatkan sesama.
+            Setiap detik, sensor alam dan laporan warga membantu kesiapan kita menyelamatkan sesama.
           </span>
         </div>
       </div>

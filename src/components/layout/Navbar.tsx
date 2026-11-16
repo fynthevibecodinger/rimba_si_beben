@@ -19,6 +19,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [issuesDropdownOpen, setIssuesDropdownOpen] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === "/" || location.pathname === "";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,7 +51,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full transition-all duration-300 pointer-events-none">
+    <header className={`sticky top-0 z-50 w-full transition-all duration-300 pointer-events-none ${isHome ? "-mb-16" : ""}`}>
       {/* Outer wrapper that pads when floating */}
       <div
         className={`w-full transition-all duration-300 ease-out pointer-events-auto ${
@@ -62,7 +63,9 @@ export default function Navbar() {
           className={`mx-auto transition-all duration-300 ease-out flex items-center justify-between relative overflow-visible ${
             isScrolled
               ? "max-w-6xl rounded-2xl sm:rounded-full bg-white/92 backdrop-blur-2xl border border-emerald-800/15 shadow-2xl shadow-emerald-950/15 h-14 sm:h-15 px-4 sm:px-6 ring-1 ring-white/60"
-              : "w-full max-w-7xl rounded-none bg-[#f7f5ee]/90 backdrop-blur-xl border-b border-emerald-900/10 shadow-none h-16 px-4 sm:px-6 lg:px-8"
+              : isHome
+                ? "w-full max-w-7xl rounded-none bg-transparent border-b border-white/15 shadow-none h-16 px-4 sm:px-6 lg:px-8"
+                : "w-full max-w-7xl rounded-none bg-[#f7f5ee]/90 backdrop-blur-xl border-b border-emerald-900/10 shadow-none h-16 px-4 sm:px-6 lg:px-8"
           }`}
         >
           {/* Brand / Logo Maskot Rimba */}
@@ -169,7 +172,7 @@ export default function Navbar() {
                   className="absolute top-full left-0 mt-2 w-68 rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 shadow-2xl p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150 ring-1 ring-emerald-950/5"
                 >
                   <div className="text-[10px] font-black text-emerald-800 uppercase tracking-widest px-3 py-1.5 flex items-center justify-between">
-                    <span>Isu Hidrometeorologi</span>
+                    <span>Masalah Alam dan Cuaca</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   </div>
                   <div className="space-y-1">

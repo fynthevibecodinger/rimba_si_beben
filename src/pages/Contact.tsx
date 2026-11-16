@@ -17,28 +17,28 @@ export default function Contact() {
   const emergencyContacts = [
     {
       number: "112",
-      name: "Panggilan Darurat Umum",
+      name: "Nomor Darurat Umum",
       agency: "Kemenkominfo & Pemda / BPBD",
-      description: "Nomor tunggal darurat untuk semua jenis musibah bencana alam, banjir, pohon tumbang, dan evakuasi.",
+      description: "Nomor tunggal darurat untuk semua jenis musibah bencana alam, banjir, pohon tumbang, dan menyelamatkan diri.",
       badge: "Bebas Pulsa 24 Jam",
     },
     {
       number: "113",
       name: "Pemadam Kebakaran",
       agency: "Dinas Pemadam Kebakaran & Penyelamatan",
-      description: "Penanganan kebakaran rumah, gedung, kebakaran semak/lahan (karhutla), serta evakuasi hewan berbisa.",
+      description: "Penanganan kebakaran rumah, gedung, kebakaran semak/lahan (karhutla), serta menyelamatkan diri hewan berbisa.",
       badge: "Siaga 24 Jam",
     },
     {
       number: "115",
       name: "Badan Nasional Pencarian dan Pertolongan",
       agency: "BASARNAS",
-      description: "Operasi Search and Rescue (SAR) korban tertimbun longsor, hanyut banjir bandang, dan kecelakaan perairan.",
+      description: "Pencarian dan Pertolongan korban tertimbun longsor, hanyut banjir bandang, dan kecelakaan perairan.",
       badge: "Operasi Darurat",
     },
     {
       number: "119",
-      name: "Sistem Penanggulangan Gawat Darurat Terpadu",
+      name: "Layanan Darurat Medis",
       agency: "Kementerian Kesehatan RI",
       description: "Layanan ambulans gawat darurat medis, korban cedera fisik, hipotermia, dan keracunan asap pekat.",
       badge: "Layanan Medis",
@@ -108,7 +108,7 @@ export default function Contact() {
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-['Fredoka']">
-                Hotline Bebas Pulsa Nasional (Emergency Call)
+                Nomor Darurat Nasional
               </h2>
               <p className="text-xs sm:text-sm text-slate-500">
                 Layanan aktif 24 jam sehari dari seluruh operator telepon seluler di Indonesia

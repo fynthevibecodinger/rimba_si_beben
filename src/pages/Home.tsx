@@ -105,7 +105,7 @@ export default function Home() {
               {/* Deskripsi Jelas & Terbaca */}
               <p className="text-base sm:text-lg text-[#305345] font-medium max-w-2xl leading-relaxed mx-auto lg:mx-0">
                  Kenali hubungan antara perubahan lingkungan dan risiko bencana melalui materi interaktif, 
-                 simulasi ekosistem, serta panduan aksi sederhana untuk konservasi alam, pengelolaan sampah, dan penghijauan.
+                 simulasi ekosistem, serta panduan aksi sederhana untuk menjaga alam alam, pengelolaan sampah, dan penghijauan.
               </p>
 
               {/* Tombol Aksi Utama Bersih */}
@@ -320,7 +320,7 @@ export default function Home() {
             <div className="lg:col-span-8 space-y-4">
               <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 text-xs font-extrabold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                 Laboratorium Ekosistem Interaktif
+                 Tempat Mencoba dan Belajar Interaktif
               </span>
               <h3 className="text-3xl sm:text-4xl font-black font-['Fredoka'] leading-tight">
                  Uji Dampak Aksi Kita terhadap Ekosistem

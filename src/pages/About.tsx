@@ -24,14 +24,14 @@ export default function About() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-             Portal Edukasi Lingkungan Nusantara
+             Tempat Belajar tentang Alam
           </span>
           <h1 className="text-3xl sm:text-5xl font-black font-['Fredoka'] tracking-tight leading-tight">
              Membangun Generasi Peduli Alam dan Tangguh Bencana
           </h1>
           <p className="text-emerald-100/90 text-sm sm:text-base mt-4 leading-relaxed max-w-2xl mx-auto">
-             Media pembelajaran interaktif berbasis web yang menghubungkan konservasi alam, pengelolaan lingkungan,
-             dan kesiapsiagaan bencana untuk pelajar Indonesia.
+             Media pembelajaran interaktif berbasis web yang menghubungkan menjaga alam alam, pengelolaan lingkungan,
+             dan kesiapan bencana untuk pelajar Indonesia.
           </p>
           <div className="flex flex-wrap justify-center gap-2 mt-6">
             {['Belajar', 'Bermain', 'Beraksi'].map((word) => <span key={word} className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-xs font-bold">{word}</span>)}
@@ -63,8 +63,8 @@ export default function About() {
               </h2>
 
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Rimba terinspirasi dari <strong>Burung Rangkong (Hornbill)</strong>, spesies payung (umbrella species) 
-                hutan tropis Indonesia yang dikenal sebagai &ldquo;petani hutan&rdquo; karena kemampuannya menebar biji-bijian 
+                Rimba terinspirasi dari <strong>Burung Rangkong (Hornbill)</strong>, hewan penting yang membantu menjaga hutan (umbrella species)
+                hutan tropis Indonesia yang dikenal sebagai &ldquo;petani hutan&rdquo; karena kemampuannya menebar biji-bijian
                 pohon besar sejauh puluhan kilometer.
               </p>
 
@@ -78,7 +78,7 @@ export default function About() {
                 <div className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong>Rompi Hijau Hutan:</strong> Perlambang komitmen menjaga keseimbangan hidrologi dan konservasi daerah aliran sungai.
+                    <strong>Rompi Hijau Hutan:</strong> Perlambang komitmen menjaga keseimbangan aliran air dan menjaga alam daerah aliran sungai.
                   </span>
                 </div>
                 <div className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
@@ -155,7 +155,7 @@ export default function About() {
               { icon: ShieldCheck, title: "Tangguh", text: "Berani bersiap, sigap menghadapi risiko, dan mampu bangkit bersama." },
               { icon: Leaf, title: "Peduli Alam", text: "Menjaga ekosistem sebagai bagian penting dari upaya mengurangi risiko bencana." },
               { icon: BookOpen, title: "Berbasis Sains", text: "Mengutamakan informasi yang masuk akal, relevan, dan dapat dipertanggungjawabkan." },
-              { icon: Heart, title: "Kolaboratif", text: "Membangun kesiapsiagaan melalui kepedulian dan kerja sama lintas komunitas." },
+              { icon: Heart, title: "Kolaboratif", text: "Membangun kesiapan melalui kepedulian dan kerja sama lintas komunitas." },
             ].map(({ icon: Icon, title, text }) => (
               <div key={title} className="rounded-3xl bg-white border border-slate-200 p-6 shadow-md hover:-translate-y-1 transition-transform">
                 <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4"><Icon className="w-5 h-5" /></div>
@@ -186,7 +186,7 @@ export default function About() {
                 1. Sains &amp; Sebab-Akibat
               </h4>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Membongkar miskonsepsi bahwa bencana alam semata-mata takdir tak terduga. Bencana adalah perpaduan ancaman alam dan kerentanan aktivitas manusia.
+                Meluruskan pemahaman yang keliru bahwa bencana alam semata-mata takdir tak terduga. Bencana adalah perpaduan ancaman alam dan kondisi yang membuat mudah terdampak aktivitas manusia.
               </p>
             </div>
 

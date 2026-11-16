@@ -3,10 +3,10 @@ import { Phone, Shield, ArrowUpRight, Heart, Sparkles } from "lucide-react";
 
 export default function Footer() {
   const emergencyNumbers = [
-    { number: "112", label: "Panggilan Darurat Umum", desc: "BPBD & Tanggap Bencana Terpadu" },
+    { number: "112", label: "Nomor Darurat Umum", desc: "BPBD & Tanggap Bencana Terpadu" },
     { number: "113", label: "Pemadam Kebakaran", desc: "Karhutla & Evakuasi Api" },
     { number: "115", label: "BASARNAS (SAR)", desc: "Pencarian Korban Banjir & Longsor" },
-    { number: "119", label: "Kemenkes / Ambulans", desc: "Gawat Darurat Medis & ISPA" },
+    { number: "119", label: "Kemenkes / Ambulans", desc: "Gawat Darurat Medis & gangguan pernapasan" },
   ];
 
   return (
@@ -24,7 +24,7 @@ export default function Footer() {
                 Kontak Darurat Bencana Nasional
               </h3>
               <p className="text-sm text-emerald-200/80">
-                Hubungi segera saat berada dalam situasi bahaya atau memerlukan evakuasi cepat.
+                Hubungi segera saat berada dalam situasi bahaya atau memerlukan menyelamatkan diri cepat.
               </p>
             </div>
             <Link
@@ -87,12 +87,12 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-sm text-emerald-200/80 leading-relaxed max-w-md">
-               Portal edukasi lingkungan interaktif untuk generasi muda Indonesia. Rimba menghubungkan konservasi alam,
-               pengelolaan sampah, penghijauan, dan kesiapsiagaan melalui simulasi serta aksi sederhana.
+               Portal edukasi lingkungan interaktif untuk generasi muda Indonesia. Rimba menghubungkan menjaga alam alam,
+               pengelolaan sampah, penghijauan, dan kesiapan melalui simulasi serta aksi sederhana.
             </p>
             <div className="flex items-center gap-2 text-xs text-emerald-300 font-medium">
               <Shield className="w-4 h-4 text-emerald-400" />
-              Didukung data terbuka PetaBencana.id & BMKG
+              Didukung data terbuka PetaBencana.id dan BMKG
             </div>
           </div>
 
@@ -134,7 +134,7 @@ export default function Footer() {
               <li>
                 <Link to="/simulasi" className="hover:text-white transition-colors flex items-center gap-1.5 font-bold text-emerald-300">
                   <Sparkles className="w-4 h-4 text-amber-400" />
-                   Laboratorium Ekosistem
+                   Tempat Mencoba dan Belajar
                 </Link>
               </li>
               <li>

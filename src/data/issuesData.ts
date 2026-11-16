@@ -15,8 +15,8 @@ export interface StudentActionItem {
 
 // ===== BARU =====
 export interface QuickFact {
-  value: string; 
-  label: string; 
+  value: string;
+  label: string;
 }
 
 export interface MythFact {
@@ -50,14 +50,14 @@ export interface IssueSections {
     description: string;
     factHighlight: string;
   };
-  quickFacts: QuickFact[]; 
-  mythsAndFacts: MythFact[]; 
-  readiness: ReadinessPlan; 
+  quickFacts: QuickFact[];
+  mythsAndFacts: MythFact[];
+  readiness: ReadinessPlan;
 }
 
 export interface RealDisasterPhoto {
-  src: string; 
-  fallbackSrc: string; 
+  src: string;
+  fallbackSrc: string;
   alt: string;
   caption: string;
 }
@@ -87,7 +87,7 @@ export const issuesData: Record<string, IssueContent> = {
     themeColor: "#0284c7",
     accentBg: "from-sky-500/20 to-blue-600/10",
     threatLevel: "Sangat Tinggi",
-    heroBadge: "Hidrometeorologi Basah",
+    heroBadge: "Banjir karena Hujan",
     icon: "CloudRainWind",
     realPhoto: {
       src: "/images/disasters/banjir.jpg",
@@ -99,7 +99,7 @@ export const issuesData: Record<string, IssueContent> = {
       causeAndEffect: {
         title: "Kenapa Air Meluap dan Menggenang?",
         description:
-          "Hujan deras hanyalah pemicu. Penyebab sebenarnya ada di darat: permukaan yang tertutup aspal dan beton membuat air tidak bisa meresap, sehingga hampir semuanya menjadi limpasan (run-off). Air itu langsung mengalir ke selokan dan sungai yang sudah dangkal karena sedimen dan sampah, lalu meluap dalam hitungan jam.",
+          "Hujan deras hanyalah pemicu. Penyebab sebenarnya ada di darat: permukaan yang tertutup aspal dan beton membuat air tidak bisa meresap, sehingga hampir semuanya menjadi air yang mengalir di permukaan. Air itu langsung mengalir ke selokan dan sungai yang sudah dangkal karena sedimen dan sampah, lalu meluap dalam hitungan jam.",
         humanActivities: [
           "Mengubah sempadan sungai dan rawa penampung air menjadi permukiman padat.",
           "Membuang sampah rumah tangga ke selokan dan sungai.",
@@ -177,7 +177,7 @@ export const issuesData: Record<string, IssueContent> = {
       ],
       readiness: {
         before: [
-          "Kenali jalur dan titik kumpul evakuasi terdekat.",
+          "Kenali jalur dan titik kumpul menyelamatkan diri terdekat.",
           "Simpan nomor darurat dan pantau informasi cuaca resmi.",
         ],
         during: [
@@ -196,13 +196,13 @@ export const issuesData: Record<string, IssueContent> = {
         question: "Mengapa halaman rumah yang seluruhnya disemen memperparah risiko banjir?",
         options: [
           "Air hujan menguap lebih cepat ke awan",
-          "Tanah tidak bisa menyerap air sehingga air langsung menjadi limpasan ke selokan dan sungai",
+          "Tanah tidak bisa menyerap air sehingga air langsung mengalir di permukaan ke selokan dan sungai",
           "Beton menarik air lebih kuat",
           "Selokan menjadi lebih bersih tanpa tanah",
         ],
         correctIndex: 1,
         explanation:
-          "Beton kedap air. Tanpa tanah terbuka atau biopori, sebagian besar air hujan menjadi limpasan yang membebani drainase.",
+          "Beton kedap air. Tanpa tanah terbuka atau biopori, sebagian besar air hujan mengalir di permukaan yang membebani drainase.",
       },
       {
         id: 2,
@@ -268,7 +268,7 @@ export const issuesData: Record<string, IssueContent> = {
     themeColor: "#8d5b4c",
     accentBg: "from-amber-700/20 to-stone-800/10",
     threatLevel: "Tinggi",
-    heroBadge: "Geohidrologi Lereng",
+    heroBadge: "Longsor di Lereng",
     icon: "Landslide",
     realPhoto: {
       src: "/images/disasters/tanah-longsor.jpg",
@@ -297,7 +297,7 @@ export const issuesData: Record<string, IssueContent> = {
           "Habitat satwa di lereng dan tepi hutan hilang.",
         ],
         socialEconomic: [
-          "Rumah dan lahan tertimbun dalam waktu singkat, sehingga waktu evakuasi sangat pendek.",
+          "Rumah dan lahan tertimbun dalam waktu singkat, sehingga waktu menyelamatkan diri sangat pendek.",
           "Jalan penghubung antardesa terputus dan bantuan sulit masuk.",
         ],
         vulnerabilityNote:
@@ -359,7 +359,7 @@ export const issuesData: Record<string, IssueContent> = {
       readiness: {
         before: [
           "Cari tahu apakah rumah atau sekolahmu berada di zona rawan longsor.",
-          "Siapkan jalur dan titik kumpul evakuasi yang tidak melewati kaki lereng.",
+          "Siapkan jalur dan titik kumpul menyelamatkan diri yang tidak melewati kaki lereng.",
         ],
         during: [
           "Jauhi lereng dan alur sungai kecil di bawahnya, lalu lari ke samping jalur luncuran.",
@@ -449,7 +449,7 @@ export const issuesData: Record<string, IssueContent> = {
     themeColor: "#d97706",
     accentBg: "from-amber-500/20 to-yellow-600/10",
     threatLevel: "Sedang",
-    heroBadge: "Hidrometeorologi Kering",
+    heroBadge: "Kekeringan karena Kemarau",
     icon: "DropletOff",
     realPhoto: {
       src: "/images/disasters/kekeringan.jpg",
@@ -461,9 +461,9 @@ export const issuesData: Record<string, IssueContent> = {
       causeAndEffect: {
         title: "Kenapa Sumur Kering dan Sawah Retak?",
         description:
-          "Kekeringan meteorologis muncul saat hujan jauh di bawah normal, misalnya akibat El Niño. Namun dampaknya diperparah oleh kerusakan daerah tangkapan air, pengambilan air tanah yang melebihi pengisian ulang, dan tanah yang miskin humus sehingga tidak mampu menyimpan air.",
+          "Kekeringan karena kurang hujan muncul saat hujan jauh di bawah normal, misalnya akibat El Niño. Namun dampaknya diperparah oleh kerusakan daerah tangkapan air, pengambilan air tanah yang melebihi pengisian ulang, dan tanah yang miskin humus sehingga tidak mampu menyimpan air.",
         humanActivities: [
-          "Mengambil air tanah dalam secara besar-besaran tanpa upaya konservasi.",
+          "Mengambil air tanah dalam secara besar-besaran tanpa upaya menjaga alam.",
           "Menguruk rawa dan danau yang berfungsi sebagai tandon air alami.",
           "Bertani tanpa mulsa atau penutup tanah sehingga air cepat menguap.",
           "Boros air dan membiarkan pipa bocor dalam jangka lama.",
@@ -642,7 +642,7 @@ export const issuesData: Record<string, IssueContent> = {
           "Membuka lahan dengan cara membakar karena dianggap murah.",
           "Membuat parit atau kanal yang mengeringkan kubah gambut.",
           "Membuang puntung rokok atau meninggalkan api unggun yang belum padam total.",
-          "Merambah kawasan hutan lindung dan konservasi.",
+          "Merambah kawasan hutan lindung dan menjaga alam.",
         ],
         ecologicalProcess:
           "Api gambut bisa menyala diam-diam di bawah tanah dan menghasilkan asap tebal yang berbahaya.",
@@ -654,7 +654,7 @@ export const issuesData: Record<string, IssueContent> = {
           "Lapisan gambut rusak dan butuh waktu sangat lama untuk pulih.",
         ],
         socialEconomic: [
-          "Kasus ISPA meningkat, termasuk pada anak sekolah.",
+          "Kasus gangguan pernapasan meningkat, termasuk pada anak sekolah.",
           "Sekolah diliburkan dan penerbangan terganggu akibat kabut asap.",
         ],
         vulnerabilityNote:
