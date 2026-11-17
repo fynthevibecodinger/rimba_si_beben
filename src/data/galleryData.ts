@@ -290,3 +290,105 @@ export const rangersDataEn: RangerProfile[] = [
 export function getRangersData(lang: "id" | "en" = "id"): RangerProfile[] {
   return lang === "en" ? rangersDataEn : rangersDataId;
 }
+
+export interface LocalWisdomProfile {
+  id: string;
+  name: string;
+  origin: string;
+  culturalValue: string;
+  disasterMitigation: string;
+  image: string;
+  fallbackImage: string;
+  summary: string;
+  fullStory: string;
+  proverb: string;
+  p5Action: string;
+}
+
+export const localWisdomData: LocalWisdomProfile[] = [
+  {
+    id: "gotong-royong",
+    name: "Gotong Royong & Kerja Bakti",
+    origin: "Seluruh Nusantara",
+    culturalValue: "Kebersamaan & Kepedulian Kolektif",
+    disasterMitigation: "Cegah Banjir & Sumbatan Drainase",
+    image:
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "Tradisi bekerja bersama-sama membersihkan selokan, mengeruk sedimen sungai, dan menanam pohon di lingkungan kampung maupun sekolah menjelang musim hujan.",
+    fullStory:
+      "Gotong royong merupakan akar budaya Indonesia yang menempatkan keselamatan lingkungan sebagai tanggung jawab bersama. Dengan rutin membersihkan saluran air dan memangkas dahan rapuh secara kolektif, warga mengurangi risiko luapan banjir dan genangan secara nyata tanpa menunggu bencana terjadi.",
+    proverb: "Berat sama dipikul, ringan sama dijinjing.",
+    p5Action: "Jadwalkan Jumat Bersih rutin untuk mengecek selokan dan area resapan air sekolah.",
+  },
+  {
+    id: "subak-bali",
+    name: "Sistem Irigasi Subak",
+    origin: "Bali (Warisan Budaya Dunia UNESCO)",
+    culturalValue: "Tri Hita Karana (Harmoni Manusia, Alam & Tuhan)",
+    disasterMitigation: "Cegah Kekeringan & Atur Tata Air Hulu-Hilir",
+    image:
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "Organisasi kemasyarakatan tradisional di Bali yang mengatur pembagian air irigasi sawah secara adil, berkelanjutan, dan selaras dengan siklus ekosistem alam.",
+    fullStory:
+      "Subak membuktikan bahwa tata kelola air berbasis musyawarah mampu menjaga ketahanan pangan dan ketersediaan air bersih selama berabad-abad. Terasering sawah Subak juga berfungsi menahan laju limpasan air hujan sehingga mengurangi erosi tanah di perbukitan.",
+    proverb: "Paras paros sarpanaya — saling menghargai dan menjaga keseimbangan alam.",
+    p5Action: "Terapkan hemat air di rumah dan sekolah serta jaga kebersihan saluran irigasi sekitar.",
+  },
+  {
+    id: "sasi-maluku-papua",
+    name: "Tradisi Adat Sasi",
+    origin: "Maluku & Tanah Papua",
+    culturalValue: "Pembatasan Panen & Regenerasi Ekosistem",
+    disasterMitigation: "Jaga Kelestarian Hutan, Pesisir & Cegah Abrasi",
+    image:
+      "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "Hukum adat berupa larangan sementara mengambil hasil laut maupun hasil hutan tertentu agar flora, fauna, dan ekosistem pesisir memiliki waktu memulihkan diri.",
+    fullStory:
+      "Dalam tradisi Sasi, masyarakat adat menyepakati penutupan sementara wilayah hutan atau perairan tertentu. Aturan ini mencegah eksploitasi berlebihan, menjaga hutan bakau dan terumbu karang tetap sehat sebagai benteng alami penahan gelombang dan abrasi pantai.",
+    proverb: "Ambil secukupnya hari ini agar alam tetap memberi kehidupan esok hari.",
+    p5Action: "Kurangi konsumsi berlebihan dan beri ruang hijau sekolah waktu tumbuh tanpa gangguan.",
+  },
+  {
+    id: "leuweung-tutupan",
+    name: "Hutan Larangan & Leuweung Tutupan",
+    origin: "Sunda (Baduy / Kasepuhan) & Kalimantan",
+    culturalValue: "Zona Lindung Sakral Penjaga Hulu Sungai",
+    disasterMitigation: "Cegah Tanah Longsor & Banjir Bandang",
+    image:
+      "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "Pembagian zona hutan adat yang melarang penebangan pohon di kawasan hulu dan lereng curam demi menjaga kesucian alam sekaligus cadangan mata air desa.",
+    fullStory:
+      "Masyarakat adat membagi hutan menjadi zona larangan (tutupan), zona titipan, dan zona garapan. Pepohonan berakar kuat di leuweung tutupan mengikat struktur tanah lereng pegunungan dan menyerap air hujan ke dalam tanah, mencegah longsor serta kekeringan saat kemarau.",
+    proverb: "Gunung teu meunang dilebur, lebak teu meunang diruksak (Gunung tak boleh dihancurkan, lembah tak boleh dirusak).",
+    p5Action: "Tanam dan rawat pohon pelindung di area miring atau lahan kosong sekitar sekolah.",
+  },
+  {
+    id: "lubuk-larangan",
+    name: "Tradisi Lubuk Larangan",
+    origin: "Sumatera Barat, Jambi & Riau",
+    culturalValue: "Konservasi Sungai Berbasis Kesepakatan Desa",
+    disasterMitigation: "Jaga Kebersihan & Ekosistem Daerah Aliran Sungai",
+    image:
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "Kesepakatan masyarakat adat untuk menjaga bagian aliran sungai tertentu agar bebas dari sampah, racun, maupun penangkapan ikan merusak dalam kurun waktu tertentu.",
+    fullStory:
+      "Lubuk Larangan menjadikan sungai sebagai ruang hidup yang dihormati bersama. Karena aliran sungai dijaga ketat dari limbah dan perusakan sempadan, kualitas air tetap jernih dan bantaran sungai terlindungi dari erosi maupun pendangkalan pemicu banjir.",
+    proverb: "Alam takambang jadi guru — alam terbentang menjadi guru kehidupan.",
+    p5Action: "Kampanyekan larangan membuang sampah ke sungai dan selokan di lingkungan tempat tinggal.",
+  },
+];

@@ -4,7 +4,12 @@ import { Link } from "../router";
 import RimbaMascot, { RimbaMood } from "../components/mascot/RimbaMascot";
 import EcoLandscape from "../components/hero/EcoLandscape";
 import { useLanguage } from "../context/LanguageContext";
-import { getRangersData, RangerProfile } from "../data/galleryData";
+import {
+  getRangersData,
+  RangerProfile,
+  localWisdomData,
+  type LocalWisdomProfile,
+} from "../data/galleryData";
 import {
   Sparkles,
   MapPin,
@@ -22,6 +27,7 @@ import {
   Waves,
   Star,
   Volume2,
+  Landmark,
 } from "lucide-react";
 
 export default function Gallery() {
@@ -31,6 +37,7 @@ export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState<string>("semua");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeRanger, setActiveRanger] = useState<RangerProfile | null>(null);
+  const [activeWisdom, setActiveWisdom] = useState<LocalWisdomProfile | null>(null);
   const [tipIndex, setTipIndex] = useState<number>(0);
   const [mascotMood, setMascotMood] = useState<RimbaMood>("wave");
 
@@ -348,6 +355,85 @@ export default function Gallery() {
             layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
           >
+          {/* MODAL DETAIL KEARIFAN LOKAL */}
+      <AnimatePresence>
+        {activeWisdom && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveWisdom(null)}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0, y: 18 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 18 }}
+              transition={{ type: "spring", stiffness: 260, damping: 24 }}
+              onClick={(e) => e.stopPropagation()}
+              className="max-w-2xl w-full rounded-3xl bg-white overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto"
+            >
+              <div className="relative h-60 sm:h-68 bg-emerald-950">
+                <img
+                  src={activeWisdom.image}
+                  alt={activeWisdom.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = activeWisdom.fallbackImage;
+                  }}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                <button
+                  onClick={() => setActiveWisdom(null)}
+                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <div className="absolute bottom-4 left-6 right-6 text-white space-y-1">
+                  <span className="px-3 py-1 rounded-full bg-amber-400 text-emerald-950 text-[11px] font-black">
+                    {activeWisdom.origin}
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-black font-['Fredoka']">
+                    {activeWisdom.name}
+                  </h3>
+                  <p className="text-xs text-emerald-200 font-semibold">
+                    {activeWisdom.culturalValue}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-6 sm:p-7 space-y-4">
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-950 font-semibold flex items-start gap-2">
+                  <ShieldCheck className="w-5 h-5 text-emerald-700 flex-shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Kaitan Mitigasi Bencana:</strong> {activeWisdom.disasterMitigation}
+                  </span>
+                </div>
+
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  {activeWisdom.fullStory}
+                </p>
+
+                <blockquote className="p-4 rounded-2xl bg-amber-50/90 border-l-4 border-amber-500 text-xs sm:text-sm text-slate-800 italic flex items-start gap-2">
+                  <Quote className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span>&ldquo;{activeWisdom.proverb}&rdquo;</span>
+                </blockquote>
+
+                <div className="p-4 rounded-2xl bg-slate-900 text-white text-xs sm:text-sm flex items-start gap-2.5">
+                  <Sparkles className="w-4 h-4 text-amber-300 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-black text-amber-300 uppercase text-[11px] tracking-wider mb-0.5">
+                      Inspirasi Aksi Pelajar P5
+                    </p>
+                    <p className="text-slate-100">{activeWisdom.p5Action}</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
             <AnimatePresence mode="popLayout">
               {filteredRangers.map((ranger, index) => (
                 <motion.div
@@ -591,3 +677,4 @@ export default function Gallery() {
     </div>
   );
 }
+
