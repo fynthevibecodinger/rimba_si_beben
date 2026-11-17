@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "../../router";
-import MusicController from "../audio/MusicController";
+import PersonalizationMenu from "./PersonalizationMenu";
+import { useLanguage } from "../../context/LanguageContext";
 import {
   Menu,
   X,
@@ -17,6 +18,7 @@ export default function Navbar() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [issuesDropdownOpen, setIssuesDropdownOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
   const isHome = location.pathname === "/" || location.pathname === "" || location.pathname === "/galeri";
 
@@ -101,27 +103,29 @@ export default function Navbar() {
   };
 
   const issuesList = [
-    { title: "Banjir & Genangan", slug: "banjir", icon: Waves, color: "text-sky-600", bg: "bg-sky-50" },
-    { title: "Tanah Longsor", slug: "tanah-longsor", icon: Mountain, color: "text-amber-800", bg: "bg-amber-50" },
-    { title: "Kekeringan Air", slug: "kekeringan", icon: SunMedium, color: "text-amber-600", bg: "bg-orange-50" },
-    { title: "Kebakaran Hutan", slug: "kebakaran-hutan", icon: Flame, color: "text-red-600", bg: "bg-rose-50" },
+    { title: t("issue_flood", "Banjir & Genangan"), slug: "banjir", icon: Waves, color: "text-sky-600", bg: "bg-sky-50" },
+    { title: t("issue_landslide", "Tanah Longsor"), slug: "tanah-longsor", icon: Mountain, color: "text-amber-800", bg: "bg-amber-50" },
+    { title: t("issue_drought", "Kekeringan Air"), slug: "kekeringan", icon: SunMedium, color: "text-amber-600", bg: "bg-orange-50" },
+    { title: t("issue_fire", "Kebakaran Hutan"), slug: "kebakaran-hutan", icon: Flame, color: "text-red-600", bg: "bg-rose-50" },
   ];
 
   return (
     <header className={`sticky top-0 z-50 w-full transition-all duration-300 pointer-events-none ${isHome ? "-mb-16" : ""}`}>
       {/* Outer wrapper that pads when floating */}
       <div
-        className={`w-full transition-all duration-300 ease-out pointer-events-auto ${isScrolled ? "pt-2.5 sm:pt-3.5 px-3 sm:px-6 lg:px-8" : "pt-0 px-0"
-          }`}
+        className={`w-full transition-all duration-300 ease-out pointer-events-auto ${
+          isScrolled ? "pt-2.5 sm:pt-3.5 px-3 sm:px-6 lg:px-8" : "pt-0 px-0"
+        }`}
       >
         {/* Main Navbar Capsule */}
         <div
-          className={`mx-auto transition-all duration-300 ease-out flex items-center justify-between relative overflow-visible ${isScrolled
-            ? "max-w-6xl rounded-2xl sm:rounded-full bg-white/92 backdrop-blur-2xl border border-emerald-800/15 shadow-2xl shadow-emerald-950/15 h-14 sm:h-15 px-4 sm:px-6 ring-1 ring-white/60"
-            : isHome
+          className={`mx-auto transition-all duration-300 ease-out flex items-center justify-between relative overflow-visible ${
+            isScrolled
+              ? "max-w-6xl rounded-2xl sm:rounded-full bg-white/92 backdrop-blur-2xl border border-emerald-800/15 shadow-2xl shadow-emerald-950/15 h-14 sm:h-15 px-4 sm:px-6 ring-1 ring-white/60"
+              : isHome
               ? "w-full max-w-7xl rounded-none bg-transparent border-b border-white/15 shadow-none h-16 px-4 sm:px-6 lg:px-8"
               : "w-full max-w-7xl rounded-none bg-[#f7f5ee]/90 backdrop-blur-xl border-b border-emerald-900/10 shadow-none h-16 px-4 sm:px-6 lg:px-8"
-            }`}
+          }`}
         >
           {/* Brand / Logo Maskot Rimba */}
           <Link
@@ -133,8 +137,9 @@ export default function Navbar() {
             }}
           >
             <div
-              className={`rounded-2xl bg-gradient-to-br from-[#1b4332] to-[#0e2c20] p-1 flex items-center justify-center shadow-md shadow-emerald-950/15 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-200 ${isScrolled ? "w-8 h-8 sm:w-9 sm:h-9" : "w-9 h-9 sm:w-10 sm:h-10"
-                }`}
+              className={`rounded-2xl bg-gradient-to-br from-[#1b4332] to-[#0e2c20] p-1 flex items-center justify-center shadow-md shadow-emerald-950/15 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-200 ${
+                isScrolled ? "w-8 h-8 sm:w-9 sm:h-9" : "w-9 h-9 sm:w-10 sm:h-10"
+              }`}
             >
               <svg
                 viewBox="90 35 240 180"
@@ -176,13 +181,14 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col">
               <span
-                className={`font-black leading-none text-[#173a2d] font-['Fredoka'] tracking-tight transition-all ${isScrolled ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"
-                  }`}
+                className={`font-black leading-none text-[#173a2d] font-['Fredoka'] tracking-tight transition-all ${
+                  isScrolled ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"
+                }`}
               >
                 Rimba
               </span>
               <span className="text-[9px] sm:text-[10px] font-extrabold text-emerald-800 tracking-widest uppercase mt-0.5">
-                Peduli Lingkungan
+                {t("nav_brand_tagline", "Peduli Lingkungan")}
               </span>
             </div>
           </Link>
@@ -191,12 +197,13 @@ export default function Navbar() {
           <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
             <Link
               to="/"
-              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${isCurrent("/") && location.pathname === "/"
-                ? "bg-emerald-900 text-white shadow-sm"
-                : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
-                }`}
+              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${
+                isCurrent("/") && location.pathname === "/"
+                  ? "bg-emerald-900 text-white shadow-sm"
+                  : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
+              }`}
             >
-              Beranda
+              {t("nav_home", "Beranda")}
             </Link>
 
             {/* Isu Bencana Dropdown Interaktif (Dapat Diklik dan Dihover dengan Mulus) */}
@@ -211,19 +218,21 @@ export default function Navbar() {
                 onClick={handleToggleClick}
                 aria-expanded={issuesDropdownOpen}
                 aria-haspopup="true"
-                className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-1.5 transition-all duration-150 cursor-pointer select-none ${isCurrent("/isu") || issuesDropdownOpen
-                  ? "bg-emerald-900 text-white shadow-sm"
-                  : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
-                  }`}
+                className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-1.5 transition-all duration-150 cursor-pointer select-none ${
+                  isCurrent("/isu") || issuesDropdownOpen
+                    ? "bg-emerald-900 text-white shadow-sm"
+                    : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
+                }`}
               >
-                <span>Jelajah Alam</span>
+                <span>{t("nav_explore", "Jelajah Alam")}</span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${issuesDropdownOpen
-                    ? "rotate-180 text-emerald-300"
-                    : isCurrent("/isu")
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    issuesDropdownOpen
+                      ? "rotate-180 text-emerald-300"
+                      : isCurrent("/isu")
                       ? "text-emerald-200"
                       : "text-slate-400 group-hover:text-emerald-800"
-                    }`}
+                  }`}
                 />
               </button>
 
@@ -235,7 +244,7 @@ export default function Navbar() {
                 >
                   <div className="rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 shadow-2xl p-2.5 ring-1 ring-emerald-950/5">
                     <div className="text-[10px] font-black text-emerald-800 uppercase tracking-widest px-3 py-1.5 flex items-center justify-between">
-                      <span>Masalah Alam dan Cuaca</span>
+                      <span>{t("nav_explore_subtitle", "Masalah Alam dan Cuaca")}</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     </div>
                     <div className="space-y-1">
@@ -247,10 +256,11 @@ export default function Navbar() {
                             key={item.slug}
                             to={`/isu/${item.slug}`}
                             onClick={() => setIssuesDropdownOpen(false)}
-                            className={`flex items-center gap-3 px-3 py-2 rounded-2xl transition-all text-xs sm:text-sm font-bold group ${isItemActive
-                              ? "bg-emerald-100/80 text-emerald-900 shadow-2xs"
-                              : "text-slate-800 hover:bg-emerald-50/80 hover:text-emerald-900"
-                              }`}
+                            className={`flex items-center gap-3 px-3 py-2 rounded-2xl transition-all text-xs sm:text-sm font-bold group ${
+                              isItemActive
+                                ? "bg-emerald-100/80 text-emerald-900 shadow-2xs"
+                                : "text-slate-800 hover:bg-emerald-50/80 hover:text-emerald-900"
+                            }`}
                           >
                             <div
                               className={`p-2 rounded-xl ${item.bg} ${item.color} group-hover:scale-110 transition-transform`}
@@ -270,63 +280,67 @@ export default function Navbar() {
             {/* Tombol Lab Simulasi Interaktif dengan Efek Shimmer */}
             <Link
               to="/simulasi"
-              className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black inline-flex items-center gap-1.5 transition-all duration-150 ${isCurrent("/simulasi")
-                ? "bg-emerald-800 text-white shadow-md shadow-emerald-900/25 ring-2 ring-emerald-400/50"
-                : "bg-emerald-100/90 text-emerald-900 hover:bg-emerald-200/90 hover:scale-105 active:scale-95"
-                }`}
+              className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black inline-flex items-center gap-1.5 transition-all duration-150 ${
+                isCurrent("/simulasi")
+                  ? "bg-emerald-800 text-white shadow-md shadow-emerald-900/25 ring-2 ring-emerald-400/50"
+                  : "bg-emerald-100/90 text-emerald-900 hover:bg-emerald-200/90 hover:scale-105 active:scale-95"
+              }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
-              <span>Lab Simulasi</span>
+              <span>{t("nav_simulation", "Lab Simulasi")}</span>
             </Link>
             <Link
               to="/galeri"
-              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${isCurrent("/galeri")
-                ? "bg-emerald-900 text-white shadow-sm"
-                : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
-                }`}
+              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${
+                isCurrent("/galeri")
+                  ? "bg-emerald-900 text-white shadow-sm"
+                  : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
+              }`}
             >
-              Galeri
+              {t("nav_gallery", "Galeri")}
             </Link>
             <Link
               to="/about"
-              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${isCurrent("/about")
-                ? "bg-emerald-900 text-white shadow-sm"
-                : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
-                }`}
+              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${
+                isCurrent("/about")
+                  ? "bg-emerald-900 text-white shadow-sm"
+                  : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
+              }`}
             >
-              Tentang
+              {t("nav_about", "Tentang")}
             </Link>
 
             {/* Kontak */}
             <Link
               to="/contact"
-              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${isCurrent("/contact")
-                ? "bg-emerald-900 text-white shadow-sm"
-                : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
-                }`}
+              className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-150 ${
+                isCurrent("/contact")
+                  ? "bg-emerald-900 text-white shadow-sm"
+                  : "text-slate-700 hover:text-emerald-900 hover:bg-emerald-800/10"
+              }`}
             >
-              <span>Kontak</span>
+              <span>{t("nav_contact", "Kontak")}</span>
             </Link>
 
+            {/* Menu Personalisasi (Bahasa & Musik Ambience) menggantikan ikon musik lama */}
             <div className="pl-1 border-l border-emerald-900/15">
-              <MusicController compact />
+              <PersonalizationMenu />
             </div>
-
           </nav>
 
           {/* Mobile Actions */}
           <div className="flex md:hidden items-center gap-2">
-            <MusicController compact />
+            <PersonalizationMenu compact />
             <Link
               to="/simulasi"
               className="px-3 py-1.5 rounded-full bg-emerald-800 text-white text-xs font-black inline-flex items-center gap-1 shadow-sm"
             >
               <Sparkles className="w-3 h-3 text-amber-400" />
-              <span>Simulasi</span>
+              <span>{t("nav_simulation", "Simulasi")}</span>
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-emerald-900/10 text-emerald-900 hover:bg-emerald-900/15 transition-colors"
+              className="p-2 rounded-xl bg-emerald-900/10 text-emerald-900 hover:bg-emerald-900/15 transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -347,18 +361,51 @@ export default function Navbar() {
         {/* Mobile Drawer Menu - Clean Floating Card */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-2 max-w-lg mx-auto rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 p-4 space-y-2 shadow-2xl animate-in slide-in-from-top-3 duration-200">
+            {/* Quick Language Switcher in Mobile Drawer */}
+            <div className="p-2.5 rounded-2xl bg-emerald-50/70 border border-emerald-200/60 flex items-center justify-between">
+              <span className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+                <span>🌐</span>
+                <span>{t("lang_title", "Bahasa Tampilan")}</span>
+              </span>
+              <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-emerald-200/50 shadow-2xs">
+                <button
+                  type="button"
+                  onClick={() => setLanguage("id")}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                    language === "id"
+                      ? "bg-emerald-900 text-white shadow-xs"
+                      : "text-slate-600 hover:text-emerald-900"
+                  }`}
+                >
+                  🇮🇩 ID
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLanguage("en")}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                    language === "en"
+                      ? "bg-emerald-900 text-white shadow-xs"
+                      : "text-slate-600 hover:text-emerald-900"
+                  }`}
+                >
+                  🇬🇧 EN
+                </button>
+              </div>
+            </div>
+
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2.5 rounded-2xl font-bold text-sm ${location.pathname === "/" ? "bg-emerald-800 text-white" : "text-slate-800 hover:bg-emerald-50"
-                }`}
+              className={`block px-4 py-2.5 rounded-2xl font-bold text-sm ${
+                location.pathname === "/" ? "bg-emerald-800 text-white" : "text-slate-800 hover:bg-emerald-50"
+              }`}
             >
-              Beranda
+              {t("nav_home", "Beranda")}
             </Link>
 
             <div className="pt-1 pb-1">
               <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">
-                Jelajah Alam dan Bencana
+                {t("nav_explore_subtitle", "Jelajah Alam dan Bencana")}
               </span>
               <div className="grid grid-cols-2 gap-2 mt-1.5">
                 {issuesList.map((item) => {
@@ -385,10 +432,10 @@ export default function Navbar() {
             >
               <span className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                Coba Simulasi Alam
+                {t("btn_try_simulation", "Coba Simulasi Alam")}
               </span>
               <span className="text-[10px] uppercase bg-emerald-600 px-2 py-0.5 rounded-full font-black">
-                Interaktif
+                {t("nav_simulation_interactive", "Interaktif")}
               </span>
             </Link>
 
@@ -397,24 +444,25 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-2.5 rounded-2xl font-bold text-sm text-slate-800 hover:bg-emerald-50"
             >
-              Tentang
+              {t("nav_about", "Tentang")}
             </Link>
             <Link
               to="/galeri"
               onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2.5 rounded-2xl font-bold text-sm ${location.pathname === "/galeri"
+              className={`block px-4 py-2.5 rounded-2xl font-bold text-sm ${
+                location.pathname === "/galeri"
                   ? "bg-emerald-800 text-white"
                   : "text-slate-800 hover:bg-emerald-50"
-                }`}
+              }`}
             >
-              Galeri
+              {t("nav_gallery", "Galeri")}
             </Link>
             <Link
               to="/contact"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-2.5 rounded-2xl font-bold text-sm text-slate-800 hover:bg-emerald-50"
             >
-              Kontak
+              {t("nav_contact", "Kontak")}
             </Link>
           </div>
         )}

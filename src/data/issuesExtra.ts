@@ -190,4 +190,8 @@ export const issuesExtra: Record<string, IssueExtra> = {
   },
 };
 
-export const getExtra = (slug: string): IssueExtra | undefined => issuesExtra[slug];
+import { issuesExtraEn } from "./issuesExtraEn";
+
+export const getExtra = (slug: string, lang: "id" | "en" = "id"): IssueExtra | undefined => {
+  return lang === "en" ? issuesExtraEn[slug] || issuesExtra[slug] : issuesExtra[slug];
+};

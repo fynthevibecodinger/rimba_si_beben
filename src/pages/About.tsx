@@ -1,5 +1,7 @@
 import RimbaMascot from "../components/mascot/RimbaMascot";
 import { Link } from "../router";
+import { useLanguage } from "../context/LanguageContext";
+import { t } from "../utils/translate";
 import {
   ShieldCheck,
   Heart,
@@ -25,6 +27,8 @@ function SocialLogo({ type, className = "w-4 h-4" }: { type: "instagram" | "link
 }
 
 export default function About() {
+  const { language } = useLanguage();
+  const isEn = language === "en";
   return (
     <div className="w-full pb-20">
       {/* Header Banner */}
@@ -39,17 +43,18 @@ export default function About() {
          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
           <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-             Tempat Belajar tentang Alam
+             {t("nature_and_eco_hub", isEn)}
           </span>
           <h1 className="text-3xl sm:text-5xl font-black font-['Fredoka'] tracking-tight leading-tight">
-             Membangun Generasi Peduli Alam dan Tangguh Bencana
+             {t("empowering_tagline", isEn)}
           </h1>
           <p className="text-emerald-100/90 text-sm sm:text-base mt-4 leading-relaxed max-w-2xl mx-auto">
-             Media belajar di web yang membantu anak-anak menjaga alam, merawat lingkungan,
-             dan kesiapan bencana untuk pelajar Indonesia.
+             {isEn
+               ? "An interactive web learning sanctuary helping youth preserve ecosystems, care for nature, and prepare for environmental challenges."
+               : "Media belajar di web yang membantu anak-anak menjaga alam, merawat lingkungan, dan kesiapan bencana untuk pelajar Indonesia."}
           </p>
           <div className="flex flex-wrap justify-center gap-2 mt-6">
-            {['Belajar', 'Bermain', 'Beraksi'].map((word) => <span key={word} className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-xs font-bold">{word}</span>)}
+            {(isEn ? [t("learn", isEn), t("explore", isEn), t("act", isEn)] : [t("learn", false), t("explore", false), t("act", false)]).map((word) => <span key={word} className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-xs font-bold">{word}</span>)}
           </div>
         </div>
       </section>
@@ -62,7 +67,11 @@ export default function About() {
             <div className="lg:col-span-5 flex justify-center">
               <RimbaMascot
                 mood="wave"
-                speech="Salam kenal! Aku Rimba, burung rangkong penjaga tajuk pohon hutan hujan Nusantara!"
+                speech={
+                  isEn
+                    ? "Warm greetings! I'm Rimba, the hornbill guardian of the rainforest canopy!"
+                    : "Salam kenal! Aku Rimba, burung rangkong penjaga tajuk pohon hutan hujan Nusantara!"
+                }
                 size="xl"
               />
             </div>
