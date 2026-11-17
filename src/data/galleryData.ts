@@ -293,6 +293,7 @@ export function getRangersData(lang: "id" | "en" = "id"): RangerProfile[] {
 
 export interface LocalWisdomProfile {
   id: string;
+  category: "sungai" | "hutan" | "plastik" | "konservasi";
   name: string;
   origin: string;
   culturalValue: string;
@@ -308,6 +309,7 @@ export interface LocalWisdomProfile {
 export const localWisdomData: LocalWisdomProfile[] = [
   {
     id: "gotong-royong",
+    category: "sungai",
     name: "Gotong Royong & Kerja Bakti",
     origin: "Seluruh Nusantara",
     culturalValue: "Kebersamaan & Kepedulian Kolektif",
@@ -325,6 +327,7 @@ export const localWisdomData: LocalWisdomProfile[] = [
   },
   {
     id: "subak-bali",
+    category: "konservasi",
     name: "Sistem Irigasi Subak",
     origin: "Bali (Warisan Budaya Dunia UNESCO)",
     culturalValue: "Tri Hita Karana (Harmoni Manusia, Alam & Tuhan)",
@@ -342,6 +345,7 @@ export const localWisdomData: LocalWisdomProfile[] = [
   },
   {
     id: "sasi-maluku-papua",
+    category: "hutan",
     name: "Tradisi Adat Sasi",
     origin: "Maluku & Tanah Papua",
     culturalValue: "Pembatasan Panen & Regenerasi Ekosistem",
@@ -359,6 +363,7 @@ export const localWisdomData: LocalWisdomProfile[] = [
   },
   {
     id: "leuweung-tutupan",
+    category: "hutan",
     name: "Hutan Larangan & Leuweung Tutupan",
     origin: "Sunda (Baduy / Kasepuhan) & Kalimantan",
     culturalValue: "Zona Lindung Sakral Penjaga Hulu Sungai",
@@ -376,6 +381,7 @@ export const localWisdomData: LocalWisdomProfile[] = [
   },
   {
     id: "lubuk-larangan",
+    category: "sungai",
     name: "Tradisi Lubuk Larangan",
     origin: "Sumatera Barat, Jambi & Riau",
     culturalValue: "Konservasi Sungai Berbasis Kesepakatan Desa",

@@ -91,6 +91,18 @@ export default function Gallery() {
     return matchesCategory && matchesSearch;
   });
 
+  const filteredWisdom = localWisdomData.filter((item) => {
+  const matchesCategory =
+    selectedCategory === "semua" || item.category === selectedCategory;
+  const q = searchQuery.toLowerCase().trim();
+  const matchesSearch =
+    !q ||
+    item.name.toLowerCase().includes(q) ||
+    item.origin.toLowerCase().includes(q) ||
+    item.summary.toLowerCase().includes(q);
+  return matchesCategory && matchesSearch;
+});
+
   return (
     <div className="w-full pb-24 overflow-x-clip">
       {/* 1. HERO BANNER */}
@@ -544,6 +556,92 @@ export default function Gallery() {
           </motion.div>
         )}
 
+        {/* SECTION BARU: KEARIFAN LOKAL & BUDAYA PENJAGA ALAM NUSANTARA */}
+        <div className="pt-8 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-emerald-900/10 pb-5"
+          >
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 border border-amber-300/80 text-amber-950 text-xs font-black uppercase tracking-wider">
+                <Landmark className="w-3.5 h-3.5 text-amber-700" />
+                <span>Warisan Budaya &amp; Ekologi P5</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black font-['Fredoka'] text-emerald-950">
+                Kearifan Lokal &amp; Budaya Penjaga Alam Nusantara
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Jauh sebelum istilah konservasi modern lahir, masyarakat Nusantara telah mewariskan tradisi gotong royong dan aturan adat untuk menjaga keseimbangan alam serta mencegah bencana.
+              </p>
+            </div>
+
+            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3.5 py-2 rounded-2xl self-start md:self-auto">
+              Klik kartu untuk pelajari nilai budaya &amp; aksi P5
+            </span>
+          </motion.div>
+
+          {/* Grid Kartu Kearifan Lokal */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredWisdom.map((item, idx) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.06, type: "spring", stiffness: 220, damping: 22 }}
+                whileHover={{ y: -6 }}
+                onClick={() => setActiveWisdom(item)}
+                className="group rounded-3xl bg-white border border-emerald-900/10 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  <div className="relative h-48 overflow-hidden bg-emerald-950">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = item.fallbackImage;
+                      }}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+
+                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-amber-400 text-emerald-950 text-[11px] font-black shadow-xs">
+                      {item.disasterMitigation}
+                    </span>
+
+                    <div className="absolute bottom-3 left-4 right-4 text-white">
+                      <p className="text-[11px] font-semibold text-amber-200 flex items-center gap-1">
+                        <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span>{item.origin}</span>
+                      </p>
+                      <h3 className="text-lg font-black font-['Fredoka'] leading-snug group-hover:text-amber-300 transition-colors">
+                        {item.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="p-5 space-y-3">
+                    <div className="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200/80 text-[11px] font-bold text-emerald-950">
+                      🌿 Nilai Budaya: {item.culturalValue}
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      {item.summary}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-5 py-3 bg-[#f7f5ee] border-t border-emerald-900/10 flex items-center justify-between text-xs font-black text-emerald-900">
+                  <span>Pelajari Tradisi</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-amber-600" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
         {/* 3. BANNER AJAKAN PELAJAR */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -668,6 +766,85 @@ export default function Gallery() {
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* MODAL DETAIL KEARIFAN LOKAL */}
+      <AnimatePresence>
+        {activeWisdom && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveWisdom(null)}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0, y: 18 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 18 }}
+              transition={{ type: "spring", stiffness: 260, damping: 24 }}
+              onClick={(e) => e.stopPropagation()}
+              className="max-w-2xl w-full rounded-3xl bg-white overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto"
+            >
+              <div className="relative h-60 sm:h-68 bg-emerald-950">
+                <img
+                  src={activeWisdom.image}
+                  alt={activeWisdom.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = activeWisdom.fallbackImage;
+                  }}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                <button
+                  onClick={() => setActiveWisdom(null)}
+                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <div className="absolute bottom-4 left-6 right-6 text-white space-y-1">
+                  <span className="px-3 py-1 rounded-full bg-amber-400 text-emerald-950 text-[11px] font-black">
+                    {activeWisdom.origin}
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-black font-['Fredoka']">
+                    {activeWisdom.name}
+                  </h3>
+                  <p className="text-xs text-emerald-200 font-semibold">
+                    {activeWisdom.culturalValue}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-6 sm:p-7 space-y-4">
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-950 font-semibold flex items-start gap-2">
+                  <ShieldCheck className="w-5 h-5 text-emerald-700 flex-shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Kaitan Mitigasi Bencana:</strong> {activeWisdom.disasterMitigation}
+                  </span>
+                </div>
+
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  {activeWisdom.fullStory}
+                </p>
+
+                <blockquote className="p-4 rounded-2xl bg-amber-50/90 border-l-4 border-amber-500 text-xs sm:text-sm text-slate-800 italic flex items-start gap-2">
+                  <Quote className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span>&ldquo;{activeWisdom.proverb}&rdquo;</span>
+                </blockquote>
+
+                <div className="p-4 rounded-2xl bg-slate-900 text-white text-xs sm:text-sm flex items-start gap-2.5">
+                  <Sparkles className="w-4 h-4 text-amber-300 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-black text-amber-300 uppercase text-[11px] tracking-wider mb-0.5">
+                      Inspirasi Aksi Pelajar P5
+                    </p>
+                    <p className="text-slate-100">{activeWisdom.p5Action}</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
