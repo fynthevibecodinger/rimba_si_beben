@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "../router";
 import { issuesData, IssueContent } from "../data/issuesData";
 import { getExtra } from "../data/issuesExtra";
-import IssueExtraMaterial from "../data/IssueExtraMaterial";
+import { translateIssueData } from "../utils/translateIssue";
 import QuizSection from "../components/quiz/QuizSection";
 import RimbaMascot, { RimbaMood } from "../components/mascot/RimbaMascot";
 import LandslideIcon from "../components/icons/LandslideIcon";

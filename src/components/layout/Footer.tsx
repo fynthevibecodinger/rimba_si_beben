@@ -1,12 +1,31 @@
 import { Link } from "../../router";
+import { useLanguage } from "../../context/LanguageContext";
 import { Phone, Shield, ArrowUpRight, Heart, Sparkles } from "lucide-react";
 
 export default function Footer() {
+  const { language, t } = useLanguage();
+
   const emergencyNumbers = [
-    { number: "112", label: "Nomor Darurat Umum", desc: "BPBD & Tanggap Bencana Terpadu" },
-    { number: "113", label: "Pemadam Kebakaran", desc: "Karhutla & Evakuasi Api" },
-    { number: "115", label: "BASARNAS (SAR)", desc: "Pencarian Korban Banjir & Longsor" },
-    { number: "119", label: "Kemenkes / Ambulans", desc: "Gawat Darurat Medis & gangguan pernapasan" },
+    {
+      number: "112",
+      label: language === "id" ? "Nomor Darurat Umum" : "Public Emergency Call",
+      desc: language === "id" ? "BPBD & Tanggap Bencana Terpadu" : "Disaster Response Center",
+    },
+    {
+      number: "113",
+      label: language === "id" ? "Pemadam Kebakaran" : "Fire & Rescue Department",
+      desc: language === "id" ? "Karhutla & Evakuasi Api" : "Wildfires & Fire Evacuation",
+    },
+    {
+      number: "115",
+      label: "BASARNAS (SAR)",
+      desc: language === "id" ? "Pencarian Korban Banjir & Longsor" : "Search & Rescue Operations",
+    },
+    {
+      number: "119",
+      label: language === "id" ? "Kemenkes / Ambulans" : "Ambulance / Health Center",
+      desc: language === "id" ? "Gawat Darurat Medis & Pernapasan" : "Medical Emergency & Paramedics",
+    },
   ];
 
   return (
@@ -25,15 +44,17 @@ export default function Footer() {
             <div>
               <h3 className="flex items-center gap-2 text-base md:text-lg font-bold font-['Fredoka'] text-white">
                 <Phone className="w-4 h-4 text-rose-300" />
-                Nomor Darurat
+                {t("footer_emergency", "Nomor Darurat")}
               </h3>
-              <p className="text-xs text-emerald-200/70">Hubungi saat membutuhkan bantuan segera.</p>
+              <p className="text-xs text-emerald-200/70">
+                {t("footer_emergency_desc", "Hubungi saat membutuhkan bantuan segera.")}
+              </p>
             </div>
             <Link
               to="/contact"
               className="inline-flex items-center gap-1 text-xs font-bold text-emerald-300 hover:text-white transition-colors"
             >
-              Info lengkap
+              {language === "id" ? "Info lengkap" : "Full info"}
               <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
@@ -78,43 +99,45 @@ export default function Footer() {
               <div>
                 <span className="font-extrabold text-xl font-['Fredoka'] text-white">Rimba</span>
                 <span className="block text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-                   Edukasi Lingkungan &amp; Kesiapsiagaan
+                  {language === "id" ? "Edukasi Lingkungan & Kesiapsiagaan" : "Environmental Education & Preparedness"}
                 </span>
               </div>
             </div>
             <p className="text-xs text-emerald-200/80 leading-relaxed max-w-md">
-               Belajar menjaga alam dan bersiap menghadapi bencana melalui cara yang mudah dan menyenangkan.
+              {language === "id"
+                ? "Belajar menjaga alam dan bersiap menghadapi bencana melalui cara yang mudah dan menyenangkan."
+                : "Learn to care for nature and be prepared for environmental disasters in an engaging and accessible way."}
             </p>
             <div className="flex items-center gap-2 text-[11px] text-emerald-300 font-medium">
               <Shield className="w-4 h-4 text-emerald-400" />
-                Menggunakan data dari PetaBencana.id dan BMKG
+              {language === "id" ? "Menggunakan data dari PetaBencana.id dan BMKG" : "Powered by data from PetaBencana.id and BMKG"}
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="font-bold text-sm text-white uppercase tracking-wider font-mono">
-               Jelajah Alam
+              {t("nav_explore", "Jelajah Alam")}
             </h4>
             <ul className="space-y-2 text-sm text-emerald-200/80">
               <li>
                 <Link to="/isu/banjir" className="hover:text-white transition-colors">
-                  Banjir & Genangan Kota
+                  {t("issue_flood", "Banjir & Genangan")}
                 </Link>
               </li>
               <li>
                 <Link to="/isu/tanah-longsor" className="hover:text-white transition-colors">
-                  Tanah Longsor Lereng
+                  {t("issue_landslide", "Tanah Longsor")}
                 </Link>
               </li>
               <li>
                 <Link to="/isu/kekeringan" className="hover:text-white transition-colors">
-                  Kekeringan & Air Bersih
+                  {t("issue_drought", "Kekeringan Air")}
                 </Link>
               </li>
               <li>
                 <Link to="/isu/kebakaran-hutan" className="hover:text-white transition-colors">
-                  Kebakaran Hutan & Lahan
+                  {t("issue_fire", "Kebakaran Hutan")}
                 </Link>
               </li>
             </ul>
@@ -123,23 +146,23 @@ export default function Footer() {
           {/* Feature Links */}
           <div className="space-y-3">
             <h4 className="font-bold text-sm text-white uppercase tracking-wider font-mono">
-               Jelajahi Rimba
+              {language === "id" ? "Jelajahi Rimba" : "Explore Rimba"}
             </h4>
             <ul className="space-y-2 text-sm text-emerald-200/80">
               <li>
                 <Link to="/simulasi" className="hover:text-white transition-colors flex items-center gap-1.5 font-bold text-emerald-300">
                   <Sparkles className="w-4 h-4 text-amber-400" />
-                   Tempat Mencoba dan Belajar
+                  {t("nav_simulation", "Lab Simulasi Ekosistem")}
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="hover:text-white transition-colors">
-                   Tentang Rimba
+                  {t("nav_about", "Tentang Rimba")}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-white transition-colors">
-                  Kirim Masukan Pelajar
+                  {t("nav_contact", "Kontak & Masukan")}
                 </Link>
               </li>
               <li>
@@ -151,7 +174,7 @@ export default function Footer() {
                   }}
                   className="hover:text-white transition-colors inline-block"
                 >
-                  Kembali ke Puncak ↑
+                  {language === "id" ? "Kembali ke Puncak ↑" : "Back to Top ↑"}
                 </a>
               </li>
             </ul>
@@ -159,10 +182,10 @@ export default function Footer() {
         </div>
 
         {/* Bottom Credits */}
-         <div className="pt-5 flex flex-col md:flex-row items-center justify-between gap-2 text-[11px] text-emerald-300/60 text-center md:text-left">
-          <p>© {new Date().getFullYear()} Petualangan Siaga Bencana Bersama Sigi & Rimba. Hak Cipta Dilindungi.</p>
+        <div className="pt-5 flex flex-col md:flex-row items-center justify-between gap-2 text-[11px] text-emerald-300/60 text-center md:text-left">
+          <p>© {new Date().getFullYear()} {language === "id" ? "Petualangan Siaga Bencana Bersama Rimba. Hak Cipta Dilindungi." : "Disaster Preparedness Adventure with Rimba. All rights reserved."}</p>
           <p className="flex items-center gap-1 justify-center">
-            Dibuat untuk mencerdaskan generasi tangguh bencana Indonesia <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+            {language === "id" ? "Dibuat untuk mencerdaskan generasi tangguh bencana Indonesia" : "Built to inspire resilient and eco-conscious generations"} <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
           </p>
         </div>
       </div>

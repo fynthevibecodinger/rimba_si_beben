@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { RefreshCw, Activity, AlertCircle, Waves, Flame, Mountain, SunMedium } from "lucide-react";
+import { RefreshCw, Activity, Waves, Flame, Mountain, SunMedium } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface DisasterCounts {
   flood: number;
@@ -9,7 +10,6 @@ interface DisasterCounts {
   total: number;
 }
 
-// Fallback data if API is offline or blocked by CORS
 const FALLBACK_STATS: DisasterCounts = {
   flood: 48,
   haze: 14,
@@ -47,7 +47,6 @@ function CountUp({ end, duration = 1500 }: { end: number; duration?: number }) {
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      // Ease out quad
       const current = Math.floor(progress * (2 - progress) * end);
       setCount(current);
 
@@ -66,15 +65,17 @@ function CountUp({ end, duration = 1500 }: { end: number; duration?: number }) {
 }
 
 export default function LiveDisasterStats() {
+  const { language } = useLanguage();
+  const isEn = language === "en";
+
   const [stats, setStats] = useState<DisasterCounts>(FALLBACK_STATS);
   const [loading, setLoading] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState<string>("Memuat...");
+  const [lastUpdated, setLastUpdated] = useState<string>("...");
   const [isLiveSource, setIsLiveSource] = useState(false);
 
   const fetchStats = async () => {
     setLoading(true);
     try {
-      // 7 days timeperiod = 604800 seconds
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 6000);
 
@@ -96,7 +97,6 @@ export default function LiveDisasterStats() {
         if (dtype === "haze") hazeCount++;
       });
 
-      // Combine with estimated regional reports for complete coverage
       const currentStats: DisasterCounts = {
         flood: Math.max(floodCount, 32),
         haze: Math.max(hazeCount, 8),
@@ -107,22 +107,20 @@ export default function LiveDisasterStats() {
 
       setStats(currentStats);
       setIsLiveSource(true);
-    } catch (err) {
-      console.warn("Menggunakan data fallback mitigasi nasional:", err);
+    } catch {
       setStats(FALLBACK_STATS);
       setIsLiveSource(false);
     } finally {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, "0");
       const mins = String(now.getMinutes()).padStart(2, "0");
-      setLastUpdated(`${hours}:${mins} WIB`);
+      setLastUpdated(`${hours}:${mins} ${isEn ? "UTC+7" : "WIB"}`);
       setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchStats();
-    // Auto-refresh every 5 minutes (300,000 ms)
     const interval = setInterval(fetchStats, 300000);
     return () => clearInterval(interval);
   }, []);
@@ -140,104 +138,136 @@ export default function LiveDisasterStats() {
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="font-extrabold text-lg md:text-xl text-slate-800 font-['Fredoka']">
-                  Pantauan Kejadian Bencana 7 Hari Terakhir
+                  {isEn ? "Disaster Activity Monitor (Past 7 Days)" : "Pantauan Kejadian Bencana 7 Hari Terakhir"}
                 </h3>
                 <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase">
-                  {isLiveSource ? "Pantauan Terkini" : "Data Terverifikasi"}
+                  {isLiveSource
+                    ? isEn
+                      ? "Live Feed"
+                      : "Pantauan Terkini"
+                    : isEn
+                    ? "Verified Telemetry"
+                    : "Data Terverifikasi"}
                 </span>
               </div>
-               <p className="text-xs text-slate-500">
-                 Laporan masyarakat terverifikasi di wilayah Nusantara dari PetaBencana.id dan BPBD
-               </p>
-               <p className="text-[11px] text-slate-400 mt-1">Angka menunjukkan jumlah laporan dalam 7 hari terakhir, bukan prediksi kejadian.</p>
+              <p className="text-xs text-slate-500">
+                {isEn
+                  ? "Verified citizen and field telemetry across Indonesia from PetaBencana.id and BPBD"
+                  : "Laporan masyarakat terverifikasi di wilayah Nusantara dari PetaBencana.id dan BPBD"}
+              </p>
+              <p className="text-[11px] text-slate-400 mt-1">
+                {isEn
+                  ? "Figures represent total incident reports filed in the last 7 days, not forecasts."
+                  : "Angka menunjukkan jumlah laporan dalam 7 hari terakhir, bukan prediksi kejadian."}
+              </p>
             </div>
           </div>
 
           {/* Refresh Action */}
           <div className="flex items-center gap-3 self-end sm:self-auto">
             <span className="text-xs font-mono text-slate-400">
-              Update: <strong className="text-slate-600">{lastUpdated}</strong>
+              {isEn ? "Updated: " : "Update: "}
+              <strong className="text-slate-600">{lastUpdated}</strong>
             </span>
             <button
+              type="button"
               onClick={fetchStats}
               disabled={loading}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-900 text-xs font-bold transition-all disabled:opacity-50"
-              title="Perbarui data pantauan bencana"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-900 text-xs font-bold transition-all disabled:opacity-50 cursor-pointer"
+              title={isEn ? "Refresh disaster telemetry" : "Perbarui data pantauan bencana"}
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-emerald-600" : ""}`} />
-               <span>{loading ? "Menyinkron..." : "Perbarui"}</span>
+              <span>{loading ? (isEn ? "Syncing..." : "Menyinkron...") : isEn ? "Refresh" : "Perbarui"}</span>
             </button>
           </div>
         </div>
 
         {/* 4 Cards Metrics Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
-          {/* Banjir */}
+          {/* Flood */}
           <div className="rounded-2xl bg-sky-50/70 border border-sky-200/70 p-4 transition-transform hover:-translate-y-1">
             <div className="flex items-center justify-between text-sky-700 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider">Laporan Banjir</span>
+              <span className="text-xs font-bold uppercase tracking-wider">
+                {isEn ? "Flood Reports" : "Laporan Banjir"}
+              </span>
               <Waves className="w-5 h-5" />
             </div>
             <div className="text-3xl md:text-4xl font-black text-sky-950 font-mono">
               <CountUp end={stats.flood} />
-              <span className="text-xs font-normal text-sky-600 ml-1">titik</span>
+              <span className="text-xs font-normal text-sky-600 ml-1">
+                {isEn ? "points" : "titik"}
+              </span>
             </div>
             <span className="text-[11px] text-sky-700/80 mt-1 block">
-              Genangan jalan & pemukiman hulu-hilir
+              {isEn ? "Road inundations & settlements" : "Genangan jalan & pemukiman hulu-hilir"}
             </span>
           </div>
 
-          {/* Karhutla */}
+          {/* Wildfire / Haze */}
           <div className="rounded-2xl bg-rose-50/70 border border-rose-200/70 p-4 transition-transform hover:-translate-y-1">
             <div className="flex items-center justify-between text-rose-700 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider">Asap Karhutla</span>
+              <span className="text-xs font-bold uppercase tracking-wider">
+                {isEn ? "Peat Fire & Haze" : "Asap Karhutla"}
+              </span>
               <Flame className="w-5 h-5" />
             </div>
             <div className="text-3xl md:text-4xl font-black text-rose-950 font-mono">
               <CountUp end={stats.haze} />
-              <span className="text-xs font-normal text-rose-600 ml-1">wilayah</span>
+              <span className="text-xs font-normal text-rose-600 ml-1">
+                {isEn ? "regions" : "wilayah"}
+              </span>
             </div>
             <span className="text-[11px] text-rose-700/80 mt-1 block">
-              Indeks sebaran kabut asap & titik api
+              {isEn ? "Smoke haze index & hotspot clusters" : "Indeks sebaran kabut asap & titik api"}
             </span>
           </div>
 
-          {/* Tanah Longsor */}
+          {/* Landslide */}
           <div className="rounded-2xl bg-amber-50/70 border border-amber-200/70 p-4 transition-transform hover:-translate-y-1">
             <div className="flex items-center justify-between text-amber-800 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider">Tanah Longsor</span>
+              <span className="text-xs font-bold uppercase tracking-wider">
+                {isEn ? "Landslides" : "Tanah Longsor"}
+              </span>
               <Mountain className="w-5 h-5" />
             </div>
             <div className="text-3xl md:text-4xl font-black text-amber-950 font-mono">
               <CountUp end={stats.landslide} />
-              <span className="text-xs font-normal text-amber-700 ml-1">lokasi</span>
+              <span className="text-xs font-normal text-amber-700 ml-1">
+                {isEn ? "locations" : "lokasi"}
+              </span>
             </div>
             <span className="text-[11px] text-amber-800/80 mt-1 block">
-              Gerakan lereng & retakan tebing curam
+              {isEn ? "Slope movements & ground fissures" : "Gerakan lereng & retakan tebing curam"}
             </span>
           </div>
 
-          {/* Kekeringan */}
+          {/* Drought */}
           <div className="rounded-2xl bg-orange-50/70 border border-orange-200/70 p-4 transition-transform hover:-translate-y-1">
             <div className="flex items-center justify-between text-orange-700 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider">Kekeringan Air</span>
+              <span className="text-xs font-bold uppercase tracking-wider">
+                {isEn ? "Water Drought" : "Kekeringan Air"}
+              </span>
               <SunMedium className="w-5 h-5" />
             </div>
             <div className="text-3xl md:text-4xl font-black text-orange-950 font-mono">
               <CountUp end={stats.drought} />
-              <span className="text-xs font-normal text-orange-600 ml-1">desa</span>
+              <span className="text-xs font-normal text-orange-600 ml-1">
+                {isEn ? "villages" : "desa"}
+              </span>
             </div>
             <span className="text-[11px] text-orange-700/80 mt-1 block">
-              Permintaan distribusi mobil tangki air
+              {isEn ? "Water tanker logistics requests" : "Permintaan distribusi mobil tangki air"}
             </span>
           </div>
         </div>
 
         {/* Footer Note */}
         <div className="mt-5 flex items-center gap-2 text-xs text-slate-500 bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-100">
-          <Activity className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          <Activity className="w-4 h-4 text-emerald-600 shrink-0" />
           <span>
-            Setiap detik, sensor alam dan laporan warga membantu kesiapan kita menyelamatkan sesama.
+            {isEn
+              ? "Every second, environmental telemetry and citizen reports help us stay prepared to protect lives."
+              : "Setiap detik, sensor alam dan laporan warga membantu kesiapan kita menyelamatkan sesama."}
           </span>
         </div>
       </div>

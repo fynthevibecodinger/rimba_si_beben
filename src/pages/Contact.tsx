@@ -1,8 +1,12 @@
 import { useState, FormEvent } from "react";
 import RimbaMascot from "../components/mascot/RimbaMascot";
+import { t } from "../utils/translate";
+import { useLanguage } from "../context/LanguageContext";
 import { Send, CheckCircle2, AlertCircle, Building, Mail, User, MessageSquare, Link2, Globe, MapPin, ArrowUpRight, Sparkles } from "lucide-react";
 
 export default function Contact() {
+  const { language } = useLanguage();
+  const isEn = language === "en";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -65,19 +69,29 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-400/15 text-emerald-200 border border-emerald-300/25 text-xs font-bold uppercase tracking-[0.16em]">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" /> Hubungi Rimba
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" /> {t("contact_title", isEn)}
             </span>
             <h1 className="text-4xl sm:text-6xl font-black font-['Fredoka'] leading-[1.05] mt-5 max-w-2xl">
-              Satu pesan kecil, <span className="text-emerald-300">dampak besar.</span>
+              {isEn ? (
+                <>
+                  A small message, <span className="text-emerald-300">huge impact.</span>
+                </>
+              ) : (
+                <>
+                  Satu pesan kecil, <span className="text-emerald-300">dampak besar.</span>
+                </>
+              )}
             </h1>
             <p className="text-emerald-100/80 text-sm sm:text-base leading-relaxed mt-5 max-w-xl">
-              Punya pertanyaan, cerita, atau ide untuk membuat belajar tentang alam jadi lebih seru? Ceritakan kepada kami.
+              {t("contact_desc", isEn)}
             </p>
           </div>
           <div className="mt-8 flex flex-wrap gap-3 text-xs font-bold text-emerald-100/80">
-            <span className="px-3 py-2 rounded-full bg-white/10 border border-white/10">Ramah pelajar</span>
-            <span className="px-3 py-2 rounded-full bg-white/10 border border-white/10">Terbuka untuk ide</span>
-            <span className="px-3 py-2 rounded-full bg-white/10 border border-white/10">Belajar bersama</span>
+            {[t("tag_student_friendly", isEn), t("tag_open_ideas", isEn), t("tag_learn_together", isEn)].map((tag) => (
+              <span key={tag} className="px-3 py-2 rounded-full bg-white/10 border border-white/10">
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       </section>

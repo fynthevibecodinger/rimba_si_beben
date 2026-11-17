@@ -1,6 +1,7 @@
 import Gallery from "./pages/Gallery";
 import { RouterProvider, useRouter } from "./router";
 import { AmbientMusicProvider } from "./context/AmbientMusicContext";
+import { LanguageProvider } from "./context/LanguageContext";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer.tsx";
 import Home from "./pages/Home";
@@ -52,9 +53,11 @@ function AppContent() {
 export default function App() {
   return (
     <RouterProvider>
-      <AmbientMusicProvider>
+      <LanguageProvider>
+        <AmbientMusicProvider>
         <AppContent />
-      </AmbientMusicProvider>
+        </AmbientMusicProvider>
+      </LanguageProvider>
     </RouterProvider>
   );
 }
