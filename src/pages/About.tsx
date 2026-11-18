@@ -41,10 +41,6 @@ export default function About() {
          />
          <div className="absolute inset-0 bg-gradient-to-b from-[#12382b]/50 via-[#1b4332]/55 to-[#173a2d]/75" />
          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-             {t("nature_and_eco_hub", isEn)}
-          </span>
           <h1 className="text-3xl sm:text-5xl font-black font-['Fredoka'] tracking-tight leading-tight">
              {t("empowering_tagline", isEn)}
           </h1>

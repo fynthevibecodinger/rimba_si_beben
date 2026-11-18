@@ -396,32 +396,6 @@ export default function IssueDetail() {
               animate="visible"
               className="lg:col-span-7 space-y-4"
             >
-              <motion.div variants={heroItemVariants}>
-                <div
-                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md text-xs font-black uppercase tracking-wider text-white border transition-all ${
-                    issue.slug === "kebakaran-hutan"
-                      ? "bg-red-950/70 border-red-500/70 shadow-[0_0_20px_rgba(239,68,68,0.5)] ring-2 ring-orange-500/30"
-                      : "bg-white/20 border-white/20 shadow-xs"
-                  }`}
-                >
-                  <span
-                    className={
-                      issue.slug === "kebakaran-hutan"
-                        ? "text-amber-300 animate-pulse filter drop-shadow-[0_0_8px_#f59e0b]"
-                        : ""
-                    }
-                  >
-                    <MainIcon className="w-4 h-4" />
-                  </span>
-                  <span>
-                    {issue.heroBadge} • {isEn ? "Threat Level: " : "Tingkat Ancaman: "}{issue.threatLevel}
-                  </span>
-                  {issue.slug === "kebakaran-hutan" && (
-                    <span className="w-2 h-2 rounded-full bg-red-400 animate-ping ml-1" />
-                  )}
-                </div>
-              </motion.div>
-
               <motion.h1
                 variants={heroItemVariants}
                 className="text-3xl sm:text-5xl font-black font-['Fredoka'] leading-tight drop-shadow-sm"
@@ -929,10 +903,6 @@ export default function IssueDetail() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-5 border-b border-slate-100">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full border border-emerald-300/60 inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                  {isEn ? "Nature Exploration" : "Eksplorasi Jelajah Alam"}
-                </span>
                 <span className="text-xs font-bold text-slate-400">
                   {isEn ? `Topic ${currentIndex + 1} of ${ALL_ISSUES.length}` : `Topik ${currentIndex + 1} dari ${ALL_ISSUES.length}`}
                 </span>

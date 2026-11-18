@@ -649,10 +649,6 @@ export default function EcosystemSimulation() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-2 max-w-2xl">
-              <span className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider border ${currentTheme.badgeBg}`}>
-                <Sparkles className={`w-3.5 h-3.5 ${currentTheme.badgeIconColor}`} />
-                {isEn ? "3D Ecosystem Simulation Lab" : "Laboratorium Simulasi 3D Ekosistem"}
-              </span>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Fredoka'] tracking-tight">
                 {isEn ? "Disaster Learning Diorama" : "Diorama Belajar Bencana"}
               </h1>

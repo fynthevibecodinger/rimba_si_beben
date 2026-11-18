@@ -68,10 +68,7 @@ export default function Contact() {
         <div className="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-teal-300/10 blur-3xl" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-400/15 text-emerald-200 border border-emerald-300/25 text-xs font-bold uppercase tracking-[0.16em]">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" /> {t("contact_title", isEn)}
-            </span>
-            <h1 className="text-4xl sm:text-6xl font-black font-['Fredoka'] leading-[1.05] mt-5 max-w-2xl">
+            <h1 className="text-4xl sm:text-6xl font-black font-['Fredoka'] leading-[1.05] max-w-2xl">
               {isEn ? (
                 <>
                   A small message, <span className="text-emerald-300">huge impact.</span>

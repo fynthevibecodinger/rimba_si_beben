@@ -145,12 +145,6 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Kolom Kiri: Judul, Deskripsi & Tombol Aksi */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              {/* Badge Identitas */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-emerald-700/20 shadow-md shadow-emerald-950/5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 backdrop-blur-xs">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                {isEn ? "Environmental Education & Awareness Hub" : "Portal Edukasi & Kampanye Peduli Lingkungan"}
-              </div>
-
               {/* Headline Bersih & Rapi Tanpa Font Terpotong */}
               <h1 className="font-['Fredoka'] text-4xl sm:text-5xl lg:text-6xl font-black text-[#173a2d] tracking-tight leading-[1.14]">
                 {isEn ? (
