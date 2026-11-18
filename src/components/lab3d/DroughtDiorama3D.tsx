@@ -587,8 +587,9 @@ export default function DroughtDiorama3D({
           <boxGeometry args={[1.05, 0.52, 0.95]} />
           <meshStandardMaterial color="#b45309" roughness={0.7} />
         </mesh>
-        <mesh castShadow position={[0, 0.85, 0]} rotation={[0, 0, 0]}>
-          <coneGeometry args={[0.9, 0.45, 4]} />
+        {/* Atap Limasan Genteng Merah (Tegak Sejajar Tembok Rumah) */}
+        <mesh castShadow position={[0, 0.85, 0]} rotation={[0, Math.PI / 4, 0]}>
+          <coneGeometry args={[0.92, 0.45, 4]} />
           <meshStandardMaterial color="#991b1b" roughness={0.6} />
         </mesh>
         <mesh position={[0.53, 0.36, 0]}>

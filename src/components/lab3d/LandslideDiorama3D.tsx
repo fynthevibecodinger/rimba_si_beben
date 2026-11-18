@@ -703,9 +703,9 @@ export default function LandslideDiorama3D({
             <boxGeometry args={[0.5, 0.26, 0.5]} />
             <meshStandardMaterial color="#78350f" />
           </mesh>
-          {/* Atap Pelana Genteng Merah Peringatan Bahaya */}
-          <mesh castShadow position={[0, 0.44, 0]}>
-            <coneGeometry args={[0.45, 0.24, 4]} />
+          {/* Atap Genteng Merah Peringatan Bahaya (Tegak Sejajar Tembok Rumah) */}
+          <mesh castShadow position={[0, 0.44, 0]} rotation={[0, Math.PI / 4, 0]}>
+            <coneGeometry args={[0.46, 0.24, 4]} />
             <meshStandardMaterial color="#ef4444" roughness={0.5} />
           </mesh>
         </group>
@@ -721,8 +721,9 @@ export default function LandslideDiorama3D({
           <boxGeometry args={[0.62, 0.34, 0.62]} />
           <meshStandardMaterial color="#b45309" roughness={0.7} />
         </mesh>
-        <mesh castShadow position={[0, 0.56, 0]}>
-          <coneGeometry args={[0.55, 0.32, 4]} />
+        {/* Atap Genteng Hijau (Tegak Sejajar Tembok Rumah) */}
+        <mesh castShadow position={[0, 0.56, 0]} rotation={[0, Math.PI / 4, 0]}>
+          <coneGeometry args={[0.56, 0.32, 4]} />
           <meshStandardMaterial color="#15803d" roughness={0.6} />
         </mesh>
       </group>

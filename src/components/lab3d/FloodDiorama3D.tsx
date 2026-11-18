@@ -448,8 +448,9 @@ export default function FloodDiorama3D({
           <boxGeometry args={[0.8, 0.7, 0.9]} />
           <meshStandardMaterial color="#fef9c3" roughness={0.6} />
         </mesh>
-        <mesh position={[0, 0.85, 0]} rotation={[0, 0, 0]} castShadow>
-          <coneGeometry args={[0.7, 0.45, 4]} />
+        {/* Atap Limasan Genteng Merah (Tegak Sejajar Tembok Rumah) */}
+        <mesh position={[0, 0.85, 0]} rotation={[0, Math.PI / 4, 0]} castShadow>
+          <coneGeometry args={[0.72, 0.45, 4]} />
           <meshStandardMaterial color="#b91c1c" roughness={0.5} />
         </mesh>
         <mesh position={[0.41, 0.25, 0]}>
@@ -468,8 +469,9 @@ export default function FloodDiorama3D({
           <boxGeometry args={[0.85, 0.8, 1.0]} />
           <meshStandardMaterial color="#f0fdf4" roughness={0.6} />
         </mesh>
-        <mesh position={[0, 0.95, 0]} castShadow>
-          <coneGeometry args={[0.75, 0.5, 4]} />
+        {/* Atap Limasan Genteng Oranye (Tegak Sejajar Tembok Rumah) */}
+        <mesh position={[0, 0.95, 0]} rotation={[0, Math.PI / 4, 0]} castShadow>
+          <coneGeometry args={[0.78, 0.5, 4]} />
           <meshStandardMaterial color="#c2410c" roughness={0.5} />
         </mesh>
         <mesh position={[0.43, 0.28, 0]}>
