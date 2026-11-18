@@ -647,36 +647,23 @@ export default function EcosystemSimulation() {
          ========================================================================= */}
       <section className={`bg-gradient-to-b ${currentTheme.headerGradient} text-white pt-8 pb-14 border-b ${currentTheme.headerBorder} transition-colors duration-500`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="space-y-2 max-w-2xl">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Fredoka'] tracking-tight">
-                {isEn ? "Disaster Learning Diorama" : "Diorama Belajar Bencana"}
-              </h1>
-              <p className="text-white/80 text-xs sm:text-sm md:text-base leading-relaxed">
-                {isEn ? (
-                  <>
-                    Explore real-time 3D landscape cross-sections. Test how extreme weather,
-                    human activities, and conservation solutions affect water runoff, soil stability, and groundwater aquifers.
-                  </>
-                ) : (
-                  <>
-                    Eksplorasi potongan balok lanskap 3D secara <em className="not-italic font-semibold text-white">real-time</em>. Uji bagaimana cuaca ekstrem,
-                    kebiasaan manusia, dan solusi konservasi mempengaruhi aliran air, tanah, dan akuifer bumi.
-                  </>
-                )}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => handleScenarioChange(scenario)}
-                className="px-4 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs sm:text-sm font-bold inline-flex items-center gap-2 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
-                title={isEn ? "Reset scenario to initial state" : "Atur ulang skenario ke kondisi awal"}
-              >
-                <RotateCcw className={`w-4 h-4 ${currentTheme.resetIconColor}`} />
-                <span>{isEn ? "Reset Scenario" : "Mulai Ulang Skenario"}</span>
-              </button>
-            </div>
+          <div className="space-y-2 max-w-3xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Fredoka'] tracking-tight">
+              {isEn ? "Disaster Learning Diorama" : "Diorama Belajar Bencana"}
+            </h1>
+            <p className="text-white/80 text-xs sm:text-sm md:text-base leading-relaxed">
+              {isEn ? (
+                <>
+                  Explore real-time 3D landscape cross-sections. Test how extreme weather,
+                  human activities, and conservation solutions affect water runoff, soil stability, and groundwater aquifers.
+                </>
+              ) : (
+                <>
+                  Eksplorasi potongan balok lanskap 3D secara <em className="not-italic font-semibold text-white">real-time</em>. Uji bagaimana cuaca ekstrem,
+                  kebiasaan manusia, dan solusi konservasi mempengaruhi aliran air, tanah, dan akuifer bumi.
+                </>
+              )}
+            </p>
           </div>
 
           {/* 4 Scenario Selector Tabs */}
@@ -762,6 +749,16 @@ export default function EcosystemSimulation() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  {/* Tombol Mulai Ulang / Reset Cepat Diorama */}
+                  <button
+                    onClick={() => handleScenarioChange(scenario)}
+                    className="px-2.5 sm:px-3 py-1.5 rounded-xl font-bold text-xs inline-flex items-center gap-1.5 transition-all shadow-xs cursor-pointer border bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300/70 active:scale-95 group"
+                    title={isEn ? "Reset scenario to initial state" : "Atur ulang skenario ke kondisi awal"}
+                  >
+                    <RotateCcw className="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-800 group-hover:-rotate-45 transition-transform duration-200" />
+                    <span className="hidden sm:inline">{isEn ? "Reset" : "Mulai Ulang"}</span>
+                  </button>
+
                   {/* Tombol Toggle Label Pin Hotspot */}
                   <button
                     onClick={() => setShowHotspotLabels(!showHotspotLabels)}
@@ -1057,9 +1054,16 @@ export default function EcosystemSimulation() {
                   {isEn ? "Control & Engineering Panel" : "Panel Kontrol & Rekayasa"}
                 </span>
               </div>
-              <span className="text-[10px] text-slate-400 font-bold hidden sm:inline">
-                {isEn ? "10 Interactive Parameters" : "10 Parameter Interaktif"}
-              </span>
+              
+              {/* Tombol Mulai Ulang Skenario Lengkap */}
+              <button
+                onClick={() => handleScenarioChange(scenario)}
+                className="px-3 py-1.5 rounded-xl font-bold text-xs bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs transition-all inline-flex items-center gap-1.5 cursor-pointer hover:border-slate-300 active:scale-95 group"
+                title={isEn ? "Reset all parameters and weather to initial scenario state" : "Atur ulang seluruh parameter dan cuaca ke kondisi awal skenario"}
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-700 group-hover:-rotate-45 transition-transform duration-300" />
+                <span>{isEn ? "Reset Scenario" : "Mulai Ulang Skenario"}</span>
+              </button>
             </div>
             
             {/* 1. MASKOT RIMBA HORIZONTAL COMPANION CARD (SERAGAM DENGAN CARD LAIN) */}

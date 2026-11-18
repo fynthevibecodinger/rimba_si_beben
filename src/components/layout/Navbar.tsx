@@ -6,6 +6,7 @@ import {
   Menu,
   X,
   Sparkles,
+  FlaskConical,
   Waves,
   Mountain,
   SunMedium,
@@ -280,13 +281,13 @@ export default function Navbar() {
             {/* Tombol Lab Simulasi Interaktif dengan Efek Shimmer */}
             <Link
               to="/simulasi"
-              className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black inline-flex items-center gap-1.5 transition-all duration-150 ${
+              className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-black inline-flex items-center gap-1.5 transition-all duration-150 group ${
                 isCurrent("/simulasi")
                   ? "bg-emerald-800 text-white shadow-md shadow-emerald-900/25 ring-2 ring-emerald-400/50"
                   : "bg-emerald-100/90 text-emerald-900 hover:bg-emerald-200/90 hover:scale-105 active:scale-95"
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+              <FlaskConical className="w-3.5 h-3.5 text-amber-500 group-hover:-rotate-12 transition-transform duration-200" />
               <span>{t("nav_simulation", "Lab Simulasi")}</span>
             </Link>
             <Link
@@ -329,18 +330,31 @@ export default function Navbar() {
           </nav>
 
           {/* Mobile Actions */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex md:hidden items-center gap-1.5 sm:gap-2">
             <PersonalizationMenu compact />
+
+            {/* Tombol Lab Simulasi Mobile: Mode Logo Lab Sains */}
             <Link
               to="/simulasi"
-              className="px-3 py-1.5 rounded-full bg-emerald-800 text-white text-xs font-black inline-flex items-center gap-1 shadow-sm"
+              aria-label={t("nav_simulation", "Lab Simulasi")}
+              title={t("nav_simulation", "Lab Simulasi")}
+              className={`w-9 h-9 justify-center rounded-xl sm:rounded-full group font-bold inline-flex items-center transition-all duration-200 cursor-pointer select-none border shadow-2xs hover:scale-105 active:scale-95 relative ${
+                isCurrent("/simulasi")
+                  ? "bg-emerald-900 text-white border-emerald-700/70 shadow-md ring-2 ring-emerald-400/40"
+                  : "bg-emerald-800 hover:bg-emerald-700 text-white border-emerald-600/50 shadow-xs"
+              }`}
             >
-              <Sparkles className="w-3 h-3 text-amber-400" />
-              <span>{t("nav_simulation", "Simulasi")}</span>
+              <FlaskConical className="w-4.5 h-4.5 text-amber-300 group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-200" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+              </span>
             </Link>
+
+            {/* Tombol Hamburger Drawer */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-emerald-900/10 text-emerald-900 hover:bg-emerald-900/15 transition-colors cursor-pointer"
+              className="w-9 h-9 justify-center rounded-xl sm:rounded-full bg-emerald-900/10 hover:bg-emerald-900/15 text-emerald-900 border border-emerald-900/10 shadow-2xs transition-all duration-200 cursor-pointer inline-flex items-center hover:scale-105 active:scale-95"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -428,10 +442,10 @@ export default function Navbar() {
             <Link
               to="/simulasi"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-emerald-800 text-white font-black text-sm shadow-md"
+              className="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-emerald-800 text-white font-black text-sm shadow-md group"
             >
               <span className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
+                <FlaskConical className="w-4 h-4 text-amber-300 group-hover:-rotate-12 transition-transform duration-200" />
                 {t("btn_try_simulation", "Coba Simulasi Alam")}
               </span>
               <span className="text-[10px] uppercase bg-emerald-600 px-2 py-0.5 rounded-full font-black">
