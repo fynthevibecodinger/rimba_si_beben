@@ -37,32 +37,9 @@ export default function PersonalizationMenu({ compact = false }: Personalization
 
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Hover handlers matching the "materi" (Jelajah Alam) dropdown
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    setIsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    timeoutRef.current = setTimeout(() => {
-      setIsOpen(false);
-    }, 220);
-  };
 
   const handleToggleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
     setIsOpen((prev) => !prev);
   };
 
@@ -85,9 +62,6 @@ export default function PersonalizationMenu({ compact = false }: Personalization
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
     };
   }, []);
 
@@ -95,8 +69,6 @@ export default function PersonalizationMenu({ compact = false }: Personalization
     <div
       ref={menuRef}
       className="relative inline-block"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       {/* =========================================================================
           1. TRIGGER BUTTON DI NAVBAR (IKON / LOGO PERSONALISASI SAJA)
@@ -108,23 +80,23 @@ export default function PersonalizationMenu({ compact = false }: Personalization
         aria-haspopup="true"
         title={t("nav_personalization", "Personalisasi: Atur Bahasa & Musik")}
         aria-label={t("nav_personalization", "Personalisasi")}
-        className={`w-9 h-9 justify-center rounded-xl sm:rounded-full group font-bold inline-flex items-center transition-all duration-200 cursor-pointer select-none border shadow-2xs ${
+        className={`w-9 h-9 justify-center rounded-xl sm:rounded-full group font-bold inline-flex items-center transition-all duration-200 cursor-pointer select-none border shadow-2xs hover:scale-105 active:scale-95 ${
           isOpen
             ? "bg-emerald-900 text-white border-emerald-700/60 shadow-md ring-2 ring-emerald-400/40"
             : isPlaying
-            ? "bg-emerald-800 text-emerald-50 border-emerald-600/50 shadow-sm"
-            : "bg-white/80 hover:bg-emerald-50/90 text-slate-700 hover:text-emerald-950 border-emerald-900/15 hover:border-emerald-700/30"
+            ? "bg-emerald-800 text-emerald-50 border-emerald-600/50 shadow-sm hover:bg-emerald-700"
+            : "bg-white/90 hover:bg-emerald-50 text-slate-700 hover:text-emerald-950 border-emerald-900/15 hover:border-emerald-700/30 shadow-xs"
         }`}
       >
         {/* Ikon Personalisasi dengan animasi equalizer / dot aktif jika musik berputar */}
         <div className="relative flex items-center justify-center">
           <SlidersHorizontal
-            className={`w-4 h-4 transition-transform duration-200 ${
+            className={`w-4 h-4 transition-transform duration-300 ${
               isOpen
-                ? "rotate-90 text-emerald-300"
+                ? "rotate-90 text-emerald-300 scale-110"
                 : isPlaying
-                ? "text-emerald-200"
-                : "text-emerald-800 group-hover:scale-110"
+                ? "text-emerald-200 group-hover:scale-110 group-hover:rotate-12"
+                : "text-emerald-800 group-hover:scale-110 group-hover:rotate-12"
             }`}
           />
           {isPlaying && (
@@ -137,13 +109,11 @@ export default function PersonalizationMenu({ compact = false }: Personalization
       </button>
 
       {/* =========================================================================
-          2. DROPDOWN PANEL PERSONALISASI (HOVER KAYA MATERI)
+          2. DROPDOWN PANEL PERSONALISASI (HANYA DITAMPILKAN SAAT DIKLIK)
          ========================================================================= */}
       {isOpen && (
         <div
           className="absolute top-full -right-2 sm:right-0 pt-2 w-[335px] sm:w-[390px] max-w-[calc(100vw-20px)] z-50 animate-in fade-in zoom-in-95 duration-150"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
           <div className="rounded-3xl bg-white/95 backdrop-blur-2xl border border-emerald-900/15 shadow-2xl p-4 sm:p-5 ring-1 ring-emerald-950/5 text-slate-800">
             {/* Header Panel */}
