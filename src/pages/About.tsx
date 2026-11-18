@@ -306,14 +306,8 @@ export default function About() {
   return (
     <div className="w-full bg-[#f7f4eb] text-emerald-950 pb-24 overflow-x-clip">
       {/* 1. HERO BANNER */}
-      <section className="eco-hero relative overflow-visible bg-gradient-to-b from-[#dff4ec] via-[#e9f5e9] to-[#f7f4eb]">
+      <section className="eco-hero relative overflow-visible bg-gradient-to-b from-[#dff4ec] via-[#e9f5e9] to-[#f7f4eb] min-h-[calc(100vh-4rem)] flex flex-col justify-center">
         <EcoLandscape />
-
-        {/* Lapisan Kontras Halus di Belakang Teks agar Terbaca Jelas di Atas Awan */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-[5] bg-[radial-gradient(ellipse_65%_50%_at_50%_46%,rgba(8,36,26,0.34)_0%,rgba(8,36,26,0.12)_55%,transparent_100%)]"
-        />
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-20 md:pt-36 md:pb-28 text-center">
           <motion.div
@@ -323,57 +317,31 @@ export default function About() {
             className="space-y-6"
           >
             {/* Kicker / Eyebrow Editorial */}
-            <div className="flex items-center justify-center gap-3 text-[11px] sm:text-xs font-extrabold uppercase tracking-[0.24em] text-amber-200 drop-shadow-[0_2px_8px_rgba(6,28,20,0.75)]">
-              <span className="h-[1.5px] w-7 rounded-full bg-amber-300/80" />
+            <div className="flex items-center justify-center gap-3 text-[11px] sm:text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-800/80">
+              <span className="h-[1.5px] w-7 rounded-full bg-emerald-600/40" />
               <span>
                 {isEn
                   ? "Interactive Eco-Learning Sanctuary"
                   : "Ruang Belajar Ekologi Interaktif"}
               </span>
-              <span className="h-[1.5px] w-7 rounded-full bg-amber-300/80" />
+              <span className="h-[1.5px] w-7 rounded-full bg-emerald-600/40" />
             </div>
 
             {/* Judul Utama dengan Aksen Sorotan & Kedalaman */}
-            <h1 className="text-3xl sm:text-5xl md:text-[3.55rem] font-black font-['Fredoka'] text-white drop-shadow-[0_4px_18px_rgba(6,28,20,0.65)] leading-[1.12] tracking-tight max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-5xl md:text-[3.55rem] font-black font-['Fredoka'] text-[#173a2d] leading-[1.14] tracking-tight max-w-4xl mx-auto">
               {isEn ? (
                 <>
                   Empowering{" "}
-                  <span className="relative inline-block text-amber-300">
+                  <span className="text-[#2d6a4f] underline decoration-emerald-400/60 decoration-wavy decoration-2">
                     Eco-Conscious
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 220 12"
-                      fill="none"
-                      className="absolute -bottom-1.5 left-0 w-full h-2.5 text-amber-300/85"
-                    >
-                      <path
-                        d="M3 9C55 3 165 3 217 9"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                      />
-                    </svg>
                   </span>{" "}
                   &amp; Climate-Resilient Generations
                 </>
               ) : (
                 <>
                   Membangun Generasi{" "}
-                  <span className="relative inline-block text-amber-300">
+                  <span className="text-[#2d6a4f] underline decoration-emerald-400/60 decoration-wavy decoration-2">
                     Peduli Alam
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 220 12"
-                      fill="none"
-                      className="absolute -bottom-1.5 left-0 w-full h-2.5 text-amber-300/85"
-                    >
-                      <path
-                        d="M3 9C55 3 165 3 217 9"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                      />
-                    </svg>
                   </span>{" "}
                   &amp; Tangguh Menghadapi Bencana
                 </>
@@ -381,41 +349,11 @@ export default function About() {
             </h1>
 
             {/* Subjudul dengan Kontras Tinggi */}
-            <p className="text-sm sm:text-base md:text-lg text-white/95 drop-shadow-[0_2px_10px_rgba(6,28,20,0.75)] max-w-2xl mx-auto leading-relaxed font-semibold">
+            <p className="text-base sm:text-lg text-[#305345] max-w-2xl mx-auto leading-relaxed font-medium">
               {isEn
                 ? "An interactive web learning sanctuary helping youth preserve ecosystems, care for nature, and prepare for environmental challenges."
                 : "Ruang belajar web interaktif yang membantu generasi muda menjaga ekosistem, mencintai alam, dan siap menghadapi tantangan lingkungan."}
             </p>
-
-            {/* Quick Anchor Pills dengan Ikon & Hierarki Visual */}
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => scrollToSection("about-mascot")}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-950/60 hover:bg-emerald-950/85 text-white text-xs sm:text-sm font-bold backdrop-blur-md border border-white/30 shadow-sm transition-all cursor-pointer hover:-translate-y-0.5"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-amber-300" />
-                <span>{isEn ? "Learn" : "Pelajari"}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => scrollToSection("about-pillars")}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-950/60 hover:bg-emerald-950/85 text-white text-xs sm:text-sm font-bold backdrop-blur-md border border-white/30 shadow-sm transition-all cursor-pointer hover:-translate-y-0.5"
-              >
-                <Compass className="w-3.5 h-3.5 text-emerald-300" />
-                <span>{isEn ? "Explore" : "Jelajahi"}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => scrollToSection("about-cta")}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs sm:text-sm font-extrabold border border-amber-200/80 shadow-md transition-all cursor-pointer hover:-translate-y-0.5"
-              >
-                <Zap className="w-3.5 h-3.5" />
-                <span>{isEn ? "Act" : "Bertindak"}</span>
-              </button>
-            </div>
           </motion.div>
         </div>
       </section>
@@ -440,23 +378,23 @@ export default function About() {
                   key={selectedGear}
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 0.45 }}
-                  className="relative z-10 scale-110"
+                  className="relative z-10 -translate-y-3"
                 >
                   <RimbaMascot size="lg" />
                 </motion.div>
 
-                {/* Specimen Label Tag */}
-                <div className="absolute -bottom-2 left-2 sm:left-4 bg-[#f7f4eb] border border-emerald-900/20 px-3.5 py-2 rounded-2xl shadow-xs">
-                  <p className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700">
+                {/* Specimen Label Tag - Clear of mascot feet */}
+                <div className="absolute -bottom-3 left-1 sm:left-2 bg-[#f7f4eb]/95 backdrop-blur-xs border border-emerald-900/20 px-3.5 py-1.5 rounded-2xl shadow-md z-20">
+                  <p className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 leading-none mb-1">
                     {isEn ? "Species Inspiration" : "Inspirasi Spesies"}
                   </p>
-                  <p className="text-xs font-bold italic text-emerald-950">
+                  <p className="text-xs font-bold italic text-emerald-950 leading-none">
                     Buceros rhinoceros
                   </p>
                 </div>
 
                 {/* Habitat Tag */}
-                <div className="absolute top-3 right-2 sm:right-3 bg-emerald-900 text-amber-300 px-3 py-1 rounded-full text-[11px] font-bold flex items-center gap-1.5">
+                <div className="absolute top-3 right-2 sm:right-3 bg-emerald-900 text-amber-300 px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 shadow-xs z-20">
                   <MapPin className="w-3 h-3" />
                   <span>{isEn ? "Tropical Canopy" : "Kanopi Tropis"}</span>
                 </div>

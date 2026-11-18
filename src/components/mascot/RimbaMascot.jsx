@@ -17,16 +17,18 @@ export default function RimbaMascot({
     >
       <svg viewBox="0 0 360 390" role="img">
         <title>Rimba si eco-ranger burung rangkong</title>
-        <ellipse cx="184" cy="361" rx="104" ry="16" fill="#153B2D" opacity=".12" />
+        <ellipse cx="180" cy="362" rx="104" ry="16" fill="#153B2D" opacity=".14" />
 
         <motion.g
           animate={mood === "scan" ? { rotate: [0, 2, 0, -2, 0] } : {}}
           transition={{ duration: 2.4, repeat: Infinity }}
           style={{ transformOrigin: "180px 220px" }}
         >
-          {/* tail and body */}
-          <path d="M118 264 65 347l63-34 18 46 19-91Z" fill="#173B30" />
-          <path d="m124 288-37 52 46-23Z" fill="#F5E7C6" />
+          {/* tail feathers - neatly tucked behind */}
+          <path d="M125 268 L92 344 L122 324 L138 352 L148 285 Z" fill="#173B30" />
+          <path d="M102 322 L92 344 L122 324 Z" fill="#F5E7C6" />
+
+          {/* body */}
           <ellipse cx="178" cy="264" rx="84" ry="90" fill="#253D37" />
           <ellipse cx="179" cy="268" rx="59" ry="71" fill="#F6F0DB" />
 
@@ -76,36 +78,49 @@ export default function RimbaMascot({
           <circle cx="134" cy="161" r="11" fill="#EFA88B" opacity=".45" />
 
           {/* explorer hat */}
-          <path d="M104 101c26-16 86-25 126-4l-10 16c-39-12-77-8-111 4Z" fill="#8D5B4C" />
           <path
-            d="M126 93c1-48 70-58 87-3l-6 13c-31-10-56-8-81 2Z"
+            d="M124 94 C125 50, 195 40, 212 94 Z"
             fill="#B9825F"
             stroke="#684437"
             strokeWidth="5"
+            strokeLinejoin="round"
           />
-          <path d="M125 86c29 8 59 7 88-1l-1 14c-31 8-58 8-87 1Z" fill="#2D6A4F" />
-          <path d="M184 74c10-8 21-11 34-7-8 12-18 19-32 20Z" fill="#52B788" />
+          <path
+            d="M123 93 C148 85, 185 85, 213 93 L212 85 C185 78, 148 78, 124 85 Z"
+            fill="#2D6A4F"
+          />
+          <path d="M184 74 c10-8 21-11 34-7 -8 12 -18 19 -32 20 Z" fill="#52B788" />
+          <path
+            d="M106 102 C134 88, 188 88, 222 100 C194 108, 134 108, 106 102 Z"
+            fill="#8D5B4C"
+            stroke="#684437"
+            strokeWidth="4"
+            strokeLinejoin="round"
+          />
 
           {/* waving wing */}
           <motion.g
             animate={
               mood === "wave" || mood === "celebrate"
-                ? { rotate: [0, -22, 10, -22, 0] }
-                : { rotate: [0, -3, 0] }
+                ? { rotate: [0, -20, 8, -20, 0] }
+                : { rotate: [0, -4, 0] }
             }
-            transition={{ duration: 1.5, repeat: Infinity }}
-            style={{ transformOrigin: "117px 239px" }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transformOrigin: "120px 235px" }}
           >
             <path
-              d="M121 239c-33-9-59-30-67-58-14 18-4 51 15 68-24-6-34-2-39 9 23 20 61 25 91 4Z"
+              d="M122 232 C95 210, 68 185, 46 160 C40 178, 48 202, 64 218 C46 222, 38 238, 44 252 C64 266, 96 262, 122 240 Z"
               fill="#263E38"
+              stroke="#1A2D28"
+              strokeWidth="3.5"
+              strokeLinejoin="round"
             />
             <path
-              d="M55 181c-8-13-15-20-25-22M68 249c-19 4-29 10-34 21"
+              d="M62 216 C78 228, 98 234, 118 234"
               fill="none"
-              stroke="#263E38"
+              stroke="#3E6157"
+              strokeWidth="4"
               strokeLinecap="round"
-              strokeWidth="13"
             />
           </motion.g>
 
@@ -148,11 +163,25 @@ export default function RimbaMascot({
 
           {/* feet */}
           <path
-            d="M149 337v23M211 337v23M130 364h40M191 364h40"
+            d="M152 334v20 M208 334v20"
             fill="none"
             stroke="#D99A3C"
             strokeLinecap="round"
-            strokeWidth="13"
+            strokeWidth="12"
+          />
+          <path
+            d="M132 358 c4 6 12 7 20 7 c8 0 16-1 20-7"
+            fill="none"
+            stroke="#D99A3C"
+            strokeLinecap="round"
+            strokeWidth="12"
+          />
+          <path
+            d="M188 358 c4 6 12 7 20 7 c8 0 16-1 20-7"
+            fill="none"
+            stroke="#D99A3C"
+            strokeLinecap="round"
+            strokeWidth="12"
           />
         </motion.g>
       </svg>

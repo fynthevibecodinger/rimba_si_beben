@@ -82,6 +82,9 @@ const DEFAULT_ACTIONS: Record<ScenarioId, Record<string, boolean>> = {
 };
 
 interface ScenarioTheme {
+  pageBg: string;
+  glowTop: string;
+  glowBottom: string;
   headerGradient: string;
   headerBorder: string;
   badgeBg: string;
@@ -104,6 +107,9 @@ interface ScenarioTheme {
 
 const SCENARIO_THEMES: Record<ScenarioId, ScenarioTheme> = {
   banjir: {
+    pageBg: "bg-gradient-to-b from-[#0a2139] via-[#07192c] to-[#04101c]",
+    glowTop: "bg-sky-500/15",
+    glowBottom: "bg-cyan-500/10",
     headerGradient: "from-[#0c243c] via-[#091b2e] to-[#061220]",
     headerBorder: "border-sky-900/40",
     badgeBg: "bg-sky-500/20 text-sky-300 border-sky-400/30",
@@ -124,6 +130,9 @@ const SCENARIO_THEMES: Record<ScenarioId, ScenarioTheme> = {
     weatherPresetActiveLight: "bg-sky-50 text-sky-800 border-sky-300 ring-1 ring-sky-300",
   },
   longsor: {
+    pageBg: "bg-gradient-to-b from-[#251b12] via-[#1c140d] to-[#120c08]",
+    glowTop: "bg-amber-600/15",
+    glowBottom: "bg-yellow-700/10",
     headerGradient: "from-[#291e14] via-[#20170f] to-[#17100a]",
     headerBorder: "border-amber-900/40",
     badgeBg: "bg-amber-500/20 text-amber-300 border-amber-400/30",
@@ -144,6 +153,9 @@ const SCENARIO_THEMES: Record<ScenarioId, ScenarioTheme> = {
     weatherPresetActiveLight: "bg-amber-50 text-amber-900 border-amber-400 ring-1 ring-amber-300",
   },
   kekeringan: {
+    pageBg: "bg-gradient-to-b from-[#2e1906] via-[#221204] to-[#140a02]",
+    glowTop: "bg-orange-500/15",
+    glowBottom: "bg-amber-500/10",
     headerGradient: "from-[#351e08] via-[#2a1705] to-[#1e1003]",
     headerBorder: "border-orange-900/40",
     badgeBg: "bg-orange-500/20 text-orange-300 border-orange-400/30",
@@ -164,6 +176,9 @@ const SCENARIO_THEMES: Record<ScenarioId, ScenarioTheme> = {
     weatherPresetActiveLight: "bg-orange-50 text-orange-900 border-orange-300 ring-1 ring-orange-300",
   },
   karhutla: {
+    pageBg: "bg-gradient-to-b from-[#330a0a] via-[#240606] to-[#160303]",
+    glowTop: "bg-rose-600/15",
+    glowBottom: "bg-red-600/10",
     headerGradient: "from-[#3a0c0c] via-[#2c0808] to-[#1c0404]",
     headerBorder: "border-rose-900/40",
     badgeBg: "bg-rose-500/20 text-rose-300 border-rose-400/30",
@@ -641,14 +656,30 @@ export default function EcosystemSimulation() {
   }, [scenario]);
 
   return (
-    <div className="w-full pb-20 bg-slate-50/50 overflow-x-clip">
+    <div className={`w-full min-h-screen pb-24 ${currentTheme.pageBg} text-white transition-colors duration-700 relative overflow-x-clip`}>
+      {/* Ambient Atmospheric Lighting Behind Content */}
+      <div
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <div
+          className={`absolute -top-32 -left-32 w-96 sm:w-[500px] h-96 sm:h-[500px] rounded-full blur-3xl transition-colors duration-700 ${currentTheme.glowTop}`}
+        />
+        <div
+          className={`absolute top-1/3 -right-32 w-96 sm:w-[600px] h-96 sm:h-[600px] rounded-full blur-3xl transition-colors duration-700 ${currentTheme.glowBottom}`}
+        />
+        <div
+          className={`absolute -bottom-32 left-1/4 w-96 sm:w-[600px] h-96 sm:h-[600px] rounded-full blur-3xl transition-colors duration-700 ${currentTheme.glowTop}`}
+        />
+      </div>
+
       {/* =========================================================================
           1. HEADER BANNER UTAMA LABORATORIUM 3D
          ========================================================================= */}
-      <section className={`bg-gradient-to-b ${currentTheme.headerGradient} text-white pt-8 pb-14 border-b ${currentTheme.headerBorder} transition-colors duration-500`}>
+      <section className="relative z-10 pt-8 pb-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-2 max-w-3xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Fredoka'] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-['Fredoka'] tracking-tight text-white">
               {isEn ? "Disaster Learning Diorama" : "Diorama Belajar Bencana"}
             </h1>
             <p className="text-white/80 text-xs sm:text-sm md:text-base leading-relaxed">
@@ -680,7 +711,7 @@ export default function EcosystemSimulation() {
                   className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all flex items-center justify-between gap-2.5 cursor-pointer select-none group ${
                     isActive
                       ? `bg-white text-slate-900 border-white shadow-xl scale-[1.02] ring-2 ${scenTheme.activeTabRing} font-black`
-                      : "bg-white/5 hover:bg-white/10 text-white/80 border-white/10 hover:border-white/20"
+                      : "bg-white/5 hover:bg-white/10 text-white/80 border-white/10 hover:border-white/20 backdrop-blur-xs"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -721,7 +752,7 @@ export default function EcosystemSimulation() {
       {/* =========================================================================
           2. WORKSPACE UTAMA: SPLIT-SCREEN RESPONSIVE (3D CANVAS + KONTROL)
          ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
+      <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-1">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
           {/* =========================================================================
@@ -1045,12 +1076,12 @@ export default function EcosystemSimulation() {
           <div className="lg:col-span-5 space-y-3.5 self-start">
             
             {/* Visual Column Header */}
-            <div className="flex items-center justify-between px-1 text-slate-700">
+            <div className="flex items-center justify-between px-1 mb-1">
               <div className="flex items-center gap-2">
-                <span className="p-1 rounded-lg bg-emerald-100 text-emerald-800">
+                <span className={`p-1.5 rounded-lg ${currentTheme.activeTabIconBg}`}>
                   <Sliders className="w-3.5 h-3.5" />
                 </span>
-                <span className="text-xs font-black uppercase tracking-wider text-slate-800">
+                <span className="text-xs font-black uppercase tracking-wider text-white/95">
                   {isEn ? "Control & Engineering Panel" : "Panel Kontrol & Rekayasa"}
                 </span>
               </div>
@@ -1058,10 +1089,10 @@ export default function EcosystemSimulation() {
               {/* Tombol Mulai Ulang Skenario Lengkap */}
               <button
                 onClick={() => handleScenarioChange(scenario)}
-                className="px-3 py-1.5 rounded-xl font-bold text-xs bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs transition-all inline-flex items-center gap-1.5 cursor-pointer hover:border-slate-300 active:scale-95 group"
+                className="px-3 py-1.5 rounded-xl font-bold text-xs bg-white hover:bg-slate-100 text-slate-800 border border-white/80 shadow-sm transition-all inline-flex items-center gap-1.5 cursor-pointer hover:scale-102 active:scale-95 group"
                 title={isEn ? "Reset all parameters and weather to initial scenario state" : "Atur ulang seluruh parameter dan cuaca ke kondisi awal skenario"}
               >
-                <RotateCcw className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-700 group-hover:-rotate-45 transition-transform duration-300" />
+                <RotateCcw className="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-800 group-hover:-rotate-45 transition-transform duration-200" />
                 <span>{isEn ? "Reset Scenario" : "Mulai Ulang Skenario"}</span>
               </button>
             </div>
