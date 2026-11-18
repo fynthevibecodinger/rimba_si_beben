@@ -14,6 +14,8 @@ import {
   CheckCircle2,
   MapPin,
   BookOpen,
+  Compass,
+  Zap,
 } from "lucide-react";
 
 const InstagramIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
@@ -307,41 +309,112 @@ export default function About() {
       <section className="eco-hero relative overflow-visible bg-gradient-to-b from-[#dff4ec] via-[#e9f5e9] to-[#f7f4eb]">
         <EcoLandscape />
 
+        {/* Lapisan Kontras Halus di Belakang Teks agar Terbaca Jelas di Atas Awan */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[5] bg-[radial-gradient(ellipse_65%_50%_at_50%_46%,rgba(8,36,26,0.34)_0%,rgba(8,36,26,0.12)_55%,transparent_100%)]"
+        />
+
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-20 md:pt-36 md:pb-28 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-5"
+            transition={{ duration: 0.65, ease: "easeOut" }}
+            className="space-y-6"
           >
-            <h1 className="text-3xl sm:text-5xl md:text-[3.4rem] font-black font-['Fredoka'] text-white drop-shadow-[0_2px_12px_rgba(10,38,28,0.45)] leading-[1.12] tracking-tight max-w-4xl mx-auto">
-              {isEn
-                ? "Empowering Eco-Conscious & Climate-Resilient Generations"
-                : "Membangun Generasi Peduli Alam & Tangguh Menghadapi Bencana"}
+            {/* Kicker / Eyebrow Editorial */}
+            <div className="flex items-center justify-center gap-3 text-[11px] sm:text-xs font-extrabold uppercase tracking-[0.24em] text-amber-200 drop-shadow-[0_2px_8px_rgba(6,28,20,0.75)]">
+              <span className="h-[1.5px] w-7 rounded-full bg-amber-300/80" />
+              <span>
+                {isEn
+                  ? "Interactive Eco-Learning Sanctuary"
+                  : "Ruang Belajar Ekologi Interaktif"}
+              </span>
+              <span className="h-[1.5px] w-7 rounded-full bg-amber-300/80" />
+            </div>
+
+            {/* Judul Utama dengan Aksen Sorotan & Kedalaman */}
+            <h1 className="text-3xl sm:text-5xl md:text-[3.55rem] font-black font-['Fredoka'] text-white drop-shadow-[0_4px_18px_rgba(6,28,20,0.65)] leading-[1.12] tracking-tight max-w-4xl mx-auto">
+              {isEn ? (
+                <>
+                  Empowering{" "}
+                  <span className="relative inline-block text-amber-300">
+                    Eco-Conscious
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 220 12"
+                      fill="none"
+                      className="absolute -bottom-1.5 left-0 w-full h-2.5 text-amber-300/85"
+                    >
+                      <path
+                        d="M3 9C55 3 165 3 217 9"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>{" "}
+                  &amp; Climate-Resilient Generations
+                </>
+              ) : (
+                <>
+                  Membangun Generasi{" "}
+                  <span className="relative inline-block text-amber-300">
+                    Peduli Alam
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 220 12"
+                      fill="none"
+                      className="absolute -bottom-1.5 left-0 w-full h-2.5 text-amber-300/85"
+                    >
+                      <path
+                        d="M3 9C55 3 165 3 217 9"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>{" "}
+                  &amp; Tangguh Menghadapi Bencana
+                </>
+              )}
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-white/95 drop-shadow-[0_1px_6px_rgba(10,38,28,0.5)] max-w-2xl mx-auto leading-relaxed font-medium">
+            {/* Subjudul dengan Kontras Tinggi */}
+            <p className="text-sm sm:text-base md:text-lg text-white/95 drop-shadow-[0_2px_10px_rgba(6,28,20,0.75)] max-w-2xl mx-auto leading-relaxed font-semibold">
               {isEn
                 ? "An interactive web learning sanctuary helping youth preserve ecosystems, care for nature, and prepare for environmental challenges."
                 : "Ruang belajar web interaktif yang membantu generasi muda menjaga ekosistem, mencintai alam, dan siap menghadapi tantangan lingkungan."}
             </p>
 
-            {/* Quick Anchor Pills */}
-            <div className="pt-3 flex flex-wrap items-center justify-center gap-2.5">
-              {[
-                { label: isEn ? "Learn" : "Pelajari", target: "about-mascot" },
-                { label: isEn ? "Explore" : "Jelajahi", target: "about-pillars" },
-                { label: isEn ? "Act" : "Bertindak", target: "about-cta" },
-              ].map((pill) => (
-                <button
-                  key={pill.target}
-                  type="button"
-                  onClick={() => scrollToSection(pill.target)}
-                  className="px-5 py-2 rounded-full bg-emerald-950/45 hover:bg-emerald-950/70 text-white text-xs sm:text-sm font-bold backdrop-blur-md border border-white/25 transition-all cursor-pointer hover:-translate-y-0.5"
-                >
-                  {pill.label}
-                </button>
-              ))}
+            {/* Quick Anchor Pills dengan Ikon & Hierarki Visual */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => scrollToSection("about-mascot")}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-950/60 hover:bg-emerald-950/85 text-white text-xs sm:text-sm font-bold backdrop-blur-md border border-white/30 shadow-sm transition-all cursor-pointer hover:-translate-y-0.5"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-amber-300" />
+                <span>{isEn ? "Learn" : "Pelajari"}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => scrollToSection("about-pillars")}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-950/60 hover:bg-emerald-950/85 text-white text-xs sm:text-sm font-bold backdrop-blur-md border border-white/30 shadow-sm transition-all cursor-pointer hover:-translate-y-0.5"
+              >
+                <Compass className="w-3.5 h-3.5 text-emerald-300" />
+                <span>{isEn ? "Explore" : "Jelajahi"}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => scrollToSection("about-cta")}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs sm:text-sm font-extrabold border border-amber-200/80 shadow-md transition-all cursor-pointer hover:-translate-y-0.5"
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span>{isEn ? "Act" : "Bertindak"}</span>
+              </button>
             </div>
           </motion.div>
         </div>
@@ -635,7 +708,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* 5. 3 SUSTAINABLE LEARNING PILLARS (Alur Tahapan Terhubung & Rapi) */}
+      {/* 5. 3 SUSTAINABLE LEARNING PILLARS */}
       <section
         id="about-pillars"
         className="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-14 scroll-mt-24"
@@ -652,7 +725,6 @@ export default function About() {
         </div>
 
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
-          {/* Garis Penghubung Horizontal Sejajar di Desktop (di belakang header node) */}
           <div
             aria-hidden="true"
             className="hidden md:block absolute top-6 left-6 right-16 h-[2px] bg-gradient-to-r from-emerald-800/35 via-amber-500/60 to-emerald-800/20"
@@ -667,7 +739,6 @@ export default function About() {
               transition={{ delay: idx * 0.1 }}
               className="relative flex flex-col"
             >
-              {/* Node Langkah dengan background krem agar garis berhenti rapi tanpa menabrak teks */}
               <div className="relative z-10 inline-flex items-center gap-3.5 mb-5 bg-[#f7f4eb] pr-5 w-fit">
                 <span className="w-12 h-12 rounded-2xl bg-[#0f3d2e] text-amber-300 font-['Fredoka'] font-black text-base flex items-center justify-center shadow-xs flex-shrink-0">
                   0{idx + 1}
@@ -682,7 +753,6 @@ export default function About() {
                 </div>
               </div>
 
-              {/* Konten Pilar */}
               <div className="pl-5 ml-6 border-l-2 border-emerald-900/15 space-y-2">
                 <h3 className="text-lg sm:text-xl font-extrabold text-emerald-950">
                   {pillar.title}
@@ -725,7 +795,6 @@ export default function About() {
               className={`rounded-2xl bg-white/70 backdrop-blur-xs border ${member.accentBorder} p-6 flex flex-col justify-between gap-5 transition-colors hover:bg-white`}
             >
               <div className="space-y-4">
-                {/* Header Avatar Inisial & Peran */}
                 <div className="flex items-center gap-3.5">
                   <div
                     className={`w-12 h-12 rounded-2xl ${member.accentBg} ${member.accentText} font-['Fredoka'] font-black text-base flex items-center justify-center flex-shrink-0`}
@@ -742,13 +811,11 @@ export default function About() {
                   </div>
                 </div>
 
-                {/* Bio Singkat */}
                 <p className="text-xs sm:text-sm text-emerald-900/80 leading-relaxed">
                   {isEn ? member.bioEn : member.bioId}
                 </p>
               </div>
 
-              {/* Sosial Media: Hanya tampil jika tersedia */}
               {member.socials && (
                 <div className="pt-3 border-t border-emerald-950/10 flex flex-wrap gap-2">
                   {member.socials.instagram && (
@@ -797,7 +864,6 @@ export default function About() {
         className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 scroll-mt-24"
       >
         <div className="rounded-3xl bg-[#0b3b2c] text-white p-8 sm:p-12 relative overflow-hidden border border-emerald-800/60">
-          {/* Dekorasi Organik Halus */}
           <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-amber-400/10 blur-2xl pointer-events-none" />
           <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-emerald-400/10 blur-2xl pointer-events-none" />
 
