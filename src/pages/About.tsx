@@ -246,14 +246,6 @@ export default function About() {
           label: "@aziefamaharani",
           url: "https://instagram.com/aziefamaharani",
         },
-        linkedin: {
-          label: "Aziefa Maharani Gitaatmaja",
-          url: "https://www.linkedin.com/search/results/all/?keywords=Aziefa%20Maharani%20Gitaatmaja",
-        },
-        github: {
-          label: "aziefa-jpg",
-          url: "https://github.com/aziefa-jpg",
-        },
       },
     },
     {
@@ -291,6 +283,12 @@ export default function About() {
       accentBg: "bg-teal-800",
       accentText: "text-emerald-100",
       accentBorder: "border-teal-800/20",
+      socials: {
+        instagram: {
+          label: "@alf.chan_",
+          url: "https://instagram.com/alf.chan_",
+        },
+      },
     },
   ];
 
@@ -731,7 +729,7 @@ export default function About() {
                 {/* Header Avatar Inisial & Peran */}
                 <div className="flex items-center gap-3.5">
                   <div
-                    className={`w-12 h-12 rounded-2xl ${member.accentBg}${member.accentText} font-['Fredoka'] font-black text-base flex items-center justify-center flex-shrink-0`}
+                    className={`w-12 h-12 rounded-2xl ${member.accentBg} ${member.accentText} font-['Fredoka'] font-black text-base flex items-center justify-center flex-shrink-0`}
                   >
                     {member.initials}
                   </div>
