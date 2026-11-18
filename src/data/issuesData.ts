@@ -47,7 +47,7 @@ export interface IssueSections {
   studentActions: StudentActionItem[];
   greenTechTrivia: {
     techName: string;
-    category: "IoT Sensor" | "Satelit & Penginderaan Jauh" | "Nature-based Solutions" | "AI & Early Warning";
+    category: "IoT Sensor" | "Satelit & Penginderaan Jauh" | "Satellite & Remote Sensing" | "Nature-based Solutions" | "AI & Early Warning";
     description: string;
     factHighlight: string;
   };

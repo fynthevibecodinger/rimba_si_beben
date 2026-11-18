@@ -28,6 +28,7 @@ export default function WildfireDiorama3D({
   actions,
   onSelectHotspot,
   showLabels = true,
+  isEn = false,
 }: DioramaProps) {
   // References for dynamic animated objects
   const canalWaterRef = useRef<THREE.Mesh>(null);
@@ -685,33 +686,45 @@ export default function WildfireDiorama3D({
       {/* Hotspot 1: Lapisan Tanah Gambut */}
       <HotspotPin3D
         position={[1.4, -0.4, 2.0]}
-        title="Lapisan Tanah Gambut"
-        badge="Spons Karbon Raksasa"
+        title={isEn ? "Peatland Soil Stratum" : "Lapisan Tanah Gambut"}
+        badge={isEn ? "Giant Carbon Sponge" : "Spons Karbon Raksasa"}
         color="bg-amber-700"
         showLabel={showLabels}
-        description="Gambut adalah timbunan bahan organik tumbuhan purba terendam air ribuan tahun. Jika parit kanal menguras airnya, gambut menjadi kering bagaikan batu bara dan memicu kebakaran bawah tanah yang sulit dipadamkan."
+        description={
+          isEn
+            ? "Peat is an accumulation of ancient decayed organic matter waterlogged for millennia. If drainage canals drain this water, the peat dries into coal-like fuel and sparks underground fires that are nearly impossible to extinguish."
+            : "Gambut adalah timbunan bahan organik tumbuhan purba terendam air ribuan tahun. Jika parit kanal menguras airnya, gambut menjadi kering bagaikan batu bara dan memicu kebakaran bawah tanah yang sulit dipadamkan."
+        }
         onSelect={onSelectHotspot}
       />
 
       {/* Hotspot 2: Sekat Kanal Pembasah */}
       <HotspotPin3D
         position={[0.0, 0.6, -1.3]}
-        title="Sekat Kanal Pembasah"
-        badge="Restorasi Rewetting"
+        title={isEn ? "Canal Blocking for Rewetting" : "Sekat Kanal Pembasah"}
+        badge={isEn ? "Rewetting Restoration" : "Restorasi Rewetting"}
         color="bg-sky-600"
         showLabel={showLabels}
-        description="Penyekatan parit kanal menahan aliran air agar tidak terkuras keluar, menaikkan muka air tanah kembali, dan membasahi kubah gambut sehingga api bawah tanah tidak mungkin menyala."
+        description={
+          isEn
+            ? "Blocking drainage canals prevents water from draining away, raising the water table and re-hydrating the peat dome so subterranean fires cannot ignite or spread."
+            : "Penyekatan parit kanal menahan aliran air agar tidak terkuras keluar, menaikkan muka air tanah kembali, dan membasahi kubah gambut sehingga api bawah tanah tidak mungkin menyala."
+        }
         onSelect={onSelectHotspot}
       />
 
       {/* Hotspot 3: Habitat Satwa Hutan */}
       <HotspotPin3D
         position={[-1.5, 1.6, 0.5]}
-        title="Habitat Satwa Hutan"
-        badge="Biodiversitas Tropis"
+        title={isEn ? "Forest Wildlife Habitat" : "Habitat Satwa Hutan"}
+        badge={isEn ? "Tropical Biodiversity" : "Biodiversitas Tropis"}
         color="bg-emerald-600"
         showLabel={showLabels}
-        description="Hutan rawa gambut alami adalah rumah bagi satwa endemik langka seperti Orangutan dan Burung Rangkong. Menjaga kelembapan gambut melindungi satwa dari ancaman kepunahan akibat kabut asap kebakaran."
+        description={
+          isEn
+            ? "Natural peat swamp forests provide vital habitat for endangered endemic wildlife like Orangutans and Hornbills. Preserving peat moisture safeguards these species from deadly wildfire smoke and deforestation."
+            : "Hutan rawa gambut alami adalah rumah bagi satwa endemik langka seperti Orangutan dan Burung Rangkong. Menjaga kelembapan gambut melindungi satwa dari ancaman kepunahan akibat kabut asap kebakaran."
+        }
         onSelect={onSelectHotspot}
       />
     </group>

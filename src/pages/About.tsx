@@ -79,7 +79,7 @@ export default function About() {
             <div className="lg:col-span-7 space-y-4">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider">
                 <Award className="w-3.5 h-3.5 text-amber-700" />
-                Profil Karakter Maskot
+                {isEn ? "Mascot Character Profile" : "Profil Karakter Maskot"}
               </div>
 
               <h2 className="text-2xl sm:text-4xl font-black text-slate-900 font-['Fredoka']">
@@ -87,28 +87,41 @@ export default function About() {
               </h2>
 
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Rimba terinspirasi dari <strong>Burung Rangkong (Hornbill)</strong>, hewan penting yang membantu menjaga hutan (umbrella species)
-                hutan tropis Indonesia yang dikenal sebagai &ldquo;petani hutan&rdquo; karena kemampuannya menebar biji-bijian
-                pohon besar sejauh puluhan kilometer.
+                {isEn ? (
+                  <>
+                    Rimba is inspired by the <strong>Hornbill (Burung Rangkong)</strong>, a crucial umbrella species
+                    in Indonesian tropical rainforests known as the &ldquo;farmer of the forest&rdquo; for its vital role
+                    in dispersing large canopy tree seeds across dozens of kilometers.
+                  </>
+                ) : (
+                  <>
+                    Rimba terinspirasi dari <strong>Burung Rangkong (Hornbill)</strong>, hewan penting yang membantu menjaga hutan (umbrella species)
+                    hutan tropis Indonesia yang dikenal sebagai &ldquo;petani hutan&rdquo; karena kemampuannya menebar biji-bijian
+                    pohon besar sejauh puluhan kilometer.
+                  </>
+                )}
               </p>
 
               <div className="space-y-2 pt-2">
                 <div className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong>Topi Penjelajah Safari:</strong> Melambangkan semangat riset lapangan dan observasi alam yang cermat.
+                    <strong>{isEn ? "Safari Explorer Hat:" : "Topi Penjelajah Safari:"}</strong>{" "}
+                    {isEn ? "Symbolizing the spirit of field research and careful environmental observation." : "Melambangkan semangat riset lapangan dan observasi alam yang cermat."}
                   </span>
                 </div>
                 <div className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong>Rompi Hijau Hutan:</strong> Perlambang komitmen menjaga keseimbangan aliran air dan menjaga alam daerah aliran sungai.
+                    <strong>{isEn ? "Forest Green Vest:" : "Rompi Hijau Hutan:"}</strong>{" "}
+                    {isEn ? "Embodying the commitment to safeguard watershed balance and care for river basin ecosystems." : "Perlambang komitmen menjaga keseimbangan aliran air dan menjaga alam daerah aliran sungai."}
                   </span>
                 </div>
                 <div className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
                   <span>
-                     <strong>Tablet Pintar:</strong> Membawa informasi dari satelit dan alat pengukur untuk mengetahui bahaya lebih awal.
+                    <strong>{isEn ? "Smart Field Tablet:" : "Tablet Pintar:"}</strong>{" "}
+                    {isEn ? "Delivering real-time data from satellites and remote sensors for early disaster detection." : "Membawa informasi dari satelit dan alat pengukur untuk mengetahui bahaya lebih awal."}
                   </span>
                 </div>
               </div>
@@ -123,19 +136,20 @@ export default function About() {
               <Lightbulb className="w-6 h-6" />
             </div>
             <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider">
-              Latar Belakang Masalah
+              {t("background_problem", isEn)}
             </span>
             <h3 className="text-2xl sm:text-3xl font-black font-['Fredoka'] mt-2 mb-4">
-              Kesiapsiagaan dimulai dari pengetahuan
+              {t("preparation_knowledge", isEn)}
             </h3>
             <p className="text-sm text-emerald-100/85 leading-relaxed">
-              Indonesia memiliki risiko bencana yang tinggi, sementara pemahaman tentang perubahan iklim,
-              pengurangan risiko, dan langkah penyelamatan diri belum merata. Materi yang terlalu teoretis juga
-              membuat pelajar kesulitan menghubungkan ancaman di sekitar mereka dengan aksi nyata.
+              {isEn
+                ? "Indonesia faces high disaster risks, yet understanding of climate change, risk reduction, and personal safety measures remains uneven. Overly theoretical textbooks also make it difficult for students to connect threats in their vicinity to concrete actions."
+                : "Indonesia memiliki risiko bencana yang tinggi, sementara pemahaman tentang perubahan iklim, pengurangan risiko, dan langkah penyelamatan diri belum merata. Materi yang terlalu teoretis juga membuat pelajar kesulitan menghubungkan ancaman di sekitar mereka dengan aksi nyata."}
             </p>
             <p className="text-sm text-emerald-100/85 leading-relaxed mt-4">
-               Rimba hadir sebagai ruang belajar yang ramah, menarik, dan mudah dipahami agar setiap pelajar dapat
-              mengenali risiko, mengambil keputusan yang tepat, serta ikut menjaga lingkungan di sekitarnya.
+              {isEn
+                ? "Rimba serves as a welcoming, engaging, and easy-to-understand learning sanctuary so every student can recognize risks, make sound decisions, and actively protect their surrounding environment."
+                : "Rimba hadir sebagai ruang belajar yang ramah, menarik, dan mudah dipahami agar setiap pelajar dapat mengenali risiko, mengambil keputusan yang tepat, serta ikut menjaga lingkungan di sekitarnya."}
             </p>
           </div>
 
@@ -143,24 +157,25 @@ export default function About() {
             <div className="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center mb-5">
               <Target className="w-6 h-6" />
             </div>
-            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">Arah Rimba</span>
+            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
+              {isEn ? "Rimba's Direction" : "Arah Rimba"}
+            </span>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka'] mt-2 mb-5">
-              Visi &amp; Misi
+              {t("vision_mission", isEn)}
             </h3>
             <div className="space-y-5">
               <div>
-                <h4 className="font-bold text-emerald-800 mb-1">Visi</h4>
+                <h4 className="font-bold text-emerald-800 mb-1">{t("vision", isEn)}</h4>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Mewujudkan generasi Indonesia yang tangguh bencana, peduli lingkungan, dan mampu mengambil
-                  tindakan berbasis pengetahuan.
+                  {t("vision_text", isEn)}
                 </p>
               </div>
               <div>
-                <h4 className="font-bold text-emerald-800 mb-1">Misi</h4>
+                <h4 className="font-bold text-emerald-800 mb-1">{t("mission", isEn)}</h4>
                 <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />Menyajikan literasi bencana dan iklim yang mudah dipahami.</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />Menghadirkan simulasi untuk melatih nalar dan pengambilan keputusan.</li>
-                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />Mendorong aksi kecil yang berdampak bagi keluarga, lingkungan, dan alam.</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />{t("mission_item_1", isEn)}</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />{t("mission_item_2", isEn)}</li>
+                  <li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />{t("mission_item_3", isEn)}</li>
                 </ul>
               </div>
             </div>
@@ -170,16 +185,24 @@ export default function About() {
         {/* Core Values */}
         <section>
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block mb-1">Prinsip Kami</span>
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">Nilai-Nilai Utama</h3>
-            <p className="text-sm text-slate-600 mt-3">Nilai yang menjadi fondasi dalam setiap materi dan pengalaman belajar di Rimba.</p>
+            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block mb-1">
+              {isEn ? "Our Principles" : "Prinsip Kami"}
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">
+              {isEn ? "Core Values" : "Nilai-Nilai Utama"}
+            </h3>
+            <p className="text-sm text-slate-600 mt-3">
+              {isEn
+                ? "The guiding principles embedded in every material and learning experience at Rimba."
+                : "Nilai yang menjadi fondasi dalam setiap materi dan pengalaman belajar di Rimba."}
+            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: ShieldCheck, title: "Tangguh", text: "Berani bersiap, sigap menghadapi risiko, dan mampu bangkit bersama." },
-              { icon: Leaf, title: "Peduli Alam", text: "Menjaga ekosistem sebagai bagian penting dari upaya mengurangi risiko bencana." },
-              { icon: BookOpen, title: "Berbasis Sains", text: "Mengutamakan informasi yang masuk akal, relevan, dan dapat dipertanggungjawabkan." },
-              { icon: Heart, title: "Kolaboratif", text: "Membangun kesiapan melalui kepedulian dan kerja sama lintas komunitas." },
+              { icon: ShieldCheck, title: t("core_value_resilient", isEn), text: t("core_value_resilient_text", isEn) },
+              { icon: Leaf, title: t("core_value_care", isEn), text: t("core_value_care_text", isEn) },
+              { icon: BookOpen, title: t("core_value_science", isEn), text: t("core_value_science_text", isEn) },
+              { icon: Heart, title: t("core_value_collaborative", isEn), text: t("core_value_collaborative_text", isEn) },
             ].map(({ icon: Icon, title, text }) => (
               <div key={title} className="rounded-3xl bg-white border border-slate-200 p-6 shadow-md hover:-translate-y-1 transition-transform">
                 <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4"><Icon className="w-5 h-5" /></div>
@@ -194,10 +217,10 @@ export default function About() {
         <div>
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block mb-1">
-              Pendekatan Edukasi
+              {isEn ? "Educational Approach" : "Pendekatan Edukasi"}
             </span>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">
-              3 Pilar Pembelajaran Berkelanjutan
+              {t("learning_pillars", isEn)}
             </h3>
           </div>
 
@@ -207,10 +230,10 @@ export default function About() {
                 <Compass className="w-6 h-6" />
               </div>
               <h4 className="text-xl font-bold text-slate-900 font-['Fredoka']">
-                1. Sains &amp; Sebab-Akibat
+                {t("pillar_science", isEn)}
               </h4>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Meluruskan pemahaman yang keliru bahwa bencana alam semata-mata takdir tak terduga. Bencana adalah perpaduan ancaman alam dan kondisi yang membuat mudah terdampak aktivitas manusia.
+                {t("pillar_science_desc", isEn)}
               </p>
             </div>
 
@@ -219,10 +242,10 @@ export default function About() {
                 <Sparkles className="w-6 h-6" />
               </div>
               <h4 className="text-xl font-bold text-slate-900 font-['Fredoka']">
-                2. Simulasi Interaktif
+                {t("pillar_simulation", isEn)}
               </h4>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Pelajar tidak hanya membaca teks hafalan, tetapi bereksperimen mengubah variabel iklim dan melihat respon kanvas ekologi secara visual.
+                {t("pillar_simulation_desc", isEn)}
               </p>
             </div>
 
@@ -231,10 +254,10 @@ export default function About() {
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h4 className="text-xl font-bold text-slate-900 font-['Fredoka']">
-                3. Aksi Nyata Pelajar
+                {t("pillar_action", isEn)}
               </h4>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                 Panduan praktis membuat lubang resapan, menyiapkan tas darurat 3 hari, dan menyelamatkan diri bersama keluarga.
+                {t("pillar_action_desc", isEn)}
               </p>
             </div>
           </div>
@@ -243,32 +266,32 @@ export default function About() {
         {/* Development Team */}
         <section>
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block mb-1">Di Balik Rimba</span>
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">Tim Pengembang</h3>
-            <p className="text-sm text-slate-600 mt-3">Rimba dibuat bersama untuk membantu anak-anak belajar, bermain, lalu ikut menjaga alam.</p>
+            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block mb-1">{t("behind_rimba", isEn)}</span>
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">{t("dev_team", isEn)}</h3>
+            <p className="text-sm text-slate-600 mt-3">{t("team_desc", isEn)}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 name: "Aziefa Maharani Gitaatmaja",
-                role: "Tim Pengembang",
-                instagram: "Belum tersedia",
-                linkedin: "Belum tersedia",
-                github: "Belum tersedia",
+                role: isEn ? "Development Team" : "Tim Pengembang",
+                instagram: isEn ? "Not available" : "Belum tersedia",
+                linkedin: isEn ? "Not available" : "Belum tersedia",
+                github: isEn ? "Not available" : "Belum tersedia",
               },
               {
                 name: "Adnan Nur Kholis",
-                role: "Tim Pengembang",
+                role: isEn ? "Development Team" : "Tim Pengembang",
                 instagram: "adnkh06._",
                 linkedin: "Adnan Nur Kholis",
                 github: "ItsAdnkh",
               },
               {
                 name: "Alfian Chandra Putra Ardhiansyah",
-                role: "Tim Pengembang",
-                instagram: "Belum tersedia",
-                linkedin: "Belum tersedia",
-                github: "Belum tersedia",
+                role: isEn ? "Development Team" : "Tim Pengembang",
+                instagram: isEn ? "Not available" : "Belum tersedia",
+                linkedin: isEn ? "Not available" : "Belum tersedia",
+                github: isEn ? "Not available" : "Belum tersedia",
               },
             ].map(({ name, role, instagram, linkedin, github }) => (
               <div key={name} className="rounded-3xl bg-white border border-slate-200 p-7 shadow-md">
@@ -289,23 +312,23 @@ export default function About() {
         {/* CTA Banner */}
         <div className="rounded-3xl bg-emerald-900 text-white p-8 md:p-12 text-center space-y-4 shadow-xl">
           <h3 className="text-2xl sm:text-3xl font-black font-['Fredoka']">
-            Siap Menjadi Pahlawan Kesiapsiagaan Bencana?
+            {t("cta_ready", isEn)}
           </h3>
           <p className="text-emerald-200 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
-             Mulailah dengan memilih salah satu materi lingkungan atau mencoba permainan simulasi.
+            {t("cta_start", isEn)}
           </p>
           <div className="pt-2 flex flex-wrap justify-center gap-4">
             <Link
               to="/"
               className="px-6 py-3 rounded-2xl bg-white text-emerald-950 font-bold text-sm shadow-md hover:scale-105 transition-transform"
             >
-              Jelajahi Materi
+              {t("cta_explore_material", isEn)}
             </Link>
             <Link
               to="/simulasi"
               className="px-6 py-3 rounded-2xl bg-amber-400 text-slate-950 font-bold text-sm shadow-md hover:scale-105 transition-transform"
             >
-              Masuk Simulasi
+              {isEn ? "Enter Simulation" : "Masuk Simulasi"}
             </Link>
           </div>
         </div>

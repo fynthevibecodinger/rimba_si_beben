@@ -398,3 +398,100 @@ export const localWisdomData: LocalWisdomProfile[] = [
     p5Action: "Kampanyekan larangan membuang sampah ke sungai dan selokan di lingkungan tempat tinggal.",
   },
 ];
+
+export const localWisdomDataEn: LocalWisdomProfile[] = [
+  {
+    id: "gotong-royong",
+    category: "sungai",
+    name: "Gotong Royong & Community Work",
+    origin: "Across Indonesia",
+    culturalValue: "Togetherness & Collective Responsibility",
+    disasterMitigation: "Flood Prevention & Drainage Dredging",
+    image:
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "A cherished custom of collective community cleanups to dredge river sediments, clear culverts, and plant trees ahead of monsoon seasons.",
+    fullStory:
+      "Gotong royong forms the bedrock of Indonesian civic culture, treating ecological safety as a shared community responsibility. By regularly dredging stormwater channels and trimming hazardous branches before monsoons, neighborhoods actively minimize flood risks.",
+    proverb: "Berat sama dipikul, ringan sama dijinjing (Heavy burdens shared together become light).",
+    p5Action: "Schedule a recurring school cleanup day to inspect culverts and maintain biopore absorption areas.",
+  },
+  {
+    id: "subak-bali",
+    category: "konservasi",
+    name: "Subak Irrigation System",
+    origin: "Bali (UNESCO World Cultural Heritage)",
+    culturalValue: "Tri Hita Karana (Harmony between Humans, Nature & Creator)",
+    disasterMitigation: "Drought Prevention & Upstream-Downstream Water Governance",
+    image:
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "A centuries-old democratic water management organization in Bali ensuring equitable, sustainable water sharing synchronized with natural ecological cycles.",
+    fullStory:
+      "Subak proves that consensus-based watershed governance can secure food resilience and freshwater supplies across centuries. The stepped terrace architecture also slows heavy rainfall runoff, preventing hillside soil erosion.",
+    proverb: "Paras paros sarpanaya — mutual respect and care for nature's harmony.",
+    p5Action: "Practice water conservation at home and school while keeping nearby irrigation channels clean.",
+  },
+  {
+    id: "sasi-maluku-papua",
+    category: "hutan",
+    name: "Sasi Customary Practice",
+    origin: "Maluku & Papua",
+    culturalValue: "Harvest Quotas & Ecosystem Regeneration",
+    disasterMitigation: "Forest & Coastal Conservation, Coastal Abrasion Prevention",
+    image:
+      "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "A customary moratorium prohibiting the harvest of specific forest or marine resources to give flora, fauna, and mangrove ecosystems time to replenish.",
+    fullStory:
+      "Under Sasi customary law, indigenous elders declare temporal bans on harvesting in designated reefs or forests. This stops over-exploitation and keeps mangrove forests healthy as natural seawalls against storm waves and coastal erosion.",
+    proverb: "Take only what is needed today so nature continues to nourish tomorrow.",
+    p5Action: "Reduce excessive consumption and give school green spaces time to grow without disturbance.",
+  },
+  {
+    id: "leuweung-tutupan",
+    category: "hutan",
+    name: "Sacred Forests & Leuweung Tutupan",
+    origin: "Sundanese (Baduy / Kasepuhan) & Kalimantan",
+    culturalValue: "Sacred Protection Zone Safeguarding River Headwaters",
+    disasterMitigation: "Landslide & Flash Flood Prevention",
+    image:
+      "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "Customary zonation strictly forbidding tree cutting in upland catchments and steep slopes to preserve nature's sanctity and secure perennial village springs.",
+    fullStory:
+      "Indigenous communities divide landscapes into forbidden zones (tutupan), reserve zones (titipan), and cultivated zones (garapan). Deep roots in leuweung tutupan lock slope strata and sponge torrential rains into aquifers, averting landslides and severe dry-season droughts.",
+    proverb: "Gunung teu meunang dilebur, lebak teu meunang diruksak (Mountains must not be destroyed, valleys must not be ruined).",
+    p5Action: "Plant and nurture protective native trees on slopes or empty grounds around school campuses.",
+  },
+  {
+    id: "lubuk-larangan",
+    category: "sungai",
+    name: "Lubuk Larangan River Tradition",
+    origin: "West Sumatra, Jambi & Riau",
+    culturalValue: "Community-Agreed River Conservation",
+    disasterMitigation: "Water Quality & River Basin Protection",
+    image:
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=900&q=80",
+    fallbackImage:
+      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80",
+    summary:
+      "Village consensus declaring river stretches off-limits to waste disposal, poisoning, and destructive fishing for designated replenishment periods.",
+    fullStory:
+      "Lubuk Larangan treats rivers as sacred community lifelines. Because river reaches are vigilantly guarded against pollution and bank deforestation, water remains crystal clear and riverbanks are shielded from the erosion and siltation that trigger urban flooding.",
+    proverb: "Alam takambang jadi guru — nature in its entirety is our greatest teacher.",
+    p5Action: "Campaign against disposing plastics into rivers and roadside storm drains in your community.",
+  },
+];
+
+export function getLocalWisdomData(lang: "id" | "en" = "id"): LocalWisdomProfile[] {
+  return lang === "en" ? localWisdomDataEn : localWisdomData;
+}

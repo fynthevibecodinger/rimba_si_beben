@@ -74,7 +74,7 @@ const translations: Record<Language, Record<string, string>> = {
     nav_gallery: "Gallery",
     nav_about: "About Us",
     nav_contact: "Contact",
-    nav_brand_tagline: "Eco Awareness",
+    nav_brand_tagline: "Peduli Lingkungan",
     nav_explore_subtitle: "Nature & Disaster Topics",
     nav_personalization: "Personalization",
     nav_personalization_title: "Rimba Personalization",

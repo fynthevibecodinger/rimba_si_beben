@@ -28,6 +28,7 @@ export default function LandslideDiorama3D({
   actions,
   onSelectHotspot,
   showLabels = true,
+  isEn = false,
 }: DioramaProps) {
   // References for animation
   const slideBlockRef = useRef<THREE.Group>(null);
@@ -824,33 +825,45 @@ export default function LandslideDiorama3D({
       {/* Hotspot 1: Akar Pengikat Tanah */}
       <HotspotPin3D
         position={[-1.7, 1.55, -1.2]}
-        title="Akar Pengikat Tanah"
-        badge="Paku Bumi Biologis"
+        title={isEn ? "Soil-Binding Root Network" : "Akar Pengikat Tanah"}
+        badge={isEn ? "Biological Earth Nails" : "Paku Bumi Biologis"}
         color="bg-emerald-600"
         showLabel={showLabels}
-        description="Akar pohon keras dan rumput vetiver menembus lapisan lempung hingga batuan dasar sedalam 2-4 meter, mengunci massa tanah bagaikan paku bumi biologis sehingga lereng tidak mudah runtuh saat basah."
+        description={
+          isEn
+            ? "Deep roots of hardwood trees and vetiver grass penetrate through clay layers to bedrock 2-4 meters deep, interlocking soil masses like living earth nails so slopes resist sliding when saturated."
+            : "Akar pohon keras dan rumput vetiver menembus lapisan lempung hingga batuan dasar sedalam 2-4 meter, mengunci massa tanah bagaikan paku bumi biologis sehingga lereng tidak mudah runtuh saat basah."
+        }
         onSelect={onSelectHotspot}
       />
 
       {/* Hotspot 2: Terasering Lereng */}
       <HotspotPin3D
         position={[-0.1, 0.95, 0.9]}
-        title="Terasering Lereng"
-        badge="Rekayasa Kontur"
+        title={isEn ? "Hillside Terracing" : "Terasering Lereng"}
+        badge={isEn ? "Contour Engineering" : "Rekayasa Kontur"}
         color="bg-amber-600"
         showLabel={showLabels}
-        description="Sistem undakan terasering memotong sudut kemiringan lereng yang curam dan memperlambat limpasan air hujan. Air diarahkan ke saluran drainase agar tidak menumpuk dan menjebol tanah."
+        description={
+          isEn
+            ? "Terraced step structures reduce steep hillside gradients and slow surface runoff velocity. Water is safely diverted into drainage ditches rather than pooling and shearing the slope."
+            : "Sistem undakan terasering memotong sudut kemiringan lereng yang curam dan memperlambat limpasan air hujan. Air diarahkan ke saluran drainase agar tidak menumpuk dan menjebol tanah."
+        }
         onSelect={onSelectHotspot}
       />
 
       {/* Hotspot 3: Zona Rawan Kaki Bukit */}
       <HotspotPin3D
         position={[1.6, 0.75, 0.5]}
-        title="Zona Rawan Kaki Bukit"
-        badge="Tata Ruang Aman"
+        title={isEn ? "Foothill Run-Out Hazard Zone" : "Zona Rawan Kaki Bukit"}
+        badge={isEn ? "Safe Spatial Zoning" : "Tata Ruang Aman"}
         color="bg-rose-600"
         showLabel={showLabels}
-        description="Area kaki lereng adalah jalur luncuran utama material longsor (run-out zone). Pemukiman membutuhkan zona penyangga aman, dinding penahan tanah (talud/bronjong), atau relokasi jika lereng di atasnya gundul."
+        description={
+          isEn
+            ? "The base of steep slopes serves as the primary run-out zone for sliding debris. Settlements require safety buffer strips, retaining walls (gabions/riprap), or relocation if deforested slopes loom overhead."
+            : "Area kaki lereng adalah jalur luncuran utama material longsor (run-out zone). Pemukiman membutuhkan zona penyangga aman, dinding penahan tanah (talud/bronjong), atau relokasi jika lereng di atasnya gundul."
+        }
         onSelect={onSelectHotspot}
       />
     </group>

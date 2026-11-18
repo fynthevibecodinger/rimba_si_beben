@@ -3,18 +3,22 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, ContactShadows } from "@react-three/drei";
 import { Loader2, Plus, Minus, RotateCcw, ZoomIn } from "lucide-react";
 import { ScenarioId } from "./types";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface DioramaCanvasProps {
   children: ReactNode;
   weatherIntensity?: number;
   scenario?: ScenarioId;
+  isEn?: boolean;
 }
 
-function CanvasLoader() {
+function CanvasLoader({ isEn }: { isEn?: boolean }) {
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/10 backdrop-blur-xs z-20 pointer-events-none">
       <Loader2 className="w-8 h-8 text-emerald-600 animate-spin" />
-      <span className="text-xs font-bold text-slate-700 mt-2">Memuat Diorama 3D...</span>
+      <span className="text-xs font-bold text-slate-700 mt-2">
+        {isEn ? "Loading 3D Diorama..." : "Memuat Diorama 3D..."}
+      </span>
     </div>
   );
 }
@@ -23,7 +27,10 @@ export default function DioramaCanvas({
   children,
   weatherIntensity = 50,
   scenario = "banjir",
+  isEn: isEnProp,
 }: DioramaCanvasProps) {
+  const { language } = useLanguage();
+  const isEn = isEnProp !== undefined ? isEnProp : language === "en";
   const controlsRef = useRef<any>(null);
   const [enableWheelZoom, setEnableWheelZoom] = useState(false);
 
@@ -79,7 +86,7 @@ export default function DioramaCanvas({
 
   return (
     <div className={`relative w-full h-[380px] sm:h-[400px] lg:h-[420px] xl:h-[440px] rounded-3xl overflow-hidden bg-gradient-to-b ${containerBg} border border-slate-200/90 shadow-inner select-none transition-colors duration-500`}>
-      <Suspense fallback={<CanvasLoader />}>
+      <Suspense fallback={<CanvasLoader isEn={isEn} />}>
         <Canvas
           shadows
           camera={{ position: [7.5, 6.5, 7.5], fov: 45 }}
@@ -137,7 +144,7 @@ export default function DioramaCanvas({
 
       {/* Overlay Petunjuk Navigasi Kiri Bawah */}
       <div className="absolute bottom-2.5 left-2.5 pointer-events-none z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/75 backdrop-blur-md text-white text-[10px] font-bold shadow-sm border border-white/10">
-        <span>🖱️ Geser untuk putar 3D</span>
+        <span>{isEn ? "🖱️ Drag to rotate 3D" : "🖱️ Geser untuk putar 3D"}</span>
       </div>
 
       {/* Floating Toolbar Zoom & Reset Kamera Kanan Bawah */}
@@ -145,24 +152,24 @@ export default function DioramaCanvas({
         <button
           onClick={handleZoomIn}
           className="p-1 rounded-lg hover:bg-white/20 active:scale-90 transition-all text-white cursor-pointer"
-          title="Zoom Mendekat (+)"
-          aria-label="Zoom in"
+          title={isEn ? "Zoom In (+)" : "Zoom Mendekat (+)"}
+          aria-label={isEn ? "Zoom in" : "Zoom in"}
         >
           <Plus className="w-3.5 h-3.5" />
         </button>
         <button
           onClick={handleZoomOut}
           className="p-1 rounded-lg hover:bg-white/20 active:scale-90 transition-all text-white cursor-pointer"
-          title="Zoom Menjauh (-)"
-          aria-label="Zoom out"
+          title={isEn ? "Zoom Out (-)" : "Zoom Menjauh (-)"}
+          aria-label={isEn ? "Zoom out" : "Zoom out"}
         >
           <Minus className="w-3.5 h-3.5" />
         </button>
         <button
           onClick={handleResetCamera}
           className="p-1 rounded-lg hover:bg-white/20 active:scale-90 transition-all text-white cursor-pointer"
-          title="Reset Sudut Pandang Kamera"
-          aria-label="Reset kamera"
+          title={isEn ? "Reset Camera View" : "Reset Sudut Pandang Kamera"}
+          aria-label={isEn ? "Reset camera" : "Reset kamera"}
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>
@@ -176,8 +183,12 @@ export default function DioramaCanvas({
           }`}
           title={
             enableWheelZoom
-              ? "Wheel Zoom Aktif: Scroll mouse akan zoom 3D. Klik untuk membebaskan scroll halaman."
-              : "Wheel Zoom Mati: Scroll mouse bebas menggulir halaman. Gunakan tombol +/- untuk zoom."
+              ? (isEn
+                  ? "Wheel Zoom Active: Mouse scroll zooms 3D. Click to allow page scrolling."
+                  : "Wheel Zoom Aktif: Scroll mouse akan zoom 3D. Klik untuk membebaskan scroll halaman.")
+              : (isEn
+                  ? "Wheel Zoom Off: Mouse scroll freely scrolls page. Use +/- buttons to zoom."
+                  : "Wheel Zoom Mati: Scroll mouse bebas menggulir halaman. Gunakan tombol +/- untuk zoom.")
           }
         >
           <ZoomIn className="w-3 h-3" />

@@ -28,6 +28,7 @@ export default function FloodDiorama3D({
   actions,
   onSelectHotspot,
   showLabels = true,
+  isEn = false,
 }: DioramaProps) {
   // References for dynamic animated objects
   const riverWaterRef = useRef<THREE.Mesh>(null);
@@ -947,9 +948,13 @@ export default function FloodDiorama3D({
       {/* Hotspot 1: Saluran Sungai & Drainase (Kanan Belakang) */}
       <HotspotPin3D
         position={[0.2, 0.85, -1.5]}
-        title="Saluran Sungai & Drainase Kota"
-        description="Sungai dan gorong-gorong adalah jalur utama air mengalir ke laut. Jika tersumbat sampah, air hujan tidak tertampung dan meluap membanjiri pemukiman warga."
-        badge="Sungai & Saluran"
+        title={isEn ? "River Channel & Urban Drainage" : "Saluran Sungai & Drainase Kota"}
+        description={
+          isEn
+            ? "Rivers and culverts are the main avenues for stormwater to flow to the sea. When clogged with debris, rainwater overflows rapidly into residential neighborhoods."
+            : "Sungai dan gorong-gorong adalah jalur utama air mengalir ke laut. Jika tersumbat sampah, air hujan tidak tertampung dan meluap membanjiri pemukiman warga."
+        }
+        badge={isEn ? "River & Drainage" : "Sungai & Saluran"}
         color="bg-sky-600"
         showLabel={showLabels}
         onSelect={onSelectHotspot}
@@ -958,9 +963,13 @@ export default function FloodDiorama3D({
       {/* Hotspot 2: Lubang Resapan Biopori (Kiri Depan) */}
       <HotspotPin3D
         position={[-1.5, 0.95, 1.2]}
-        title="Lubang Resapan Biopori"
-        description="Pipa silinder berpori di tanah yang diisi sampah organik/kompos. Membantu air hujan meresap cepat ke tanah hingga 40%, mengurangi genangan permukaan dan menyuburkan tanah."
-        badge="Biopori Tanah"
+        title={isEn ? "Biopore Infiltration Hole" : "Lubang Resapan Biopori"}
+        description={
+          isEn
+            ? "Cylindrical perforated pipes in the ground filled with organic mulch. Helps rainwater absorb into subsoil up to 40% faster, eliminating surface puddles and enriching the earth."
+            : "Pipa silinder berpori di tanah yang diisi sampah organik/kompos. Membantu air hujan meresap cepat ke tanah hingga 40%, mengurangi genangan permukaan dan menyuburkan tanah."
+        }
+        badge={isEn ? "Soil Biopores" : "Biopori Tanah"}
         color="bg-emerald-600"
         showLabel={showLabels}
         onSelect={onSelectHotspot}
@@ -969,9 +978,13 @@ export default function FloodDiorama3D({
       {/* Hotspot 3: Lapisan Akuifer Air Tanah (Kanan Depan Bawah) */}
       <HotspotPin3D
         position={[1.3, -0.75, 2.0]}
-        title="Lapisan Akuifer Air Tanah"
-        description="Lapisan batu dan pasir alami di bawah tanah yang menyimpan air tawar bersih. Air yang meresap lewat biopori mengisi akuifer ini sebagai cadangan air sumur saat kemarau."
-        badge="Akuifer Bawah Tanah"
+        title={isEn ? "Groundwater Aquifer Layer" : "Lapisan Akuifer Air Tanah"}
+        description={
+          isEn
+            ? "Natural subterranean sand and permeable rock strata storing clean fresh water. Rainwater absorbed through biopores replenishes this aquifer as a dry-season well buffer."
+            : "Lapisan batu dan pasir alami di bawah tanah yang menyimpan air tawar bersih. Air yang meresap lewat biopori mengisi akuifer ini sebagai cadangan air sumur saat kemarau."
+        }
+        badge={isEn ? "Underground Aquifer" : "Akuifer Bawah Tanah"}
         color="bg-cyan-600"
         showLabel={showLabels}
         onSelect={onSelectHotspot}

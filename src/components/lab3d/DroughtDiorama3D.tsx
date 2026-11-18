@@ -28,6 +28,7 @@ export default function DroughtDiorama3D({
   actions,
   onSelectHotspot,
   showLabels = true,
+  isEn = false,
 }: DioramaProps) {
   // References for dynamic animated objects
   const sunGroupRef = useRef<THREE.Group>(null);
@@ -748,33 +749,45 @@ export default function DroughtDiorama3D({
       {/* Hotspot 1: Tandon Pemanen Air Hujan */}
       <HotspotPin3D
         position={[-1.3, 1.25, -0.6]}
-        title="Tandon Pemanen Air Hujan"
-        badge="Rainwater Harvesting"
+        title={isEn ? "Rainwater Harvesting Cistern" : "Tandon Pemanen Air Hujan"}
+        badge={isEn ? "Rainwater Harvesting" : "Pemanen Air Hujan"}
         color="bg-sky-600"
         showLabel={showLabels}
-        description="Menampung limpasan air hujan dari talang atap rumah saat musim basah sebagai cadangan ratusan liter air tawar mandiri saat kemarau panjang tanpa menguras air tanah."
+        description={
+          isEn
+            ? "Captures roof runoff during wet seasons into storage tanks, securing hundreds of liters of clean fresh water for dry spells without depleting fragile underground aquifers."
+            : "Menampung limpasan air hujan dari talang atap rumah saat musim basah sebagai cadangan ratusan liter air tawar mandiri saat kemarau panjang tanpa menguras air tanah."
+        }
         onSelect={onSelectHotspot}
       />
 
       {/* Hotspot 2: Irigasi Tetes Hemat Air */}
       <HotspotPin3D
         position={[1.3, 0.75, 0.8]}
-        title="Irigasi Tetes Hemat Air"
-        badge="Mikro-Irigasi Presisi"
+        title={isEn ? "Water-Saving Drip Irrigation" : "Irigasi Tetes Hemat Air"}
+        badge={isEn ? "Precision Micro-Irrigation" : "Mikro-Irigasi Presisi"}
         color="bg-emerald-600"
         showLabel={showLabels}
-        description="Sistem mikro-irigasi menyalurkan air langsung ke perakaran tanaman tetes demi tetes, menghemat hingga 80% air dan mencegah penguapan sia-sia di permukaan tanah."
+        description={
+          isEn
+            ? "Precision micro-irrigation delivers water drop by drop right to the root zone, saving up to 80% of water and preventing wasteful evaporation on hot soil surfaces."
+            : "Sistem mikro-irigasi menyalurkan air langsung ke perakaran tanaman tetes demi tetes, menghemat hingga 80% air dan mencegah penguapan sia-sia di permukaan tanah."
+        }
         onSelect={onSelectHotspot}
       />
 
       {/* Hotspot 3: Cadangan Air Tanah (Akuifer) */}
       <HotspotPin3D
         position={[-0.6, -0.45, 2.0]}
-        title="Cadangan Air Tanah (Akuifer)"
-        badge="Tabungan Air Alami"
+        title={isEn ? "Groundwater Reserve (Aquifer)" : "Cadangan Air Tanah (Akuifer)"}
+        badge={isEn ? "Natural Water Savings" : "Tabungan Air Alami"}
         color="bg-cyan-600"
         showLabel={showLabels}
-        description="Lapisan akuifer adalah tabungan air alami bumi. Pengambilan air tanah yang berlebihan tanpa pengisian resapan menyebabkan muka air tanah anjlok dan sumur warga mengering total."
+        description={
+          isEn
+            ? "Aquifer strata act as Earth's natural water bank. Excessive groundwater pumping without replenishing infiltration causes the water table to plunge and community wells to run completely dry."
+            : "Lapisan akuifer adalah tabungan air alami bumi. Pengambilan air tanah yang berlebihan tanpa pengisian resapan menyebabkan muka air tanah anjlok dan sumur warga mengering total."
+        }
         onSelect={onSelectHotspot}
       />
     </group>

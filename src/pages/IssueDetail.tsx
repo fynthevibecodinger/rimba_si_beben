@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "../router";
 import { issuesData, IssueContent } from "../data/issuesData";
+import { getIssuesData } from "../data/getIssuesData";
+import { useLanguage } from "../context/LanguageContext";
 import { getExtra } from "../data/issuesExtra";
 import IssueExtraMaterial from "../data/IssueExtraMaterial";
 import { translateIssueData } from "../utils/translateIssue";
@@ -165,6 +167,97 @@ const disasterTips: Record<string, { mood: RimbaMood; text: string }[]> = {
   ],
 };
 
+const disasterTipsEn: Record<string, { mood: RimbaMood; text: string }[]> = {
+  banjir: [
+    {
+      mood: "alert",
+      text: "Turn off the main electrical MCB breaker immediately if water enters the house! Floodwater and live electricity are a deadly mix.",
+    },
+    {
+      mood: "think",
+      text: "A water current just 15 cm deep can easily sweep an adult off their feet. Never attempt to wade through rushing floodwaters!",
+    },
+    {
+      mood: "scan",
+      text: "Upstream IoT ultrasonic sensors monitor river heights automatically and broadcast early warnings hours before flood crests reach downstream settlements.",
+    },
+    {
+      mood: "celebrate",
+      text: "A single biopore infiltration hole (10 × 100 cm) in your yard can absorb thousands of liters of rainwater while turning leaf litter into compost!",
+    },
+    {
+      mood: "wave",
+      text: "Pack an Emergency Go-Bag: seal essential documents in watertight pouches, pack a flashlight, whistle, first aid kit, and spare batteries.",
+    },
+  ],
+  "tanah-longsor": [
+    {
+      mood: "alert",
+      text: "Watch for landslide warning signs: fresh curved ground fissures, leaning utility poles/trees, and natural spring water suddenly turning muddy!",
+    },
+    {
+      mood: "think",
+      text: "If a hillside rumbles and ground starts moving, flee sideways perpendicular to the slide path. Never run downhill in the path of the slide!",
+    },
+    {
+      mood: "scan",
+      text: "Soil sensors monitor slope moisture levels. If water saturation reaches critical limits, community early warning sirens sound automatically.",
+    },
+    {
+      mood: "celebrate",
+      text: "Vetiver grass roots penetrate 3–4 meters deep, functioning like living underground soil nails that lock steep slope stability.",
+    },
+    {
+      mood: "wave",
+      text: "Never excavate hillside slope toes vertically for parking or buildings without engineered retaining walls and proper slope drainage.",
+    },
+  ],
+  kekeringan: [
+    {
+      mood: "alert",
+      text: "Groundwater is our natural savings account! Turning off the tap while brushing teeth saves up to 12 liters of clean water every single day.",
+    },
+    {
+      mood: "think",
+      text: "Cover garden beds and plant pots with dry leaf mulch. Mulch shields soil from solar heat and slashes water evaporation by up to 70%!",
+    },
+    {
+      mood: "scan",
+      text: "Weather satellites track seasonal shifts and vegetation health to detect prolonged drought periods months in advance.",
+    },
+    {
+      mood: "celebrate",
+      text: "Use simple DIY drip irrigation from recycled bottles to deliver moisture directly to plant roots without wasting a single drop.",
+    },
+    {
+      mood: "wave",
+      text: "Harvest rainwater during wet months into clean, tightly covered tanks so disease-carrying mosquito larvae cannot breed.",
+    },
+  ],
+  "kebakaran-hutan": [
+    {
+      mood: "alert",
+      text: "Wear an N95 or KF94 respirator mask when air is filled with smoke. Standard cloth masks cannot filter microscopic toxic PM2.5 dust!",
+    },
+    {
+      mood: "think",
+      text: "Peatland fires smolder flamelessly 1–3 meters underground. Just because surface flames disappear does not mean the fire is out!",
+    },
+    {
+      mood: "scan",
+      text: "KLHK SiPongi thermal satellites spot ground hotspots across forests so response crews can dispatch before fires spread underground.",
+    },
+    {
+      mood: "celebrate",
+      text: "Canal blocking raises peatland water tables to keep subterranean bogs saturated (rewetting) and immune to fire outbreaks.",
+    },
+    {
+      mood: "wave",
+      text: "Create a clean-air room at home: seal window and door crevices with damp towels and run an indoor HEPA air purifier.",
+    },
+  ],
+};
+
 const heroContentVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -187,14 +280,17 @@ const heroItemVariants = {
 
 export default function IssueDetail() {
   const { slug } = useParams<{ slug: string }>();
+  const { language } = useLanguage();
+  const isEn = language === "en";
   const [activeTab, setActiveTab] = useState<"sebab" | "dampak" | "aksi">("sebab");
   const [actionFilter, setActionFilter] = useState<"semua" | "rumah" | "sekolah" | "lingkungan">("semua");
   const [tipIndex, setTipIndex] = useState(0);
   const [openImpact, setOpenImpact] = useState<"environmental" | "health" | "social">("environmental");
 
   const normalizedSlug = slug === "kekeringan-air" ? "kekeringan" : slug;
+  const currentIssues = getIssuesData(language);
   const issue: IssueContent | undefined = normalizedSlug
-    ? issuesData[normalizedSlug]
+    ? currentIssues[normalizedSlug] || issuesData[normalizedSlug]
     : undefined;
 
   const currentIndex = ALL_ISSUES.findIndex((item) => item.slug === normalizedSlug);
@@ -202,47 +298,50 @@ export default function IssueDetail() {
     currentIndex >= 0 && currentIndex + 1 < ALL_ISSUES.length
       ? ALL_ISSUES[currentIndex + 1]
       : ALL_ISSUES[0];
-  const nextIssue = issuesData[nextItem.slug];
+  const nextIssue = currentIssues[nextItem.slug] || issuesData[nextItem.slug];
 
   const prevItem =
     currentIndex > 0
       ? ALL_ISSUES[currentIndex - 1]
       : ALL_ISSUES[ALL_ISSUES.length - 1];
-  const prevIssue = issuesData[prevItem.slug];
+  const prevIssue = currentIssues[prevItem.slug] || issuesData[prevItem.slug];
+
+  const activeTips = (isEn ? disasterTipsEn[issue?.slug ?? ""] : disasterTips[issue?.slug ?? ""]) ?? [];
 
   const handleMascotClick = () => {
-    const tips = disasterTips[issue?.slug ?? ""] ?? [];
-    setTipIndex((prev) => (prev + 1) % (tips.length || 1));
+    setTipIndex((prev) => (prev + 1) % (activeTips.length || 1));
   };
 
   useEffect(() => {
     setTipIndex(0);
     setActiveTab("sebab");
     setActionFilter("semua");
-  }, [normalizedSlug]);
+  }, [normalizedSlug, language]);
 
   if (!issue) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-6">
         <h2 className="text-3xl font-black font-['Fredoka'] text-slate-800">
-          Materi Bencana Tidak Ditemukan
+          {isEn ? "Disaster Topic Not Found" : "Materi Bencana Tidak Ditemukan"}
         </h2>
         <p className="text-slate-600">
-          Maaf, topik bencana dengan alamat &ldquo;{slug}&rdquo; belum terdaftar.
+          {isEn
+            ? `Sorry, topic "${slug}" is not yet registered.`
+            : `Maaf, topik bencana dengan alamat "${slug}" belum terdaftar.`}
         </p>
         <div className="flex justify-center gap-3">
           <Link
             to="/"
             className="px-6 py-3 rounded-2xl bg-emerald-800 text-white font-bold text-sm hover:bg-emerald-900 transition-colors"
           >
-            Kembali ke Beranda
+            {isEn ? "Back to Home" : "Kembali ke Beranda"}
           </Link>
         </div>
       </div>
     );
   }
 
-  const extra = getExtra(issue.slug);
+  const extra = getExtra(issue.slug, language);
 
   const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     CloudRainWind,
@@ -280,10 +379,10 @@ export default function IssueDetail() {
             className="flex items-center gap-2 text-xs font-semibold text-white/80 mb-6"
           >
             <Link to="/" className="hover:text-white transition-colors">
-              Beranda
+              {isEn ? "Home" : "Beranda"}
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-white font-bold">Materi Isu</span>
+            <span className="text-white font-bold">{isEn ? "Issue Topics" : "Materi Isu"}</span>
             <ChevronRight className="w-3.5 h-3.5" />
             <span className="text-amber-300 font-bold">{issue.title}</span>
           </motion.nav>
@@ -315,7 +414,7 @@ export default function IssueDetail() {
                     <MainIcon className="w-4 h-4" />
                   </span>
                   <span>
-                    {issue.heroBadge} • Tingkat Ancaman: {issue.threatLevel}
+                    {issue.heroBadge} • {isEn ? "Threat Level: " : "Tingkat Ancaman: "}{issue.threatLevel}
                   </span>
                   {issue.slug === "kebakaran-hutan" && (
                     <span className="w-2 h-2 rounded-full bg-red-400 animate-ping ml-1" />
@@ -348,8 +447,7 @@ export default function IssueDetail() {
             {/* RIGHT: Rimba Mascot + Speech Bubble */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center">
               {(() => {
-                const tips = disasterTips[issue.slug] ?? [];
-                const currentTip = tips[tipIndex % (tips.length || 1)];
+                const currentTip = activeTips[tipIndex % (activeTips.length || 1)];
                 return currentTip ? (
                   <motion.div
                     key={tipIndex}
@@ -358,15 +456,15 @@ export default function IssueDetail() {
                     transition={{ type: "spring" as const, stiffness: 400, damping: 25 }}
                     onClick={handleMascotClick}
                     className="w-full max-w-[280px] sm:max-w-[300px] bg-white/95 backdrop-blur-sm rounded-2xl p-3 sm:p-3.5 shadow-xl border border-emerald-800/15 cursor-pointer transition-all mb-2 select-none relative group z-20"
-                    title="Klik untuk tips siaga berikutnya!"
+                    title={isEn ? "Click for next eco tip!" : "Klik untuk tips siaga berikutnya!"}
                   >
                     <div className="flex items-center justify-between gap-2 mb-1">
                       <div className="flex items-center gap-1.5 font-['Fredoka'] font-black text-emerald-800 text-xs sm:text-sm">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                        Hai, aku Rimba!
+                        {isEn ? "Hi, I'm Rimba!" : "Hai, aku Rimba!"}
                       </div>
                       <span className="text-[9px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-300/50">
-                        Tips {(tipIndex % (tips.length || 1)) + 1}/{tips.length}
+                        {isEn ? "Tip" : "Tips"} {(tipIndex % (activeTips.length || 1)) + 1}/{activeTips.length}
                       </span>
                     </div>
                     <p className="text-[11px] sm:text-xs text-slate-700 font-medium leading-relaxed">
@@ -374,10 +472,10 @@ export default function IssueDetail() {
                     </p>
                     <div className="mt-1.5 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px] text-emerald-700 font-bold">
                       <span className="inline-flex items-center gap-1">
-                        <Volume2 className="w-3 h-3" /> Tips Siaga
+                        <Volume2 className="w-3 h-3" /> {isEn ? "Eco Tips" : "Tips Siaga"}
                       </span>
                       <span className="text-slate-400 group-hover:text-emerald-600 transition-colors">
-                        Klik untuk ganti ↻
+                        {isEn ? "Click to change ↻" : "Klik untuk ganti ↻"}
                       </span>
                     </div>
                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-white border-b-2 border-r-2 border-emerald-800/15 transform rotate-45 pointer-events-none" />
@@ -396,12 +494,12 @@ export default function IssueDetail() {
                 }}
                 onClick={handleMascotClick}
                 className="cursor-pointer select-none"
-                title="Klik Rimba untuk tips siaga berikutnya!"
+                title={isEn ? "Click Rimba for eco tips!" : "Klik Rimba untuk tips siaga berikutnya!"}
               >
                 <RimbaMascot
                   mood={
-                    disasterTips[issue.slug]?.[
-                      tipIndex % (disasterTips[issue.slug]?.length || 1)
+                    activeTips[
+                      tipIndex % (activeTips.length || 1)
                     ]?.mood ?? "idle"
                   }
                   size="lg"
@@ -412,7 +510,7 @@ export default function IssueDetail() {
                 className="mt-1 inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-200 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 transition-all shadow-sm cursor-pointer select-none"
                 onClick={handleMascotClick}
               >
-                💬 Klik Rimba untuk Tips Siaga!
+                💬 {isEn ? "Click Rimba for Eco Tips!" : "Klik Rimba untuk Tips Siaga!"}
               </div>
             </div>
           </div>
@@ -442,7 +540,7 @@ export default function IssueDetail() {
                 />
               )}
               <AlertTriangle className="w-4 h-4 text-amber-600" />
-              <span>Sebab-Akibat</span>
+              <span>{isEn ? "Cause & Effect" : "Sebab-Akibat"}</span>
             </motion.button>
 
             <motion.button
@@ -463,7 +561,7 @@ export default function IssueDetail() {
                 />
               )}
               <ShieldAlert className="w-4 h-4 text-rose-600" />
-              <span>Dampak Bencana</span>
+              <span>{isEn ? "Disaster Impact" : "Dampak Bencana"}</span>
             </motion.button>
 
             <motion.button
@@ -484,7 +582,7 @@ export default function IssueDetail() {
                 />
               )}
               <CheckCircle className="w-4 h-4 text-emerald-600" />
-              <span>Aksi Nyata Pelajar</span>
+              <span>{isEn ? "Youth Action Guide" : "Aksi Nyata Pelajar"}</span>
             </motion.button>
           </div>
 
@@ -503,7 +601,7 @@ export default function IssueDetail() {
                 {/* Narasi Pembuka dengan Aksen Garis Samping */}
                 <div className="pl-5 border-l-4 border-emerald-600 space-y-2 max-w-4xl">
                   <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">
-                    Memahami Akar Permasalahan
+                    {isEn ? "Understanding Root Causes" : "Memahami Akar Permasalahan"}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka']">
                     {issue.sections.causeAndEffect.title}
@@ -527,8 +625,12 @@ export default function IssueDetail() {
                            <CloudLightning className="h-5 w-5" />
                          </span>
                          <div>
-                           <h4 className="font-black text-base text-slate-900 font-['Fredoka']">Pemicu alami</h4>
-                           <p className="text-xs text-slate-500">Hal dari alam yang memulai bencana.</p>
+                           <h4 className="font-black text-base text-slate-900 font-['Fredoka']">
+                             {isEn ? "Natural triggers" : "Pemicu alami"}
+                           </h4>
+                           <p className="text-xs text-slate-500">
+                             {isEn ? "Natural environmental processes initiating the hazard." : "Hal dari alam yang memulai bencana."}
+                           </p>
                          </div>
                        </div>
                        <ul className="space-y-2 pl-12">
@@ -548,8 +650,12 @@ export default function IssueDetail() {
                          <Users className="h-5 w-5" />
                        </span>
                        <div>
-                         <h4 className="font-black text-base text-slate-900 font-['Fredoka']">Faktor memperparah</h4>
-                         <p className="text-xs text-slate-500">Kebiasaan manusia yang membuat dampaknya lebih besar.</p>
+                         <h4 className="font-black text-base text-slate-900 font-['Fredoka']">
+                           {isEn ? "Human exacerbating factors" : "Faktor memperparah"}
+                         </h4>
+                         <p className="text-xs text-slate-500">
+                           {isEn ? "Human activities and habits that amplify impacts." : "Kebiasaan manusia yang membuat dampaknya lebih besar."}
+                         </p>
                        </div>
                      </div>
                      <ul className="space-y-2 pl-12">
@@ -579,7 +685,7 @@ export default function IssueDetail() {
                     </div>
                     <div>
                       <strong className="text-[11px] font-black text-amber-300 uppercase tracking-widest block mb-1">
-                        Dampak Rantai Ekosistem (Efek Domino):
+                        {isEn ? "Ecosystem Domino Effect:" : "Dampak Rantai Ekosistem (Efek Domino):"}
                       </strong>
                       <p className="text-xs sm:text-sm text-emerald-50 leading-relaxed">
                         {issue.sections.causeAndEffect.ecologicalProcess}
@@ -602,21 +708,21 @@ export default function IssueDetail() {
               >
                  <div className="max-w-2xl">
                    <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">
-                     Apa yang terdampak?
+                     {isEn ? "What is impacted?" : "Apa yang terdampak?"}
                    </span>
                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka'] mt-1">
-                     Dampak bencana di sekitar kita
+                     {isEn ? "Disaster impacts around us" : "Dampak bencana di sekitar kita"}
                    </h3>
                    <p className="text-sm text-slate-600 mt-1 leading-relaxed">
-                     Lihat tiga bagian dampaknya satu per satu supaya lebih mudah dipahami.
+                     {isEn ? "Explore three impact dimensions one by one for clarity." : "Lihat tiga bagian dampaknya satu per satu supaya lebih mudah dipahami."}
                    </p>
                  </div>
 
                  <div className="rounded-3xl border border-slate-200 bg-slate-50/70 p-4 sm:p-6 space-y-2">
                    {[
-                     { id: "environmental" as const, title: "Alam dan lingkungan", hint: "Apa yang berubah di alam?", icon: Leaf, items: issue.sections.impact.environmental },
-                     ...(issue.sections.impact.healthSafety ? [{ id: "health" as const, title: "Kesehatan dan keselamatan", hint: "Apa pengaruhnya bagi tubuh dan keamanan?", icon: HeartPulse, items: issue.sections.impact.healthSafety }] : []),
-                     { id: "social" as const, title: "Masyarakat dan pelajar", hint: "Bagaimana kegiatan sehari-hari terdampak?", icon: Building2, items: issue.sections.impact.socialEconomic },
+                     { id: "environmental" as const, title: isEn ? "Nature & Environment" : "Alam dan lingkungan", hint: isEn ? "What shifts in our natural ecosystems?" : "Apa yang berubah di alam?", icon: Leaf, items: issue.sections.impact.environmental },
+                     ...(issue.sections.impact.healthSafety ? [{ id: "health" as const, title: isEn ? "Health & Safety" : "Kesehatan dan keselamatan", hint: isEn ? "How does it affect human bodies and safety?" : "Apa pengaruhnya bagi tubuh dan keamanan?", icon: HeartPulse, items: issue.sections.impact.healthSafety }] : []),
+                     { id: "social" as const, title: isEn ? "Society & Students" : "Masyarakat dan pelajar", hint: isEn ? "How are daily routines and schooling disrupted?" : "Bagaimana kegiatan sehari-hari terdampak?", icon: Building2, items: issue.sections.impact.socialEconomic },
                    ].map((section) => {
                      const open = openImpact === section.id;
                      const Icon = section.icon;
@@ -662,7 +768,9 @@ export default function IssueDetail() {
                  >
                    <ShieldAlert className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: issue.themeColor }} />
                    <div>
-                     <strong className="font-black" style={{ color: issue.themeColor }}>Zona &amp; Kelompok Paling Rentan: </strong>
+                     <strong className="font-black" style={{ color: issue.themeColor }}>
+                       {isEn ? "Most Vulnerable Zones & Groups: " : "Zona & Kelompok Paling Rentan: "}
+                     </strong>
                      <span className="text-slate-700">{issue.sections.impact.vulnerabilityNote}</span>
                    </div>
                  </div>
@@ -686,22 +794,24 @@ export default function IssueDetail() {
                     </span>
                     <div>
                       <span className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700">
-                        Aksi yang bisa dilakukan
+                        {isEn ? "Actionable steps" : "Aksi yang bisa dilakukan"}
                       </span>
                       <h3 className="text-2xl sm:text-3xl font-black text-slate-900 font-['Fredoka'] mt-0.5">
-                        Langkah kesiapsiagaan
+                        {isEn ? "Preparedness measures" : "Langkah kesiapsiagaan"}
                       </h3>
-                      <p className="text-sm text-slate-600 mt-1">Pilih kebiasaan yang sesuai dengan tempatmu.</p>
+                      <p className="text-sm text-slate-600 mt-1">
+                        {isEn ? "Choose habits tailored to your immediate environment." : "Pilih kebiasaan yang sesuai dengan tempatmu."}
+                      </p>
                     </div>
                   </div>
 
                   {/* Filter Lokasi */}
                   <div className="flex flex-wrap gap-1.5 bg-slate-50 p-1 rounded-xl border border-slate-200 self-start">
                     {[
-                      { id: "semua", label: "Semua Lokasi" },
-                      { id: "rumah", label: "🏠 Di Rumah" },
-                      { id: "sekolah", label: "🏫 Di Sekolah" },
-                      { id: "lingkungan", label: "🌳 Di Lingkungan" },
+                      { id: "semua", label: isEn ? "All Locations" : "Semua Lokasi" },
+                      { id: "rumah", label: isEn ? "🏠 At Home" : "🏠 Di Rumah" },
+                      { id: "sekolah", label: isEn ? "🏫 At School" : "🏫 Di Sekolah" },
+                      { id: "lingkungan", label: isEn ? "🌳 In Community" : "🌳 Di Lingkungan" },
                     ].map((loc) => (
                       <button
                         key={loc.id}
@@ -724,11 +834,14 @@ export default function IssueDetail() {
 
                 <div className="space-y-2">
                   {filteredActions.map((act, idx) => {
-                    const isPencegahan = act.type === "pencegahan";
+                    const isPencegahan = act.type === "pencegahan" || act.type === "prevention";
                     const locationLabels: Record<string, string> = {
-                      rumah: "🏠 Di Rumah",
-                      sekolah: "🏫 Di Sekolah",
-                      lingkungan: "🌳 Di Lingkungan",
+                      rumah: isEn ? "🏠 At Home" : "🏠 Di Rumah",
+                      home: isEn ? "🏠 At Home" : "🏠 Di Rumah",
+                      sekolah: isEn ? "🏫 At School" : "🏫 Di Sekolah",
+                      school: isEn ? "🏫 At School" : "🏫 Di Sekolah",
+                      lingkungan: isEn ? "🌳 In Community" : "🌳 Di Lingkungan",
+                      environment: isEn ? "🌳 In Community" : "🌳 Di Lingkungan",
                     };
                     return (
                       <motion.div
@@ -753,7 +866,9 @@ export default function IssueDetail() {
                             className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full text-white"
                             style={{ backgroundColor: issue.themeColor }}
                           >
-                            {isPencegahan ? "Langkah Pencegahan" : "Penyelamatan Diri"}
+                            {isPencegahan
+                              ? (isEn ? "Prevention Measure" : "Langkah Pencegahan")
+                              : (isEn ? "Safety & Rescue" : "Penyelamatan Diri")}
                           </span>
                         </div>
                         <h4 className="font-black text-base text-slate-900 mb-1 font-['Fredoka']">
@@ -816,17 +931,19 @@ export default function IssueDetail() {
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full border border-emerald-300/60 inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                  Eksplorasi Jelajah Alam
+                  {isEn ? "Nature Exploration" : "Eksplorasi Jelajah Alam"}
                 </span>
                 <span className="text-xs font-bold text-slate-400">
-                  Topik {currentIndex + 1} dari {ALL_ISSUES.length}
+                  {isEn ? `Topic ${currentIndex + 1} of ${ALL_ISSUES.length}` : `Topik ${currentIndex + 1} dari ${ALL_ISSUES.length}`}
                 </span>
               </div>
               <h3 className="text-xl sm:text-2xl font-black font-['Fredoka'] text-slate-900 tracking-tight">
-                Lanjut ke Isu Bencana Berikutnya
+                {isEn ? "Continue to Next Disaster Topic" : "Lanjut ke Isu Bencana Berikutnya"}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
-                Pilih topik di bawah ini atau langsung tekan tombol untuk melanjutkan ke materi selanjutnya.
+                {isEn
+                  ? "Select a topic below or click the button to proceed to the next module."
+                  : "Pilih topik di bawah ini atau langsung tekan tombol untuk melanjutkan ke materi selanjutnya."}
               </p>
             </div>
 
@@ -835,18 +952,18 @@ export default function IssueDetail() {
               <Link
                 to={`/isu/${prevItem.slug}`}
                 className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
-                title={`Kembali ke isu sebelumnya: ${prevItem.title}`}
+                title={`${isEn ? "Back to previous topic: " : "Kembali ke isu sebelumnya: "}${prevIssue?.title || prevItem.title}`}
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span className="hidden sm:inline">Sebelumnya</span>
+                <span className="hidden sm:inline">{isEn ? "Previous" : "Sebelumnya"}</span>
               </Link>
 
               <Link
                 to={`/isu/${nextItem.slug}`}
                 className="px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs sm:text-sm transition-all inline-flex items-center gap-2 cursor-pointer shadow-md shadow-emerald-950/20 active:scale-95 group"
-                title={`Lanjut ke isu berikutnya: ${nextItem.title}`}
+                title={`${isEn ? "Proceed to next topic: " : "Lanjut ke isu berikutnya: "}${nextIssue?.title || nextItem.title}`}
               >
-                <span>Lanjut: {nextItem.title}</span>
+                <span>{isEn ? "Next: " : "Lanjut: "}{nextIssue?.title || nextItem.title}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-amber-300" />
               </Link>
             </div>

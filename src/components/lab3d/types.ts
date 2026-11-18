@@ -6,6 +6,7 @@ export interface DioramaProps {
   actions: Record<string, boolean>;
   onSelectHotspot: (title: string, description: string) => void;
   showLabels?: boolean;
+  isEn?: boolean;
 }
 
 export interface HotspotData {
