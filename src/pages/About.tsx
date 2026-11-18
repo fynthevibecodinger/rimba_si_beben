@@ -5,7 +5,6 @@ import RimbaMascot from "../components/mascot/RimbaMascot";
 import EcoLandscape from "../components/hero/EcoLandscape";
 import { useLanguage } from "../context/LanguageContext";
 import {
-  Compass,
   Feather,
   TabletSmartphone,
   HardHat,
@@ -230,14 +229,21 @@ export default function About() {
         },
       ];
 
+  const sharedRoleId = "Tim Pengembang Rimba";
+  const sharedRoleEn = "Rimba Development Team";
+  const sharedBioId =
+    "Berkolaborasi merancang platform edukasi lingkungan dan simulasi kesiapsiagaan bencana yang interaktif bagi generasi muda.";
+  const sharedBioEn =
+    "Collaborating to build an interactive environmental education and disaster-preparedness simulation platform for youth.";
+
   const teamMembers: TeamMember[] = [
     {
       initials: "AM",
       name: "Aziefa Maharani Gitaatmaja",
-      roleId: "Riset Konten & Kearifan Lokal",
-      roleEn: "Content & Cultural Research",
-      bioId: "Menyusun materi literasi kebencanaan, galeri komunitas hijau, serta integrasi kearifan lokal Nusantara.",
-      bioEn: "Curates disaster literacy materials, green community showcases, and Indonesian local wisdom integration.",
+      roleId: sharedRoleId,
+      roleEn: sharedRoleEn,
+      bioId: sharedBioId,
+      bioEn: sharedBioEn,
       accentBg: "bg-emerald-900",
       accentText: "text-amber-300",
       accentBorder: "border-emerald-900/15",
@@ -251,10 +257,10 @@ export default function About() {
     {
       initials: "AN",
       name: "Adnan Nur Kholis",
-      roleId: "Pengembang Utama & Simulasi",
-      roleEn: "Lead Developer & Simulation",
-      bioId: "Merancang arsitektur aplikasi interaktif, laboratorium simulasi ekosistem, dan pengalaman belajar berbasis web.",
-      bioEn: "Architects the interactive web platform, ecosystem simulation lab, and responsive learning experience.",
+      roleId: sharedRoleId,
+      roleEn: sharedRoleEn,
+      bioId: sharedBioId,
+      bioEn: sharedBioEn,
       accentBg: "bg-amber-400",
       accentText: "text-emerald-950",
       accentBorder: "border-amber-500/30",
@@ -276,10 +282,10 @@ export default function About() {
     {
       initials: "AC",
       name: "Alfian Chandra Putra Ardhiansyah",
-      roleId: "Desain Visual & Aset Edukasi",
-      roleEn: "Visual Design & Learning Assets",
-      bioId: "Mengembangkan identitas visual ramah pelajar, struktur informasi modul, dan aset pendukung pembelajaran.",
-      bioEn: "Crafts student-friendly visual storytelling, module information hierarchy, and educational assets.",
+      roleId: sharedRoleId,
+      roleEn: sharedRoleEn,
+      bioId: sharedBioId,
+      bioEn: sharedBioEn,
       accentBg: "bg-teal-800",
       accentText: "text-emerald-100",
       accentBorder: "border-teal-800/20",
@@ -308,11 +314,6 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="space-y-5"
           >
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/75 backdrop-blur-md border border-emerald-900/15 text-emerald-900 text-xs font-extrabold tracking-wider uppercase shadow-xs">
-              <Compass className="w-3.5 h-3.5 text-emerald-700" />
-              {isEn ? "About Rimba Sanctuary" : "Tentang Ruang Belajar Rimba"}
-            </span>
-
             <h1 className="text-3xl sm:text-5xl md:text-[3.4rem] font-black font-['Fredoka'] text-white drop-shadow-[0_2px_12px_rgba(10,38,28,0.45)] leading-[1.12] tracking-tight max-w-4xl mx-auto">
               {isEn
                 ? "Empowering Eco-Conscious & Climate-Resilient Generations"
@@ -634,7 +635,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* 5. 3 SUSTAINABLE LEARNING PILLARS */}
+      {/* 5. 3 SUSTAINABLE LEARNING PILLARS (Alur Tahapan Terhubung & Rapi) */}
       <section
         id="about-pillars"
         className="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-14 scroll-mt-24"
@@ -650,11 +651,11 @@ export default function About() {
           </h2>
         </div>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
-          {/* Garis Penghubung Horizontal pada Layar Desktop */}
+        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+          {/* Garis Penghubung Horizontal Sejajar di Desktop (di belakang header node) */}
           <div
             aria-hidden="true"
-            className="hidden md:block absolute top-6 left-12 right-12 h-[2px] bg-gradient-to-r from-emerald-800/30 via-amber-500/50 to-emerald-800/30"
+            className="hidden md:block absolute top-6 left-6 right-16 h-[2px] bg-gradient-to-r from-emerald-800/35 via-amber-500/60 to-emerald-800/20"
           />
 
           {learningPillars.map((pillar, idx) => (
@@ -664,27 +665,25 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className={`relative flex flex-col ${
-                idx === 1 ? "md:mt-6" : idx === 2 ? "md:mt-12" : ""
-              }`}
+              className="relative flex flex-col"
             >
-              {/* Node Langkah */}
-              <div className="relative z-10 flex items-center gap-3 mb-4">
-                <span className="w-12 h-12 rounded-2xl bg-[#0f3d2e] text-amber-300 font-['Fredoka'] font-black text-base flex items-center justify-center shadow-xs">
+              {/* Node Langkah dengan background krem agar garis berhenti rapi tanpa menabrak teks */}
+              <div className="relative z-10 inline-flex items-center gap-3.5 mb-5 bg-[#f7f4eb] pr-5 w-fit">
+                <span className="w-12 h-12 rounded-2xl bg-[#0f3d2e] text-amber-300 font-['Fredoka'] font-black text-base flex items-center justify-center shadow-xs flex-shrink-0">
                   0{idx + 1}
                 </span>
                 <div>
                   <span className="block text-[11px] font-extrabold uppercase tracking-wider text-emerald-700">
                     {pillar.step}
                   </span>
-                  <span className="text-xs font-semibold text-emerald-900/70">
+                  <span className="text-xs font-semibold text-emerald-900/75">
                     {pillar.subtitle}
                   </span>
                 </div>
               </div>
 
               {/* Konten Pilar */}
-              <div className="pl-4 border-l-2 border-emerald-900/15 space-y-2">
+              <div className="pl-5 ml-6 border-l-2 border-emerald-900/15 space-y-2">
                 <h3 className="text-lg sm:text-xl font-extrabold text-emerald-950">
                   {pillar.title}
                 </h3>
