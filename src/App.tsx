@@ -10,6 +10,7 @@ import EcosystemSimulation from "./pages/EcosystemSimulation";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FallingLeaves from "./components/common/FallingLeaves";
+import ErrorBoundary from "./components/common/ErrorBoundary";
 
 function AppContent() {
   const { path } = useRouter();
@@ -43,7 +44,7 @@ function AppContent() {
       <FallingLeaves />
       <Navbar />
       <main className="flex-1">
-        {renderPage()}
+        <ErrorBoundary key={path}>{renderPage()}</ErrorBoundary>
       </main>
       <Footer />
     </div>

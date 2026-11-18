@@ -7,8 +7,8 @@ export interface QuizQuestion {
 }
 
 export interface StudentActionItem {
-  location?: "rumah" | "sekolah" | "lingkungan";
-  type: "pencegahan" | "penyelamatan";
+  location?: "rumah" | "sekolah" | "lingkungan" | "home" | "school" | "environment" | string;
+  type: "pencegahan" | "penyelamatan" | "prevention" | "rescue" | string;
   title: string;
   description: string;
   iconName: string;
@@ -70,7 +70,7 @@ export interface IssueContent {
   tagline: string;
   themeColor: string;
   accentBg: string;
-  threatLevel: "Tinggi" | "Kritis" | "Sedang" | "Sangat Tinggi";
+  threatLevel: "Tinggi" | "Kritis" | "Sedang" | "Sangat Tinggi" | "Very High" | "High" | "Critical" | "Medium" | string;
   heroBadge: string;
   icon: string;
   realPhoto: RealDisasterPhoto;

@@ -42,6 +42,10 @@ export const translations = {
   "cta_start": { id: "Mulailah dengan memilih salah satu materi lingkungan atau mencoba permainan simulasi.", en: "Start by selecting an environmental topic or trying the simulation game." },
   "cta_explore_material": { id: "Jelajahi Materi", en: "Explore Materials" },
   "contact_title": { id: "Hubungi Rimba", en: "Contact Rimba" },
+  "contact_desc": {
+    id: "Punya ide penambahan materi, pertanyaan, atau ingin berkolaborasi dalam aksi peduli lingkungan? Rimba dan tim edukasi siap mendengar ceritamu.",
+    en: "Have ideas for new learning materials, questions, or want to collaborate on environmental actions? Rimba and our education team are ready to hear from you.",
+  },
   "tag_student_friendly": { id: "Ramah pelajar", en: "Student Friendly" },
   "tag_open_ideas": { id: "Terbuka untuk ide", en: "Open for Ideas" },
   "tag_learn_together": { id: "Belajar bersama", en: "Learn Together" },
@@ -61,5 +65,8 @@ export const translations = {
   "team_desc": { id: "Rimba dibuat bersama untuk membantu anak-anak belajar, bermain, lalu ikut menjaga alam.", en: "Rimba is built together to help children learn, play, and protect nature." },
 };
 
-export const t = (key: keyof typeof translations, isEn: boolean) =>
-  isEn ? translations[key].en : translations[key].id;
+export const t = (key: keyof typeof translations | string, isEn: boolean) => {
+  const item = (translations as Record<string, { id: string; en: string }>)[key];
+  if (!item) return key;
+  return isEn ? item.en : item.id;
+};

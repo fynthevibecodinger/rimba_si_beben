@@ -1,3 +1,5 @@
+import type { IssueContent } from "./issuesData";
+
 export interface QuizQuestion {
   id: number;
   question: string;
@@ -63,22 +65,9 @@ export interface RealDisasterPhoto {
   caption: string;
 }
 
-export interface IssueContent {
-  slug: "banjir" | "tanah-longsor" | "kekeringan" | "kebakaran-hutan";
-  title: string;
-  subtitle: string;
-  tagline: string;
-  themeColor: string;
-  accentBg: string;
-  threatLevel: "High" | "Critical" | "Medium" | "Very High";
-  heroBadge: string;
-  icon: string;
-  realPhoto: RealDisasterPhoto;
-  sections: IssueSections;
-  quiz: QuizQuestion[];
-}
+export type { IssueContent };
 
-export const issuesDataEn = {
+export const issuesDataEn: Record<string, IssueContent> = {
   banjir: {
     slug: "banjir",
     title: "Flood & Waterlogging",
